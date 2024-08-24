@@ -18,6 +18,7 @@ export default [
       "no-unused-vars": "error",
       "no-undef": "error",
       "vue/multi-word-component-names": "off",
+      "vue/no-reserved-component-names": "off",
     },
   },
 ];
