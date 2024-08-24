@@ -1,0 +1,29 @@
+# Check Prettier standards
+yarn check-format || 
+    (
+        echo '❌ Prettier Check Failed. Run yarn format, add changes and try commit again.'
+        false
+    )
+
+# Check ESLint Standards
+yarn check-lint ||
+    (
+        echo '❌ ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false
+    )
+
+# Check tsconfig standards
+yarn check-types ||
+    (
+        echo '❌ TypeScript Check Failed. Fix the issues, add changes and try to commit again.'
+        false
+    )
+
+# Check test
+# yarn test:coverage --no-watch ||
+#     (
+#         echo '❌ Failed test check.'
+#         false
+#     )
+
+echo '✅ All pre commits checks passed. Proceed with the commit.'
