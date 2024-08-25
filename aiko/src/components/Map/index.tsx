@@ -13,6 +13,11 @@ import shadow from 'leaflet/dist/images/marker-shadow.png'
 
 
 export default function Map(): JSX.Element {
+    const title = {
+        att: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    }
+
     const EquipmentIcon = Leaflet.icon({
         iconRetinaUrl: marker2x,
         iconUrl: marker,
@@ -22,8 +27,8 @@ export default function Map(): JSX.Element {
     return (
         <MapContainer center={[51.505, -0.09]} zoom={13}>
             <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url={title.url}
+                attribution={title.att}
             />
             <Marker position={[51.505, -0.09]} icon={EquipmentIcon}>
                 <Popup>
