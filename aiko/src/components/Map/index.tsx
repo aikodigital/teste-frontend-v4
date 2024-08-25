@@ -1,17 +1,14 @@
-// Dependencies
+import PopupContent from "../PopupContent";
+import equipmentServices from "../../services/equipment/equipment";
 import Leaflet, { LatLngExpression } from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
-// Styles
 import './styles.css'
 import 'leaflet/dist/leaflet.css'
 
-// Assets
 import marker from 'leaflet/dist/images/marker-icon.png'
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png'
 import shadow from 'leaflet/dist/images/marker-shadow.png'
-import equipmentServices from "../../services/equipment/equipment";
-import PopupContent from "../PopupContent";
 
 
 export default function Map(): JSX.Element {
