@@ -1,9 +1,7 @@
+import Home from "./pages/Home"
+
 function App() {
-  return (
-    <>
-      Hello, Aiko!
-    </>
-  )
+  return <Home />
 }
 
 export default App
