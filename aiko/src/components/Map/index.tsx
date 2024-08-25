@@ -11,6 +11,7 @@ import marker from 'leaflet/dist/images/marker-icon.png'
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png'
 import shadow from 'leaflet/dist/images/marker-shadow.png'
 import equipmentServices from "../../services/equipment/equipment";
+import PopupContent from "../PopupContent";
 
 
 export default function Map(): JSX.Element {
@@ -58,7 +59,7 @@ export default function Map(): JSX.Element {
             />
             {getLatestEquipmentsLocation().map((equip) => <Marker position={[equip.positions.lat, equip.positions.lon]} icon={EquipmentIcon}>
                 <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
+                    <PopupContent equipmentId={equip.equipmentId} />
                 </Popup>
             </Marker>)}
 
