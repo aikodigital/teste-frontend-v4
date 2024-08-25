@@ -1,7 +1,8 @@
 import PopupContent from "../PopupContent";
+import TooltipContent from "../TooltipContent";
 import equipmentServices from "../../services/equipment/equipment";
 import Leaflet, { LatLngExpression } from "leaflet";
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet'
 
 import './styles.css'
 import 'leaflet/dist/leaflet.css'
@@ -54,11 +55,15 @@ export default function Map(): JSX.Element {
                 url={title.url}
                 attribution={title.att}
             />
-            {getLatestEquipmentsLocation().map((equip) => <Marker position={[equip.positions.lat, equip.positions.lon]} icon={EquipmentIcon}>
-                <Popup>
-                    <PopupContent equipmentId={equip.equipmentId} />
-                </Popup>
-            </Marker>)}
+            {getLatestEquipmentsLocation().map((equip) =>
+                <Marker position={[equip.positions.lat, equip.positions.lon]} icon={EquipmentIcon}>
+                    <Popup>
+                        <PopupContent equipmentId={equip.equipmentId} />
+                    </Popup>
+                    <Tooltip>
+                        <TooltipContent equipmentId={equip.equipmentId} />
+                    </Tooltip>
+                </Marker>)}
 
         </MapContainer>
     )
