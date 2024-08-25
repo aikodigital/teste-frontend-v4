@@ -8,7 +8,7 @@ interface EquipmentItemProps {
 
 const EquipmentItem = ({ props }: EquipmentItemProps) => {
   return (
-    <Link href={`/equipment/${props.id}`}>
+    <Link href={`/equipment/${props.equipmentModelId}`}>
       <div className="w-full py-5 px-4 rounded-lg shadow-md bg-muted flex justify-between items-center">
         <div className="flex flex-col gap-2">
             <h2 className="font-semibold">{props.name}</h2>
