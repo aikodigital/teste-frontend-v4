@@ -1,7 +1,7 @@
 import PopupContent from "../PopupContent";
 import TooltipContent from "../TooltipContent";
-import equipmentServices from "../../services/equipment/equipment";
 import Leaflet, { LatLngExpression } from "leaflet";
+import equipmentsPositionHistoryServices from "../../services/equipmentsPositionHistoryServices";
 import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet'
 
 import './styles.css'
@@ -13,7 +13,7 @@ import shadow from 'leaflet/dist/images/marker-shadow.png'
 
 
 export default function Map(): JSX.Element {
-    const { getEquipmentsPositionHistory } = equipmentServices()
+    const { getEquipmentsPositionHistory } = equipmentsPositionHistoryServices()
 
     const title = {
         att: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
