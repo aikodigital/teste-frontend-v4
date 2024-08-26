@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = configure(function () {
   return {
-    boot: ['i18n'],
+    boot: [],
     css: ['app.scss'],
     extras: [
       'roboto-font',

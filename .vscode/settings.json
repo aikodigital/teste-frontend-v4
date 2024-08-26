@@ -1,5 +1,6 @@
 {
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "mayank1513.trello-kanban.Workspace.filePath": ".tkb"
 }
