@@ -1,4 +1,3 @@
-
 export interface Position {
   lat: number;
   lon: number;
@@ -12,15 +11,15 @@ export interface Equipment {
 }
 
 export interface EquipmentState {
-    id: string;
-    name: string;
-    color: string;
-  }
+  id: string;
+  name: string;
+  color: string;
+}
 
 export interface StateHistory {
-    equipmentId: string;
-    equipmentStateId: string;
-    date: string; 
+  equipmentId: string;
+  equipmentStateId: string;
+  date: string;
 }
 
 export interface EquipmentStateHistory {
@@ -36,4 +35,3 @@ export interface EquipmentModel {
     value: number;
   }[];
 }
-

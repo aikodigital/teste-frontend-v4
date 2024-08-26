@@ -1,5 +1,11 @@
 import { create } from 'zustand';
-import { Equipment,EquipmentState, EquipmentModel, EquipmentStateHistory, Position } from '../types/interface';
+import {
+  Equipment,
+  EquipmentState,
+  EquipmentModel,
+  EquipmentStateHistory,
+  Position,
+} from '../types/interface';
 
 interface EquipmentStore {
   equipment: Equipment[];

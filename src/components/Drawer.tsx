@@ -27,7 +27,7 @@ const DrawerComponent: React.FC<EquipmentDrawerProps> = ({
     >
       <Timeline>
         {equipmentHistory.map((state, index) => {
-          const stateColor = states[state.equipmentStateId]?.color || '#000'; 
+          const stateColor = states[state.equipmentStateId]?.color || '#000';
           return (
             <Timeline.Item
               key={index}
