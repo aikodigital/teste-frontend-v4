@@ -1,1 +1,1 @@
-export * from './Maps';
+export * from './Dashboard';

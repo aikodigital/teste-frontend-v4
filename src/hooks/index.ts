@@ -1,1 +1,1 @@
-export * from './useProcessData';
+export * from './useEquipment';

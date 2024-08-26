@@ -1,6 +1,8 @@
 import { ThemeProvider } from 'styled-components';
 
-import { Maps } from './pages';
+import { EquipmentProvider } from './hooks';
+
+import { Dashboard } from './pages';
 
 import { theme } from './styles';
 
@@ -10,7 +12,9 @@ import '@/styles/defaultStyle.css';
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Maps />
+      <EquipmentProvider>
+        <Dashboard />
+      </EquipmentProvider>
     </ThemeProvider>
   );
 }

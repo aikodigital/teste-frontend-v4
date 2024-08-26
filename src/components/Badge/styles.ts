@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { BadgeStyledProps } from './models';
 
 export const BadgeStyled = styled.span<BadgeStyledProps>`

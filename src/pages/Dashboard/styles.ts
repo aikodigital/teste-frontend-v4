@@ -38,9 +38,14 @@ export const SidebarFilterContainerStyled = styled.section`
 
 export const SidebarFilterLineStyled = styled.section`
   display: flex;
+  align-items: flex-end;
   width: 100%;
 
   gap: 1rem;
+
+  button {
+    height: 2.5rem;
+  }
 `;
 
 export const SidebarListContainerStyled = styled.section`
@@ -51,6 +56,16 @@ export const SidebarListContainerStyled = styled.section`
   padding: 0 1rem 1.5rem;
 
   overflow-y: auto;
+
+  .no-equipment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: ${(props) => props.theme.text.baseLight};
+  }
 `;
 
 export const MapContainerStyled = styled.section`

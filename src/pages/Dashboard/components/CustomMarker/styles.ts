@@ -1,17 +1,6 @@
-import { MapContainer } from 'react-leaflet';
 import styled from 'styled-components';
 
-export const MapContainerStyled = styled(MapContainer)`
-  height: 100vh;
-  width: 100%;
-
-  .custom-marker-icon {
-    border-radius: 50%;
-    object-fit: cover;
-  }
-`;
-
-export const MapPopupContainerStyled = styled.div`
+export const CustomMarkerContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -23,7 +12,7 @@ export const MapPopupContainerStyled = styled.div`
   }
 `;
 
-export const MapPopupHeaderStyled = styled.div`
+export const CustomMarkerHeaderStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,7 +32,7 @@ export const MapPopupHeaderStyled = styled.div`
   }
 `;
 
-export const MapPopupTextsStyled = styled.div`
+export const CustomMarkerTextsStyled = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -63,14 +52,14 @@ export const MapPopupTextsStyled = styled.div`
   }
 `;
 
-export const MapPopupIconStyled = styled.img`
+export const CustomMarkerIconStyled = styled.img`
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
   object-fit: cover;
 `;
 
-export const MapPopupContentStyled = styled.div`
+export const CustomMarkerContentStyled = styled.div`
   display: flex;
   flex-direction: column;
 
