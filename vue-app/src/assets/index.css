@@ -1,73 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
- 
+
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
- 
+
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
- 
+
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
- 
+
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
- 
+
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
- 
+
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
- 
+
     --ring: 240 10% 3.9%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
- 
+
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
- 
+
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
- 
+
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
- 
+
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
- 
+
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
- 
+
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
- 
+
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
- 
+
     --ring: 240 4.9% 83.9%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -75,4 +75,32 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.custom-bg-0 {
+  background-color: #f43f5e; /* Tailwind rose-600 */
+}
+.custom-bg-1 {
+  background-color: #fb923c; /* Tailwind orange-400 */
+}
+.custom-bg-2 {
+  background-color: #facc15; /* Tailwind yellow-300 */
+}
+.custom-bg-3 {
+  background-color: #84cc16; /* Tailwind lime-500 */
+}
+.custom-bg-4 {
+  background-color: #14b8a6; /* Tailwind teal-500 */
+}
+.custom-bg-5 {
+  background-color: #1d4ed8; /* Tailwind blue-700 */
+}
+.custom-bg-6 {
+  background-color: #6d28d9; /* Tailwind violet-700 */
+}
+.custom-bg-7 {
+  background-color: #dc2626; /* Tailwind red-600 */
+}
+.custom-bg-8 {
+  background-color: #312e81; /* Tailwind indigo-900 */
 }

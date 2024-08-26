@@ -10,6 +10,7 @@
     "add-component": "npx shadcn-vue@latest add"
   },
   "dependencies": {
+    "@vueuse/core": "^11.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",
@@ -17,7 +18,8 @@
     "radix-vue": "^1.9.4",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

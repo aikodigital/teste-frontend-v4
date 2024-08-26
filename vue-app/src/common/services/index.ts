@@ -8,22 +8,26 @@ import EquipmentModel from '../types/EquipmentModel';
 import EquipmentState from '../types/EquipmentState';
 import EquipmentPositionHistory, { Position } from '../types/EquipmentPositionHistory';
 import EquipmentStateHistory, { State } from '../types/EquipmentStateHistory';
+import EquipmentWithLastPosition from '../types/EquipmentWithLastPosition'
 
 function listEquipments(): Equipment[] {
   return equipments;
 }
 
-function listEquipmentsWithLastPosition(){
+function listEquipmentsWithLastPosition(): EquipmentWithLastPosition[]{
   return listEquipments().map(equipment => {
     const lastPosition = getEquipmentLastPosition(equipment.id);
     const stateHistory = getEquipmentHistoryStates(equipment.id)?.states;
     const lastState = getEquipmentLastState(equipment.id);
     const lastPositionState = stateHistory?.find(p => p.date == lastPosition?.date);
+    const model = getModelById(equipment.equipmentModelId);
     const state = lastPositionState ? getStateById(lastPositionState.equipmentStateId) 
       : lastState ? getStateById(lastState?.equipmentStateId) : null;
     return {
       ...equipment,
-      lastPosition: { ...lastPosition, state: state },
+      lastPosition,
+      lastState: state,
+      model
       
     }
   })

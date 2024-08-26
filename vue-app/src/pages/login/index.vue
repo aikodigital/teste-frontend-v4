@@ -6,7 +6,7 @@
         <span class="text-2xl font-bold text-zinc-200">Dodô</span>
         <span class="text-2xl font-bold text-green-700">Agro</span>
       </div>
-      <Button class="shadow-md shadow-zinc-800 hover:bg-zinc-800" @click="$emit('join')">
+      <Button class="shadow-md shadow-zinc-800 hover:bg-zinc-800" @click="$router.push('/app')">
         Entrar
       </Button>
     </div>
