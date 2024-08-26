@@ -1,0 +1,9 @@
+.main {
+    height: 410px;
+    width: 800px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 6px solid #6a60e8
+}
