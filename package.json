@@ -1,0 +1,21 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "nuxt": "^3.13.0",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.5.2",
+    "eslint": "^9.9.1"
+  }
+}
