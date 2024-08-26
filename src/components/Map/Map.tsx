@@ -69,11 +69,27 @@ const Map: React.FC = () => {
 
       {filteredData.map((item, index) => {
         const lastPosition = item.positions[item.positions.length - 1];
+        const lastState = item.states[item.states.length - 1].stateName;
+
+        let stateClass = '';
+        switch (lastState) {
+          case 'Operando':
+            stateClass = styles.operando;
+            break;
+          case 'Parado':
+            stateClass = styles.parado;
+            break;
+          case 'Manutenção':
+            stateClass = styles.manutencao;
+            break;
+          default:
+            stateClass = ''; // Fallback or default class
+        }
+        console.log(item.states[item.states.length - 1].stateName);
 
         const customIcon = L.divIcon({
-          //arrumar a cor do icone prar state do equipamento
-          className: styles.modelContainer,
-          html: `<img src="${iconMapping[item.modelName] || defaultIconUrl}" class="${styles.modelImg}" />`, // HTML do ícone
+          className: `${styles.modelContainer} ${stateClass}`, // Apply the state-specific class
+          html: `<img src="${iconMapping[item.modelName] || defaultIconUrl}" class="${styles.modelImg}" />`,
           iconSize: [40, 40],
           iconAnchor: [20, 40],
         });
@@ -84,10 +100,13 @@ const Map: React.FC = () => {
             position={[lastPosition.lat, lastPosition.lon]}
             icon={customIcon}
           >
-            <Popup>
-              {item.name} <br />
-              Latitude: {lastPosition.lat} <br />
-              Longitude: {lastPosition.lon}
+            <Popup className={styles.popup}>
+              <h5 className={styles.title}>
+                {item.name} <br />
+              </h5>
+              <h5 className={styles.state}>
+                {item.states[item.states.length - 1].stateName}
+              </h5>
             </Popup>
           </Marker>
         );
