@@ -1,44 +1,5 @@
 import { create } from 'zustand';
-
-interface Position {
-  lat: number;
-  lon: number;
-  date: string;
-}
-
-interface Equipment {
-  id: string;
-  equipmentModelId: string;
-  name: string;
-}
-
-type EquipmentState = Record<
-  string,
-  {
-    id: string;
-    name: string;
-    color: string;
-  }
->;
-
-interface StateHistory {
-  date: string;
-  equipmentStateId: string;
-}
-
-interface EquipmentStateHistory {
-  equipmentId: string;
-  states: StateHistory[];
-}
-
-interface EquipmentModel {
-  id: string;
-  name: string;
-  hourlyEarnings: {
-    equipmentStateId: string;
-    value: number;
-  }[];
-}
+import { Equipment,EquipmentState, EquipmentModel, EquipmentStateHistory, Position } from '../types/interface';
 
 interface EquipmentStore {
   equipment: Equipment[];
