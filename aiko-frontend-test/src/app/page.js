@@ -9,6 +9,7 @@ import { setEquipmentStateHistory } from '../../store/slices/equipmentStateHisto
 import { setEquipmentPositionHistory } from '../../store/slices/equipmentPositionHistorySlice';
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import HistoryTable from "./component/historyTable/historyTable";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <MapDisplay />
+      <HistoryTable />
     </main>
   );
 }

@@ -1,9 +1,7 @@
 .main {
-    height: 410px;
-    width: 800px;
-
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 6px solid #6a60e8
+    gap: 16px;
 }
