@@ -1,0 +1,138 @@
+.container {
+  width: auto;
+  margin: 16px;
+  border-radius: 8px;
+  border: 1px solid rgb(209, 209, 209);
+  background-color: white;
+  padding: 16px;
+}
+.modelContainer {
+  background-color: #e74c3c;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.modelImg {
+  width: 70%;
+  height: 70%;
+  filter: invert(100%);
+}
+.nameHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  cursor: pointer;
+}
+.equipmentName {
+  font-weight: 800;
+  font-size: 16px;
+}
+.modelName {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+}
+.containerModel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(209, 209, 209);
+  margin: 16px 0;
+}
+.hourlyEarnings {
+  margin-bottom: 16px;
+}
+.hourlyEarningsValue {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: right;
+}
+.hourlyEarningsText {
+  font-weight: 400;
+  margin: 0;
+}
+.containerState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  height: 16px;
+}
+.contentState {
+  display: flex;
+  align-items: center;
+}
+.historyStateButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.titleList {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.statesList {
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+.historyState {
+  list-style: none;
+}
+.containerStateHistory {
+  width: auto;
+  margin: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: white;
+  padding: 16px;
+}
+.toggleStatesButton {
+  margin-top: 16px;
+  border: 1px solid black;
+  color: black;
+  border-radius: 4px;
+  background-color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.tagState {
+  width: 12px;
+  height: 12px;
+  margin: 0 8px 0 0;
+  border-radius: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noData {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #888;
+  padding: 20px;
+}
+.pin {
+  margin-left: 16px;
+  width: 20px;
+  opacity: 0.5;
+  cursor: pointer;
+}

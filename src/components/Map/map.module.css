@@ -1,0 +1,18 @@
+.grayscaleTile {
+  filter: grayscale(100%);
+}
+.modelContainer {
+  background-color: #e74c3c;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.modelImg {
+  width: 70%;
+  height: 70%;
+  filter: invert(100%);
+}

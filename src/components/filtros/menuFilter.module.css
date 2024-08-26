@@ -1,0 +1,86 @@
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 999;
+  position: absolute;
+  gap: 8px;
+  margin: 12px;
+  right: 0;
+  background-color: white;
+  border: 1px solid rgb(209, 209, 209);
+  width: 32px;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.content {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 999;
+  position: absolute;
+  gap: 8px;
+  margin: 72px 12px 0 12px;
+  right: 0;
+  background-color: white;
+  border: 1px solid rgb(209, 209, 209);
+  width: 32px;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.styleButton,
+.styleFilter {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: none;
+  background-color: white !important;
+}
+
+.styleButton:hover {
+  border: 1px solid rgb(209, 209, 209);
+  cursor: pointer;
+}
+
+.operando,
+.parado,
+.manutencao {
+  width: 16px;
+  height: 16px;
+  border-radius: 100px;
+}
+
+.operando {
+  background-color: #2ecc71;
+}
+.parado {
+  background-color: #f1c40f;
+}
+.manutencao {
+  background-color: #e74c3c;
+}
+.filterIcon {
+  border: 1px solid rgb(209, 209, 209);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background-image: url('../../assets/icons/filter.png');
+  border: none;
+}
+.filterIcon img {
+  width: 24px;
+  height: 24px;
+}
+.styleFilter {
+  filter: grayscale(50%);
+  opacity: 0.5;
+}

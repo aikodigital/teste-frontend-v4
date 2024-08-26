@@ -1,0 +1,19 @@
+/* grafico.module.css */
+.donutChart {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: conic-gradient(black 100%, black 100%);
+  clip-path: circle(50% at 50% 50%);
+}
+
+.centerHole {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 50%;
+}

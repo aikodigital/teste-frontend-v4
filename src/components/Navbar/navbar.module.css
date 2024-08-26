@@ -1,0 +1,53 @@
+.container {
+  width: 98vw;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.contentUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.inputNav,
+.menu {
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inputNav {
+  border: none;
+  width: 40%;
+  background-color: rgb(240, 240, 240);
+  padding-left: 16px;
+  font-size: 16px;
+}
+
+.menu {
+  width: 48px;
+  border: 1px solid rgb(202, 202, 202);
+  background-color: white;
+}
+
+.menu img {
+  height: 24px;
+  width: 24px;
+}
+.nameUser {
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.logo {
+  height: 40px;
+}
