@@ -1,17 +1,16 @@
-import { Marker, Tooltip } from 'react-leaflet';
 import img from '../../assets/marker.png';
+
+import { Marker as LeafletMarker, Tooltip } from 'react-leaflet';
+
+import { DataProps } from '../../context/DataContext';
+
+import { useDataContext } from '../../context/DataContext';
 
 import { Icon } from 'leaflet';
 
-interface MarkerProps {
-  id: string;
-  name: string | undefined;
-  model: string | undefined;
-  position: [number, number] | undefined;
-  state: string | undefined;
-}
+const Marker = ({ id, position, name, model, state }: DataProps) => {
+  const { setSelectedID } = useDataContext();
 
-const DetailedMarker = ({ position, name, model, state }: MarkerProps) => {
   const customIcon = new Icon({
     iconUrl: img,
     iconSize: [24, 24],
@@ -20,14 +19,23 @@ const DetailedMarker = ({ position, name, model, state }: MarkerProps) => {
   if (!position) return null;
 
   return (
-    <Marker position={position} icon={customIcon} riseOnHover>
+    <LeafletMarker
+      position={position}
+      icon={customIcon}
+      eventHandlers={{
+        click: () => {
+          console.log(id);
+          setSelectedID(id);
+        },
+      }}
+    >
       <Tooltip>
         <span>{name}</span>
         <span>{model}</span>
         <span>{state}</span>
       </Tooltip>
-    </Marker>
+    </LeafletMarker>
   );
 };
 
-export default DetailedMarker;
+export default Marker;
