@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "skipLibCheck": true,
+    "types": ["vitest/globals"],
+    "jsxImportSource": "vue"
+  },
+  "extends": "./tsconfig.paths.json",
+  "include": [
+    "src",
+    "__tests__",
+    "vite.config.ts",
+    "cypress.config.ts",
+    "commitlint.config.js",
+    ".eslintrc.js"
+  ],
+  "exclude": ["node_modules", "cypress.config.ts"]
+}
