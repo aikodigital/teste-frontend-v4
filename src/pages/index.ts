@@ -1,3 +1,4 @@
 import Home from './Home.vue';
+import Map from './Map.vue';
 
-export { Home };
+export { Home, Map };

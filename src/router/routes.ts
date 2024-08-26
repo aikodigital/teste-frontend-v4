@@ -1,11 +1,16 @@
 import { RouteRecordRaw } from 'vue-router';
-import { Home } from '../pages';
+import { Home, Map } from '../pages';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
     component: Home,
+  },
+  {
+    path: '/map',
+    name: 'map',
+    component: Map,
   }
   // {
   //   path: '/:catchAll(.*)*',
