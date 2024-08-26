@@ -21,10 +21,14 @@ type EquipmentState = Record<
   }
 >;
 
+interface StateHistory {
+  date: string;
+  equipmentStateId: string;
+}
+
 interface EquipmentStateHistory {
   equipmentId: string;
-  equipmentStateId: string;
-  date: string;
+  states: StateHistory[];
 }
 
 interface EquipmentModel {
@@ -39,14 +43,14 @@ interface EquipmentModel {
 interface EquipmentStore {
   equipment: Equipment[];
   positions: Record<string, Position[]>;
-  states: Record<string, EquipmentState>;
+  states: EquipmentState;
   models: EquipmentModel[];
-  stateHistory: EquipmentStateHistory[];
+  history: EquipmentStateHistory[];
   setEquipment: (equipment: Equipment[]) => void;
   setPositions: (positions: Record<string, Position[]>) => void;
-  setStates: (states: Record<string, EquipmentState>) => void;
+  setStates: (states: EquipmentState) => void;
   setModels: (models: EquipmentModel[]) => void;
-  setStateHistory: (stateHistory: EquipmentStateHistory[]) => void;
+  setStateHistory: (history: EquipmentStateHistory[]) => void;
 }
 
 const useEquipmentStore = create<EquipmentStore>((set) => ({
@@ -54,12 +58,12 @@ const useEquipmentStore = create<EquipmentStore>((set) => ({
   positions: {},
   states: {},
   models: [],
-  stateHistory: [],
+  history: [],
   setEquipment: (equipment) => set({ equipment }),
   setPositions: (positions) => set({ positions }),
   setStates: (states) => set({ states }),
   setModels: (models) => set({ models }),
-  setStateHistory: (stateHistory) => set({ stateHistory }),
+  setStateHistory: (history) => set({ history }),
 }));
 
 export default useEquipmentStore;

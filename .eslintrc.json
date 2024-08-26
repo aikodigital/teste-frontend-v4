@@ -26,6 +26,10 @@
       "typescript": {}
     }
   },
+  "env": {
+    "node": true,
+    "browser": true
+  },
   "rules": {
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
