@@ -1,6 +1,6 @@
 "use client";
 
-import equipmentDetails from "@/app/data/equipmentModel.json";
+import equipmentDetails from "@/app/data/equipment.json";
 import { useEffect, useState } from "react";
 
 interface EquipamentPageProps {
@@ -13,7 +13,7 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
   const [equipment, setEquipment] = useState<(typeof equipmentDetails)[0]>({
     id: "",
     name: "",
-    hourlyEarnings: [],
+    equipmentModelId: "",
   });
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
       return row.id === params.id;
     });
 
-    console.log(equipmentFinded);
     if (equipmentFinded) {
       setEquipment(equipmentFinded);
     }
