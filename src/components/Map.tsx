@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useEquipmentStore from '../store/useEquipmentStore';
-import { Position, StateHistory, EquipmentModel } from '../types/interface';
 import DrawerComponent from './Drawer';
 import { Button } from '@mantine/core';
+import useMap from '../hooks/useMap'; // Importa o hook
+import { Position } from '../types/interface';
 
 const Map: React.FC = () => {
   const {
@@ -21,38 +22,24 @@ const Map: React.FC = () => {
     states,
   } = useEquipmentStore();
 
-  const [opened, setOpened] = useState(false);
-  const [selectedEquipmentModel, setSelectedEquipmentModel] = useState<EquipmentModel | null>(null);
-
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(
-    null
-  );
-  const [equipmentHistory, setEquipmentHistory] = useState<StateHistory[]>([]);
-
-  const handleOpenDrawer = (id: string) => {
-    const equip = equipment.find((e) => e.id === id);
-    if (!equip) return;
-  
-    const equipModel = models.find((model) => model.id === equip.equipmentModelId);
-    if (!equipModel) return;
-
-    setSelectedEquipmentId(id);
-    setSelectedEquipmentModel(equipModel); // Define o modelo do equipamento selecionado
-    setEquipmentHistory(
-      history
-        .filter((item) => item.equipmentId === id)
-        .flatMap((item) => item.states)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    );
-    setOpened(true);
-  };
+  const {
+    opened,
+    selectedEquipmentModel,
+    equipmentHistory,
+    selectedEquipmentId,
+    handleOpenDrawer,
+    setOpened,
+  } = useMap({
+    equipment,
+    models,
+    history,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const equipmentResponse = await fetch('/data/equipment.json');
         const equipmentData = await equipmentResponse.json();
-        console.log('equipment', equipmentData)
         setEquipment(equipmentData);
 
         const positionsResponse = await fetch(
@@ -103,19 +90,6 @@ const Map: React.FC = () => {
 
     fetchData();
   }, [setEquipment, setPositions, setStates, setModels, setStateHistory]);
-
-  useEffect(() => {
-    if (selectedEquipmentId) {
-      setEquipmentHistory(
-        history
-          .filter((item) => item.equipmentId === selectedEquipmentId)
-          .flatMap((item) => item.states)
-          .sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-      );
-    }
-  }, [selectedEquipmentId, history]);
 
   return (
     <>
