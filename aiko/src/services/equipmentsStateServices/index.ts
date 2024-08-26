@@ -6,7 +6,7 @@ export default function equipmentsStateServices() {
     }
 
     function getEquipmentsStateById(statusId: string) {
-        return getEquipmentsState().filter(st => st.id === statusId)[0]
+        return equipmentState.find(st => st.id === statusId)
     }
 
     return {

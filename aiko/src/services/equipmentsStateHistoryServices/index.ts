@@ -6,7 +6,7 @@ export default function equipmentsStateHistoryServices() {
     }
 
     function getEquipmentsStateHistoryById(equipmentId: string) {
-        return getEquipmentsStateHistory().filter(eq => eq.equipmentId === equipmentId)[0]
+        return equipmentStateHistory.find(eq => eq.equipmentId === equipmentId)
     }
 
     return {

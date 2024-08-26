@@ -1,8 +1,8 @@
-import PopupContent from "../PopupContent";
 import TooltipContent from "../TooltipContent";
 import Leaflet, { LatLngExpression } from "leaflet";
 import equipmentsPositionHistoryServices from "../../services/equipmentsPositionHistoryServices";
-import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet'
+import { IEquipmentsPositionHistory, IPositions } from "../../services/types";
+import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet'
 
 import './styles.css'
 import 'leaflet/dist/leaflet.css'
@@ -29,8 +29,8 @@ export default function Map(): JSX.Element {
     const equipmentsPositionHistory = getEquipmentsPositionHistory()
 
     function getLatestEquipmentsLocation() {
-        return equipmentsPositionHistory.map(equip => {
-            const latestPos = equip.positions.sort().reverse()[0]
+        return equipmentsPositionHistory.map((equip: IEquipmentsPositionHistory) => {
+            const latestPos = equip.positions.at(-1)
             return {
                 equipmentId: equip.equipmentId,
                 positions: latestPos,
@@ -41,8 +41,8 @@ export default function Map(): JSX.Element {
     function getMapCenter(): LatLngExpression | undefined {
         const center: LatLngExpression = [0, 0]
         getLatestEquipmentsLocation().map((equip) => {
-            center[0] += equip.positions.lat
-            center[1] += equip.positions.lon
+            center[0] += (equip.positions as IPositions)?.lat
+            center[1] += (equip.positions as IPositions)?.lon
         })
         const maxEquips = getLatestEquipmentsLocation().length
         if (maxEquips > 0) return [center[0] / maxEquips, center[1] / maxEquips]
@@ -50,16 +50,13 @@ export default function Map(): JSX.Element {
     }
 
     return (
-        <MapContainer center={getMapCenter()} zoom={10}>
+        <MapContainer center={getMapCenter()} zoom={11}>
             <TileLayer
                 url={title.url}
                 attribution={title.att}
             />
             {getLatestEquipmentsLocation().map((equip) =>
-                <Marker position={[equip.positions.lat, equip.positions.lon]} icon={EquipmentIcon}>
-                    <Popup>
-                        <PopupContent equipmentId={equip.equipmentId} />
-                    </Popup>
+                <Marker position={[(equip.positions as IPositions)?.lat, (equip.positions as IPositions)?.lon]} icon={EquipmentIcon}>
                     <Tooltip>
                         <TooltipContent equipmentId={equip.equipmentId} />
                     </Tooltip>

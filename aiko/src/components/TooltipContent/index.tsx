@@ -9,17 +9,20 @@ export default function TooltipContent({ equipmentId }: ITooltipContent): JSX.El
     const { getEquipmentsStateById } = equipmentsStateServices()
     const { getEquipmentsStateHistoryById } = equipmentsStateHistoryServices()
 
-    const latestStatus = getEquipmentsStateHistoryById(equipmentId).states.sort().reverse()[0]
-    const status = getEquipmentsStateById(latestStatus.equipmentStateId)
+    const latestStatus = getEquipmentsStateHistoryById(equipmentId)?.states.at(-1)
+    const status = latestStatus && getEquipmentsStateById(latestStatus.equipmentStateId)
 
     return (
-        <div style={{ color: status.color }}>
-            <b>
-                {status.name}
-            </b>
+        <div>
+            <h3 style={{ color: status?.color }}>
+                {status?.name}
+            </h3>
             <div>
-                {status.id}
+                Última atualização
             </div>
+            <b>
+                {new Date(latestStatus?.date as string).toLocaleString().replace(",", " às")}
+            </b>
         </div>
     )
 
