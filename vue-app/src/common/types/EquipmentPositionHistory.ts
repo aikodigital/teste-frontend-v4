@@ -1,4 +1,4 @@
-type Position = {
+export type Position = {
     date: string,
     lat: number,
     lon: number

@@ -6,15 +6,43 @@ import equipmentPositionHistory from '@/assets/data/equipmentPositionHistory.jso
 import Equipment from '../types/Equipment';
 import EquipmentModel from '../types/EquipmentModel';
 import EquipmentState from '../types/EquipmentState';
-import EquipmentPositionHistory from '../types/EquipmentPositionHistory';
-import EquipmentStateHistory from '../types/EquipmentStateHistory';
+import EquipmentPositionHistory, { Position } from '../types/EquipmentPositionHistory';
+import EquipmentStateHistory, { State } from '../types/EquipmentStateHistory';
 
 function listEquipments(): Equipment[] {
   return equipments;
 }
 
+function listEquipmentsWithLastPosition(){
+  return listEquipments().map(equipment => {
+    const lastPosition = getEquipmentLastPosition(equipment.id);
+    const stateHistory = getEquipmentHistoryStates(equipment.id)?.states;
+    const lastState = getEquipmentLastState(equipment.id);
+    const lastPositionState = stateHistory?.find(p => p.date == lastPosition?.date);
+    const state = lastPositionState ? getStateById(lastPositionState.equipmentStateId) 
+      : lastState ? getStateById(lastState?.equipmentStateId) : null;
+    return {
+      ...equipment,
+      lastPosition: { ...lastPosition, state: state },
+      
+    }
+  })
+}
+
 function getEquipmentById(id: string): Equipment | undefined {
   return equipments.find(equipment => equipment.id === id);
+}
+
+function getEquipmentLastPosition(id: string): Position | undefined {
+  const equipmentHistory = getEquipmentPositionHistory(id);
+  return equipmentHistory ? 
+    equipmentHistory.positions[equipmentHistory.positions.length - 1] : undefined;
+}
+
+function getEquipmentLastState(id: string): State | undefined {
+  const equipmentHistoryState = getEquipmentHistoryStates(id);
+  return equipmentHistoryState ? 
+  equipmentHistoryState.states[equipmentHistoryState.states.length - 1] : undefined;
 }
 
 function listModels(): EquipmentModel[] {
@@ -47,6 +75,7 @@ function getEquipmentHistoryStates(id: string): EquipmentStateHistory | undefine
 
 export default {
     listEquipments,
+    listEquipmentsWithLastPosition,
     getEquipmentById,
     listModels,
     getModelById,
@@ -54,5 +83,6 @@ export default {
     getStateById,
     listEquipmentPositionHistory,
     getEquipmentPositionHistory,
-    getEquipmentHistoryStates
+    getEquipmentHistoryStates,
+    getEquipmentLastPosition
 }

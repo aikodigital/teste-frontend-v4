@@ -25,7 +25,7 @@ export default defineComponent({
     join(){
       this.currentComponent = 'home';
     },
-  }
+  },
 });
 </script>
 <style>
