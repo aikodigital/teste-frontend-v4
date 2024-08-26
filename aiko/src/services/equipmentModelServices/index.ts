@@ -5,7 +5,12 @@ export default function equipmentModelServices() {
         return equipmentModel
     }
 
+    function getEquipmentsModelById(equipmentModelId: string) {
+        return equipmentModel.find(eq => eq.id === equipmentModelId)
+    }
+
     return {
         getEquipmentsModel,
+        getEquipmentsModelById,
     }
 }
