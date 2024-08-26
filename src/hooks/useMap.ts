@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { EquipmentModel, StateHistory, Equipment, EquipmentStateHistory } from '../types/interface';
+import {
+  EquipmentModel,
+  StateHistory,
+  Equipment,
+  EquipmentStateHistory,
+} from '../types/interface';
 
 interface UseMapProps {
   equipment: Equipment[];
@@ -7,25 +12,26 @@ interface UseMapProps {
   history: EquipmentStateHistory[];
 }
 
-const useMap = ({
-  equipment,
-  models,
-  history,
-}: UseMapProps) => {
+const useMap = ({ equipment, models, history }: UseMapProps) => {
   const [opened, setOpened] = useState(false);
-  const [selectedEquipmentModel, setSelectedEquipmentModel] = useState<EquipmentModel | null>(null);
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
+  const [selectedEquipmentModel, setSelectedEquipmentModel] =
+    useState<EquipmentModel | null>(null);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(
+    null
+  );
   const [equipmentHistory, setEquipmentHistory] = useState<StateHistory[]>([]);
 
   const handleOpenDrawer = (id: string) => {
     const equip = equipment.find((e) => e.id === id);
     if (!equip) return;
-  
-    const equipModel = models.find((model) => model.id === equip.equipmentModelId);
+
+    const equipModel = models.find(
+      (model) => model.id === equip.equipmentModelId
+    );
     if (!equipModel) return;
 
     setSelectedEquipmentId(id);
-    setSelectedEquipmentModel(equipModel); 
+    setSelectedEquipmentModel(equipModel);
     setEquipmentHistory(
       history
         .filter((item) => item.equipmentId === id)
