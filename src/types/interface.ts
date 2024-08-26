@@ -11,14 +11,11 @@ export interface Equipment {
   name: string;
 }
 
-export type EquipmentState = Record<
-  string,
-  {
+export interface EquipmentState {
     id: string;
     name: string;
     color: string;
   }
->;
 
 export interface StateHistory {
     equipmentId: string;

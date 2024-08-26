@@ -3,18 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useEquipmentStore from '../store/useEquipmentStore';
-import { Drawer, Button, Timeline } from '@mantine/core';
-
-interface Position {
-  lat: number;
-  lon: number;
-  date: string;
-}
-
-interface StateHistory {
-  date: string;
-  equipmentStateId: string;
-}
+import { Position, StateHistory } from '../types/interface';
+import DrawerComponent from './Drawer';
+import { Button } from '@mantine/core';
 
 const Map: React.FC = () => {
   const {
@@ -134,7 +125,6 @@ const Map: React.FC = () => {
             (model) => model.id === equip.equipmentModelId
           );
 
-          // Obter o estado mais recente
           const latestStateHistory = history
             .filter((item) => item.equipmentId === equip.id)
             .flatMap((item) => item.states)
@@ -186,40 +176,12 @@ const Map: React.FC = () => {
         })}
       </MapContainer>
 
-      <Drawer
+      <DrawerComponent
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Histórico de Equipamento"
-        padding="xl"
-        size="lg"
-        style={{ position: 'fixed', zIndex: 1300 }}
-        position="right"
-      >
-        <Timeline>
-          {equipmentHistory.map((state, index) => {
-            const stateColor = states[state.equipmentStateId]?.color || '#000'; // Cor padrão se o estado não for encontrado
-
-            return (
-              <Timeline.Item
-                key={index}
-                title={new Date(state.date).toLocaleString()}
-                bullet={
-                  <div
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: '50%',
-                      backgroundColor: stateColor,
-                    }}
-                  />
-                }
-              >
-                {states[state.equipmentStateId]?.name || 'Desconhecido'}
-              </Timeline.Item>
-            );
-          })}
-        </Timeline>
-      </Drawer>
+        equipmentHistory={equipmentHistory}
+        states={states}
+      />
     </>
   );
 };

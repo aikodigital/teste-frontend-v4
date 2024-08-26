@@ -4,12 +4,12 @@ import { Equipment,EquipmentState, EquipmentModel, EquipmentStateHistory, Positi
 interface EquipmentStore {
   equipment: Equipment[];
   positions: Record<string, Position[]>;
-  states: EquipmentState;
+  states: Record<string, EquipmentState>;
   models: EquipmentModel[];
   history: EquipmentStateHistory[];
   setEquipment: (equipment: Equipment[]) => void;
   setPositions: (positions: Record<string, Position[]>) => void;
-  setStates: (states: EquipmentState) => void;
+  setStates: (states: Record<string, EquipmentState>) => void;
   setModels: (models: EquipmentModel[]) => void;
   setStateHistory: (history: EquipmentStateHistory[]) => void;
 }
