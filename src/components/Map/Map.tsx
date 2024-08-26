@@ -9,18 +9,21 @@ import equipmentStateData from '../../data/equipmentState.json';
 import equipmentStateHistoryData from '../../data/equipmentStateHistory.json';
 import equipmentPositionHistoryData from '../../data/equipmentPositionHistory.json';
 import HoverableMarker from '../MapMarker/MapMarker';
-import { Equipment } from '../../types/equipment';
+import { Equipment, stateData } from '../../types/equipment';
 import { DynamicToolMapProps } from './DynamicMap';
+import { formatDateToDMY } from '../../utils/dateFormatter';
 
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
 
 const ToolMap = ({ isShowingHistory, onMarkerClick }: DynamicToolMapProps) => {
   const [processedData, setProcessedData] = useState<Equipment[]>([]);
+  const [equipmentStates, setEquipmentStates] = useState<stateData[]>([]);
 
   useEffect(() => {
     if(!isShowingHistory) {
       getInitialMapState();
+      setEquipmentStates([]);
     }
   }, [isShowingHistory]);
 
@@ -56,7 +59,14 @@ const ToolMap = ({ isShowingHistory, onMarkerClick }: DynamicToolMapProps) => {
   }
 
   const handleMarkerClick = (equipment: Equipment) => {
-    console.log(equipment)
+    const stateHistory = equipmentStateHistoryData.find(es => es.equipmentId === equipment.id);
+    const eqStates = stateHistory.states.map(state => {
+      const stateData = equipmentStateData.find(esd => esd.id === state.equipmentStateId);
+      return {
+        date: state.date,
+        ...stateData
+      }
+    });
     const updatedData: Equipment[] = equipment.stateHistory.map(history => ({
       id: history.date,
       name: equipment.name,
@@ -68,23 +78,42 @@ const ToolMap = ({ isShowingHistory, onMarkerClick }: DynamicToolMapProps) => {
     }));
     onMarkerClick();
     setProcessedData(updatedData);
+    console.log(stateHistory)
+    setEquipmentStates(eqStates);
   };
 
   return (
-    <MapContainer center={[-19.126536, -45.947756]} zoom={10} style={{ height: "500px", width: "100%" }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
-      {processedData.map((equipment: Equipment) => (
-        <HoverableMarker
-          key={equipment.id}
-          position={[equipment.position.lat, equipment.position.lon]}
-          equipment={equipment}
-          onClick={handleMarkerClick}
+    <>
+      <MapContainer center={[-19.126536, -45.947756]} zoom={10} style={{ height: "500px", width: "100%" }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
         />
-      ))}
-    </MapContainer>
+        {processedData.map((equipment: Equipment) => (
+          <HoverableMarker
+            key={equipment.id}
+            position={[equipment.position.lat, equipment.position.lon]}
+            equipment={equipment}
+            onClick={handleMarkerClick}
+          />
+        ))}
+      </MapContainer>
+      {equipmentStates.length > 0 &&
+        <>
+          <h4>Histórico de estados</h4>
+          <div style={{display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap"}}>
+            {equipmentStates.map((es, index) => {
+              return (
+                <div key={index} style={{border: `1px solid ${es.color}`, padding: "5px"}}>
+                  <p>{es.name}</p>
+                  <p>{formatDateToDMY(es.date)}</p>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      }
+    </>
   );
 };
 
