@@ -1,11 +1,13 @@
 import React from 'react';
-import { Drawer, Timeline } from '@mantine/core';
-import { StateHistory, EquipmentState } from '../types/interface';
+import { Divider, Drawer, Text, Timeline } from '@mantine/core';
+import { StateHistory, EquipmentState, EquipmentModel } from '../types/interface';
 
 interface EquipmentDrawerProps {
   opened: boolean;
   onClose: () => void;
   equipmentHistory: StateHistory[];
+  equipmentName: string;
+  equipmentModel: EquipmentModel;
   states: Record<string, EquipmentState>;
 }
 
@@ -13,6 +15,8 @@ const DrawerComponent: React.FC<EquipmentDrawerProps> = ({
   opened,
   onClose,
   equipmentHistory,
+  equipmentName,
+  equipmentModel,
   states,
 }) => {
   return (
@@ -25,6 +29,9 @@ const DrawerComponent: React.FC<EquipmentDrawerProps> = ({
       style={{ position: 'fixed', zIndex: 1300 }}
       position="right"
     >
+      <Text size="lg"><strong>{`${equipmentName} - ${equipmentModel?.name}`}</strong></Text>
+      <Divider/>
+      <br/>
       <Timeline>
         {equipmentHistory.map((state, index) => {
           const stateColor = states[state.equipmentStateId]?.color || '#000';

@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useEquipmentStore from '../store/useEquipmentStore';
-import { Position, StateHistory } from '../types/interface';
+import { Position, StateHistory, EquipmentModel } from '../types/interface';
 import DrawerComponent from './Drawer';
 import { Button } from '@mantine/core';
 
@@ -22,13 +22,22 @@ const Map: React.FC = () => {
   } = useEquipmentStore();
 
   const [opened, setOpened] = useState(false);
+  const [selectedEquipmentModel, setSelectedEquipmentModel] = useState<EquipmentModel | null>(null);
+
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(
     null
   );
   const [equipmentHistory, setEquipmentHistory] = useState<StateHistory[]>([]);
 
   const handleOpenDrawer = (id: string) => {
+    const equip = equipment.find((e) => e.id === id);
+    if (!equip) return;
+  
+    const equipModel = models.find((model) => model.id === equip.equipmentModelId);
+    if (!equipModel) return;
+
     setSelectedEquipmentId(id);
+    setSelectedEquipmentModel(equipModel); // Define o modelo do equipamento selecionado
     setEquipmentHistory(
       history
         .filter((item) => item.equipmentId === id)
@@ -43,6 +52,7 @@ const Map: React.FC = () => {
       try {
         const equipmentResponse = await fetch('/data/equipment.json');
         const equipmentData = await equipmentResponse.json();
+        console.log('equipment', equipmentData)
         setEquipment(equipmentData);
 
         const positionsResponse = await fetch(
@@ -176,12 +186,16 @@ const Map: React.FC = () => {
         })}
       </MapContainer>
 
-      <DrawerComponent
-        opened={opened}
-        onClose={() => setOpened(false)}
-        equipmentHistory={equipmentHistory}
-        states={states}
-      />
+      {selectedEquipmentModel && (
+        <DrawerComponent
+          opened={opened}
+          onClose={() => setOpened(false)}
+          equipmentHistory={equipmentHistory}
+          equipmentModel={selectedEquipmentModel}
+          equipmentName={equipment.find(e => e.id === selectedEquipmentId)?.name || ''} 
+          states={states}
+        />
+      )}
     </>
   );
 };
