@@ -1,75 +1,54 @@
 <template>
   <div>
+    <Filters :models="equipmentModelData" :states="equipmentStateData" @filter="applyFilter" />
     <div id="map"></div>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import Filters from '../components/FiltersUse.vue';
 import equipmentData from '../data/equipment.json';
 import equipmentStateData from '../data/equipmentState.json';
 import equipmentPositionHistoryData from '../data/equipmentPositionHistory.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
-import equipmentModelData from '../data/equipmentModel.json'; // Importando os modelos de equipamentos
+import equipmentModelData from '../data/equipmentModel.json';
 import iconImage from '../assets/aiko.png';
 
 export default {
   name: 'HomePage',
+  components: { Filters },
   setup() {
+    const map = ref(null);
+    const markers = ref([]);
+    const filteredEquipment = ref(equipmentData);
+
     onMounted(() => {
-      const map = L.map('map').setView([-19.126536, -45.947756], 10);
+      map.value = L.map('map').setView([-19.126536, -45.947756], 10);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors',
-      }).addTo(map);
+      }).addTo(map.value);
 
-      const getLastState = (equipmentId) => {
-        const history = equipmentStateHistoryData.find((item) => item.equipmentId === equipmentId);
-        if (history) {
-          const lastStateEntry = history.states[history.states.length - 1];
-          return equipmentStateData.find((state) => state.id === lastStateEntry.equipmentStateId);
-        }
-        return null;
-      };
+      updateMarkers(filteredEquipment.value);
+    });
 
-      const getLastPosition = (equipmentId) => {
-        const history = equipmentPositionHistoryData.find((item) => item.equipmentId === equipmentId);
-        if (history) {
-          return history.positions[history.positions.length - 1];
-        }
-        return null;
-      };
+    const updateMarkers = (equipmentList) => {
+      markers.value.forEach(marker => map.value.removeLayer(marker));
+      markers.value = [];
 
-      const getEquipmentModel = (equipmentModelId) => {
-        return equipmentModelData.find((model) => model.id === equipmentModelId);
-      };
-
-      const getHourlyEarnings = (equipmentModel, equipmentStateId) => {
-        const earning = equipmentModel.hourlyEarnings.find(
-          (earning) => earning.equipmentStateId === equipmentStateId
-        );
-        return earning ? earning.value : null;
-      };
-
-      const equipmentIcon = L.icon({
-        iconUrl: iconImage,
-        iconSize: [32, 32], 
-        iconAnchor: [16, 32], 
-        popupAnchor: [0, -32], 
-      });
-
-      equipmentData.forEach((equipment) => {
+      equipmentList.forEach((equipment) => {
         const lastPosition = getLastPosition(equipment.id);
         const lastState = getLastState(equipment.id);
         const equipmentModel = getEquipmentModel(equipment.equipmentModelId);
 
         if (lastPosition && lastState && equipmentModel) {
           const hourlyEarnings = getHourlyEarnings(equipmentModel, lastState.id);
-          const marker = L.marker([lastPosition.lat, lastPosition.lon], { icon: equipmentIcon })
-            .addTo(map)
+          const marker = L.marker([lastPosition.lat, lastPosition.lon], { icon: getEquipmentIcon(equipmentModel.id) })
+            .addTo(map.value)
             .bindPopup(`<div class="popup-content"><b>${equipment.name}</b><br>Estado: ${lastState.name}<br>Modelo: ${equipmentModel.name}<br>Valor por hora: R$ ${hourlyEarnings}</div>`)
             .on('click', () => {
               const history = equipmentStateHistoryData.find((item) => item.equipmentId === equipment.id);
@@ -82,34 +61,85 @@ export default {
                 });
                 historyHtml += '</ul>';
                 marker.bindPopup(`<div class="popup-content">${historyHtml}</div>`, {
-                  maxWidth: 300, 
-                  maxHeight: 500, 
+                  maxWidth: 300,
+                  maxHeight: 500,
                 }).openPopup();
               }
             });
+          markers.value.push(marker);
         }
       });
+    };
 
-      map.on('popupopen', function (e) {
-        const popUpContent = e.popup.getElement().querySelector('.popup-content');
-        popUpContent.style.maxHeight = '500px';
-        popUpContent.style.maxWidth = '300px';
-        popUpContent.style.overflowY = 'auto';
+    const applyFilter = (filter) => {
+      filteredEquipment.value = equipmentData.filter(equipment => {
+        const matchesModel = filter.model ? equipment.equipmentModelId === filter.model : true;
+        const lastState = getLastState(equipment.id);
+        const matchesState = filter.state ? lastState.id === filter.state : true;
+        const matchesQuery = filter.query ? equipment.name.toLowerCase().includes(filter.query.toLowerCase()) : true;
+        return matchesModel && matchesState && matchesQuery;
       });
-    });
+
+      updateMarkers(filteredEquipment.value);
+    };
+
+    const getLastState = (equipmentId) => {
+      const history = equipmentStateHistoryData.find((item) => item.equipmentId === equipmentId);
+      if (history) {
+        const lastStateEntry = history.states[history.states.length - 1];
+        return equipmentStateData.find((state) => state.id === lastStateEntry.equipmentStateId);
+      }
+      return null;
+    };
+
+    const getLastPosition = (equipmentId) => {
+      const history = equipmentPositionHistoryData.find((item) => item.equipmentId === equipmentId);
+      if (history) {
+        return history.positions[history.positions.length - 1];
+      }
+      return null;
+    };
+
+    const getEquipmentModel = (equipmentModelId) => {
+      return equipmentModelData.find((model) => model.id === equipmentModelId);
+    };
+
+    const getHourlyEarnings = (equipmentModel, equipmentStateId) => {
+      const earning = equipmentModel.hourlyEarnings.find(
+        (earning) => earning.equipmentStateId === equipmentStateId
+      );
+      return earning ? earning.value : null;
+    };
+
+    const getEquipmentIcon = (equipmentModelId) => {
+      const iconOptions = {
+        Caminhão: 'caminhao-icon.png',
+        Harvester: 'harvester-icon.png',
+        Garra: 'garra-icon.png',
+      };
+      return L.icon({
+        iconUrl: iconOptions[equipmentModelId] || iconImage,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+      });
+    };
+
+    return {
+      equipmentStateData,
+      equipmentModelData,
+      applyFilter,
+    };
   },
 };
 </script>
 
 <style scoped>
 #map {
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
+  position: relative;
+  margin: 10px 0;
 }
 
 .popup-content {
