@@ -1,17 +1,21 @@
 <script lang="ts" setup>
 /** Data */
-import equipmentData from '~/data/equipment.json';
-import equipmentModelData from '~/data/equipmentModel.json';
-import equipmentPositionHistoryData from '~/data/equipmentPositionHistory.json';
-import equipmentStateData from '~/data/equipmentState.json';
-import equipmentStateHistoryData from '~/data/equipmentStateHistory.json';
+import {
+  equipmentData,
+  equipmentModelData,
+  equipmentPositionHistoryData,
+  equipmentStateData,
+  equipmentStateHistoryData
+} from '~/data/equipment';
 
 /** Interfaces */
-import type { IEquipment } from '~/interfaces/IEquipment';
-import type { IEquipmentModel } from '~/interfaces/IEquipmentModel';
-import type { IEquipmentPositionHistory } from '~/interfaces/IEquipmentPositionHistory';
-import type { IEquipmentState } from '~/interfaces/IEquipmentState';
-import type { IEquipmentStateHistory } from '~/interfaces/IEquipmentStateHistory';
+import type {
+  IEquipment,
+  IEquipmentModel,
+  IEquipmentPositionHistory,
+  IEquipmentState,
+  IEquipmentStateHistory
+} from '~/interfaces/equipment';
 
 const equipments = ref<IEquipment[]>(equipmentData);
 const equipmentsModel = ref<IEquipmentModel[]>(equipmentModelData);
@@ -19,43 +23,15 @@ const equipmentsPositionHistory = ref<IEquipmentPositionHistory[]>(equipmentPosi
 const equipmentsStateHistory = ref<IEquipmentStateHistory[]>(equipmentStateHistoryData);
 const equipmentState = ref<IEquipmentState[]>(equipmentStateData);
 
-const recentEquipments = ref(getEquipmentDetails());
+const recentEquipments = ref(getEquipmentDetails(
+  equipments.value,
+  equipmentsModel.value,
+  equipmentsPositionHistory.value,
+  equipmentsStateHistory.value,
+  equipmentState.value
+));
+
 const zoom = ref(2);
-
-function getEquipmentDetails() {
-  return equipments.value.map((equipment) => {
-    const model = equipmentsModel.value.find((model) => model.id === equipment.equipmentModelId);
-    const positionHistory = equipmentsPositionHistory.value.find((positionHistory) => positionHistory.equipmentId === equipment.id)?.positions || [];
-    const stateHistory = equipmentsStateHistory.value.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
-    const currentPosition = getLastPosition(positionHistory);
-    const currentState = getLastState(stateHistory);
-
-    return {
-      id: equipment.id,
-      name: equipment.name,
-      model,
-      currentState,
-      stateHistory,
-      currentPosition,
-      positionHistory,
-    };
-  });
-}
-
-function getLastPosition(positions: { lat: number; lon: number }[]) {
-  return positions[positions.length - 1];
-}
-
-function getLastState(states: { date: string; equipmentStateId: string }[]) {
-  const lastState = states[states.length - 1];
-  return equipmentState.value.find((state) => state.id === lastState.equipmentStateId);
-}
-
-function getCurrentStateClass(state: IEquipmentState) {
-  return state.name === 'Operando' ? 'text-operando'
-    : state.name === 'Parado' ? 'text-parado'
-      : 'text-manutencao';
-}
 </script>
 
 <template>
