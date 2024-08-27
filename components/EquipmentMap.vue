@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+/** Core */
+import type { PointExpression } from 'leaflet';
+
 /** Data */
 import {
   equipmentData,
@@ -11,6 +14,7 @@ import {
 /** Interfaces */
 import type {
   IEquipment,
+  IEquipmentDetails,
   IEquipmentModel,
   IEquipmentPositionHistory,
   IEquipmentState,
@@ -23,7 +27,7 @@ const equipmentsPositionHistory = ref<IEquipmentPositionHistory[]>(equipmentPosi
 const equipmentsStateHistory = ref<IEquipmentStateHistory[]>(equipmentStateHistoryData);
 const equipmentState = ref<IEquipmentState[]>(equipmentStateData);
 
-const recentEquipments = ref(getEquipmentDetails(
+const recentEquipments = ref<IEquipmentDetails[]>(getEquipmentDetails(
   equipments.value,
   equipmentsModel.value,
   equipmentsPositionHistory.value,
@@ -31,37 +35,20 @@ const recentEquipments = ref(getEquipmentDetails(
   equipmentState.value
 ));
 
-const zoom = ref(2);
+const equipmentsRecentPositions = getEquipmentsRecentPosition(recentEquipments.value);
+const centralPosition = ref<PointExpression>(getCentralPosition(equipmentsRecentPositions));
+const zoom = ref<number>(getZoomLevel(equipmentsRecentPositions));
 </script>
 
 <template>
   <div>
-    <LMap style="height: 700px" :zoom="zoom" :center="[47.21322, -1.559482]" :use-global-leaflet="false">
+    <LMap ref="map" style="height: 700px" :zoom="zoom" :center="centralPosition" :useGlobalLeaflet="false">
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
-        layer-type="base" name="OpenStreetMap" />
+        layerType="base" name="OpenStreetMap" />
 
       <div v-for="equipment in recentEquipments" :key="equipment.id">
-        <LMarker :lat-lng="[equipment.currentPosition.lat, equipment.currentPosition.lon]">
-          <LPopup>
-            <div class="flex flex-col">
-              <span>
-                Nome: {{ equipment.name }}
-              </span>
-
-              <span>
-                Modelo: {{ equipment.model?.name }}
-              </span>
-
-              <span>
-                Estado Atual:
-                <span :class="getCurrentStateClass(equipment.currentState!)">
-                  {{ equipment.currentState?.name }}
-                </span>
-              </span>
-            </div>
-          </LPopup>
-        </LMarker>
+        <EquipmentMarker v-for="equipment in recentEquipments" :key="equipment.id" :equipment="equipment" />
       </div>
     </LMap>
   </div>

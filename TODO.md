@@ -6,10 +6,10 @@
   - [x] Carregar dados de `equipmentPositionHistory.json`.
   - [x] Exibir no mapa os equipamentos nas suas posições mais recentes.
 
-- [ ] **Estado atual do equipamento**
-  - [ ] Carregar dados de `equipmentState.json` e `equipmentStateHistory.json`.
-  - [ ] Visualizar o estado mais recente dos equipamentos.
-  - [ ] Implementar visualização do estado no mapa (pop-up, mouse hover, etc.).
+- [x] **Estado atual do equipamento**
+  - [x] Carregar dados de `equipmentState.json` e `equipmentStateHistory.json`.
+  - [x] Visualizar o estado mais recente dos equipamentos.
+  - [x] Implementar visualização do estado no mapa (pop-up, mouse hover, etc.).
 
 - [ ] **Histórico de estados do equipamento**
   - [ ] Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.

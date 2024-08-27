@@ -1,6 +1,10 @@
+/** Core */
+import type { PointExpression } from 'leaflet';
+
 /** Interfaces */
 import type {
   IEquipment,
+  IEquipmentDetails,
   IEquipmentModel,
   IEquipmentPositionHistory,
   IEquipmentState,
@@ -41,7 +45,7 @@ export function getEquipmentDetails(
   equipmentsPositionHistory: IEquipmentPositionHistory[],
   equipmentsStateHistory: IEquipmentStateHistory[],
   equipmentState: IEquipmentState[]
-) {
+): IEquipmentDetails[] {
   return equipments.map((equipment) => {
     const model = getModel(equipment, equipmentsModel);
     const positionHistory = getPositionHistory(equipment, equipmentsPositionHistory);
@@ -59,4 +63,58 @@ export function getEquipmentDetails(
       positionHistory,
     };
   });
+}
+
+export function getEquipmentsRecentPosition(equipments: IEquipmentDetails[]): { lat: number; lon: number }[] {
+  return equipments.map((equipment) => ({
+    lat: equipment.currentPosition.lat,
+    lon: equipment.currentPosition.lon,
+  }));
+}
+
+export function getCentralPosition(positions: { lat: number; lon: number }[]): PointExpression {
+  const total = positions.length;
+
+  const sum = positions.reduce((acc, position) => {
+    acc.lat += position.lat;
+    acc.lon += position.lon;
+
+    return acc;
+  }, { lat: 0, lon: 0 });
+
+  return [
+    sum.lat / total,
+    sum.lon / total,
+  ];
+}
+
+export function getZoomLevel(positions: { lat: number; lon: number }[]) {
+  if (positions.length === 0) {
+    return 2;
+  }
+
+  const latitudes = positions.map((position) => position.lat);
+  const longitudes = positions.map((position) => position.lon);
+
+  const latDiff = Math.max(...latitudes) - Math.min(...latitudes);
+  const lonDiff = Math.max(...longitudes) - Math.min(...longitudes);
+  const maxDiff = Math.max(latDiff, lonDiff);
+
+  if (maxDiff < 0.01) {
+    return 15;
+  }
+
+  if (maxDiff < 0.1) {
+    return 14;
+  }
+
+  if (maxDiff < 0.5) {
+    return 10;
+  }
+
+  if (maxDiff < 0.7) {
+    return 8;
+  }
+
+  return 2;
 }
