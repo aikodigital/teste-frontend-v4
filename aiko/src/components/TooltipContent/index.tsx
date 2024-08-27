@@ -17,11 +17,15 @@ export default function TooltipContent({ equipmentId }: ITooltipContent): JSX.El
     const latestStatus = getEquipmentsStateHistoryById(equipmentId)?.states.at(-1)
     const status = latestStatus && getEquipmentsStateById(latestStatus.equipmentStateId)
     const equipmentModel = equipment && getEquipmentsModelById(equipment?.equipmentModelId)
+    const hourlyEarnings = equipmentModel?.hourlyEarnings.find(h => h.equipmentStateId === status?.id)?.value
 
     return (
         <div>
             <h4>
                 {equipment?.name} - {equipmentModel?.name}
+            </h4>
+            <h4>
+                Ganhos/hora: {hourlyEarnings}
             </h4>
             <h3 style={{ color: status?.color }}>
                 {status?.name}
