@@ -29,8 +29,6 @@ const { data: equipments } = await useFetch('/api/equipments')
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  height: 100%;
   padding: 24px;
   background-color: rgb(150, 200, 150);
 

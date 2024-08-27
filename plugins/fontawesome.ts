@@ -10,6 +10,6 @@ library.add(
   faLinkedin
 )
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(nuxtApp => {
   nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon);
 })

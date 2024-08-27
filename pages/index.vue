@@ -3,13 +3,15 @@
 
 <template>
   <div class="container">
+    <AppMap />
   </div>
 </template>
 
 <style scoped>
 .container {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 24px;
   background-color: rgb(150, 200, 150);
 }
