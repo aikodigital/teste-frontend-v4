@@ -2,6 +2,30 @@
 
 ![image](https://github.com/user-attachments/assets/3884cabb-e11c-4a18-a2cd-3bf59cd1b13f)
 
+## Documentação
+
+**Descrição:** 
+A aplicação é uma ferramenta de monitoramento de equipamentos florestais, permitindo a visualização de estados, modelos, posições, produtividade, e ganhos financeiros feita com Vue 3 e leaflet.
+
+[Deploy do projeto]([https://github.com](https://gabriel-aiko-case.netlify.app/))
+
+**Componentes Principais:**
+HomePage: Componente principal que exibe o mapa e os filtros.
+Filters: Componente para aplicar filtros e pesquisar equipamentos.
+ProductivityAndEarnings: Exibe a produtividade e ganhos calculados.
+
+**Funcionalidades:**
+Filtros por estado e modelo.
+Pesquisa de equipamentos.
+Visualização da produtividade e ganhos financeiros.
+Diferenciação visual de modelos.
+Exibição do histórico de posições.
+
+**Como Executar:**
+Clone o repositório e execute `npm install` para instalar as dependências.
+Execute `npm run serve` para iniciar o servidor de desenvolvimento.
+
+##--------------------------------------------------
 
 Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
 
