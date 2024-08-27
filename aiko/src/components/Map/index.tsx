@@ -7,12 +7,11 @@ import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet'
 import './styles.css'
 import 'leaflet/dist/leaflet.css'
 
+import shadow from 'leaflet/dist/images/marker-shadow.png'
 import marker from 'leaflet/dist/images/marker-icon.png'
 import marker2x from 'leaflet/dist/images/marker-icon-2x.png'
-import shadow from 'leaflet/dist/images/marker-shadow.png'
 
-
-export default function Map(): JSX.Element {
+export default function Map({ getSelectedEquipment }: { getSelectedEquipment: () => void }): JSX.Element {
     const { getEquipmentsPositionHistory } = equipmentsPositionHistoryServices()
 
     const title = {
@@ -27,6 +26,7 @@ export default function Map(): JSX.Element {
     })
 
     const equipmentsPositionHistory = getEquipmentsPositionHistory()
+
 
     function getLatestEquipmentsLocation() {
         return equipmentsPositionHistory.map((equip: IEquipmentsPositionHistory) => {
@@ -56,7 +56,16 @@ export default function Map(): JSX.Element {
                 attribution={title.att}
             />
             {getLatestEquipmentsLocation().map((equip) =>
-                <Marker position={[(equip.positions as IPositions)?.lat, (equip.positions as IPositions)?.lon]} icon={EquipmentIcon}>
+                <Marker
+                    icon={EquipmentIcon}
+                    position={[(equip.positions as IPositions)?.lat, (equip.positions as IPositions)?.lon]}
+                    eventHandlers={{
+                        click: () => {
+                            history.pushState({}, '', equip.equipmentId)
+                            getSelectedEquipment()
+                        }
+                    }}
+                >
                     <Tooltip>
                         <TooltipContent equipmentId={equip.equipmentId} />
                     </Tooltip>
