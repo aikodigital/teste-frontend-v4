@@ -1,36 +1,24 @@
-export interface Equipment {
-    id: string;
-    equipmentModelId: string;
-    name: string;
-}
+export type Position = {
+  lat: number;
+  lon: number;
+  date: string;
+};
 
-export interface EquipmentModel {
-    id: string;
-    name: string;
-    hourlyEarnings: {
-        equipmentStateId: string;
-        value: number;
-    }[];
-}
-
-export interface Position {
+export type EquipmentStatus = {
+  equipmentId: string;
+  states: {
     date: string;
-    lat: number;
-    lon: number;
-}
+    equipmentStateId: string;
+  }[];
+};
 
-export interface EquipmentPositionHistory {
-    equipmentId: string;
-    positions: Position[];
-}
+export type Vehicle = {
+  id: string;
+  name: string;
+  equipmentModelId: string;
+};
 
-export interface EquipmentState {
-    id: string;
-    name: string;
-}
-
-export interface EquipmentStateHistory {
-    equipmentId: string;
-    stateId: string;
-    date: string;
-}
+export type EquipmentModel = {
+  id: string;
+  name: string;
+};
