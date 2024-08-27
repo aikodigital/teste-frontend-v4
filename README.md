@@ -1,6 +1,7 @@
 # Teste Frontend V4
 
-![Aiko](img/aiko.png)
+![image](https://github.com/user-attachments/assets/3884cabb-e11c-4a18-a2cd-3bf59cd1b13f)
+
 
 Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
 
