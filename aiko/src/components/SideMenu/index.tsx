@@ -1,9 +1,9 @@
 import logo from '../../assets/aiko.png'
 import marker from 'leaflet/dist/images/marker-icon.png'
-import equipmentsStateHistoryServices from "../../services/equipmentsStateHistoryServices"
-import { Grid, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Typography } from "@mui/material"
 import equipmentServices from '../../services/equipment'
 import equipmentsStateServices from '../../services/equipmentsStateServices'
+import equipmentsStateHistoryServices from "../../services/equipmentsStateHistoryServices"
+import { Grid, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Typography } from "@mui/material"
 
 
 interface ISideMenu {
@@ -37,9 +37,11 @@ export default function SideMenu({ equipmentId }: ISideMenu): JSX.Element {
                 </Grid>
             </Grid>
             <List sx={{ width: '100%' }}>
-                <ListSubheader>
-                    Histórico {equipment?.name}
-                </ListSubheader>
+                {equipmentId.length > 0 &&
+                    <ListSubheader>
+                        Histórico {equipment?.name}
+                    </ListSubheader>
+                }
                 {formattedData?.sort().reverse().map(e =>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
