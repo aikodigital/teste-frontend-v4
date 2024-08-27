@@ -1,6 +1,15 @@
 import Map from './components/Map'
+import { useEquipments } from './hooks/useEquipments'
 
 function App() {
+  const { isLoading, data: equipments } = useEquipments()
+
+  if (isLoading || !equipments) {
+    return <div>carregando</div>
+  }
+
+  console.log('equipment', equipments)
+
   return (
     <main className="h-full w-full flex flex-col gap-4 p-12 bg-gray-50">
       <header>
@@ -21,8 +30,8 @@ function App() {
         </select>
       </div>
 
-      <div className="h-96 w-full rounded-xl overflow-hidden shadow-lg">
-        <Map />
+      <div className="h-[600px] w-full rounded-xl overflow-hidden shadow-lg">
+        <Map equipments={equipments} />
       </div>
     </main>
   )
