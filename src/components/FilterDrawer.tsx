@@ -70,7 +70,11 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
         styles={{ dropdown: { zIndex: 1400 } }}
       />
 
-      <Button onClick={onClose} style={{ marginTop: '1rem' }}>
+      <Button
+        className="history-button"
+        onClick={onClose}
+        style={{ marginTop: '1rem' }}
+      >
         Aplicar Filtros
       </Button>
     </Drawer>

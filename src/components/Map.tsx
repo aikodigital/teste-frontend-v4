@@ -145,7 +145,10 @@ const Map: React.FC = () => {
                   <p>Lat: {latestPosition.lat}</p>
                   <p>Lon: {latestPosition.lon}</p>
                   <p>Data: {new Date(latestPosition.date).toLocaleString()}</p>
-                  <Button onClick={() => handleViewHistory(equip.id)}>
+                  <Button
+                    className="history-button"
+                    onClick={() => handleViewHistory(equip.id)}
+                  >
                     Ver histórico
                   </Button>
                 </div>

@@ -37,3 +37,19 @@
     color: #535626; 
     
   }
+
+  button.history-button {
+    background-color: #535626;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+  }
+
+  button.history-button:hover {
+    background-color: #767957;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+  }
