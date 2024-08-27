@@ -7,7 +7,7 @@
 **Descrição:** 
 A aplicação é uma ferramenta de monitoramento de equipamentos florestais, permitindo a visualização de estados, modelos, posições, produtividade, e ganhos financeiros feita com Vue 3 e leaflet.
 
-[Deploy do projeto]([https://github.com](https://gabriel-aiko-case.netlify.app/))
+[Deploy do projeto](https://gabriel-aiko-case.netlify.app/)
 
 **Componentes Principais:**
 HomePage: Componente principal que exibe o mapa e os filtros.
