@@ -1,25 +1,15 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useData } from "./context/DataContext";
 import "./index.css";
 
-import { Icon, divIcon, point } from "leaflet";
+import { Icon } from "leaflet";
 
-// create custom icon
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-  iconSize: [38, 38], // size of the icon
+  iconSize: [38, 38],
 });
 
-// custom cluster icon
-const createClusterCustomIcon = function (cluster) {
-  return new divIcon({
-    html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-    className: "custom-marker-cluster",
-    iconSize: point(33, 33, true),
-  });
-};
-
-// markers
 const markers = [
   {
     geocode: [-19.126536, -45.947756],
@@ -36,6 +26,11 @@ const markers = [
 ];
 
 export default function App() {
+  const { data, loading, error } = useData();
+
+  if (loading) return <p>Carregando...</p>;
+  if (error) return <p>Erro: {error.message}</p>;
+
   return (
     <MapContainer center={[-19.126536, -45.947756]} zoom={13}>
       <TileLayer
