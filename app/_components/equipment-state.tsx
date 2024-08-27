@@ -8,8 +8,13 @@ interface EquipmentStateProps {
 const EquipmentState = ({ equipmentStateId }: EquipmentStateProps) => {
   const status = statusProps.filter((status) => status.id === equipmentStateId);
 
+  if (status.length === 0) {
+    return null;
+  }
+
   return (
     <Badge
+      className="whitespace-nowrap px-2 py-1"
       style={{
         backgroundColor: status[0].color,
       }}
