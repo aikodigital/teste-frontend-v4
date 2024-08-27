@@ -5,12 +5,14 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "react", "react-hooks", "jsx-a11y", "import", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "jsx-a11y",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -21,9 +23,6 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "import/resolver": {
-      "typescript": {}
     }
   },
   "env": {
@@ -31,16 +30,13 @@
     "browser": true
   },
   "rules": {
+    "react/prop-types": 0,
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "import/order": [
+    "@typescript-eslint/no-unused-vars": [
       "error",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always"
-      }
+      { "argsIgnorePattern": "^_" }
     ]
   }
 }

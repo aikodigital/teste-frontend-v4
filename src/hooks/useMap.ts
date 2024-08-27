@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import {
   EquipmentModel,
   StateHistory,
@@ -37,6 +38,8 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     );
     if (!equipModel) return;
 
+
+  
     setSelectedEquipmentId(id);
     setSelectedEquipmentModel(equipModel);
     setEquipmentHistory(
@@ -81,6 +84,32 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     return isStateMatch && isModelMatch && isSearchMatch;
   });
 
+  const calculateProductivity = (equipmentId: string) => {
+    const EquipmentStateHistory = history.find(
+      (item) => item.equipmentId === equipmentId
+    );
+
+    if (!EquipmentStateHistory) {
+      return 0;
+    };
+
+    const operatingState = EquipmentStateHistory.states.filter(
+      (state) => states[state.equipmentStateId].name === 'Operando'
+    );
+
+    const operatingHours = operatingState.reduce((total, state) => {
+      const start = new Date(state.date);
+      const end = new Date(state.date);
+      const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+      return total + durationInHours;
+    }, 0);
+
+    const totalHours = 24;
+    const productivity = (operatingHours / totalHours) * 100;
+
+    return Math.round(productivity);
+  };
+
   return {
     opened,
     selectedEquipmentModel,
@@ -95,6 +124,7 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     filteredEquipment,
     searchQuery,
     setSearchQuery,
+    calculateProductivity
   };
 };
 

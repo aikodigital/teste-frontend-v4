@@ -33,13 +33,12 @@ const Map: React.FC = () => {
   const [drawerOpened, setDrawerOpened] = React.useState(false);
 
   const handleFilterButtonClick = () => {
-    setDrawerOpened(false); 
-    setTimeout(() => setFilterDrawerOpened(true), 300); 
+    setDrawerOpened(false);
+    setTimeout(() => setFilterDrawerOpened(true), 300);
   };
 
-
   const handleViewHistory = (id: string) => {
-    setFilterDrawerOpened(false); 
+    setFilterDrawerOpened(false);
     setTimeout(() => {
       handleOpenDrawer(id);
       setDrawerOpened(true);
@@ -134,7 +133,7 @@ const Map: React.FC = () => {
       </MapContainer>
 
       {selectedEquipmentModel && (
-          <DrawerComponent
+        <DrawerComponent
           opened={drawerOpened}
           onClose={() => setDrawerOpened(false)}
           equipmentHistory={equipmentHistory}
