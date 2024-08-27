@@ -1,6 +1,6 @@
 import { IPosition } from './iPosition';
 
 export interface IEquipemntPositionHistory {
-  id: string;
+  equipmentId: string;
   positions: IPosition[];
 }
