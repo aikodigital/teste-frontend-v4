@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/leaflet'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/leaflet', '@nuxt/icon'],
   tailwindcss: {
     config: {
       theme: {

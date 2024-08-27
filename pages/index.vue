@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <h1 class="text-3xl">
-      Equipamentos
-    </h1>
-
+  <div class="flex">
     <EquipmentMap />
+
+    <EquipmentList />
   </div>
 </template>

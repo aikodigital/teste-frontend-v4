@@ -10,33 +10,7 @@ const props = defineProps<{
 <template>
   <LMarker :latLng="[equipment.currentPosition.lat, equipment.currentPosition.lon]">
     <LPopup>
-      <div class="flex flex-col">
-        <span>
-          <span class="font-bold">
-            Nome:
-          </span>
-
-          {{ equipment.name }}
-        </span>
-
-        <span>
-          <span class="font-bold">
-            Modelo:
-          </span>
-
-          {{ equipment.model?.name }}
-        </span>
-
-        <span>
-          <span class="font-bold">
-            Estado Atual:
-          </span>
-
-          <span :class="getCurrentStateClass(equipment.currentState!)">
-            {{ equipment.currentState?.name }}
-          </span>
-        </span>
-      </div>
+      <EquipmentDetails :equipment="equipment" />
     </LPopup>
   </LMarker>
 </template>

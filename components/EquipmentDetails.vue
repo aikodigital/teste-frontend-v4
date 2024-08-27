@@ -1,0 +1,46 @@
+<script lang="ts" setup>
+/** Interfaces */
+import type { IEquipmentDetails } from '~/interfaces/equipment';
+
+const props = defineProps<{
+  equipment: IEquipmentDetails;
+}>();
+
+const iconName = 'fa6-solid:clock-rotate-left';
+</script>
+
+<template>
+  <div class="flex flex-col">
+    <span>
+      <span class="font-bold">
+        Nome:
+      </span>
+
+      {{ equipment.name }}
+    </span>
+
+    <span>
+      <span class="font-bold">
+        Modelo:
+      </span>
+
+      {{ equipment.model?.name }}
+    </span>
+
+    <span>
+      <span class="font-bold">
+        Estado Atual:
+      </span>
+
+      <span :class="getCurrentStateClass(equipment.currentState!)">
+        {{ equipment.currentState?.name }}
+      </span>
+    </span>
+
+    <button class="border rounded-md flex items-center gap-1 px-2 w-fit">
+      <Icon :name="iconName" />
+
+      Histórico de estados
+    </button>
+  </div>
+</template>
