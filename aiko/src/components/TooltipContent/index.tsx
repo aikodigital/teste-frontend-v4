@@ -1,4 +1,5 @@
 import equipmentServices from "../../services/equipment"
+import equipmentModelServices from "../../services/equipmentModelServices"
 import equipmentsStateHistoryServices from "../../services/equipmentsStateHistoryServices"
 import equipmentsStateServices from "../../services/equipmentsStateServices"
 
@@ -10,15 +11,17 @@ export default function TooltipContent({ equipmentId }: ITooltipContent): JSX.El
     const { getEquipmentsById } = equipmentServices()
     const { getEquipmentsStateById } = equipmentsStateServices()
     const { getEquipmentsStateHistoryById } = equipmentsStateHistoryServices()
+    const { getEquipmentsModelById } = equipmentModelServices()
 
     const equipment = getEquipmentsById(equipmentId)
     const latestStatus = getEquipmentsStateHistoryById(equipmentId)?.states.at(-1)
     const status = latestStatus && getEquipmentsStateById(latestStatus.equipmentStateId)
+    const equipmentModel = equipment && getEquipmentsModelById(equipment?.equipmentModelId)
 
     return (
         <div>
             <h4>
-                {equipment?.name}
+                {equipment?.name} - {equipmentModel?.name}
             </h4>
             <h3 style={{ color: status?.color }}>
                 {status?.name}
