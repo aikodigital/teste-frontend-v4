@@ -42,6 +42,8 @@ export default {
         Parado: "#f1c40f",
         Manutenção: "#e74c3c",
       },
+      animatedPolylines: [],
+      animationInterval: null,
     };
   },
   computed: {
@@ -91,12 +93,16 @@ export default {
                   const marker = L.marker([lat, lon])
                     .addTo(this.map)
                     .on("click", () => this.showEquipmentHistory(equipmentId))
-                    .on("mouseover", () =>
-                      this.showEquipmentState(equipmentId)
-                    );
+                    .on("mouseover", () => {
+                      this.showEquipmentState(equipmentId);
+                      this.animatePolyline(positions);
+                    })
+                    .on("mouseout", () => {
+                      this.clearAnimatedPolylines();
+                      this.stopPolylineAnimation(); // Para a animação quando o mouse sair do pin
+                    });
                   bounds.extend(marker.getLatLng());
 
-                  // Armazena o marcador junto com o equipamento
                   const equipmentItem = this.equipments.find(
                     (eq) => eq.id === equipmentId
                   );
@@ -187,6 +193,13 @@ export default {
             };
             this.isModalVisible = true;
             this.currentPage = 1;
+
+            const equipmentItem = this.equipments.find(
+              (eq) => eq.id === equipmentId
+            );
+            if (equipmentItem && equipmentItem.polyline) {
+              this.map.fitBounds(equipmentItem.polyline.getBounds());
+            }
           } else {
             console.error(
               "Histórico de estados não encontrado para o equipamento:",
@@ -200,6 +213,35 @@ export default {
             error
           );
         });
+    },
+    animatePolyline(positions) {
+      let index = 0;
+      this.animationInterval = setInterval(() => {
+        // Armazena o identificador do intervalo
+        if (index >= positions.length - 1) {
+          clearInterval(this.animationInterval);
+          return;
+        }
+        const segment = [positions[index], positions[index + 1]];
+        const polyline = L.polyline(segment, {
+          color: "blue",
+          dashArray: "5, 10",
+        }).addTo(this.map);
+        this.animatedPolylines.push(polyline);
+        index++;
+      }, 500);
+    },
+    clearAnimatedPolylines() {
+      this.animatedPolylines.forEach((polyline) => {
+        this.map.removeLayer(polyline);
+      });
+      this.animatedPolylines = [];
+    },
+    stopPolylineAnimation() {
+      if (this.animationInterval) {
+        clearInterval(this.animationInterval);
+        this.animationInterval = null;
+      }
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
@@ -239,40 +281,8 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  color: #002255;
-}
 #map {
   width: 100%;
   height: 100vh;
-}
-.pagination-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.pagination-controls button {
-  background-color: #00c100;
-  color: white;
-  border: none;
-}
-
-.pagination-controls span {
-  color: #002255;
-  font-weight: 700;
-}
-
-.list__states {
-  color: #444444;
-}
-
-.status-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
 }
 </style>
