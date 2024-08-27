@@ -29,7 +29,7 @@ const DrawerComponent: React.FC<EquipmentDrawerProps> = ({
       onClose={onClose}
       title="Histórico de Equipamento"
       padding="xl"
-      size="lg"
+      size="md"
       style={{ position: 'fixed', zIndex: 1300 }}
       position="right"
     >

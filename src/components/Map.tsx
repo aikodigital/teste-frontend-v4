@@ -8,6 +8,7 @@ import useEquipmentStore from '../store/useEquipmentStore';
 import useData from '../hooks/useData';
 import useMap from '../hooks/useMap';
 import DrawerComponent from './Drawer';
+import FilterDrawer from './FilterDrawer';
 
 const Map: React.FC = () => {
   useData();
@@ -21,14 +22,30 @@ const Map: React.FC = () => {
     selectedEquipmentId,
     handleOpenDrawer,
     setOpened,
-  } = useMap({
-    equipment,
-    models,
-    history,
-  });
+    filterState,
+    setFilterState,
+    filterModel,
+    setFilterModel,
+    filteredEquipment,
+  } = useMap({ equipment, models, history, states, positions });
 
   return (
-    <>
+    <div>
+      <div style={{ width: '300px', padding: '1rem' }}>
+        <Button onClick={() => setOpened(true)} style={{ margin: '1rem' }}>
+          Filtrar
+        </Button>
+      </div>
+      <FilterDrawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        filterState={filterState}
+        setFilterState={setFilterState}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        states={states}
+        models={models}
+      />
       <MapContainer
         center={[-19.126536, -45.947756]}
         zoom={13}
@@ -38,7 +55,8 @@ const Map: React.FC = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {equipment.map((equip) => {
+
+        {filteredEquipment.map((equip) => {
           const pos = positions[equip.id];
           const latestPosition = pos ? pos[pos.length - 1] : null;
           const equipmentModel = models.find(
@@ -108,7 +126,7 @@ const Map: React.FC = () => {
           states={states}
         />
       )}
-    </>
+    </div>
   );
 };
 

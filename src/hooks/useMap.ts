@@ -4,15 +4,19 @@ import {
   StateHistory,
   Equipment,
   EquipmentStateHistory,
+  EquipmentState,
+  Position
 } from '../types/interface';
 
 interface UseMapProps {
   equipment: Equipment[];
   models: EquipmentModel[];
   history: EquipmentStateHistory[];
+  states: Record<string, EquipmentState>;
+  positions: Record<string, Position[]>;
 }
 
-const useMap = ({ equipment, models, history }: UseMapProps) => {
+const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   const [opened, setOpened] = useState(false);
   const [selectedEquipmentModel, setSelectedEquipmentModel] =
     useState<EquipmentModel | null>(null);
@@ -20,6 +24,8 @@ const useMap = ({ equipment, models, history }: UseMapProps) => {
     null
   );
   const [equipmentHistory, setEquipmentHistory] = useState<StateHistory[]>([]);
+  const [filterState, setFilterState] = useState<string | null>(null);
+  const [filterModel, setFilterModel] = useState<string | null>(null);
 
   const handleOpenDrawer = (id: string) => {
     const equip = equipment.find((e) => e.id === id);
@@ -41,6 +47,25 @@ const useMap = ({ equipment, models, history }: UseMapProps) => {
     setOpened(true);
   };
 
+  const filteredEquipment = equipment.filter((equip) => {
+
+    const latestStateHistory = history
+      .filter((item) => item.equipmentId === equip.id)
+      .flatMap((item) => item.states)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+
+    const equipmentState = latestStateHistory
+      ? states[latestStateHistory.equipmentStateId]
+      : null;
+
+    const isStateMatch = filterState ? equipmentState?.id === filterState : true;
+    const isModelMatch = filterModel ? equip.equipmentModelId === filterModel : true;
+
+    return isStateMatch && isModelMatch;
+  });
+
+
+
   useEffect(() => {
     if (selectedEquipmentId) {
       setEquipmentHistory(
@@ -61,6 +86,11 @@ const useMap = ({ equipment, models, history }: UseMapProps) => {
     selectedEquipmentId,
     handleOpenDrawer,
     setOpened,
+    filterState,
+    setFilterState,
+    filterModel,
+    setFilterModel,
+    filteredEquipment
   };
 };
 
