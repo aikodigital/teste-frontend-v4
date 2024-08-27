@@ -26,9 +26,25 @@ const markers = [
 ];
 
 export default function App() {
-  const { equipmentBasicData, loading, error } = useData();
+  const {
+    equipmentPositionHistory,
+    equipmentBasicData,
+    equipmentModel,
+    equipmentState,
+    equipmentStateHistory,
+    loading,
+    error,
+  } = useData();
 
-  console.log(equipmentBasicData, loading, error);
+  console.log(
+    { equipmentPositionHistory },
+    { equipmentBasicData },
+    { equipmentModel },
+    { equipmentState },
+    { equipmentStateHistory },
+    loading,
+    error
+  );
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;

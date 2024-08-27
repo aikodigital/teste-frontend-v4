@@ -15,6 +15,9 @@ export const useData = () => {
 export const DataProvider = ({ children }) => {
   const [equipmentPositionHistory, setEquipmentPositionHistory] = useState({});
   const [equipmentBasicData, setEquipmentBasicData] = useState({});
+  const [equipmentModel, setEquipmentModel] = useState({});
+  const [equipmentState, setEquipmentState] = useState({});
+  const [equipmentStateHistory, setEquipmentStateHistory] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,27 +27,63 @@ export const DataProvider = ({ children }) => {
         const response = await fetch("/data/equipmentPositionHistory.json");
         const result = await response.json();
         setEquipmentPositionHistory(result);
-      } catch (err) {
-        setError(err);
+      } catch (error) {
+        setError(error);
       }
     };
 
-    const fetchEquipmentBasicDataData = async () => {
+    const fetchEquipmentBasicData = async () => {
       try {
         const response = await fetch("/data/equipment.json");
         const result = await response.json();
         setEquipmentBasicData(result);
-      } catch (err) {
-        setError(err);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    const fetchEquipmentModelData = async () => {
+      try {
+        const response = await fetch("/data/equipmentModel.json");
+        const result = await response.json();
+        setEquipmentModel(result);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    const fetchEquipmentStateData = async () => {
+      try {
+        const response = await fetch("/data/equipmentState.json");
+        const result = await response.json();
+        setEquipmentState(result);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    const fetchEquipmentStateHistoryData = async () => {
+      try {
+        const response = await fetch("/data/equipmentStateHistory.json");
+        const result = await response.json();
+        setEquipmentStateHistory(result);
+      } catch (error) {
+        setError(error);
       }
     };
 
     const fetchAllData = async () => {
       setLoading(true);
       try {
-        await Promise.all([fetchEquipmentPositionHistoryData(), fetchEquipmentBasicDataData()]);
-      } catch (err) {
-        setError(err);
+        await Promise.all([
+          fetchEquipmentPositionHistoryData(),
+          fetchEquipmentBasicData(),
+          fetchEquipmentModelData(),
+          fetchEquipmentStateData(),
+          fetchEquipmentStateHistoryData(),
+        ]);
+      } catch (error) {
+        setError(error);
       } finally {
         setLoading(false);
       }
@@ -54,7 +93,17 @@ export const DataProvider = ({ children }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ equipmentPositionHistory, equipmentBasicData, loading, error }}>
+    <DataContext.Provider
+      value={{
+        equipmentPositionHistory,
+        equipmentBasicData,
+        equipmentModel,
+        equipmentState,
+        equipmentStateHistory,
+        loading,
+        error,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
