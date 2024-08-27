@@ -6,16 +6,11 @@ import { useEquipmentContext } from '../../context/EquipmentContext';
 export const Aside: React.FC = () => {
   const { filteredData, organizedData, filtered } = useEquipmentContext();
 
-  const dataToDisplay =
-    filtered && filteredData.length === 0
-      ? []
-      : filtered
-        ? filteredData
-        : organizedData;
+  const dataToDisplay = filtered ? filteredData : organizedData;
 
   return (
     <div className={styles.container}>
-      <Card data={dataToDisplay} />
+      <Card data={dataToDisplay} onLocationSelect={(coordinates) => console.log(coordinates)} />
     </div>
   );
 };

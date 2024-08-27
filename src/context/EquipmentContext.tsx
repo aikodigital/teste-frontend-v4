@@ -27,6 +27,8 @@ interface EquipmentContextType {
   organizedData: OrganizedEquipment[];
   filteredData: FilteredEquipment[];
   setFilteredData: React.Dispatch<React.SetStateAction<FilteredEquipment[]>>;
+  resultFilter: FilteredEquipment[];
+  setResultFilter: React.Dispatch<React.SetStateAction<FilteredEquipment[]>>;
   filtered: boolean;
   setFiltered: React.Dispatch<React.SetStateAction<boolean>>;
   local: Number[];
@@ -58,6 +60,7 @@ export const EquipmentProvider: React.FC<{ children: ReactNode }> = ({
   const [setEquipmentStateHistory] = useState<EquipmentStateHistory[]>([]);
   const [organizedData, setOrganizedData] = useState<OrganizedEquipment[]>([]);
   const [filteredData, setFilteredData] = useState<FilteredEquipment[]>([]);
+  const [resultFilter, setResultFilter] = useState<FilteredEquipment[]>([]);
   const [filtered, setFiltered] = useState<boolean>(false);
   const [local, setLocal] = useState<Number[]>();
 
@@ -94,6 +97,8 @@ export const EquipmentProvider: React.FC<{ children: ReactNode }> = ({
         organizedData,
         filteredData,
         setFilteredData,
+        resultFilter,
+        setResultFilter,
         filtered,
         setFiltered,
         local,

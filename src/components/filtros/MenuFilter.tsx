@@ -19,7 +19,7 @@ const MenuFilter = () => {
     setFilteredData(filtered);
     setFiltered(true);
     setSelectedState(params);
-    setSelectedEquipment(null); // Clear equipment selection
+    setSelectedEquipment(null); 
   };
 
   const handleEquipment = (params: string) => {
@@ -29,14 +29,14 @@ const MenuFilter = () => {
     setFilteredData(filtered);
     setFiltered(true);
     setSelectedEquipment(params);
-    setSelectedState(null); // Clear state selection
+    setSelectedState(null); 
   };
 
   const clearFilter = () => {
     setFilteredData(organizedData);
     setFiltered(false);
-    setSelectedState(null); // Clear state selection
-    setSelectedEquipment(null); // Clear equipment selection
+    setSelectedState(null); 
+    setSelectedEquipment(null); 
   };
 
   return (

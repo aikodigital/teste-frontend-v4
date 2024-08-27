@@ -35,6 +35,7 @@
   height: 40px;
   cursor: pointer;
 }
+
 .equipmentName {
   font-weight: 800;
   font-size: 16px;
@@ -130,9 +131,4 @@
   color: #888;
   padding: 20px;
 }
-.pin {
-  margin-left: 16px;
-  width: 20px;
-  opacity: 0.5;
-  cursor: pointer;
-}
+

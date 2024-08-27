@@ -1,5 +1,5 @@
 .container {
-  width: 98vw;
+  width: 98%;
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -14,7 +14,6 @@
   gap: 16px;
 }
 
-.inputNav,
 .menu {
   height: 48px;
   border-radius: 8px;
@@ -22,14 +21,6 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
-
-.inputNav {
-  border: none;
-  width: 40%;
-  background-color: rgb(240, 240, 240);
-  padding-left: 16px;
-  font-size: 16px;
 }
 
 .menu {

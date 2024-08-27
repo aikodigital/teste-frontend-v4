@@ -7,13 +7,12 @@ import styles from './map.module.css';
 import MenuFilter from '../filtros/MenuFilter';
 import { useEquipmentContext } from '../../context/EquipmentContext';
 
-// Importando as imagens dos ícones personalizados
 import caminhao from '../../assets/icons/caminhao.png';
 import garra from '../../assets/icons/garra.png';
 import harvester from '../../assets/icons/harvester.png';
 
 const Map: React.FC = () => {
-  const { local, filteredData } = useEquipmentContext();
+  const { local, filteredData, organizedData } = useEquipmentContext();
 
   const defaultLat = -19.163956;
   const defaultLon = -46.087835;
@@ -48,7 +47,9 @@ const Map: React.FC = () => {
   };
 
   const defaultIconUrl =
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png'; // URL do ícone padrão
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png'; 
+
+  const dataToMap = filteredData.length > 0 ? filteredData : organizedData;
 
   return (
     <MapContainer
@@ -67,7 +68,7 @@ const Map: React.FC = () => {
       />
       <MenuFilter />
 
-      {filteredData.map((item, index) => {
+      {dataToMap.map((item, index) => {
         const lastPosition = item.positions[item.positions.length - 1];
         const lastState = item.states[item.states.length - 1].stateName;
 
@@ -83,12 +84,11 @@ const Map: React.FC = () => {
             stateClass = styles.manutencao;
             break;
           default:
-            stateClass = ''; // Fallback or default class
+            stateClass = ''; 
         }
-        console.log(item.states[item.states.length - 1].stateName);
 
         const customIcon = L.divIcon({
-          className: `${styles.modelContainer} ${stateClass}`, // Apply the state-specific class
+          className: `${styles.modelContainer} ${stateClass}`, 
           html: `<img src="${iconMapping[item.modelName] || defaultIconUrl}" class="${styles.modelImg}" />`,
           iconSize: [40, 40],
           iconAnchor: [20, 40],

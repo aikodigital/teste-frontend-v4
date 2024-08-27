@@ -4,7 +4,6 @@ import DonutChart from '../grafico/Grafico';
 import caminhao from '../../assets/icons/caminhao.png';
 import garra from '../../assets/icons/garra.png';
 import harvester from '../../assets/icons/harvester.png';
-import pin from '../../assets/icons/pin.png';
 import { useEquipmentContext } from '../../context/EquipmentContext';
 
 const imageMap = {
@@ -13,14 +12,23 @@ const imageMap = {
   Harvester: harvester,
 } as { [key: string]: string };
 
+interface Equipment {
+  id: number;
+  name: string;
+  modelName: string;
+  states: { stateName: string; date: string }[];
+  hourlyEarnings: { stateName: string; value: number }[];
+  positions: { lat: number; lon: number }[];
+}
+
 interface CardProps {
   data: any[];
   onLocationSelect: (coordinates: [number, number]) => void;
 }
 
 const Card: React.FC<CardProps> = ({ data }) => {
+  
   const { setLocal } = useEquipmentContext();
-
   const [openStateId, setOpenStateId] = useState<number | null>(null);
   const [showAllStates, setShowAllStates] = useState(false);
 
@@ -106,11 +114,6 @@ const Card: React.FC<CardProps> = ({ data }) => {
                         />
                       </div>
                       <h5 className={styles.equipmentName}>{equipment.name}</h5>
-                      <img
-                        src={pin}
-                        alt="Ver no mapa."
-                        className={styles.pin}
-                      />
                     </div>
                     <DonutChart
                       percentage={percentage}
