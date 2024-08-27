@@ -7,6 +7,10 @@ import type { IEquipmentPositionHistory } from '~/interfaces/IEquipmentPositionH
 
 const equipmentPositionHistory = ref<IEquipmentPositionHistory[]>(eph);
 const zoom = ref(2);
+
+function getLastPosition(positions: { lat: number; lon: number }[]) {
+  return positions[positions.length - 1];
+}
 </script>
 
 <template>
@@ -16,9 +20,8 @@ const zoom = ref(2);
         attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
         layer-type="base" name="OpenStreetMap" />
 
-      <div v-for="equipment in equipmentPositionHistory">
-        <LMarker
-          :lat-lng="[equipment.positions[equipment.positions.length - 1].lat, equipment.positions[equipment.positions.length - 1].lon]">
+      <div v-for="equipment in equipmentPositionHistory" :key="equipment.equipmentId">
+        <LMarker :lat-lng="[getLastPosition(equipment.positions).lat, getLastPosition(equipment.positions).lon]">
           <LPopup>
             {{ equipment.equipmentId }}
           </LPopup>

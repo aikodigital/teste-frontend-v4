@@ -2,9 +2,9 @@
 
 ## Requisitos Obrigatórios
 
-- [ ] **Posições dos equipamentos**
+- [x] **Posições dos equipamentos**
   - [x] Carregar dados de `equipmentPositionHistory.json`.
-  - [ ] Exibir no mapa os equipamentos nas suas posições mais recentes.
+  - [x] Exibir no mapa os equipamentos nas suas posições mais recentes.
 
 - [ ] **Estado atual do equipamento**
   - [ ] Carregar dados de `equipmentState.json` e `equipmentStateHistory.json`.
