@@ -1,6 +1,10 @@
 "use client";
 
 import equipmentDetails from "@/app/data/equipment.json";
+import equipmentModels from "@/app/data/equipmentModel.json";
+import equipmentPositionHistory from "@/app/data/equipmentPositionHistory.json";
+import equipmentStateHistory from "@/app/data/equipmentStateHistory.json";
+
 import { useEffect, useState } from "react";
 
 interface EquipamentPageProps {
@@ -27,9 +31,16 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
   }, [params.id]);
 
   return (
-    <div>
-      <h1>{equipment.name}</h1>
-    </div>
+    <section className="p-5">
+      <h1 className="text-xl font-semibold">{equipment.name}</h1>
+      <h2>
+        {
+          equipmentModels.find(
+            (model) => model.id === equipment.equipmentModelId
+          )?.name
+        }
+      </h2>
+    </section>
   );
 };
 
