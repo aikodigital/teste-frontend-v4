@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   EquipmentModel,
   StateHistory,
   Equipment,
   EquipmentStateHistory,
   EquipmentState,
-  Position
+  Position,
 } from '../types/interface';
 
 interface UseMapProps {
@@ -26,6 +26,7 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   const [equipmentHistory, setEquipmentHistory] = useState<StateHistory[]>([]);
   const [filterState, setFilterState] = useState<string | null>(null);
   const [filterModel, setFilterModel] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleOpenDrawer = (id: string) => {
     const equip = equipment.find((e) => e.id === id);
@@ -48,36 +49,37 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   };
 
   const filteredEquipment = equipment.filter((equip) => {
+    const equipmentModel = models.find(
+      (model) => model.id === equip.equipmentModelId
+    );
 
     const latestStateHistory = history
       .filter((item) => item.equipmentId === equip.id)
       .flatMap((item) => item.states)
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+      .sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      )[0];
 
     const equipmentState = latestStateHistory
       ? states[latestStateHistory.equipmentStateId]
       : null;
 
-    const isStateMatch = filterState ? equipmentState?.id === filterState : true;
-    const isModelMatch = filterModel ? equip.equipmentModelId === filterModel : true;
+    const isStateMatch = filterState
+      ? equipmentState?.id === filterState
+      : true;
 
-    return isStateMatch && isModelMatch;
+    const isModelMatch = filterModel
+      ? equipmentModel?.id === filterModel
+      : true;
+
+    const isSearchMatch = searchQuery
+      ? equip.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (equipmentModel &&
+          equipmentModel.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      : true;
+
+    return isStateMatch && isModelMatch && isSearchMatch;
   });
-
-
-
-  useEffect(() => {
-    if (selectedEquipmentId) {
-      setEquipmentHistory(
-        history
-          .filter((item) => item.equipmentId === selectedEquipmentId)
-          .flatMap((item) => item.states)
-          .sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-      );
-    }
-  }, [selectedEquipmentId, history]);
 
   return {
     opened,
@@ -90,7 +92,9 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     setFilterState,
     filterModel,
     setFilterModel,
-    filteredEquipment
+    filteredEquipment,
+    searchQuery,
+    setSearchQuery,
   };
 };
 

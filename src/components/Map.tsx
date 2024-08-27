@@ -16,35 +16,54 @@ const Map: React.FC = () => {
   const { equipment, positions, models, states, history } = useEquipmentStore();
 
   const {
-    opened,
     selectedEquipmentModel,
     equipmentHistory,
     selectedEquipmentId,
     handleOpenDrawer,
-    setOpened,
     filterState,
     setFilterState,
     filterModel,
     setFilterModel,
     filteredEquipment,
+    searchQuery,
+    setSearchQuery,
   } = useMap({ equipment, models, history, states, positions });
+
+  const [filterDrawerOpened, setFilterDrawerOpened] = React.useState(false);
+  const [drawerOpened, setDrawerOpened] = React.useState(false);
+
+  const handleFilterButtonClick = () => {
+    setDrawerOpened(false); 
+    setTimeout(() => setFilterDrawerOpened(true), 300); 
+  };
+
+
+  const handleViewHistory = (id: string) => {
+    setFilterDrawerOpened(false); 
+    setTimeout(() => {
+      handleOpenDrawer(id);
+      setDrawerOpened(true);
+    }, 300);
+  };
 
   return (
     <div>
       <div style={{ width: '300px', padding: '1rem' }}>
-        <Button onClick={() => setOpened(true)} style={{ margin: '1rem' }}>
+        <Button onClick={handleFilterButtonClick} style={{ margin: '1rem' }}>
           Filtrar
         </Button>
       </div>
       <FilterDrawer
-        opened={opened}
-        onClose={() => setOpened(false)}
+        opened={filterDrawerOpened}
+        onClose={() => setFilterDrawerOpened(false)}
         filterState={filterState}
         setFilterState={setFilterState}
         filterModel={filterModel}
         setFilterModel={setFilterModel}
         states={states}
         models={models}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
       <MapContainer
         center={[-19.126536, -45.947756]}
@@ -104,7 +123,7 @@ const Map: React.FC = () => {
                   <p>Lat: {latestPosition.lat}</p>
                   <p>Lon: {latestPosition.lon}</p>
                   <p>Data: {new Date(latestPosition.date).toLocaleString()}</p>
-                  <Button onClick={() => handleOpenDrawer(equip.id)}>
+                  <Button onClick={() => handleViewHistory(equip.id)}>
                     Ver histórico
                   </Button>
                 </div>
@@ -115,9 +134,9 @@ const Map: React.FC = () => {
       </MapContainer>
 
       {selectedEquipmentModel && (
-        <DrawerComponent
-          opened={opened}
-          onClose={() => setOpened(false)}
+          <DrawerComponent
+          opened={drawerOpened}
+          onClose={() => setDrawerOpened(false)}
           equipmentHistory={equipmentHistory}
           equipmentModel={selectedEquipmentModel}
           equipmentName={

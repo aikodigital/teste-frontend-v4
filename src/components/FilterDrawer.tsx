@@ -1,4 +1,4 @@
-import { Button, Drawer, Select } from '@mantine/core';
+import { Button, Drawer, Select, TextInput } from '@mantine/core';
 import { EquipmentModel } from '../types/interface';
 
 interface FilterDrawerProps {
@@ -10,6 +10,8 @@ interface FilterDrawerProps {
   setFilterModel: React.Dispatch<React.SetStateAction<string | null>>;
   states: Record<string, { name: string; id: string }>;
   models: EquipmentModel[];
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
@@ -21,6 +23,8 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
   setFilterModel,
   states,
   models,
+  searchQuery,
+  setSearchQuery,
 }) => {
   const stateOptions = Object.values(states).map((state) => ({
     value: state.id,
@@ -41,12 +45,18 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       size="md"
       style={{ position: 'fixed', zIndex: 1300 }}
     >
-
+      <TextInput
+        label="Buscar Equipamento"
+        placeholder="Digite o nome ou modelo do equipmento"
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.currentTarget.value)}
+        style={{ marginBottom: '1rem' }}
+      />
 
       <Select
         label="Estado"
         placeholder="Selecione o estado"
-        value={filterState || null }
+        value={filterState || null}
         onChange={(value) => setFilterState(value || null)}
         data={stateOptions}
         styles={{ dropdown: { zIndex: 1400 } }}
