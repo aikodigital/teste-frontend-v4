@@ -4,20 +4,15 @@ import React, { useRef, useState } from "react";
 import {
   MapContainer,
   Marker,
-  Polyline,
-  Popup,
   TileLayer,
   Tooltip,
+  CircleMarker,
+  Polyline,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-import equipmentPosition from "../data/equipmentPositionHistory.json";
-import equipment from "../data/equipment.json";
-import equipmentModel from "../data/equipmentModel.json";
-import statusEquipment from "../data/equipmentStateHistory.json";
-
-import L from "leaflet";
 import { formatDateTime } from "../_utils/time-format";
+import { mapIconHarvester, mapIconTracer, mapIconTruck } from "../_utils/mapIcons";
 import EquipmentState from "./equipment-state";
 import {
   Sheet,
@@ -26,8 +21,29 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./ui/sheet";
+import {
+  EquipmentModel,
+  EquipmentStatus,
+  Position,
+  Vehicle,
+} from "../types/types";
 
-const Map = () => {
+type MapProps = {
+  equipment: Vehicle[];
+  equipmentPositionHistory: {
+    equipmentId: string;
+    positions: Position[];
+  }[];
+  equipmentModel: EquipmentModel[];
+  equipmentStateHistory: EquipmentStatus[];
+};
+
+const Map: React.FC<MapProps> = ({
+  equipment,
+  equipmentPositionHistory,
+  equipmentModel,
+  equipmentStateHistory,
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
   const [selectedVehiclePosition, setSelectedVehiclePosition] = useState<{
@@ -41,11 +57,11 @@ const Map = () => {
       (model) => model.id === vehicle.equipmentModelId
     );
 
-    const equipmentStatus = statusEquipment.filter(
+    const equipmentStatus = equipmentStateHistory.filter(
       (status) => status.equipmentId === vehicle.id
     );
 
-    const positionHistory = equipmentPosition
+    const positionHistory = equipmentPositionHistory
       .find((position) => position.equipmentId === vehicle.id)
       ?.positions.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -62,20 +78,7 @@ const Map = () => {
     };
   });
 
-  const mapIconTruck = new L.Icon({
-    iconUrl: "/truck.png",
-    iconSize: [40, 40],
-  });
 
-  const mapIconHarvester = new L.Icon({
-    iconUrl: "/harvester.png",
-    iconSize: [40, 40],
-  });
-
-  const mapIconTracer = new L.Icon({
-    iconUrl: "/tracer.png",
-    iconSize: [40, 40],
-  });
 
   const handleSheetClose = () => {
     setModalOpen(false);
@@ -174,8 +177,8 @@ const Map = () => {
                   <h3 className="text-lg font-semibold">
                     Histórico de Estados
                   </h3>
-                  <div className="w-full overflow-x-auto">
-                    <ul className="flex space-x-10 mt-5 py-5 relative">
+                  <div className="w-full">
+                    <ul className="z-50 flex overflow-x-scroll max-w-[100vw] space-x-10 mt-5 py-5 relative">
                       {vehicle.equipmentStatus.map((status) =>
                         status.states
                           .sort(
@@ -213,14 +216,29 @@ const Map = () => {
           </Marker>
         ))}
       {selectedVehiclePosition && (
-        <Polyline
-          positions={
-            vehicles
-              .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
-              ?.positionHistory?.map((p) => [p.lat, p.lon]) || []
-          }
-          pathOptions={{ color: "#00BE9C", weight: 4 }}
-        />
+        <>
+          {vehicles
+            .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
+            ?.positionHistory?.map((pos, index) => (
+              <CircleMarker
+                key={index}
+                center={[pos.lat, pos.lon]}
+                radius={4}
+                color="#00BE9C"
+                fillOpacity={0.4}
+                opacity={(index + 1) / 100}
+              />
+            ))}
+          {/* <Polyline
+            positions={
+              vehicles
+                .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
+                ?.positionHistory?.map((p, i) => [p.lat, p.lon]) || []
+            }
+            pathOptions={{ color: "#00BE9C", weight: 1 }}
+            opacity={(i + 1) / 100}
+          /> */}
+        </>
       )}
     </MapContainer>
   );
