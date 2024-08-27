@@ -13,14 +13,13 @@ export default function Home(): JSX.Element {
     useEffect(getSelectedEquipment, [])
 
     return (
-        <Grid container>
-            <Grid item xs={9}>
+        <Grid display="flex" maxHeight="100vh">
+            <Grid item width="70%" >
                 <Map getSelectedEquipment={getSelectedEquipment} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item width="30%" position="relative">
                 <SideMenu equipmentId={id} />
             </Grid>
-
         </Grid>
     )
 }
