@@ -38,8 +38,6 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     );
     if (!equipModel) return;
 
-
-  
     setSelectedEquipmentId(id);
     setSelectedEquipmentModel(equipModel);
     setEquipmentHistory(
@@ -91,7 +89,7 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
 
     if (!EquipmentStateHistory) {
       return 0;
-    };
+    }
 
     const operatingState = EquipmentStateHistory.states.filter(
       (state) => states[state.equipmentStateId].name === 'Operando'
@@ -100,7 +98,8 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     const operatingHours = operatingState.reduce((total, state) => {
       const start = new Date(state.date);
       const end = new Date(state.date);
-      const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+      const durationInHours =
+        (end.getTime() - start.getTime()) / (1000 * 60 * 60);
       return total + durationInHours;
     }, 0);
 
@@ -124,7 +123,7 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     filteredEquipment,
     searchQuery,
     setSearchQuery,
-    calculateProductivity
+    calculateProductivity,
   };
 };
 
