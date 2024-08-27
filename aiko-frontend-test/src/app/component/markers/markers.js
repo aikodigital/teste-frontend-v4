@@ -40,7 +40,7 @@ export default function Markers({ equipmentsLatestData }) {
             {equipmentsLatestData.map((latestData) => (
 
 
-                <Marker position={[latestData.lat, latestData.lon]} icon={new Icon({
+                <Marker position={[latestData.lat, latestData.lon]} key={latestData.equipmentId} icon={new Icon({
                     iconUrl: latestData.stateName == "Operando" ? operando.src : latestData.stateName == "Parado" ? parado.src : manutencao.src,
                     iconSize: [38, 38]
                 })}

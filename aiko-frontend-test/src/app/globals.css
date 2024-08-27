@@ -22,6 +22,12 @@ body {
   border: 6px solid #6a60e8;
 }
 
+/* .MuiInputBase-formControl {
+  border-color: 1px solid white;
+  background-color: green;
+  color: black;
+} */
+
 a {
   color: inherit;
   text-decoration: none;

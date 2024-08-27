@@ -3,5 +3,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+}
+
+.main>div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mapDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 16px;
 }

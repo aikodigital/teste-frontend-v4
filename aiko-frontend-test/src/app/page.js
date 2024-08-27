@@ -10,6 +10,7 @@ import { setEquipmentPositionHistory } from '../../store/slices/equipmentPositio
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import HistoryTable from "./component/historyTable/historyTable";
+import StateModelFilter from "./component/stateModelFilter/stateModelFilter";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -39,8 +40,13 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <MapDisplay />
-      <HistoryTable />
+      <div >
+        <StateModelFilter />
+        <div className={styles.mapDiv}>
+          <MapDisplay />
+          <HistoryTable />
+        </div>
+      </div>
     </main>
   );
 }

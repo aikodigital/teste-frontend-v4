@@ -3,6 +3,7 @@ export const selectEquipmentsLatestData = (state) => {
     const equipmentPositionHistory = state.equipmentPositionHistory.data;
     const equipmentStateHistory = state.equipmentStateHistory.data;
     const equipmentStates = state.equipmentState.data;
+    const equipments = state.equipment.data
 
     if (Array.isArray(equipmentPositionHistory) && Array.isArray(equipmentStateHistory)) {
 
@@ -33,12 +34,14 @@ export const selectEquipmentsLatestData = (state) => {
         const combinedData = latestPositions.map((position) => {
             const stateData = latestStates.find((state) => state.equipmentId === position.equipmentId);
             const state = equipmentStates.find((s) => s.id === stateData.equipmentStateId);
-
+            const equipment = equipments.find((e) => e.id === stateData.equipmentId)
             return {
                 equipmentId: position.equipmentId,
+                equipmentModelId: equipment.equipmentModelId,
                 date: position.date,
                 lat: position.lat,
                 lon: position.lon,
+                stateId: state ? state.id : 'Unknown',
                 stateName: state ? state.name : 'Unknown',
                 stateColor: state ? state.color : 'Unknown'
             };
