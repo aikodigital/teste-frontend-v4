@@ -19,7 +19,7 @@ const EquipmentPage = () => {
     <div className="h-full w-full flex flex-col gap-2 p-12 bg-gray-50 overflow-auto">
       <div className="flex">
         <span
-          className="text-lg text-gray-500 cursor-pointer"
+          className="text-lg text-gray-500 cursor-pointer hover:underline"
           onClick={handleGoBack}
         >
           {`← voltar`}

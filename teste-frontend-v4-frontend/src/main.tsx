@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import EquipmentPage from './pages/EquipmentPage.tsx'
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/equipment/:id',
     element: <EquipmentPage />
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />
   }
 ])
 
