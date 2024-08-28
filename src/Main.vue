@@ -18,7 +18,7 @@
         </q-item-section>
 
         <q-item-section>
-          {{ item.title }}
+          <span>{{ item.title }}</span>
         </q-item-section>
       </q-item>
     </q-list>
