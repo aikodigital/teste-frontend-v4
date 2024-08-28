@@ -3,7 +3,7 @@ import { ref } from "vue";
 import Header from "./header.vue";
 import Map from "./map.vue";
 import Table from "./table.vue";
-import EquipmentService from "@/common/services/index";
+import EquipmentService from "@/common/services/EquipmentService";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
 
 

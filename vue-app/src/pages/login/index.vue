@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import Button from "@/components/ui/button/button.vue" ;
+</script>
 <template>
   <section class="flex items-center justify-center w-full h-full">
     <div class="flex flex-col gap-4">
@@ -12,14 +15,4 @@
     </div>
   </section>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-import Button from "@/components/ui/button/button.vue" ;
-export default defineComponent({
-  components: {
-    Button,
-  },
-  methods: {
-  }
-});
-</script>
+

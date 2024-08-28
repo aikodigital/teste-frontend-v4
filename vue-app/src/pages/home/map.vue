@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import L from "leaflet";
-import EquipmentService from "@/common/services/index";
+import EquipmentService from "@/common/services/EquipmentService";
 import { Map } from "leaflet";
 import { onMounted, ref } from "vue";
 import { pickColor } from "@/common/utils/helpers";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
+import router from "@/router";
 
 const map = ref({} as Map);
+
+function detailEquipment(id: string) {
+  router.push({ name: 'equipment', params: { id } });
+}
 
 function initializeMap(){
       map.value = L.map('map');
@@ -30,6 +35,10 @@ function setMarks(){
     mark.addTo(map.value as Map)
     .bindTooltip(`${equipment.name} ${ state ? "(" + state + ")" : ''}
       - [Clique para mais informações]`);
+
+    mark.addEventListener('click', () => {
+      detailEquipment(equipment.id);
+    });
   });
 }
 
@@ -47,7 +56,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <section>
-    <div id="map" class="w-[772px] h-full rounded-md mr-8" />
+  <section class="w-full pr-8 ">
+    <div id="map" class="w-full h-full mr-8 rounded-md" />
   </section>
 </template>
