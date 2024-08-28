@@ -11,7 +11,7 @@ interface IMarkerProps {
 }
 
 const Marker = ({ equipment, onSeeMoreClick }: IMarkerProps) => {
-  const markerRef = useRef(null)
+  const markerRef = useRef<L.Marker>(null)
 
   const { EquipmentIcon } = useEquipmentIcons(
     equipment.state,
