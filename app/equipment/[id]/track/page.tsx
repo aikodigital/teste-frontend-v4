@@ -39,7 +39,6 @@ const TrackPage = () => {
     <div>
       <h1>Track Page</h1>
       <p>{equipmentId}</p>
-      {/* Renderize o histórico de posição e estado aqui */}
     </div>
   );
 };
