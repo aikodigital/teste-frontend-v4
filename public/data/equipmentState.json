@@ -1,0 +1,17 @@
+[
+  {
+      "id": "0808344c-454b-4c36-89e8-d7687e692d57",
+      "name": "Operando",
+      "color": "#2ecc71"
+  },
+  {
+    "id": "0808344c-454b-4c36-89e8-d7687e692d58",
+    "name": "Parado",
+        "color": "#e74c3c"
+  },
+  {
+    "id": "0808344c-454b-4c36-89e8-d7687e692d59",
+    "name": "Manutenção",
+        "color": "#f1c40f"
+  }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
+        "states": [
+            {
+                "date": "2023-02-01T03:00:00.000Z",
+                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57"
+            }
+        ]
+    },
+    {
+        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f0",
+        "states": [
+            {
+                "date": "2024-02-01T03:00:00.000Z",
+                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d58"
+            }
+        ]
+    },
+    {
+        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f1",
+        "states": [
+            {
+                "date": "2021-02-01T03:00:00.000Z",
+                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d59"
+            }
+        ]
+    }
+]
