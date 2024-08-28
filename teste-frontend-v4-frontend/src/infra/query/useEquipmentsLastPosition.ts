@@ -40,6 +40,6 @@ export const useEquipmentsWithLastPosition = (): UseQueryResult<
   IEquipmentLastPositionHistory[]
 > =>
   useQuery({
-    queryKey: [QUERY_KEYS.EQUIPMENT_POSITION_HISTORY],
+    queryKey: [QUERY_KEYS.EQUIPMENTS_LAST_POSITION],
     queryFn: getEquipmentsWithLastPosition
   })

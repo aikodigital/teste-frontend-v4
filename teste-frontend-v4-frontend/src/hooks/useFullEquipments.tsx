@@ -7,7 +7,7 @@ import {
 import { useEquipmentModels } from '../infra/query/useEquipmentModels'
 import { useEquipments } from '../infra/query/useEquipments'
 import { useEquipmentStates } from '../infra/query/useEquipmentState'
-import { useEquipmentsWithLastPosition } from '../infra/query/useEquipmentsLastPositions'
+import { useEquipmentsWithLastPosition } from '../infra/query/useEquipmentsLastPosition'
 import { useEquipmentsLastState } from '../infra/query/useEquipmentsLastState'
 
 type TUseEquipmentsResponse = {

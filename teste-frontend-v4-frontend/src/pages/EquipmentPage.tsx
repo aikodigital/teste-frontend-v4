@@ -1,13 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom'
+
+import { useEquipmentLastPositions } from '../infra/query/useEquipmentLastPositions'
+
 import useFullEquipment from '../hooks/useFullEquipment'
+
+import EquipmentMap from '../components/EquipmentMap'
 
 const EquipmentPage = () => {
   const navigate = useNavigate()
   const params: any = useParams()
 
   const { isLoading, equipment, states } = useFullEquipment(params.id)
+  const { data: positions } = useEquipmentLastPositions(params.id)
 
-  if (isLoading || !equipment || !states) {
+  if (isLoading || !equipment || !states || !positions) {
     return <div>carregando</div>
   }
 
@@ -41,8 +47,10 @@ const EquipmentPage = () => {
         </h1>
       </header>
 
+      <EquipmentMap equipment={equipment} positions={positions} />
+
       <main className="p-4 bg-white shadow-md rounded-xl">
-        <h1 className="text-xl font-bold">Histórico </h1>
+        <h1 className="text-xl font-bold">Histórico de operações</h1>
         <table>
           <thead>
             <tr>
@@ -67,10 +75,6 @@ const EquipmentPage = () => {
           </tbody>
         </table>
       </main>
-
-      <div className="h-[600px] w-full rounded-xl overflow-hidden shadow-lg">
-        {/* <EquipmentMap equipment={equipment} states={equipmentStates.states} /> */}
-      </div>
     </div>
   )
 }
