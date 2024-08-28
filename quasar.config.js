@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = configure(function () {
   return {
-    boot: [],
+    boot: ['globals'],
     css: ['app.scss'],
     extras: [
       'roboto-font',
@@ -23,7 +23,7 @@ module.exports = configure(function () {
     },
     devServer: {
       // https: true
-      open: true
+      open: false
     },
     framework: {
       config: {},
