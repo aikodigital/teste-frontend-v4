@@ -23,7 +23,7 @@ const getEquipmentsLastState = (id: string) => {
 
   const lastStates = equipmentLastStates?.states
     .map((state) => ({
-      date: new Date(state.date).toLocaleString(),
+      date: state.date,
       state: equipmentStates.find(
         (s: IEquipmentState) => s.id === state.equipmentStateId
       )

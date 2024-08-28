@@ -16,12 +16,15 @@ O design do produto definido a partir dos objetivos resultou em um projeto com 2
 ✅ - Histórico de estados do equipamento: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento;
 ⚙️ - Filtros: Filtrar as visualizações por estado atual ou modelo de equipamento;
 ❌ - Pesquisa: Ser possível pesquisar por dados de um equipamento especifico;
-❌ - Percentual de Produtividade do equipamento: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser 18 / 24 * 100 = 75% de produtividade;
-❌ - Ganho por equipamento: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou 10 * 100 + 4 * -20 = 920;
+✅ - Percentual de Produtividade do equipamento: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser 18 / 24 * 100 = 75% de produtividade;
+✅ - Ganho por equipamento: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou 10 * 100 + 4 * -20 = 920;
 ✅ - Diferenciar os equipamentos: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa;
 ✅ - Histórico de posições: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele;
 ✅ - Documentação: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes;
 ❌ - Testes: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc;
+
+### Regras de Negócio
+Foi preciso definir uma regra para o calculo de horas trabalhadas em um dia, está foi que toda maquina operando para seu trabalho no fim do dia, caso ela comece outro dia com status de trabalhando, esse sera contabilizado
 
 ### 👷 Arquitetura do front
 o projeto frontend está localizado na  pasta ``teste-frontend-v4-frontend`` e sua arquitetura segue o seguinte padrão abaixo utilizando React + Vite + Tanstack + Leaflet `mais sobre as bibliotecas abaixo`

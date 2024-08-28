@@ -5,6 +5,6 @@ export interface IEquipmentState {
 }
 
 export type TFullState = {
-  date: string
+  date: string | Date
   state: IEquipmentState
 }

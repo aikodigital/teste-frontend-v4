@@ -25,9 +25,9 @@ const MapPage = () => {
   }
 
   return (
-    <main className="h-full w-full flex flex-col gap-4 p-12 bg-gray-50 overflow-auto">
+    <main className="h-full w-full flex flex-col gap-4 p-12 py-6 bg-blue-500 overflow-auto">
       <header>
-        <h1 className="text-3xl font-bold">Aiko Control</h1>
+        <h1 className="text-3xl font-bold text-white">Aiko Control</h1>
       </header>
 
       <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md">

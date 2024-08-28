@@ -9,8 +9,6 @@ import createMapLines from '@services/createMapLines'
 
 import useEquipmentIcons from '@hooks/useEquipmentIcons'
 
-export type TMarker = { lat: number; lng: number }
-
 interface IMapProps {
   equipment: IFullEquipment
   positions: TPosition[]

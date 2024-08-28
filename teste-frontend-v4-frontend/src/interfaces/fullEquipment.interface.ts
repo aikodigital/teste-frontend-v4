@@ -1,8 +1,9 @@
-import { TMarker } from '@components/Map'
+import { TMarker } from '@components/MainMap/Map'
 import { IEquipmentState } from './equipmentState.interface'
+import { EQUIPMENT_STATUS } from '@constants/states'
 
 export type TFullHourlyEarnings = {
-  equipmentStateId: string
+  equipmentStateId: keyof typeof EQUIPMENT_STATUS
   state: IEquipmentState
   value: number
 }
