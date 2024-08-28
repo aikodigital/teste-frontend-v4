@@ -1,6 +1,6 @@
-import { useEquipmentLastStates } from '../infra/query/useEquipmentLastStates'
-import { TFullState } from '../interfaces/equipmentState.interface'
-import { IFullEquipment } from '../interfaces/fullEquipment.interface'
+import { useEquipmentLastStates } from '@query/useEquipmentLastStates'
+import { TFullState } from '@interfaces/equipmentState.interface'
+import { IFullEquipment } from '@interfaces/fullEquipment.interface'
 import { useFullEquipments } from './useFullEquipments'
 
 type TUseEquipmentResponse = {

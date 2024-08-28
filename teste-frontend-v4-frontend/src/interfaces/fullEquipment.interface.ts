@@ -1,4 +1,4 @@
-import { TMarker } from '../components/Map'
+import { TMarker } from '@components/Map'
 import { IEquipmentState } from './equipmentState.interface'
 
 export type TFullHourlyEarnings = {

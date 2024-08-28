@@ -1,10 +1,10 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { QUERY_KEYS } from '../../constants/queryKeys'
+import { QUERY_KEYS } from '@constants/queryKeys'
 
-import { IEquipmentModel } from '../../interfaces/equipmentModel.interface'
+import { IEquipmentModel } from '@interfaces/equipmentModel.interface'
 
-import EquipmentModels from '../../../../data/equipmentModel.json'
+import EquipmentModels from '@data/equipmentModel.json'
 
 const getEquipmentModels = () => JSON.parse(JSON.stringify(EquipmentModels))
 

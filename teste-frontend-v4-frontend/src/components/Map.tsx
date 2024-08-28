@@ -1,11 +1,11 @@
 import { Icon, Point } from 'leaflet'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import { IFullEquipment } from '../interfaces/fullEquipment.interface'
+import { IFullEquipment } from '@interfaces/fullEquipment.interface'
 
-import iconMaintaining from '../assets/iconMaintaining.svg'
-import iconWorking from '../assets/iconWorking.svg'
-import iconStopped from '../assets/iconStopped.svg'
-import { EQUIPMENT_STATUS } from '../constants/states'
+import iconMaintaining from '@assets/iconMaintaining.svg'
+import iconWorking from '@assets/iconWorking.svg'
+import iconStopped from '@assets/iconStopped.svg'
+import { EQUIPMENT_STATUS } from '@constants/states'
 
 export type TMarker = { lat: number; lng: number }
 

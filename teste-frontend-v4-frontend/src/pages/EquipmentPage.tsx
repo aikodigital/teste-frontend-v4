@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useEquipmentLastPositions } from '../infra/query/useEquipmentLastPositions'
+import { useEquipmentLastPositions } from '@query/useEquipmentLastPositions'
 
-import useFullEquipment from '../hooks/useFullEquipment'
+import useFullEquipment from '@hooks/useFullEquipment'
 
-import EquipmentMap from '../components/EquipmentMap'
+import EquipmentMap from '@components/EquipmentMap'
 
 const EquipmentPage = () => {
   const navigate = useNavigate()

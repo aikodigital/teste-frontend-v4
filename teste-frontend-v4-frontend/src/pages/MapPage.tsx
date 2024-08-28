@@ -1,13 +1,22 @@
 import { useNavigate } from 'react-router-dom'
-import Map from '../components/Map'
-import { useFullEquipments } from '../hooks/useFullEquipments'
+
+import { useFullEquipments } from '@hooks/useFullEquipments'
+
+import { useEquipmentModels } from '@query/useEquipmentModels'
+import { useEquipmentStates } from '@query/useEquipmentState'
+
+import Map from '@components/Map'
 
 const MapPage = () => {
   const navigate = useNavigate()
 
   const { isLoading, data: equipments } = useFullEquipments()
+  const { isLoading: isLoadingModels, data: equipmentModels } =
+    useEquipmentModels()
+  const { isLoading: isLoadingStates, data: equipmentStates } =
+    useEquipmentStates()
 
-  if (isLoading || !equipments) {
+  if (isLoading || isLoadingModels || isLoadingStates || !equipments) {
     return <div>carregando</div>
   }
 
@@ -23,15 +32,23 @@ const MapPage = () => {
 
       <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md">
         <input placeholder="Pesquisar" />
-        <select>
-          <option disabled>Modelo</option>
-          <option>1</option>
-          <option>2</option>
+        modelo
+        <select defaultValue="">
+          <option disabled>Todos</option>
+          {equipmentModels?.map((model) => (
+            <option key={model.id} value={model.id}>
+              {model.name}
+            </option>
+          ))}
         </select>
-        <select>
-          <option disabled>Estado</option>
-          <option>1</option>
-          <option>2</option>
+        estado
+        <select defaultValue="">
+          <option disabled>Todos</option>
+          {equipmentStates?.map((state) => (
+            <option key={state.id} value={state.id}>
+              {state.name}
+            </option>
+          ))}
         </select>
       </div>
 

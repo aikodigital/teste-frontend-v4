@@ -1,13 +1,13 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { QUERY_KEYS } from '../../constants/queryKeys'
+import { QUERY_KEYS } from '@constants/queryKeys'
 
 import {
   IEquipmentLastPositionHistory,
   IEquipmentPositionHistory
-} from '../../interfaces/equipmentPositionHistory.interface'
+} from '@interfaces/equipmentPositionHistory.interface'
 
-import PositionHistory from '../../../../data/equipmentPositionHistory.json'
+import PositionHistory from '@data/equipmentPositionHistory.json'
 
 const getEquipmentsWithLastPosition = () => {
   const equipmentsWithPositions: IEquipmentPositionHistory[] = JSON.parse(

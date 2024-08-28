@@ -1,4 +1,4 @@
-import { TPosition } from '../interfaces/equipmentPositionHistory.interface'
+import { TPosition } from '@interfaces/equipmentPositionHistory.interface'
 
 const createMapLines = (
   positions: TPosition[]

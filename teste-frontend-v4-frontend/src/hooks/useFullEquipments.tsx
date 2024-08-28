@@ -2,13 +2,13 @@ import {
   IFullEquipment,
   IFullEquipmentModel,
   TFullHourlyEarnings
-} from '../interfaces/fullEquipment.interface'
+} from '@interfaces/fullEquipment.interface'
 
-import { useEquipmentModels } from '../infra/query/useEquipmentModels'
-import { useEquipments } from '../infra/query/useEquipments'
-import { useEquipmentStates } from '../infra/query/useEquipmentState'
-import { useEquipmentsWithLastPosition } from '../infra/query/useEquipmentsLastPosition'
-import { useEquipmentsLastState } from '../infra/query/useEquipmentsLastState'
+import { useEquipmentModels } from '@query/useEquipmentModels'
+import { useEquipments } from '@query/useEquipments'
+import { useEquipmentStates } from '@query/useEquipmentState'
+import { useEquipmentsWithLastPosition } from '@query/useEquipmentsLastPosition'
+import { useEquipmentsLastState } from '@query/useEquipmentsLastState'
 
 type TUseEquipmentsResponse = {
   isLoading: boolean
