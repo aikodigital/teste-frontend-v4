@@ -15,6 +15,7 @@ export interface IFullEquipmentModel {
 
 export interface IFullEquipment {
   equipmentModel: IFullEquipmentModel
+  state: IEquipmentState
   equipmentModelId: string
   id: string
   name: string

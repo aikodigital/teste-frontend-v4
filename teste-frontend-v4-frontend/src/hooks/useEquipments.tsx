@@ -7,7 +7,8 @@ import {
 import { useEquipmentModels } from '../infra/query/useEquipmentModels'
 import { useEquipment } from '../infra/query/useEquipments'
 import { useEquipmentState } from '../infra/query/useEquipmentState'
-import { useEquipmentWithLastPositions } from '../infra/query/useEquipmentLastPositions'
+import { useEquipmentsWithLastPositions } from '../infra/query/useEquipmentsLastPositions'
+import { useEquipmentsLastState } from '../infra/query/useEquipmentsLastState'
 
 type TUseEquipmentsResponse = {
   isLoading: boolean
@@ -18,13 +19,15 @@ export const useEquipments = (): TUseEquipmentsResponse => {
   const { data: equipments } = useEquipment()
   const { data: equipmentsModels } = useEquipmentModels()
   const { data: equipmentsState } = useEquipmentState()
-  const { data: equipmentWithLastPosition } = useEquipmentWithLastPositions()
+  const { data: equipmentsWithLastPosition } = useEquipmentsWithLastPositions()
+  const { data: equipmentsLastState } = useEquipmentsLastState()
 
   if (
     !equipments ||
     !equipmentsModels ||
     !equipmentsState ||
-    !equipmentWithLastPosition
+    !equipmentsWithLastPosition ||
+    !equipmentsLastState
   ) {
     return { isLoading: true, data: [] }
   }
@@ -33,11 +36,23 @@ export const useEquipments = (): TUseEquipmentsResponse => {
     const equipmentModel = equipmentsModels.find(
       (model) => model.id === equipment.equipmentModelId
     )
-    const equipmentPosition = equipmentWithLastPosition.find(
+    const equipmentPosition = equipmentsWithLastPosition.find(
+      (e) => e.equipmentId === equipment.id
+    )
+    const equipmentState = equipmentsLastState.find(
       (e) => e.equipmentId === equipment.id
     )
 
-    if (!equipmentModel || !equipmentPosition) {
+    const actualState = equipmentsState.find(
+      (s) => s.id === equipmentState?.states[0].equipmentStateId
+    )
+
+    if (
+      !equipmentModel ||
+      !equipmentPosition ||
+      !equipmentState ||
+      !actualState
+    ) {
       return acc
     }
 
@@ -66,6 +81,7 @@ export const useEquipments = (): TUseEquipmentsResponse => {
     const fullEquipment: IFullEquipment = {
       ...equipment,
       equipmentModel: equipmentModelWithStates,
+      state: actualState,
       position: {
         lat: equipmentPosition.position.lat,
         lng: equipmentPosition.position.lon

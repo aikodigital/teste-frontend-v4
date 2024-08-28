@@ -4,7 +4,7 @@ import { useEquipments } from './hooks/useEquipments'
 function App() {
   const { isLoading, data: equipments } = useEquipments()
 
-  if (isLoading || !equipments) {
+  if (isLoading || !equipments || equipments.length <= 0) {
     return <div>carregando</div>
   }
 

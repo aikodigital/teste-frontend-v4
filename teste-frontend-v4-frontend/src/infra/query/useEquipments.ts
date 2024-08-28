@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query'
 
-import { IEquipment } from '../../interfaces/equipment.interface'
-
 import { QUERY_KEYS } from '../../constants/queryKeys'
+
+import { IEquipment } from '../../interfaces/equipment.interface'
 
 import Equipment from '../../../../data/equipment.json'
 
