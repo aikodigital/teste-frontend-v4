@@ -114,7 +114,7 @@ Esta aplicação é um sistema de rastreamento de equipamentos que permite visua
 - **Filtros:** Filtrar as visualizações por estado atual ou modelo de equipamento.
 - **Pesquisa:** Ser possível pesquisar por dados de um equipamento especifico.
 - **Diferenciar os equipamentos:** Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-- **Mostrar a localização atual:** Mostrar a localização atual do usuário no mapa.
+- **Teste:** Teste e2e.
 
 
 ## :rocket:  Tecnologias utilizadas
