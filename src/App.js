@@ -23,14 +23,14 @@ export default function App() {
   const [markers, setMarkers] = useState([]);
 
   // console.log(
-  //   equipmentPositionHistory,
-  //   { equipmentPositionHistory },
-  //   { equipmentBasicData },
-  //   { equipmentModel },
-  //   { equipmentState },
-  //   { equipmentStateHistory },
-  //   loading,
-  //   error
+  // equipmentPositionHistory,
+  // { equipmentPositionHistory },
+  // { equipmentBasicData }
+  // { equipmentModel },
+  // { equipmentState },
+  // { equipmentStateHistory },
+  // loading,
+  // error
   // );
 
   useEffect(() => {
@@ -49,9 +49,25 @@ export default function App() {
       };
     });
 
-    setMarkers(equipmentWithLastPosition);
-    console.log({ equipmentWithLastPosition });
-  }, [equipmentBasicData, equipmentPositionHistory]);
+    const equipmentWithLastState = equipmentStateHistory.map((equipment, index) => {
+      const { name: stateName, color } = equipmentState.find(
+        (equipmentState) => equipment.states[0].equipmentStateId === equipmentState.id
+      );
+
+      return {
+        ...equipmentWithLastPosition[index],
+        lastKnownState:
+          equipment.states?.length > 0 ? { date: equipment.states[0].date, state: stateName, color } : null,
+      };
+    });
+
+    console.log(equipmentWithLastState);
+
+    setMarkers(equipmentWithLastState);
+  }, [equipmentBasicData, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
+
+  // estou pegando a primeira posição e o primeiro estado, não os ultimos
+  // colocar data da ultima posiçao
 
   // equipmentBasicData
   // {
@@ -73,6 +89,14 @@ export default function App() {
   //   ]
   // }
 
+  // equipmentStateHistory
+  // "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
+  // "states": [
+  //     {
+  //         "date": "2021-02-01T03:00:00.000Z",
+  //         "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
+  //     },
+
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
 
@@ -85,7 +109,12 @@ export default function App() {
       {markers.map((marker) => (
         <Fragment key={marker.id}>
           <Marker position={marker.lastKnownPosition} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
+            <Popup>
+              <p>{marker.name}</p>
+              <p>
+                Latitude: {marker.lastKnownPosition[0]}, longitude:{marker.lastKnownPosition[1]}{" "}
+              </p>
+            </Popup>
           </Marker>
         </Fragment>
       ))}
