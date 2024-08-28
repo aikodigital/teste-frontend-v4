@@ -13,11 +13,11 @@ export const useData = () => {
 };
 
 export const DataProvider = ({ children }) => {
-  const [equipmentPositionHistory, setEquipmentPositionHistory] = useState({});
-  const [equipmentBasicData, setEquipmentBasicData] = useState({});
-  const [equipmentModel, setEquipmentModel] = useState({});
-  const [equipmentState, setEquipmentState] = useState({});
-  const [equipmentStateHistory, setEquipmentStateHistory] = useState({});
+  const [equipmentPositionHistory, setEquipmentPositionHistory] = useState([]);
+  const [equipmentBasicData, setEquipmentBasicData] = useState([]);
+  const [equipmentModel, setEquipmentModel] = useState([]);
+  const [equipmentState, setEquipmentState] = useState([]);
+  const [equipmentStateHistory, setEquipmentStateHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
