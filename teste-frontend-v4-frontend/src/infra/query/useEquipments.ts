@@ -6,10 +6,10 @@ import { IEquipment } from '../../interfaces/equipment.interface'
 
 import Equipment from '../../../../data/equipment.json'
 
-const getEquipment = () => JSON.parse(JSON.stringify(Equipment))
+const getEquipments = () => JSON.parse(JSON.stringify(Equipment))
 
-export const useEquipment = (): UseQueryResult<IEquipment[]> =>
+export const useEquipments = (): UseQueryResult<IEquipment[]> =>
   useQuery({
-    queryKey: [QUERY_KEYS.EQUIPMENT],
-    queryFn: getEquipment
+    queryKey: [QUERY_KEYS.EQUIPMENTS],
+    queryFn: getEquipments
   })

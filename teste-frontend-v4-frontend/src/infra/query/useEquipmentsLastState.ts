@@ -34,6 +34,6 @@ export const useEquipmentsLastState = (): UseQueryResult<
   IEquipmentStateHistory[]
 > =>
   useQuery({
-    queryKey: [QUERY_KEYS.EQUIPMENT_STATE_HISTORY],
+    queryKey: [QUERY_KEYS.EQUIPMENTS_WITH_LAST_STATE],
     queryFn: getEquipmentsLastState
   })

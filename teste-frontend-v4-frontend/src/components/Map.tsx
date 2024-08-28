@@ -34,35 +34,34 @@ const Map = ({ equipments }: IMapProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {equipments.map(({ id, name, equipmentModel, state, position }) => (
-        <div id={`marker_${id}`}>
-          <Marker
-            position={position}
-            icon={
-              state.id === EQUIPMENT_STATUS.MAINTAINING
-                ? MaintainingIcon
-                : state.id === EQUIPMENT_STATUS.WORKING
-                ? WorkingIcon
-                : StoppedIcon
-            }
-          >
-            <Popup>
-              <div className="flex flex-col font-normal text-gray-700">
-                <header className="flex flex-row justify-between items-center">
-                  <span className="text-lg font-bold">{name}</span>
-                  <span className="font-bold" style={{ color: state.color }}>
-                    {state.name}
-                  </span>
-                </header>
-                <span className="font-bold">{equipmentModel.name}</span>
-                <span className="text-xs text-gray-400">ID: {id}</span>
+        <Marker
+          key={`marker_${id}`}
+          position={position}
+          icon={
+            state.id === EQUIPMENT_STATUS.MAINTAINING
+              ? MaintainingIcon
+              : state.id === EQUIPMENT_STATUS.WORKING
+              ? WorkingIcon
+              : StoppedIcon
+          }
+        >
+          <Popup>
+            <div className="flex flex-col font-normal text-gray-700">
+              <header className="flex flex-row justify-between items-center">
+                <span className="text-lg font-bold">{name}</span>
+                <span className="font-bold" style={{ color: state.color }}>
+                  {state.name}
+                </span>
+              </header>
+              <span className="font-bold">{equipmentModel.name}</span>
+              <span className="text-xs text-gray-400">ID: {id}</span>
 
-                <footer className="flex justify-end">
-                  <span className="underline cursor-pointer">ver mais</span>
-                </footer>
-              </div>
-            </Popup>
-          </Marker>
-        </div>
+              <footer className="flex justify-end">
+                <span className="underline cursor-pointer">ver mais</span>
+              </footer>
+            </div>
+          </Popup>
+        </Marker>
       ))}
     </MapContainer>
   )

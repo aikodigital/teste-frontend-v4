@@ -9,7 +9,7 @@ import {
 
 import PositionHistory from '../../../../data/equipmentPositionHistory.json'
 
-const getEquipmentsWithLastPositions = () => {
+const getEquipmentsWithLastPosition = () => {
   const equipmentsWithPositions: IEquipmentPositionHistory[] = JSON.parse(
     JSON.stringify(PositionHistory)
   )
@@ -36,10 +36,10 @@ const getEquipmentsWithLastPositions = () => {
   return equipmentsWithLastPosition
 }
 
-export const useEquipmentsWithLastPositions = (): UseQueryResult<
+export const useEquipmentsWithLastPosition = (): UseQueryResult<
   IEquipmentLastPositionHistory[]
 > =>
   useQuery({
     queryKey: [QUERY_KEYS.EQUIPMENT_POSITION_HISTORY],
-    queryFn: getEquipmentsWithLastPositions
+    queryFn: getEquipmentsWithLastPosition
   })

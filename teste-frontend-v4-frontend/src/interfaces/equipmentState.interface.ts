@@ -3,3 +3,8 @@ export interface IEquipmentState {
   name: string
   color: string
 }
+
+export type TFullState = {
+  date: string
+  state: IEquipmentState
+}

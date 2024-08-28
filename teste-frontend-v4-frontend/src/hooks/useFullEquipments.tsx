@@ -5,9 +5,9 @@ import {
 } from '../interfaces/fullEquipment.interface'
 
 import { useEquipmentModels } from '../infra/query/useEquipmentModels'
-import { useEquipment } from '../infra/query/useEquipments'
-import { useEquipmentState } from '../infra/query/useEquipmentState'
-import { useEquipmentsWithLastPositions } from '../infra/query/useEquipmentsLastPositions'
+import { useEquipments } from '../infra/query/useEquipments'
+import { useEquipmentStates } from '../infra/query/useEquipmentState'
+import { useEquipmentsWithLastPosition } from '../infra/query/useEquipmentsLastPositions'
 import { useEquipmentsLastState } from '../infra/query/useEquipmentsLastState'
 
 type TUseEquipmentsResponse = {
@@ -15,16 +15,16 @@ type TUseEquipmentsResponse = {
   data: IFullEquipment[]
 }
 
-export const useEquipments = (): TUseEquipmentsResponse => {
-  const { data: equipments } = useEquipment()
-  const { data: equipmentsModels } = useEquipmentModels()
-  const { data: equipmentsState } = useEquipmentState()
-  const { data: equipmentsWithLastPosition } = useEquipmentsWithLastPositions()
+export const useFullEquipments = (): TUseEquipmentsResponse => {
+  const { data: equipments } = useEquipments()
+  const { data: equipmentModels } = useEquipmentModels()
+  const { data: equipmentsState } = useEquipmentStates()
+  const { data: equipmentsWithLastPosition } = useEquipmentsWithLastPosition()
   const { data: equipmentsLastState } = useEquipmentsLastState()
 
   if (
     !equipments ||
-    !equipmentsModels ||
+    !equipmentModels ||
     !equipmentsState ||
     !equipmentsWithLastPosition ||
     !equipmentsLastState
@@ -33,7 +33,7 @@ export const useEquipments = (): TUseEquipmentsResponse => {
   }
 
   const equipmentsWithModels = equipments.reduce((acc, equipment) => {
-    const equipmentModel = equipmentsModels.find(
+    const equipmentModel = equipmentModels.find(
       (model) => model.id === equipment.equipmentModelId
     )
     const equipmentPosition = equipmentsWithLastPosition.find(
