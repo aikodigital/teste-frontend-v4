@@ -14,7 +14,7 @@ const useFullEquipment = (id: string): TUseEquipmentResponse => {
 
   const { data: equipmentLastStates } = useEquipmentLastStates(id)
 
-  const equipment = equipments.find((e) => (e.id = id))
+  const equipment = equipments.find((e) => e.id === id)
 
   if (!equipment || !equipmentLastStates) {
     return {

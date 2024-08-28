@@ -1,14 +1,19 @@
+import { useNavigate } from 'react-router-dom'
 import Map from '../components/Map'
 import { useFullEquipments } from '../hooks/useFullEquipments'
 
 const MapPage = () => {
+  const navigate = useNavigate()
+
   const { isLoading, data: equipments } = useFullEquipments()
 
   if (isLoading || !equipments) {
     return <div>carregando</div>
   }
 
-  console.log('equipment', equipments)
+  const handleNavigateToEquipment = (id: string) => {
+    navigate(`equipment/${id}`)
+  }
 
   return (
     <main className="h-full w-full flex flex-col gap-4 p-12 bg-gray-50 overflow-auto">
@@ -31,7 +36,10 @@ const MapPage = () => {
       </div>
 
       <div className="h-[600px] w-full rounded-xl overflow-hidden shadow-lg">
-        <Map equipments={equipments} />
+        <Map
+          equipments={equipments}
+          onSeeMoreClick={handleNavigateToEquipment}
+        />
       </div>
     </main>
   )

@@ -11,9 +11,10 @@ export type TMarker = { lat: number; lng: number }
 
 interface IMapProps {
   equipments: IFullEquipment[]
+  onSeeMoreClick: (id: string) => void
 }
 
-const Map = ({ equipments }: IMapProps) => {
+const Map = ({ equipments, onSeeMoreClick }: IMapProps) => {
   const MaintainingIcon = new Icon({
     iconUrl: iconMaintaining,
     iconSize: new Point(24, 24)
@@ -57,7 +58,12 @@ const Map = ({ equipments }: IMapProps) => {
               <span className="text-xs text-gray-400">ID: {id}</span>
 
               <footer className="flex justify-end">
-                <span className="underline cursor-pointer">ver mais</span>
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() => onSeeMoreClick(id)}
+                >
+                  ver mais
+                </span>
               </footer>
             </div>
           </Popup>

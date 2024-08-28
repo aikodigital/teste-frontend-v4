@@ -1,18 +1,27 @@
+import { useNavigate, useParams } from 'react-router-dom'
 import useFullEquipment from '../hooks/useFullEquipment'
 
-const ID = 'a7c53eb1-4f5e-4eba-9764-ad205d0891f9'
-
 const EquipmentPage = () => {
-  const { isLoading, equipment, states } = useFullEquipment(ID)
+  const navigate = useNavigate()
+  const params: any = useParams()
+
+  const { isLoading, equipment, states } = useFullEquipment(params.id)
 
   if (isLoading || !equipment || !states) {
     return <div>carregando</div>
   }
 
+  const handleGoBack = () => {
+    navigate(-1)
+  }
+
   return (
     <div className="h-full w-full flex flex-col gap-2 p-12 bg-gray-50 overflow-auto">
       <div className="flex">
-        <span className="text-lg text-gray-500 cursor-pointer">
+        <span
+          className="text-lg text-gray-500 cursor-pointer"
+          onClick={handleGoBack}
+        >
           {`← voltar`}
         </span>
       </div>

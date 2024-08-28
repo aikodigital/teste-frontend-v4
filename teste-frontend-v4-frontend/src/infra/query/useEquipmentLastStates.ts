@@ -37,7 +37,7 @@ export const useEquipmentLastStates = (
   id: string
 ): UseQueryResult<TFullState[]> => {
   return useQuery({
-    queryKey: [QUERY_KEYS.EQUIPMENT_LAST_STATES],
+    queryKey: [QUERY_KEYS.EQUIPMENT_LAST_STATES, id],
     queryFn: () => getEquipmentsLastState(id)
   })
 }
