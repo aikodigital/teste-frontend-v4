@@ -38,7 +38,6 @@ const Map: React.FC = () => {
     selectedEquipmentModel,
     equipmentHistory,
     selectedEquipmentId,
-    handleOpenDrawer,
     filterState,
     setFilterState,
     filterModel,
@@ -46,23 +45,13 @@ const Map: React.FC = () => {
     filteredEquipment,
     searchQuery,
     setSearchQuery,
+    handleFilterButtonClick,
+    filterDrawerOpened,
+    setFilterDrawerOpened,
+    handleViewHistory,
+    drawerOpened,
+    setDrawerOpened,
   } = useMap({ equipment, models, history, states, positions });
-
-  const [filterDrawerOpened, setFilterDrawerOpened] = React.useState(false);
-  const [drawerOpened, setDrawerOpened] = React.useState(false);
-
-  const handleFilterButtonClick = () => {
-    setDrawerOpened(false);
-    setTimeout(() => setFilterDrawerOpened(true), 300);
-  };
-
-  const handleViewHistory = (id: string) => {
-    setFilterDrawerOpened(false);
-    setTimeout(() => {
-      handleOpenDrawer(id);
-      setDrawerOpened(true);
-    }, 300);
-  };
 
   const getMarkerIcon = (modelId: string) => {
     switch (modelId) {
