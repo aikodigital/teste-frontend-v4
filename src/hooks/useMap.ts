@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
   EquipmentModel,
@@ -29,85 +29,49 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   const [filterModel, setFilterModel] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const handleOpenDrawer = (id: string) => {
-    const equip = equipment.find((e) => e.id === id);
-    if (!equip) return;
+  const findEquipmentModel = (equipmentId: string) => {
+    const equip = equipment.find(e => e.id === equipmentId);
+    if (!equip) return null;
+    return models.find(model => model.id === equip.equipmentModelId) || null;
+  };
 
-    const equipModel = models.find(
-      (model) => model.id === equip.equipmentModelId
-    );
+  const getLatestState = (equipmentId: string) => {
+    return history
+      .filter(item => item.equipmentId === equipmentId)
+      .flatMap(item => item.states)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+  };
+
+  const handleOpenDrawer = useCallback((id: string) => {
+    const equipModel = findEquipmentModel(id);
     if (!equipModel) return;
 
     setSelectedEquipmentId(id);
     setSelectedEquipmentModel(equipModel);
     setEquipmentHistory(
       history
-        .filter((item) => item.equipmentId === id)
-        .flatMap((item) => item.states)
+        .filter(item => item.equipmentId === id)
+        .flatMap(item => item.states)
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     );
     setOpened(true);
-  };
+  }, [history, equipment, models]);
 
-  const filteredEquipment = equipment.filter((equip) => {
-    const equipmentModel = models.find(
-      (model) => model.id === equip.equipmentModelId
-    );
 
-    const latestStateHistory = history
-      .filter((item) => item.equipmentId === equip.id)
-      .flatMap((item) => item.states)
-      .sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      )[0];
+  const filteredEquipment = equipment.filter(equip => {
+    const equipmentModel = findEquipmentModel(equip.id);
+    const latestStateHistory = getLatestState(equip.id);
+    const equipmentState = latestStateHistory ? states[latestStateHistory.equipmentStateId] : null;
 
-    const equipmentState = latestStateHistory
-      ? states[latestStateHistory.equipmentStateId]
-      : null;
-
-    const isStateMatch = filterState
-      ? equipmentState?.id === filterState
-      : true;
-
-    const isModelMatch = filterModel
-      ? equipmentModel?.id === filterModel
-      : true;
-
+    const isStateMatch = filterState ? equipmentState?.id === filterState : true;
+    const isModelMatch = filterModel ? equipmentModel?.id === filterModel : true;
     const isSearchMatch = searchQuery
       ? equip.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (equipmentModel &&
-          equipmentModel.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        equipmentModel?.name.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     return isStateMatch && isModelMatch && isSearchMatch;
   });
-
-  const calculateProductivity = (equipmentId: string) => {
-    const EquipmentStateHistory = history.find(
-      (item) => item.equipmentId === equipmentId
-    );
-
-    if (!EquipmentStateHistory) {
-      return 0;
-    }
-
-    const operatingState = EquipmentStateHistory.states.filter(
-      (state) => states[state.equipmentStateId].name === 'Operando'
-    );
-
-    const operatingHours = operatingState.reduce((total, state) => {
-      const start = new Date(state.date);
-      const end = new Date(state.date);
-      const durationInHours =
-        (end.getTime() - start.getTime()) / (1000 * 60 * 60);
-      return total + durationInHours;
-    }, 0);
-
-    const totalHours = 24;
-    const productivity = (operatingHours / totalHours) * 100;
-
-    return Math.round(productivity);
-  };
 
   return {
     opened,
@@ -123,7 +87,6 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     filteredEquipment,
     searchQuery,
     setSearchQuery,
-    calculateProductivity,
   };
 };
 

@@ -1,65 +1,77 @@
 import { useEffect } from 'react';
-import { Position } from '../types/interface';
+import {
+  Position,
+  Equipment,
+  EquipmentState,
+  EquipmentModel,
+  EquipmentStateHistory,
+  EquipmentPositionHistory,
+} from '../types/interface';
 import useEquipmentStore from '../store/useEquipmentStore';
+
+const transformPositions = (positions: EquipmentPositionHistory[]) =>
+  positions.reduce((acc: Record<string, Position[]>, item) => {
+    acc[item.equipmentId] = item.positions;
+    return acc;
+  }, {});
+
+const transformStates = (states: EquipmentState[]) =>
+  states.reduce((acc: Record<string, EquipmentState>, state) => {
+    acc[state.id] = state;
+    return acc;
+  }, {});
+
+const fetchData = async <T, U>(
+  url: string,
+  transformer?: (data: T) => U
+): Promise<U> => {
+  const response = await fetch(url);
+  const data: T = await response.json();
+  return transformer ? transformer(data) : (data as unknown as U);
+};
 
 const useData = () => {
   const { setEquipment, setPositions, setStates, setModels, setStateHistory } =
     useEquipmentStore();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadAllData = async () => {
       try {
-        const equipmentResponse = await fetch('/data/equipment.json');
-        const equipmentData = await equipmentResponse.json();
+        const [
+          equipmentData,
+          positionsData,
+          statesData,
+          modelsData,
+          historyData,
+        ] = await Promise.all([
+          fetchData<Equipment[], Equipment[]>('/data/equipment.json'),
+          fetchData<EquipmentPositionHistory[], Record<string, Position[]>>(
+            '/data/equipmentPositionHistory.json',
+            transformPositions
+          ),
+          fetchData<EquipmentState[], Record<string, EquipmentState>>(
+            '/data/equipmentState.json',
+            transformStates
+          ),
+          fetchData<EquipmentModel[], EquipmentModel[]>(
+            '/data/equipmentModel.json'
+          ),
+          fetchData<EquipmentStateHistory[], EquipmentStateHistory[]>(
+            '/data/equipmentStateHistory.json'
+          ),
+        ]);
+
         setEquipment(equipmentData);
-
-        const positionsResponse = await fetch(
-          '/data/equipmentPositionHistory.json'
-        );
-        const positionsData = await positionsResponse.json();
-        const positionsMap = positionsData.reduce(
-          (
-            acc: Record<string, Position[]>,
-            item: { equipmentId: string; positions: Position[] }
-          ) => {
-            acc[item.equipmentId] = item.positions;
-            return acc;
-          },
-          {}
-        );
-        setPositions(positionsMap);
-
-        const statesResponse = await fetch('/data/equipmentState.json');
-        const statesData = await statesResponse.json();
-        const stateMap = statesData.reduce(
-          (
-            acc: Record<string, { id: string; name: string; color: string }>,
-            state: { id: string; name: string; color: string }
-          ) => {
-            acc[state.id] = {
-              id: state.id,
-              name: state.name,
-              color: state.color,
-            };
-            return acc;
-          },
-          {}
-        );
-        setStates(stateMap);
-
-        const modelsResponse = await fetch('/data/equipmentModel.json');
-        const modelsData = await modelsResponse.json();
+        setPositions(positionsData);
+        setStates(statesData);
         setModels(modelsData);
-
-        const historyResponse = await fetch('/data/equipmentStateHistory.json');
-        const historyData = await historyResponse.json();
         setStateHistory(historyData);
       } catch (error) {
         console.error('Erro ao carregar dados:', error);
       }
     };
 
-    fetchData();
+    loadAllData();
   }, [setEquipment, setPositions, setStates, setModels, setStateHistory]);
 };
 

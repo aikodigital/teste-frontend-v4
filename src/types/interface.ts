@@ -35,3 +35,7 @@ export interface EquipmentModel {
     value: number;
   }[];
 }
+export interface EquipmentPositionHistory {
+  equipmentId: string;
+  positions: Position[];
+}
