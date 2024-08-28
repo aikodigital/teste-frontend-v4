@@ -14,7 +14,7 @@ O design do produto definido a partir dos objetivos resultou em um projeto com 2
 ✅ - Posições dos equipamentos;
 ✅ - Estado atual do equipamento: Visualizar o estado mais ;recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc;
 ✅ - Histórico de estados do equipamento: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento;
-⚙️ - Filtros: Filtrar as visualizações por estado atual ou modelo de equipamento;
+✅ - Filtros: Filtrar as visualizações por estado atual ou modelo de equipamento;
 ❌ - Pesquisa: Ser possível pesquisar por dados de um equipamento especifico;
 ✅ - Percentual de Produtividade do equipamento: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser 18 / 24 * 100 = 75% de produtividade;
 ✅ - Ganho por equipamento: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou 10 * 100 + 4 * -20 = 920;

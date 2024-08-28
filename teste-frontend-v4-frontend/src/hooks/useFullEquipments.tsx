@@ -15,7 +15,10 @@ type TUseEquipmentsResponse = {
   data: IFullEquipment[]
 }
 
-export const useFullEquipments = (): TUseEquipmentsResponse => {
+export const useFullEquipments = (
+  model?: string,
+  state?: string
+): TUseEquipmentsResponse => {
   const { data: equipments } = useEquipments()
   const { data: equipmentModels } = useEquipmentModels()
   const { data: equipmentsState } = useEquipmentStates()
@@ -36,10 +39,18 @@ export const useFullEquipments = (): TUseEquipmentsResponse => {
     const equipmentModel = equipmentModels.find(
       (model) => model.id === equipment.equipmentModelId
     )
-    const equipmentPosition = equipmentsWithLastPosition.find(
+    if (model && model !== equipmentModel?.id) {
+      return acc
+    }
+
+    const equipmentState = equipmentsLastState.find(
       (e) => e.equipmentId === equipment.id
     )
-    const equipmentState = equipmentsLastState.find(
+    if (state && state !== equipmentState?.states[0].equipmentStateId) {
+      return acc
+    }
+
+    const equipmentPosition = equipmentsWithLastPosition.find(
       (e) => e.equipmentId === equipment.id
     )
 

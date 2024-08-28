@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useFullEquipments } from '@hooks/useFullEquipments'
@@ -10,7 +11,13 @@ import Map from '@components/MainMap/Map'
 const MapPage = () => {
   const navigate = useNavigate()
 
-  const { isLoading, data: equipments } = useFullEquipments()
+  const [filterModel, setFilterModel] = useState('')
+  const [filterState, setFilterState] = useState('')
+
+  const { isLoading, data: equipments } = useFullEquipments(
+    filterModel,
+    filterState
+  )
   const { isLoading: isLoadingModels, data: equipmentModels } =
     useEquipmentModels()
   const { isLoading: isLoadingStates, data: equipmentStates } =
@@ -24,6 +31,13 @@ const MapPage = () => {
     navigate(`equipment/${id}`)
   }
 
+  const handleChangeFilterModel = (v: string) => setFilterModel(v)
+  const handleChangeFilterState = (v: string) => setFilterState(v)
+  const handleResetFilter = () => {
+    handleChangeFilterModel('')
+    handleChangeFilterState('')
+  }
+
   return (
     <main className="h-full w-full flex flex-col gap-4 p-12 py-6 bg-blue-500 overflow-auto">
       <header>
@@ -33,8 +47,11 @@ const MapPage = () => {
       <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md">
         <input placeholder="Pesquisar" />
         modelo
-        <select defaultValue="">
-          <option disabled>Todos</option>
+        <select
+          value={filterModel}
+          onChange={(e) => handleChangeFilterModel(e.currentTarget.value)}
+        >
+          <option value="">Todos</option>
           {equipmentModels?.map((model) => (
             <option key={model.id} value={model.id}>
               {model.name}
@@ -42,14 +59,18 @@ const MapPage = () => {
           ))}
         </select>
         estado
-        <select defaultValue="">
-          <option disabled>Todos</option>
+        <select
+          value={filterState}
+          onChange={(e) => handleChangeFilterState(e.currentTarget.value)}
+        >
+          <option value="">Todos</option>
           {equipmentStates?.map((state) => (
             <option key={state.id} value={state.id}>
               {state.name}
             </option>
           ))}
         </select>
+        <span onClick={handleResetFilter}>limpar filtro</span>
       </div>
 
       <div className="h-[600px] w-full rounded-xl overflow-hidden shadow-lg">
