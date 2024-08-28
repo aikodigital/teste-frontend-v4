@@ -1,6 +1,9 @@
 /** Core */
 import type { PointExpression } from 'leaflet';
 
+/** Data */
+import { equipmentStateData } from '~/data/equipment';
+
 /** Interfaces */
 import type {
   IEquipment,
@@ -123,4 +126,8 @@ export function getZoomLevel(positions: { lat: number; lon: number }[]) {
   }
 
   return 2;
+}
+
+export function getStates() {
+  return equipmentStateData.map((state) => state.name);
 }
