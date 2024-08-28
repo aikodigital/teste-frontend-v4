@@ -2,14 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { EquipmentService } from './core/services/equipment/equipment.service';
 import { MapComponent } from './core/components/map/map.component';
-import { IPosition } from './core/interfaces/iPosition';
-import { IEquipmentState } from './core/interfaces/iEquipmentState';
 import { ICustomEquipment } from './core/interfaces/iCustomEquipment';
+import { HeaderComponent } from './core/shared/header/header.component';
+import { TimelineComponent } from './core/components/timeline/timeline.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MapComponent],
+  imports: [RouterOutlet, MapComponent, HeaderComponent, TimelineComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

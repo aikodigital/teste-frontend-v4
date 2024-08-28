@@ -41,7 +41,6 @@ export class MapComponent implements OnInit {
   private subscribeToPositions(): void {
     this.equipmentService.positions.subscribe((positions) => {
       positions.forEach((item) => {
-        console.log(item);
         this.addMarker(item);
       });
     });
@@ -49,7 +48,7 @@ export class MapComponent implements OnInit {
 
   private addMarker(equipment: ICustomEquipment): void {
     if (!this.map) return;
-
+    console.log(equipment);
     const status = equipment.model.hourlyEarnings.slice(-1)[0].status;
     const icon = this.createCustomIcon(equipment.equipmentModelId);
     const layer = LF.marker(
@@ -66,8 +65,21 @@ export class MapComponent implements OnInit {
       layer.openPopup();
     });
 
+    let arr: IEquipmentState[] = [];
     layer.on('click', () => {
-      console.log('Equipamento clicado:', 1);
+      this.equipmentService
+        .getEquipmentStateHistory(equipment.id)
+        ?.states.forEach((item) => {
+          arr.push(
+            this.equipmentService.getEquipmentState(item.equipmentStateId)!
+          );
+        });
+
+      this.equipmentService.equipmentStateHistory.next({
+        stateHistory: arr,
+        equipmentInfo: equipment,
+      });
+      console.log(arr);
     });
   }
 

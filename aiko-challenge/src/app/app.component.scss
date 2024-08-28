@@ -1,0 +1,10 @@
+:host {
+  margin: 0;
+  display: block;
+  width: 100%;
+
+  .timeline {
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+}

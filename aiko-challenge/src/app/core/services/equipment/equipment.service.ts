@@ -11,7 +11,7 @@ import { IEquipmentState } from '../../interfaces/iEquipmentState';
 import { IEquipment } from '../../interfaces/iEquipment';
 import { equipmentPositionHistory } from '../../../../assets/data/equipmentPositionHistory';
 import { IEquipemntPositionHistory } from '../../interfaces/iEquipmentPositionHistory';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ICustomEquipment } from '../../interfaces/iCustomEquipment';
 
 @Injectable({
@@ -19,6 +19,14 @@ import { ICustomEquipment } from '../../interfaces/iCustomEquipment';
 })
 export class EquipmentService {
   positions = new BehaviorSubject<ICustomEquipment[]>([]);
+
+  equipmentStateHistory = new BehaviorSubject<{
+    stateHistory: IEquipmentState[];
+    equipmentInfo: ICustomEquipment | undefined;
+  }>({
+    stateHistory: [],
+    equipmentInfo: undefined,
+  });
 
   getEquipments(): IEquipment[] {
     return equipmentList;
