@@ -7,7 +7,6 @@
   padding: 16px;
 }
 .modelContainer {
-  background-color: #e74c3c;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -41,10 +40,11 @@
   font-size: 16px;
 }
 .modelName {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
   margin: 0;
+  max-width: 80px;
 }
 .containerModel {
   display: flex;
@@ -81,6 +81,10 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  text-align: right;
+  text-decoration: underline;
+  font-size: 10px;
+
 }
 
 .titleList {
@@ -132,3 +136,9 @@
   padding: 20px;
 }
 
+@media (max-width: 1080px) {
+  .container {
+    width: 200px;
+  margin: 16px 4px;
+  }
+}

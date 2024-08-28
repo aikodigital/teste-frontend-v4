@@ -2,7 +2,6 @@
   filter: grayscale(100%);
 }
 .modelContainer {
-  background-color: #e74c3c;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -40,6 +39,26 @@
   margin: 0;
 }
 .state {
-  margin: 0;
+  margin: 8px 0;
   font-weight: 400;
+}
+.positionHistory{
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+@media (max-width: 1080px) {
+  .container {
+    width: auto;
+    /* margin: 16px;
+    border-radius: 8px;
+    border: 1px solid rgb(209, 209, 209);
+    background-color: white;
+    padding: 16px; */
+  }
 }

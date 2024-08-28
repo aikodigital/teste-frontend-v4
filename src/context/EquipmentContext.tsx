@@ -32,7 +32,9 @@ interface EquipmentContextType {
   filtered: boolean;
   setFiltered: React.Dispatch<React.SetStateAction<boolean>>;
   local: Number[];
+  localHistory: Number[];
   setLocal: React.Dispatch<React.SetStateAction<Number[]>>;
+  setLocalHistory: React.Dispatch<React.SetStateAction<Number[]>>;
   setEquipment: React.Dispatch<React.SetStateAction<Equipment[]>>;
   setEquipmentModel: React.Dispatch<React.SetStateAction<EquipmentModel[]>>;
   setEquipmentPositionHistory: React.Dispatch<
@@ -63,6 +65,7 @@ export const EquipmentProvider: React.FC<{ children: ReactNode }> = ({
   const [resultFilter, setResultFilter] = useState<FilteredEquipment[]>([]);
   const [filtered, setFiltered] = useState<boolean>(false);
   const [local, setLocal] = useState<Number[]>();
+  const [localHistory, setLocalHistory] = useState<Number[]>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,7 +105,9 @@ export const EquipmentProvider: React.FC<{ children: ReactNode }> = ({
         filtered,
         setFiltered,
         local,
+        localHistory,
         setLocal,
+        setLocalHistory,
         setEquipment,
         setEquipmentModel,
         setEquipmentPositionHistory,

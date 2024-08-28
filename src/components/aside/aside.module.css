@@ -6,3 +6,11 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+@media (max-width: 1080px) {
+  .container {
+    width: 100%;
+    height: 72vh;
+    display: flex;
+    padding: 0 8px;
+  }
+}

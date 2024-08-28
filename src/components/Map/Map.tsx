@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -17,10 +17,9 @@ const Map: React.FC = () => {
   const defaultLat = -19.163956;
   const defaultLon = -46.087835;
 
-  const [position, setPosition] = useState({
-    lat: defaultLat,
-    lon: defaultLon,
-  });
+  const [position, setPosition] = useState({ lat: defaultLat, lon: defaultLon });
+  const [selectedEquipment, setSelectedEquipment] = useState(null);
+  const [historyPositions, setHistoryPositions] = useState([]);
 
   useEffect(() => {
     if (local && local.length === 2) {
@@ -28,6 +27,13 @@ const Map: React.FC = () => {
       setPosition({ lat, lon });
     }
   }, [local]);
+
+  useEffect(() => {
+    if (selectedEquipment) {
+      setHistoryPositions([]);
+      setSelectedEquipment(null);
+    }
+  }, [filteredData, organizedData]);
 
   const RecenterAutomatically = ({ lat, lon }) => {
     const map = useMap();
@@ -46,20 +52,35 @@ const Map: React.FC = () => {
     Harvester: harvester,
   };
 
-  const defaultIconUrl =
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png'; 
+  const defaultIconUrl = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png';
 
   const dataToMap = filteredData.length > 0 ? filteredData : organizedData;
+
+  const handleHistoryPosition = (equipment) => {
+    setSelectedEquipment(equipment);
+    const historyPositions = equipment.positions.map(pos => [pos.lat, pos.lon]);
+    setHistoryPositions(historyPositions);
+
+    if (historyPositions.length > 0) {
+      setPosition({
+        lat: historyPositions[0][0],
+        lon: historyPositions[0][1],
+      });
+    }
+  };
+
+  const customIcon = L.divIcon({
+    className: `${styles.modelContainer}`,
+    html: `<div style="background-color: grey; border-radius: 50%; width: 10px; height: 10px; border: none;"></div>`,
+    iconSize: [10, 10],
+    iconAnchor: [5, 5],
+  });
 
   return (
     <MapContainer
       center={[position.lat, position.lon]}
       zoom={13}
-      style={{
-        height: '100%',
-        width: '100%',
-        borderRadius: '8px',
-      }}
+      style={{ height: '100%', width: '100%', borderRadius: '8px' }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -68,49 +89,74 @@ const Map: React.FC = () => {
       />
       <MenuFilter />
 
-      {dataToMap.map((item, index) => {
-        const lastPosition = item.positions[item.positions.length - 1];
-        const lastState = item.states[item.states.length - 1].stateName;
-
-        let stateClass = '';
-        switch (lastState) {
-          case 'Operando':
-            stateClass = styles.operando;
-            break;
-          case 'Parado':
-            stateClass = styles.parado;
-            break;
-          case 'Manutenção':
-            stateClass = styles.manutencao;
-            break;
-          default:
-            stateClass = ''; 
-        }
-
-        const customIcon = L.divIcon({
-          className: `${styles.modelContainer} ${stateClass}`, 
-          html: `<img src="${iconMapping[item.modelName] || defaultIconUrl}" class="${styles.modelImg}" />`,
-          iconSize: [40, 40],
-          iconAnchor: [20, 40],
-        });
-
-        return (
+      {/* Renderiza os pontos históricos se um equipamento estiver selecionado */}
+      {selectedEquipment ? (
+        <>
+          {historyPositions.map((pos, index) => (
+            <Marker
+              key={index}
+              position={pos}
+              icon={customIcon}
+            />
+          ))}
           <Marker
-            key={index}
-            position={[lastPosition.lat, lastPosition.lon]}
+            position={[
+              selectedEquipment.positions[selectedEquipment.positions.length - 1].lat,
+              selectedEquipment.positions[selectedEquipment.positions.length - 1].lon,
+            ]}
             icon={customIcon}
           >
-            <Popup className={styles.popup}>
-              <h5 className={styles.title}>
-                {item.name} <br />
-              </h5>
-              <h5 className={styles.state}>
-                {item.states[item.states.length - 1].stateName}
-              </h5>
+            <Popup>
+              {selectedEquipment.name} - Última posição
             </Popup>
           </Marker>
-        );
-      })}
+          <Polyline
+            positions={historyPositions}
+            color="grey"
+            dashArray="4, 4"
+            weight={1}
+          />
+        </>
+      ) : (
+        dataToMap.map((item, index) => {
+          const lastPosition = item.positions[item.positions.length - 1];
+          const lastState = item.states[item.states.length - 1].stateName;
+
+          const stateClass = lastState === 'Operando' ? styles.operando :
+                             lastState === 'Parado' ? styles.parado :
+                             lastState === 'Manutenção' ? styles.manutencao : '';
+
+          const itemIcon = L.divIcon({
+            className: `${styles.modelContainer} ${stateClass}`,
+            html: `<img src="${iconMapping[item.modelName] || defaultIconUrl}" class="${styles.modelImg}" />`,
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+          });
+
+          return (
+            <Marker
+              key={index}
+              position={[lastPosition.lat, lastPosition.lon]}
+              icon={itemIcon}
+            >
+              <Popup className={styles.popup}>
+                <h5 className={styles.title}>
+                  {item.name} <br />
+                </h5>
+                <h5 className={styles.state}>
+                  {lastState}
+                </h5>
+                <button
+                  className={styles.positionHistory}
+                  onClick={() => handleHistoryPosition(item)}
+                >
+                  Ver histórico de posições
+                </button>
+              </Popup>
+            </Marker>
+          );
+        })
+      )}
 
       <RecenterAutomatically lat={position.lat} lon={position.lon} />
     </MapContainer>

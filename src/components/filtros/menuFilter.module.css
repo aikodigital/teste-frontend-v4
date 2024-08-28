@@ -87,3 +87,20 @@
 .selected{
   border: 1px solid rgb(209, 209, 209);
 }
+
+@media (max-width: 1080px) {
+  .content {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    z-index: 999;
+    position: absolute;
+    gap: 8px;
+    margin: 11px 12px 0 12px;
+    right: 56px;
+    background-color: white;
+    border: 1px solid rgb(209, 209, 209);
+    width: 234px;
+    padding: 8px;
+  }
+}

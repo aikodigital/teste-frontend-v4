@@ -42,7 +42,7 @@ export const Input: React.FC = () => {
         <img className={styles.lupa} src={lupa} alt="Lupa" />
         <input
           type="text"
-          placeholder="Pesquise por nome, tipo ou estado do equipamento"
+          placeholder="Busque nome, tipo ou estado do equipamento"
           className={styles.inputNav}
           value={searchTerm}
           onChange={handleInputChange}

@@ -3,4 +3,11 @@
   display: flex;
   margin: 0 auto;
   gap: 16px;
+  height: 84%;
+}
+@media (max-width: 1080px) {
+  .container {
+    flex-direction: column-reverse;
+
+  }
 }

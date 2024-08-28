@@ -1,10 +1,9 @@
 .container {
-    width: 98vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
+  width: 98vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .inputNav {
   height: 48px;
@@ -18,6 +17,7 @@
 .inputNav:focus {
   border: 1px solid rgb(209, 209, 209);
 }
+
 .inputNav {
   border: none;
   width: 100%;
@@ -26,19 +26,23 @@
   font-size: 16px;
 }
 
-
 .searchContainer {
-    position: relative; /* Necessário para posicionar a lupa dentro do contêiner */
-    width: 40%;
-  
-  }
-  .lupa {
-    position: absolute;
-    left: 16px; /* Ajuste conforme necessário */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Corrige o alinhamento vertical */
-    width: 16px; /* Ajuste o tamanho da lupa conforme necessário */
-    height: 16px; /* Ajuste o tamanho da lupa conforme necessário */
-    pointer-events: none; /* Garante que a lupa não interfira na interação com o campo de entrada */
+  position: relative; /* Necessário para posicionar a lupa dentro do contêiner */
+  width: 40%;
+}
+.lupa {
+  position: absolute;
+  left: 16px; /* Ajuste conforme necessário */
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%); /* Corrige o alinhamento vertical */
+  width: 16px; /* Ajuste o tamanho da lupa conforme necessário */
+  height: 16px; /* Ajuste o tamanho da lupa conforme necessário */
+  pointer-events: none; /* Garante que a lupa não interfira na interação com o campo de entrada */
   opacity: 0.4;
+}
+
+@media (max-width: 1080px) {
+  .inputNav::placeholder {
+    color: transparent; /* Torna o texto do placeholder invisível */
   }
+}
