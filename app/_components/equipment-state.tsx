@@ -1,11 +1,13 @@
 import { Badge } from "./ui/badge";
 import statusProps from "../data/equipmentState.json";
+import { RadioIcon } from "lucide-react";
 
 interface EquipmentStateProps {
   equipmentStateId: string;
+  variant?: "badge" | "icon";
 }
 
-const EquipmentState = ({ equipmentStateId }: EquipmentStateProps) => {
+const EquipmentState = ({ equipmentStateId, variant="badge" }: EquipmentStateProps) => {
   const status = statusProps.filter((status) => status.id === equipmentStateId);
 
   if (status.length === 0) {
@@ -13,14 +15,23 @@ const EquipmentState = ({ equipmentStateId }: EquipmentStateProps) => {
   }
 
   return (
-    <Badge
-      className="whitespace-nowrap px-2 py-1"
-      style={{
-        backgroundColor: status[0].color,
-      }}
-    >
-      • {status[0].name}
-    </Badge>
+    <>
+      {variant === "badge" ? (
+        <Badge
+          className="whitespace-nowrap px-2 py-1"
+          style={{
+            backgroundColor: status[0].color,
+          }}
+        >
+          • {status[0].name}
+        </Badge>
+      ) : (
+        <div className="p-1 flex flex-col items-center">
+          <RadioIcon size={30} color={status[0].color} />
+          <span>{status[0].name}</span>
+        </div>
+      )}
+    </>
   );
 };
 
