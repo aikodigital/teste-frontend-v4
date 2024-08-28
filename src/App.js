@@ -33,6 +33,19 @@ export default function App() {
   // error
   // );
 
+  const formatDate = (unformattedDateString) => {
+    const date = new Date(unformattedDateString);
+
+    const readableDate = date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "America/Sao_Paulo",
+    });
+
+    return readableDate;
+  };
+
   useEffect(() => {
     const basicEquipmentData = equipmentBasicData.map((equipment) => {
       return {
@@ -62,7 +75,7 @@ export default function App() {
       return {
         ...equipmentWithLastPosition[index],
         lastKnownState:
-          equipment.states?.length > 0 ? { date: equipment.states[0].date, state: stateName, color } : null,
+          equipment.states?.length > 0 ? { date: equipment.states[0].date, name: stateName, color } : null,
       };
     });
 
@@ -118,6 +131,10 @@ export default function App() {
               <p>{marker.name}</p>
               <p>
                 Latitude: {marker.lastKnownPosition.coordinates[0]}, longitude:{marker.lastKnownPosition.coordinates[1]}
+                , data: {formatDate(marker.lastKnownPosition.date)}
+              </p>
+              <p>
+                Estado: {marker.lastKnownState.name}, data: {formatDate(marker.lastKnownState.date)}
               </p>
             </Popup>
           </Marker>
