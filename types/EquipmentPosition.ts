@@ -1,5 +1,6 @@
 export default interface EquipmentPosition {
-  date: Date
+  equipmentId: string
+  date: string
   lat: number
   lon: number
 }

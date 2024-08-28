@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
 
 <template>
   <footer class="footer">
     <nav>
       <div class="nav-section">
-        <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink to="/">Início</NuxtLink>
         <NuxtLink to="/equipments">Equipamentos</NuxtLink>
+        <NuxtLink to="/map">Mapa</NuxtLink>
       </div>
       <div class="nav-section">
         <a href="https://facebook.com/rcabr31" target="_blank">
@@ -40,29 +40,23 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  background-color: rgb(0, 51, 128);
+  background-color: var(--primary-color);
   color: white;
   padding: 24px;
-  text-align: center;
 
   nav {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 24px;
+  }
 
-    .nav-section {
-      display: flex;
-      gap: 16px;
-      font-weight: bold;
+  .nav-section {
+    display: flex;
+    gap: 16px;
 
-      a {
-        color: white;
-        text-decoration: none;
+    a {
+      color: white;
 
-        &:hover {
-          color: rgb(0, 193, 0);
-        }
+      &:hover {
+        color: var(--secondary-color);
       }
     }
   }

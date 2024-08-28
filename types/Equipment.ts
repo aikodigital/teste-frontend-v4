@@ -5,7 +5,7 @@ import type EquipmentStateDate from "./EquipmentStateDate"
 export default interface Equipment {
   id: string
   name: string
-  model?: EquipmentModel
-  positions?: EquipmentPosition[]
-  states?: EquipmentStateDate[]
+  model: EquipmentModel | null
+  positions: EquipmentPosition[]
+  stateDates: EquipmentStateDate[]
 }

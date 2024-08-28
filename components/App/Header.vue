@@ -7,8 +7,9 @@
       <img src="~/assets/aiko.png" alt="logo" />
     </NuxtLink>
     <nav>
-      <NuxtLink to="/">Home</NuxtLink>
+      <NuxtLink to="/">Início</NuxtLink>
       <NuxtLink to="/equipments">Equipamentos</NuxtLink>
+      <NuxtLink to="/map">Mapa</NuxtLink>
     </nav>
   </header>
 </template>
@@ -25,18 +26,11 @@
     height: 24px;
   }
 
-  nav {
-    display: flex;
-    gap: 24px;
+  a {
+    color: var(--primary-color);
 
-    a {
-      color: rgb(0, 51, 128);
-      font-weight: bold;
-      text-decoration: none;
-
-      &:hover {
-        color: rgb(0, 193, 0);
-      }
+    &:hover {
+      color: var(--secondary-color);
     }
   }
 }

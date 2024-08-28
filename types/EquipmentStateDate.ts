@@ -1,6 +1,7 @@
 import type EquipmentState from "./EquipmentState";
 
 export default interface EquipmentStateDate {
-  date: Date
+  equipmentId: string
+  date: string
   state?: EquipmentState
 }

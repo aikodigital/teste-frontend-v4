@@ -2,17 +2,13 @@
 </script>
 
 <template>
-  <div class="container">
-    <AppMap />
+  <div id="home-container">
   </div>
 </template>
 
 <style scoped>
-.container {
+#home-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 24px;
-  background-color: rgb(150, 200, 150);
 }
 </style>

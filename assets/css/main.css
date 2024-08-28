@@ -1,6 +1,27 @@
+:root {
+  --primary-color: rgb(0, 51, 128);
+  --secondary-color: rgb(0, 193, 0);
+  --container-color: rgb(245, 245, 245);
+  --border-color: rgb(200, 200, 200);
+}
+
 body {
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0;
   margin: 0;
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 24px;
+    font-weight: bold;
+  }
+
+  a {
+    user-select: none;
+    text-decoration: none;
+    font-weight: bold;
+  }
 }
