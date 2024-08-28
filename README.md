@@ -1,51 +1,108 @@
-# React + TypeScript + Vite
+Documentação da Aplicação
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+VISÃO GERAL
+Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Map, e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
 
-Currently, two official plugins are available:
+COMO RODAR O PROJETO
+Instalar dependências: npm install
+Rodar servidor de desenvolvimento: npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ESTRUTURA DE COMPONENTES
 
-## Expanding the ESLint configuration
+App.tsx
+Componente principal que renderiza a página Home.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Home.tsx
+Componente de página que organiza a estrutura da aplicação, incluindo o Navbar, Aside e Map.
 
-- Configure the top-level `parserOptions` property like this:
+Navbar.tsx
+Barra de navegação no topo da aplicação, que inclui o logotipo, um campo de busca, e um botão de menu.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Aside.tsx
+Componente de barra lateral que pode ser usado para filtros e outras informações adicionais.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Map.tsx
+Componente que renderiza o mapa interativo usando react-leaflet. Inclui pontos de dados e históricos de posições. Vantagens de usar Leaflet: Código aberto e gratuito, leve e rápido, extensibilidade, facilidade de uso.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Input.tsx
+Componente de entrada (input) usado na Navbar.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# aiko
+EquipmentContext
+Contexto para fornecer e gerenciar o estado dos equipamentos globalmente na aplicação.
+
+Data
+equipment: Informações sobre equipamentos.
+equipmentModel: Informações sobre modelos de equipamentos.
+equipmentPositionHistory: Histórico de posições de equipamentos.
+equipmentState: Estados dos equipamentos.
+equipmentStateHistory: Histórico de estados dos equipamentos.
+
+Types
+Os tipos de dados incluem interfaces para Equipamentos, Modelos de Equipamento, Histórico de Posições, Estados e Histórico de Estados.
+
+src
+├── assets
+│ ├── icons
+│ └── img
+│
+│
+├── components
+│ ├── Aside
+│ │ ├── Aside.tsx
+│ │ └── aside.module.css
+│ │
+│ ├── Card
+│ │ ├── Card.tsx
+│ │ └── card.module.css
+│ │
+│ ├── data
+│ │ ├── EquipmentList.tsx
+│ │ └── EquipmentModel.tsx
+│ │ └── EquipmentPositionHistory.tsx
+│ │ └── Equipments.tsx
+│ │ └── EquipmentState.tsx
+│ │ └── EquipmentStateHistory.tsx
+│ │
+│ ├── filtros
+│ │ ├── MenuFilter.tsx
+│ │ └── menuFilter.module.css
+│ │
+│ ├── Map
+│ │ ├── Map.tsx
+│ │ └── map.module.css
+│ │
+│ ├── grafico
+│ │ ├── Grafico.tsx
+│ │ └── grafico.module.css
+│ │
+│ ├── Input
+│ │ ├── Input.tsx
+│ │ └── input.module.css
+│ │
+│ ├── Map
+│ │ └── Map.tsx
+│ │ └── map.module.css
+│ │
+│ └── Navbar
+│ ├── Navbar.tsx
+│ └── navbar.module.css
+│
+├── context
+│ └── EquipmentContext.tsx
+│
+├── hooks
+│ └── useEquipment.ts
+│
+├── pages
+│ └── Home.tsx
+│
+├── types
+│ └── types.ts
+│
+├── utils
+│ └── dataOrganizer.ts
+│
+├── index.tsx
+├── App.tsx
+├── index.css
+└── App.css
