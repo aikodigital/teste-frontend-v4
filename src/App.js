@@ -15,7 +15,8 @@ export default function App() {
     loading,
     error,
   } = useData();
-  const [markers, setMarkers] = useState([]);
+  const [equipments, setEquipments] = useState([]);
+  const [showStateHistory, setShowStateHistory] = useState(false);
   const initialMapPosition =
     equipmentPositionHistory.length > 0
       ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
@@ -55,6 +56,23 @@ export default function App() {
     });
   };
 
+  const toggleStateHistory = () => {
+    setShowStateHistory(!showStateHistory);
+  };
+
+  const renderStateName = (stateId) => {
+    switch (stateId) {
+      case "0808344c-454b-4c36-89e8-d7687e692d57":
+        return "Operando";
+      case "baff9783-84e8-4e01-874b-6fd743b875ad":
+        return "Parado";
+      case "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f":
+        return "Manutenção";
+      default:
+        return "Não especificado";
+    }
+  };
+
   useEffect(() => {
     const basicEquipmentData = equipmentBasicData.map((equipment) => {
       return {
@@ -63,7 +81,7 @@ export default function App() {
       };
     });
 
-    const equipmentWithLastPosition = equipmentPositionHistory.map((equipment, index) => {
+    const equipmentWithPositions = equipmentPositionHistory.map((equipment, index) => {
       return {
         ...basicEquipmentData[index],
         lastKnownPosition:
@@ -76,23 +94,24 @@ export default function App() {
       };
     });
 
-    const equipmentWithLastState = equipmentStateHistory.map((equipment, index) => {
+    const equipmentWithStates = equipmentStateHistory.map((equipment, index) => {
       const { name: stateName, color } = equipmentState.find(
         (equipmentState) => equipment.states[0].equipmentStateId === equipmentState.id
       );
 
       return {
-        ...equipmentWithLastPosition[index],
+        ...equipmentWithPositions[index],
         lastKnownState:
           equipment.states?.length > 0
             ? { date: equipment.states[equipment.states.length - 1].date, name: stateName, color }
             : null,
+        states: equipment.states,
       };
     });
 
-    // console.log(equipmentWithLastState);
+    console.log(equipmentWithStates);
 
-    setMarkers(equipmentWithLastState);
+    setEquipments(equipmentWithStates);
   }, [equipmentBasicData, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
 
   // equipmentBasicData
@@ -132,21 +151,34 @@ export default function App() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {markers.map((marker) => (
-        <Fragment key={marker.id}>
+      {equipments.map((equipment) => (
+        <Fragment key={equipment.id}>
           <Marker
-            position={marker.lastKnownPosition.coordinates}
-            icon={createIconDynamically(marker.lastKnownState.color)}
+            position={equipment.lastKnownPosition.coordinates}
+            icon={createIconDynamically(equipment.lastKnownState.color)}
           >
             <Popup>
-              <p>{marker.name}</p>
+              <p>{equipment.name}</p>
               <p>
-                Latitude: {marker.lastKnownPosition.coordinates[0]}, longitude:{marker.lastKnownPosition.coordinates[1]}
-                , data: {formatDate(marker.lastKnownPosition.date)}
+                Última posição conhecida. Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
+                {equipment.lastKnownPosition.coordinates[1]}, data: {formatDate(equipment.lastKnownPosition.date)}
               </p>
               <p>
-                Estado: {marker.lastKnownState.name}, data: {formatDate(marker.lastKnownState.date)}
+                Último estado conhecido: {equipment.lastKnownState.name}, data:{" "}
+                {formatDate(equipment.lastKnownState.date)}
               </p>
+              <button onClick={() => toggleStateHistory()}>Ver histórico de estados</button>
+              {showStateHistory && (
+                <div style={{ height: "200px", overflowY: "auto", overflowX: "hidden" }}>
+                  {equipment.states.map((state) => {
+                    return (
+                      <div>
+                        {formatDate(state.date)}, {renderStateName(state.equipmentStateId)}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </Popup>
           </Marker>
         </Fragment>
