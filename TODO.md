@@ -17,9 +17,9 @@
 
 ## Funcionalidades Extras (Opcional)
 
-- [ ] **Filtros**
-  - [ ] Implementar filtros para visualizações por estado atual.
-  - [ ] Implementar filtros para visualizações por modelo de equipamento.
+- [x] **Filtros**
+  - [x] Implementar filtros para visualizações por estado atual.
+  - [x] Implementar filtros para visualizações por modelo de equipamento.
 
 - [ ] **Pesquisa**
   - [ ] Implementar funcionalidade de pesquisa por dados de um equipamento específico.

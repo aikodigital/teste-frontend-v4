@@ -2,7 +2,7 @@
 import type { PointExpression } from 'leaflet';
 
 /** Data */
-import { equipmentStateData } from '~/data/equipment';
+import { equipmentModelData, equipmentStateData } from '~/data/equipment';
 
 /** Interfaces */
 import type {
@@ -130,4 +130,8 @@ export function getZoomLevel(positions: { lat: number; lon: number }[]) {
 
 export function getStates() {
   return equipmentStateData.map((state) => state.name);
+}
+
+export function getModels() {
+  return equipmentModelData.map((model) => model.name);
 }
