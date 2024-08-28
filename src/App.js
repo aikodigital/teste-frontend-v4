@@ -41,6 +41,16 @@ export default function App() {
     return readableDate;
   };
 
+  const createIconDynamically = (color) => {
+    return L.divIcon({
+      html: `<div style="width: 38px; height: 38px; margin-top: -24px; margin-left: -14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${
+        color ? color : "blue"
+      }" width="38px" height="38px">
+<path d="M12 2C8.1 2 5 5.1 5 9c0 3.9 7 13 7 13s7-9.1 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/>
+</svg></div>`,
+    });
+  };
+
   useEffect(() => {
     const basicEquipmentData = equipmentBasicData.map((equipment) => {
       return {
@@ -123,13 +133,7 @@ export default function App() {
         <Fragment key={marker.id}>
           <Marker
             position={marker.lastKnownPosition.coordinates}
-            icon={L.divIcon({
-              html: `<div style="width: 38px; height: 38px; margin-top: -24px; margin-left: -14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${
-                marker.lastKnownState.color ? marker.lastKnownState.color : "blue"
-              }" width="38px" height="38px">
-    <path d="M12 2C8.1 2 5 5.1 5 9c0 3.9 7 13 7 13s7-9.1 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/>
-  </svg></div>`,
-            })}
+            icon={createIconDynamically(marker.lastKnownState.color)}
           >
             <Popup>
               <p>{marker.name}</p>
