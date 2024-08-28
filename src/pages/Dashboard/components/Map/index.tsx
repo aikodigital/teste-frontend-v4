@@ -39,14 +39,14 @@ export const Map = ({
       );
 
     return {
-      lat: position.lat / equipmentList.length,
-      lon: position.lon / equipmentList.length,
+      lat: position.lat / equipmentList.length || 0,
+      lon: position.lon / equipmentList.length || 0,
     };
   }, [equipmentList, getEquipmentPositionHistory]);
 
   const markerList: MarkerListProps[] = useMemo(() => {
     if (equipmentPositionHistory.show && equipmentPositionHistory.data) {
-      return equipmentPositionHistory.data.positions.flatMap((position) => {
+      return equipmentPositionHistory.data?.positions?.flatMap((position) => {
         const equipment = equipmentList.find(
           (equipment) => equipment.id === equipmentPositionHistory.equipmentId
         );
@@ -124,6 +124,7 @@ export const Map = ({
 
       {equipmentPositionHistory.show && equipmentPositionHistory.data ? (
         <Polyline
+          data-testid="polyline"
           positions={equipmentPositionHistory.data.positions.map((position) => [
             position.lat,
             position.lon,

@@ -109,6 +109,7 @@ export const CustomMarker = ({
               <hr />
 
               <Button
+                data-testid="button-open-accordion"
                 id={`button-open-accordion-${equipment.id}`}
                 onClick={() => handleOpenEquipmentAccordion(equipment.id)}
               >

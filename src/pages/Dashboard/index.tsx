@@ -91,16 +91,17 @@ export const Dashboard = ({
   }, [getEquipmentStateList]);
 
   return (
-    <ContainerStyled>
-      <SidebarStyled>
+    <ContainerStyled data-testid="dashboard">
+      <SidebarStyled data-testid="sidebar">
         <SidebarHeaderStyled>
           <a href="/">
-            <img src={Logo} alt="Logo" />
+            <img src={Logo} alt="Logo" data-testid="logo" />
           </a>
         </SidebarHeaderStyled>
 
         <SidebarFilterContainerStyled>
           <Input
+            testId="input-equipment-name"
             label="Nome da maquina"
             placeholder="Pesquise pelo nome da maquina"
             value={filters.equipmentName}
@@ -111,6 +112,7 @@ export const Dashboard = ({
 
           <SidebarFilterLineStyled>
             <Select
+              testId="select-equipment-state"
               label="Estado atual"
               placeholder="Selecione o estado atual"
               options={equipmentStateOptions}
@@ -119,7 +121,9 @@ export const Dashboard = ({
                 handleFilterChange('equipmentState', e as SelectOption)
               }
             />
+
             <Select
+              testId="select-equipment-model"
               label="Modelo de maquina"
               placeholder="Selecione o modelo da maquina"
               options={equipmentModelOptions}
@@ -128,7 +132,9 @@ export const Dashboard = ({
                 handleFilterChange('equipmentModel', e as SelectOption)
               }
             />
+
             <Button
+              testId="button-clear-filters"
               variant="secondary"
               onClick={() => setFilters(defaultFilters)}
             >
@@ -140,7 +146,7 @@ export const Dashboard = ({
         <SidebarListContainerStyled id="sidebar-list">
           {equipmentList.length === 0 ? (
             <div className="no-equipment">
-              <span>Nenhuma maquina encontrada</span>
+              <span>Nenhuma máquina encontrada</span>
             </div>
           ) : (
             equipmentList.map((equipment) => (
@@ -150,7 +156,7 @@ export const Dashboard = ({
         </SidebarListContainerStyled>
       </SidebarStyled>
 
-      <MapContainerStyled>
+      <MapContainerStyled data-testid="map-container">
         <Map equipmentList={equipmentList} />
       </MapContainerStyled>
     </ContainerStyled>

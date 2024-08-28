@@ -93,9 +93,14 @@ export const EquipmentAccordion = ({
   }, [changeEquipmentPositionHistory, accordionTriggerRef]);
 
   return (
-    <AccordionContainer type="single" collapsible>
-      <AccordionItem value="1">
+    <AccordionContainer
+      type="single"
+      collapsible
+      data-testid="equipment-accordion"
+    >
+      <AccordionItem value={equipment.id}>
         <AccordionTrigger
+          data-testid="accordion-trigger"
           id={`accordion-trigger-${equipment.id}`}
           ref={accordionTriggerRef}
         >
@@ -131,6 +136,7 @@ export const EquipmentAccordion = ({
             {historyVisibleLength <
             (equipmentStateHistory?.states?.length || 0) ? (
               <Button
+                data-testid="show-more-state-history-button"
                 tabIndex={0}
                 variant="secondary"
                 onClick={handleShowMoreHistory}
@@ -168,6 +174,7 @@ export const EquipmentAccordion = ({
             </EquipmentAccordionContentListStyled>
 
             <Button
+              data-testid="show-position-history-button"
               tabIndex={0}
               onClick={() => {
                 changeEquipmentPositionHistory(

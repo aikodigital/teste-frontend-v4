@@ -4,10 +4,11 @@ import { ButtonStyled } from './styles';
 
 export const Button = ({
   variant = 'primary',
+  testId,
   children,
   ...props
 }: ButtonProps) => (
-  <ButtonStyled variant={variant} {...props}>
+  <ButtonStyled data-testid={testId} variant={variant} {...props}>
     {children}
   </ButtonStyled>
 );
