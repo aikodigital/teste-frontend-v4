@@ -1,11 +1,12 @@
 import EquipmentDetails from "@/components/EquipamentDetails";
+import EquipmentList from "./equipmentsList/components/equipementList";
 
 
 export default function Home() {
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+    <div className="flex flex-col">
       <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-        <EquipmentDetails />
+        <EquipmentList />
       </div>
     </div>
   );

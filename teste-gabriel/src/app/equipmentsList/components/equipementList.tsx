@@ -23,8 +23,8 @@ const EquipmentList: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto py-10 w-full">
-      <h3 className="text-lg font-medium">Listagem de Equipamentos</h3>
+    <div>
+      <h3 className="text-lg font-medium mb-10">Listagem de Equipamentos</h3>
       <DataTable columns={columns} data={equipment} />
     </div>
   );

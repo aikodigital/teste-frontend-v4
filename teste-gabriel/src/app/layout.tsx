@@ -20,11 +20,11 @@ const sidebarNavItems = [
   },
   {
     title: "Histórico de Posições",
-    href: "/examples/forms/account",
+    href: "/equipmentsPosition",
   },
   {
     title: "Histórico de Estados",
-    href: "/examples/forms/appearance",
+    href: "/equipmentsState",
   },
 ];
 
@@ -36,28 +36,30 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-200`}>
-      <Header />
-      <div className="">
-      <Card className="mt-10 p-2 max-w-7xl mx-auto">
-        <CardContent>
-          <div className="space-y-6 p-10 pb-16 md:block">
-            <div className="space-y-0.5">
-              <h2 className="text-2xl font-bold tracking-tight">Painel de Administração</h2>
-              <p className="text-muted-foreground">
-                Verifiquei estados, posições, modelos dos equipamentos.
-              </p>
-            </div>
-            <Separator className="my-6" />
-            <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-              <aside className="-mx-4 lg:w-1/5">
-                <SidebarNav items={sidebarNavItems} />
-              </aside>
-              <div className="flex-1 lg:max-w-2xl">{children}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        <Header />
+        <div className="">
+          <Card className="mt-10 p-2 max-w-7xl mx-auto">
+            <CardContent>
+              <div className="space-y-6 p-10 pb-16 md:block">
+                <div className="space-y-0.5">
+                  <h2 className="text-2xl font-bold tracking-tight">
+                    Painel de Administração
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Verifique modelos, estados e posições dos equipamentos.
+                  </p>
+                </div>
+                <Separator className="my-6" />
+                <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+                  <aside className="-mx-4 lg:w-1/5">
+                    <SidebarNav items={sidebarNavItems} />
+                  </aside>
+                  <div className="flex-1 lg:max-w-2xl">{children}</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </body>
     </html>
   );
