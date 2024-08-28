@@ -39,7 +39,7 @@ function handleShowStateHistory() {
 
     <span>
       <span class="font-bold">
-        Estado Atual:
+        Estado atual:
       </span>
 
       <span :class="getCurrentStateClass(equipment.currentState!)">

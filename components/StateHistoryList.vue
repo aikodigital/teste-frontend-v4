@@ -36,8 +36,8 @@ function handleShowEquipmentList() {
     </div>
 
     <ul class="w-full border border-black rounded-lg divide-y-2 divide-black max-h-full overflow-y-auto">
-      <li v-for="(state, index) in stateHistory" :key="index" class="p-2">
-        <div>
+      <li v-for="(state, index) in stateHistory" :key="index" class="p-2 flex gap-4">
+        <div class="flex flex-col">
           <span>
             <span class="font-bold">
               Data:
@@ -51,7 +51,7 @@ function handleShowEquipmentList() {
               Hora:
             </span>
 
-            {{ dayjs(state.date).format('HH:MM') }}
+            {{ dayjs(state.date).format('HH:MM:ss') }}
           </span>
         </div>
 

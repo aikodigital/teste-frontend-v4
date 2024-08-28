@@ -17,7 +17,7 @@ const zoom = ref<number>(getZoomLevel(equipmentsRecentPositions));
         layerType="base" name="OpenStreetMap" />
 
       <div v-for="equipment in recentEquipments" :key="equipment.id">
-        <EquipmentMarker v-for="equipment in recentEquipments" :key="equipment.id" :equipment="equipment" />
+        <EquipmentMarker :equipment="equipment" />
       </div>
     </LMap>
   </div>
