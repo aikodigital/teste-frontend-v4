@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Map from '../Map/Map'
 
 const MainScreen = () => {
   return (
-    <div>MainScreen</div>
+    <Fragment>
+      <Map />
+    </Fragment>
   )
 }
 
