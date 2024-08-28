@@ -13,22 +13,22 @@ import {
   SelectViewport
 } from 'radix-vue';
 
+const { selectedState } = useEquipmentFilter();
 const equipmentStates = getStates();
-const selectedOption = ref<string>('');
 
 const iconChevronDown = 'fa6-solid:chevron-down';
 const iconCheck = 'fa6-solid:check';
 const iconXMark = 'fa6-solid:xmark';
 
 const emit = defineEmits(['update:selectedState']);
-watch(selectedOption, (newValue) => {
+watch(selectedState, (newValue) => {
   emit('update:selectedState', newValue);
 });
 </script>
 
 <template>
   <div class="flex gap-0.5 w-full">
-    <SelectRoot v-model="selectedOption">
+    <SelectRoot v-model="selectedState">
       <SelectTrigger
         class="flex items-center justify-between w-full rounded-md px-1 pl-4 gap-1 focus:shadow-[0_0_0_2px] focus:shadow-black outline-none border border-black"
         aria-label="Selecione um estado">
@@ -61,7 +61,7 @@ watch(selectedOption, (newValue) => {
     </SelectRoot>
 
     <button class="border border-black rounded-md flex items-center gap-1 px-2 w-fit" aria-label="Limpar seleção"
-      @click="selectedOption = ''">
+      @click="selectedState = ''">
       <Icon :name="iconXMark" />
     </button>
   </div>

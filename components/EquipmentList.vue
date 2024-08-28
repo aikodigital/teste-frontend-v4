@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 const { recentEquipments } = useEquipments();
-
-const selectedState = ref<string>('');
+const { selectedState } = useEquipmentFilter();
 
 const filteredEquipments = computed(() => {
   if (!selectedState.value) {
