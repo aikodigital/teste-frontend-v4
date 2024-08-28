@@ -1,16 +1,14 @@
 import type {
   IEquipmentModel,
-  IEquipmentPositionHistory,
-  IEquipmentState,
-  IEquipmentStateHistory
+  IEquipmentPositionHistory
 } from '~/interfaces/equipment';
 
 export interface IEquipmentDetails {
   id: string;
   name: string;
   model: IEquipmentModel | undefined;
-  currentState: IEquipmentState | undefined;
-  stateHistory: IEquipmentStateHistory['states'];
+  currentState: string | undefined;
+  stateHistory: { date: string; name: string }[];
   currentPosition: { lat: number; lon: number };
   positionHistory: IEquipmentPositionHistory['positions'];
 }

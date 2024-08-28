@@ -7,6 +7,13 @@ const props = defineProps<{
 }>();
 
 const iconName = 'fa6-solid:clock-rotate-left';
+const { setView } = useView();
+const { setSelectedEquipment } = useSelectedEquipment();
+
+function handleShowStateHistory() {
+  setView('stateHistory');
+  setSelectedEquipment(props.equipment);
+}
 </script>
 
 <template>
@@ -33,11 +40,11 @@ const iconName = 'fa6-solid:clock-rotate-left';
       </span>
 
       <span :class="getCurrentStateClass(equipment.currentState!)">
-        {{ equipment.currentState?.name }}
+        {{ equipment.currentState }}
       </span>
     </span>
 
-    <button class="border rounded-md flex items-center gap-1 px-2 w-fit">
+    <button class="border rounded-md flex items-center gap-1 px-2 w-fit" @click="handleShowStateHistory">
       <Icon :name="iconName" />
 
       Histórico de estados

@@ -11,9 +11,9 @@ import type {
   IEquipmentStateHistory
 } from '~/interfaces/equipment';
 
-export function getCurrentStateClass(state: IEquipmentState) {
-  return state.name === 'Operando' ? 'text-operando'
-    : state.name === 'Parado' ? 'text-parado'
+export function getCurrentStateClass(state: string) {
+  return state === 'Operando' ? 'text-operando'
+    : state === 'Parado' ? 'text-parado'
       : 'text-manutencao';
 }
 
@@ -25,18 +25,24 @@ function getPositionHistory(equipment: IEquipment, equipmentsPositionHistory: IE
   return equipmentsPositionHistory.find((positionHistory) => positionHistory.equipmentId === equipment.id)?.positions || [];
 }
 
-function getStateHistory(equipment: IEquipment, equipmentsStateHistory: IEquipmentStateHistory[]) {
-  return equipmentsStateHistory.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
+function getStateHistory(equipment: IEquipment, equipmentsStateHistory: IEquipmentStateHistory[], equipmentStates: IEquipmentState[]) {
+  const stateHistory = equipmentsStateHistory.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
+  return stateHistory.map((state) => {
+    const stateName = equipmentStates.find((equipmentState) => equipmentState.id === state.equipmentStateId)?.name;
+
+    return {
+      date: state.date,
+      name: stateName || 'Desconhecido',
+    };
+  });
 }
 
 function getCurrentPosition(positionHistory: { lat: number; lon: number }[]) {
-  return positionHistory[positionHistory.length - 1];
+  return positionHistory.at(-1)!;
 }
 
-function getCurrentState(stateHistory: { date: string; equipmentStateId: string }[], equipmentState: IEquipmentState[]) {
-  const lastState = stateHistory[stateHistory.length - 1];
-
-  return equipmentState.find((state) => state.id === lastState.equipmentStateId);
+function getCurrentState(stateHistory: { date: string; name: string }[]) {
+  return stateHistory.at(-1)!.name;
 }
 
 export function getEquipmentDetails(
@@ -44,14 +50,14 @@ export function getEquipmentDetails(
   equipmentsModel: IEquipmentModel[],
   equipmentsPositionHistory: IEquipmentPositionHistory[],
   equipmentsStateHistory: IEquipmentStateHistory[],
-  equipmentState: IEquipmentState[]
+  equipmentStates: IEquipmentState[]
 ): IEquipmentDetails[] {
   return equipments.map((equipment) => {
     const model = getModel(equipment, equipmentsModel);
     const positionHistory = getPositionHistory(equipment, equipmentsPositionHistory);
-    const stateHistory = getStateHistory(equipment, equipmentsStateHistory);
+    const stateHistory = getStateHistory(equipment, equipmentsStateHistory, equipmentStates);
     const currentPosition = getCurrentPosition(positionHistory);
-    const currentState = getCurrentState(stateHistory, equipmentState);
+    const currentState = getCurrentState(stateHistory);
 
     return {
       id: equipment.id,
