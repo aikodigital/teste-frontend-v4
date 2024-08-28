@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Accordion > should match snapshot 1`] = `
+<div>
+  <div
+    class="sc-braxZu gaSGXv"
+    data-orientation="vertical"
+    data-testid="accordion"
+  >
+    <div
+      class="sc-gJhJTp iaxenZ"
+      data-orientation="vertical"
+      data-state="closed"
+      data-testid="accordion-item"
+    >
+      <h3
+        data-orientation="vertical"
+        data-state="closed"
+      >
+        <button
+          aria-controls="radix-:r7:"
+          aria-expanded="false"
+          class="sc-elDIKY bBOVoC"
+          data-orientation="vertical"
+          data-radix-collection-item=""
+          data-state="closed"
+          data-testid="accordion-trigger"
+          id="radix-:r6:"
+          type="button"
+        >
+          <span>
+            Accordion Title
+          </span>
+          <svg
+            aria-hidden="true"
+            class="AccordionChevron"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 448 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+            />
+          </svg>
+        </button>
+      </h3>
+      <div
+        aria-labelledby="radix-:r6:"
+        class="sc-fQpRED bYTzAp"
+        data-orientation="vertical"
+        data-state="closed"
+        data-testid="accordion-content"
+        hidden=""
+        id="radix-:r7:"
+        role="region"
+        style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);"
+      />
+    </div>
+  </div>
+</div>
+`;

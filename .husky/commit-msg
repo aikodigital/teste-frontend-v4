@@ -1,0 +1,7 @@
+# Check semantic commits
+npx --no -- commitlint --edit "$1" || (
+    echo '❌ Commit-lint validation, verify that the commit is correct!'
+    false
+)
+
+echo '✅ All commit msg checks passed. Proceed with the commit.'
