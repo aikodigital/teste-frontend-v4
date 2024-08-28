@@ -194,7 +194,9 @@ export default function App() {
 
                 <Divider orientation="horizontal" />
 
-                <Button onClick={() => toggleStateHistory()}>Ver histórico de estados</Button>
+                <Button onClick={() => toggleStateHistory()}>
+                  {showStateHistory ? "Fechar histórico de estados" : "Ver histórico de estados"}
+                </Button>
                 {showStateHistory && (
                   <ScrollArea h={200}>
                     {equipment.states.map((state) => {
