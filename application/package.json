@@ -10,14 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/eslint": "^0.5.3",
+    "eslint": "^9.9.1",
+    "leaflet": "^1.9.4",
     "nuxt": "^3.13.0",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-map-ui": "^0.0.18"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.14.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^14.12.3",
+    "nuxt-phosphor-icons": "^1.3.0",
+    "nuxt-vue-map-ui": "^1.0.16",
     "playwright-core": "^1.46.1",
     "vitest": "^2.0.5"
   }
