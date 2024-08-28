@@ -16,6 +16,7 @@ type TUseEquipmentsResponse = {
 }
 
 export const useFullEquipments = (
+  name?: string,
   model?: string,
   state?: string
 ): TUseEquipmentsResponse => {
@@ -35,7 +36,14 @@ export const useFullEquipments = (
     return { isLoading: true, data: [] }
   }
 
-  const equipmentsWithModels = equipments.reduce((acc, equipment) => {
+  const equipmentsWithProperties = equipments.reduce((acc, equipment) => {
+    if (
+      name &&
+      !equipment.name.toLocaleLowerCase().includes(name.toLowerCase())
+    ) {
+      return acc
+    }
+
     const equipmentModel = equipmentModels.find(
       (model) => model.id === equipment.equipmentModelId
     )
@@ -106,6 +114,6 @@ export const useFullEquipments = (
 
   return {
     isLoading: false,
-    data: equipmentsWithModels
+    data: equipmentsWithProperties
   }
 }

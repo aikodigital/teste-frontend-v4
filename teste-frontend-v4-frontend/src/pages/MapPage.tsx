@@ -11,10 +11,12 @@ import Map from '@components/MainMap/Map'
 const MapPage = () => {
   const navigate = useNavigate()
 
+  const [filterName, setFilterName] = useState('')
   const [filterModel, setFilterModel] = useState('')
   const [filterState, setFilterState] = useState('')
 
   const { isLoading, data: equipments } = useFullEquipments(
+    filterName,
     filterModel,
     filterState
   )
@@ -31,25 +33,30 @@ const MapPage = () => {
     navigate(`equipment/${id}`)
   }
 
-  const handleChangeFilterModel = (v: string) => setFilterModel(v)
-  const handleChangeFilterState = (v: string) => setFilterState(v)
   const handleResetFilter = () => {
-    handleChangeFilterModel('')
-    handleChangeFilterState('')
+    setFilterName('')
+    setFilterModel('')
+    setFilterState('')
   }
 
   return (
-    <main className="h-full w-full flex flex-col gap-4 p-12 py-6 bg-blue-500 overflow-auto">
+    <main className="h-full w-full flex flex-col gap-4 p-4 md:p-12 md:py-6 bg-blue-500 overflow-auto">
       <header>
         <h1 className="text-3xl font-bold text-white">Aiko Control</h1>
       </header>
 
-      <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md">
-        <input placeholder="Pesquisar" />
-        modelo
+      <div className="flex flex-wrap gap-2 p-4 bg-white rounded-xl shadow-md items-center">
+        <input
+          placeholder="Pesquisar Nome"
+          value={filterName}
+          onChange={(e) => setFilterName(e.currentTarget.value)}
+          className="h-8 p-2 py-1 text-sm text-gray-700 border-[1px] border-gray-300 rounded-md outline-blue-500 outline-[1px]"
+        />
+        <span className="text-sm text-gray-700">Modelo:</span>
         <select
           value={filterModel}
-          onChange={(e) => handleChangeFilterModel(e.currentTarget.value)}
+          onChange={(e) => setFilterModel(e.currentTarget.value)}
+          className="h-8 p-2 py-1 text-sm text-gray-700 border-[1px] border-gray-300 rounded-md"
         >
           <option value="">Todos</option>
           {equipmentModels?.map((model) => (
@@ -58,10 +65,11 @@ const MapPage = () => {
             </option>
           ))}
         </select>
-        estado
+        <span className="text-sm text-gray-700">Estado:</span>
         <select
           value={filterState}
-          onChange={(e) => handleChangeFilterState(e.currentTarget.value)}
+          onChange={(e) => setFilterState(e.currentTarget.value)}
+          className="h-8 p-2 py-1 text-sm text-gray-700 border-[1px] border-gray-300 rounded-md"
         >
           <option value="">Todos</option>
           {equipmentStates?.map((state) => (
@@ -70,7 +78,12 @@ const MapPage = () => {
             </option>
           ))}
         </select>
-        <span onClick={handleResetFilter}>limpar filtro</span>
+        <button
+          onClick={handleResetFilter}
+          className="h-8 px-4 py-1 bg-blue-500 text-white rounded-md transition-all active:bg-blue-300"
+        >
+          limpar filtro
+        </button>
       </div>
 
       <div className="h-[600px] w-full rounded-xl overflow-hidden shadow-lg">

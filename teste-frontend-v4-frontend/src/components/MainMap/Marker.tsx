@@ -46,9 +46,13 @@ const Marker = ({ equipment, onSeeMoreClick }: IMarkerProps) => {
             </span>
           </header>
           <span className="font-bold">{equipment.equipmentModel.name}</span>
-          <span className="text-xs text-gray-400">ID: {equipment.id}</span>
+          <span className="mb-1 text-xs text-gray-400">ID: {equipment.id}</span>
 
-          <footer className="flex justify-end">
+          <footer className="flex flex-row justify-between">
+            <span className="text-xs">
+              {equipment.position.lat + ', ' + equipment.position.lng}
+            </span>
+
             <span
               className="underline cursor-pointer"
               onClick={() => onSeeMoreClick(equipment.id)}

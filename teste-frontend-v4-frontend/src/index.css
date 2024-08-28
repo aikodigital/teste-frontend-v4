@@ -6,4 +6,13 @@ html,
 body,
 #root {
   height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.leaflet-popup-content-wrapper {
+  font-family: 'Roboto', sans-serif !important;
 }

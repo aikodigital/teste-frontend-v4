@@ -35,7 +35,7 @@ const EquipmentPage = () => {
   }
 
   return (
-    <div className="h-full w-full flex flex-col gap-4 p-12 py-6 bg-blue-500 overflow-auto">
+    <div className="h-full w-full flex flex-col gap-4 p-4 md:p-12 md:py-6 bg-blue-500 overflow-auto">
       <div className="flex">
         <span
           className="text-lg text-white cursor-pointer hover:underline"
@@ -107,7 +107,7 @@ const EquipmentPage = () => {
             </svg>
             Histórico de produtividade e ganho
           </h1>
-          <table>
+          <table className="w-full">
             <thead>
               <tr className="border-b-[1px] border-gray-400">
                 <th className="px-2">data</th>
