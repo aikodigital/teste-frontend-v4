@@ -3,8 +3,8 @@ import { ref } from "vue";
 import Header from "./header.vue";
 import Map from "./map.vue";
 import Table from "./table.vue";
-import EquipmentService from "@/common/services/EquipmentService";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
+import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
 
 
 const map = ref<InstanceType<typeof Map>>();
@@ -17,7 +17,7 @@ function navigateMap(equipment: EquipmentWithLastPosition){
     <section class="w-full h-full bg-zinc-800">
       <Header/>
       <div class="flex flex-row">
-        <Table :equipments="EquipmentService.listEquipmentsWithLastPosition()"
+        <Table :equipments="listEquipmentsWithLastPosition()"
           @navigate="navigateMap"  
         />
         <Map ref="map"/>

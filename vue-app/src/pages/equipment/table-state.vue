@@ -9,13 +9,13 @@ TableRow,
 } from '@/components/ui/table'
 import { onMounted, ref } from 'vue';
 import router from '@/router';
-import EquipmentService from '@/common/services/EquipmentService';
 import EquipmentStateHistory, { State } from '@/common/types/EquipmentStateHistory';
 import Pagination from './pagination.vue';
 import { getPaginatedItems } from '@/common/utils/helpers';
 import Input from '@/components/ui/input/Input.vue';
 import { twMerge } from 'tailwind-merge';
 import { variantColor } from '@/common/utils/helpers';
+import { getEquipmentHistoryStates, getStateById } from '@/common/services/StateService';
 
 const equipmentStates = ref<EquipmentStateHistory>();
 const states = ref<State[]>([]);
@@ -26,7 +26,7 @@ const pagination = ref<InstanceType<typeof Pagination>>();
 
 onMounted(() => {
 const { id } = router.currentRoute.value.params
-equipmentStates.value = EquipmentService.getEquipmentHistoryStates(id as string);
+equipmentStates.value = getEquipmentHistoryStates(id as string);
 total.value = equipmentStates.value?.states.length ?? 0;
 updatePage(1);
 })
@@ -44,7 +44,7 @@ function updatePage(page: number) {
 function filterState(): State[] {
   if(!filter.value) return equipmentStates.value!.states;
   return equipmentStates.value!.states.filter(state => {
-    const data = EquipmentService.getStateById(state.equipmentStateId);
+    const data = getStateById(state.equipmentStateId);
     const json = JSON.stringify(data).toLowerCase();
     const date = formatDate(state.date).toLowerCase();
     return (json + date).includes(filter.value.toLowerCase());
@@ -91,7 +91,7 @@ function filterData(){
             <TableCell class="text-xs font-medium">
                 <div :class="twMerge('text-xs font-semibold rounded-sm h-5 w-[100px] flex items-center justify-center',
                      variantColor(state.equipmentStateId))">
-                    {{ EquipmentService.getStateById(state.equipmentStateId)?.name }}
+                    {{ getStateById(state.equipmentStateId)?.name }}
                 </div>
             </TableCell>
         </TableRow>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import L from "leaflet";
-import EquipmentService from "@/common/services/EquipmentService";
 import { Map } from "leaflet";
 import { onMounted, ref } from "vue";
 import { pickColor } from "@/common/utils/helpers";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
 import router from "@/router";
+import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
 
 const map = ref({} as Map);
 
@@ -24,7 +24,7 @@ function initializeMap(){
 }
 
 function setMarks(){
-  const equipments = EquipmentService.listEquipmentsWithLastPosition();
+  const equipments = listEquipmentsWithLastPosition();
   equipments.forEach((equipment, index) => {
     const icon = L.divIcon({ className: `w-2 h-2 rounded-full ${pickColor(index)}` });
     const mark = L.marker([equipment.lastPosition!.lat, equipment.lastPosition!.lon], {
