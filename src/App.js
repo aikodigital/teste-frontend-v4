@@ -45,7 +45,12 @@ export default function App() {
       return {
         ...basicEquipmentData[index],
         lastKnownPosition:
-          equipment.positions?.length > 0 ? [equipment.positions[0].lat, equipment.positions[0].lon] : null,
+          equipment.positions?.length > 0
+            ? {
+                coordinates: [equipment.positions[0].lat, equipment.positions[0].lon],
+                date: equipment.positions[0].date,
+              }
+            : null,
       };
     });
 
@@ -108,11 +113,11 @@ export default function App() {
       />
       {markers.map((marker) => (
         <Fragment key={marker.id}>
-          <Marker position={marker.lastKnownPosition} icon={customIcon}>
+          <Marker position={marker.lastKnownPosition.coordinates} icon={customIcon}>
             <Popup>
               <p>{marker.name}</p>
               <p>
-                Latitude: {marker.lastKnownPosition[0]}, longitude:{marker.lastKnownPosition[1]}{" "}
+                Latitude: {marker.lastKnownPosition.coordinates[0]}, longitude:{marker.lastKnownPosition.coordinates[1]}
               </p>
             </Popup>
           </Marker>
