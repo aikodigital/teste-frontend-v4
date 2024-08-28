@@ -14,7 +14,12 @@
 
 .mapDiv {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     gap: 16px;
+}
+
+.filterDiv {
+    display: flex;
+    gap: 32px;
 }

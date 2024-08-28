@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import HistoryTable from "./component/historyTable/historyTable";
 import StateModelFilter from "./component/stateModelFilter/stateModelFilter";
+import GainProductivityPanel from "./component/gainProductivityPanel/gainProductivityPanel";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -41,7 +42,10 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div >
-        <StateModelFilter />
+        <div className={styles.filterDiv}>
+          <StateModelFilter />
+          <GainProductivityPanel />
+        </div>
         <div className={styles.mapDiv}>
           <MapDisplay />
           <HistoryTable />

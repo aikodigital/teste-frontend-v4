@@ -2,6 +2,7 @@
 import "./globals.css";
 import { Provider } from 'react-redux';
 import { store } from '../../store/makeStore';
+import EquipmentsProvider from "./context/equipmentsContext";
 
 
 
@@ -10,7 +11,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Provider store={store}>
-          {children}
+          <EquipmentsProvider>
+            {children}
+          </EquipmentsProvider>
         </Provider>
       </body>
     </html>

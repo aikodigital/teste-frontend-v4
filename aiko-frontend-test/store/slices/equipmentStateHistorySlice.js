@@ -5,7 +5,6 @@ export const equipmentStateHistorySlice = createSlice({
     initialState: {
         data: [],
         filteredHistory: [],
-        filteredStateModel: null
     },
     reducers: {
         setEquipmentStateHistory: (state, action) => {
@@ -14,12 +13,8 @@ export const equipmentStateHistorySlice = createSlice({
         setFilteredHistory: (state, action) => {
             state.filteredHistory = action.payload;
         },
-
-        setFilteredStateModel: (state, action) => {
-            state.filteredStateModel = action.payload;
-        },
     },
 });
 
-export const { setEquipmentStateHistory, setFilteredHistory, setFilteredStateModel } = equipmentStateHistorySlice.actions;
+export const { setEquipmentStateHistory, setFilteredHistory } = equipmentStateHistorySlice.actions;
 export default equipmentStateHistorySlice.reducer;

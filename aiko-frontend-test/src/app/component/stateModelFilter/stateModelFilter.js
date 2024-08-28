@@ -3,11 +3,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { selectFilterStateModel } from '../../../../store/selectors/selectFilterStateModel';
-import { setFilteredStateModel } from '../../../../store/slices/equipmentStateHistorySlice';
+import { useEquipmentsContext } from '@/app/context/equipmentsContext';
 
 export default function StateModelFilter() {
     const states = useSelector((state) => state.equipmentState.data)
@@ -15,26 +15,26 @@ export default function StateModelFilter() {
     const equipmentLatestHistory = useSelector((state) => state.equipmentPositionHistory.equipmentLatestHistory)
     const [selectedState, setSelectedState] = useState('')
     const [selectedModel, setSelectedModel] = useState('')
-    const dispatch = useDispatch();
+    const { setEquipmentsMapMarkers } = useEquipmentsContext();
 
     const handleChangeState = (event) => {
         setSelectedState(event.target.value);
-        dispatch(setFilteredStateModel(selectFilterStateModel(event.target.value, selectedModel)({
+        setEquipmentsMapMarkers(selectFilterStateModel(event.target.value, selectedModel)({
             equipmentPositionHistory: { equipmentLatestHistory }
-        })))
+        }))
     };
 
     const handleChangeModel = (event) => {
         setSelectedModel(event.target.value);
-        dispatch(setFilteredStateModel(selectFilterStateModel(selectedState, event.target.value)({
+        setEquipmentsMapMarkers(selectFilterStateModel(selectedState, event.target.value)({
             equipmentPositionHistory: { equipmentLatestHistory }
-        })))
+        }))
     };
 
     const handleClear = () => {
         setSelectedModel('')
         setSelectedState('')
-        dispatch(setFilteredStateModel(null))
+        setEquipmentsMapMarkers(equipmentLatestHistory)
     }
 
     return (
