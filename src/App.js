@@ -16,10 +16,10 @@ export default function App() {
     error,
   } = useData();
   const [markers, setMarkers] = useState([]);
-  // const initialMapPosition =
-  //   equipmentPositionHistory.length > 0
-  //     ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
-  //     : [-19.167338, -46.00347];
+  const initialMapPosition =
+    equipmentPositionHistory.length > 0
+      ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
+      : [-19.167338, -46.00347];
 
   // console.log(
   // equipmentPositionHistory,
@@ -127,8 +127,7 @@ export default function App() {
   if (error) return <p>Erro: {error.message}</p>;
 
   return (
-    // <MapContainer center={initialMapPosition} zoom={13}>
-    <MapContainer center={[-19.126536, -45.947756]} zoom={13}>
+    <MapContainer center={initialMapPosition} zoom={13}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
