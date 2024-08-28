@@ -16,6 +16,10 @@ export default function App() {
     error,
   } = useData();
   const [markers, setMarkers] = useState([]);
+  // const initialMapPosition =
+  //   equipmentPositionHistory.length > 0
+  //     ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
+  //     : [-19.167338, -46.00347];
 
   // console.log(
   // equipmentPositionHistory,
@@ -66,7 +70,7 @@ export default function App() {
           equipment.positions?.length > 0
             ? {
                 coordinates: [equipment.positions[0].lat, equipment.positions[0].lon],
-                date: equipment.positions[0].date,
+                date: equipment.positions[equipment.positions.length - 1].date,
               }
             : null,
       };
@@ -80,17 +84,16 @@ export default function App() {
       return {
         ...equipmentWithLastPosition[index],
         lastKnownState:
-          equipment.states?.length > 0 ? { date: equipment.states[0].date, name: stateName, color } : null,
+          equipment.states?.length > 0
+            ? { date: equipment.states[equipment.states.length - 1].date, name: stateName, color }
+            : null,
       };
     });
 
-    console.log(equipmentWithLastState);
+    // console.log(equipmentWithLastState);
 
     setMarkers(equipmentWithLastState);
   }, [equipmentBasicData, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
-
-  // estou pegando a primeira posição e o primeiro estado, não os ultimos
-  // colocar data da ultima posiçao
 
   // equipmentBasicData
   // {
@@ -124,6 +127,7 @@ export default function App() {
   if (error) return <p>Erro: {error.message}</p>;
 
   return (
+    // <MapContainer center={initialMapPosition} zoom={13}>
     <MapContainer center={[-19.126536, -45.947756]} zoom={13}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
