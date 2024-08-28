@@ -193,7 +193,8 @@ const Map: React.FC<MapProps> = ({
                             >
                               <div className="bg-background w-full px-4 py-2 rounded-lg shadow-md mb-2">
                                 <h4 className="text-xs font-semibold text-center">
-                                  {formatDateTime(state.date)}
+                                  Dia {formatDateTime(state.date).day}{" às "}
+                                  {formatDateTime(state.date).time}
                                 </h4>
                                 <div className="text-sm text-center">
                                   <EquipmentState

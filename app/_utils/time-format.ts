@@ -1,4 +1,6 @@
 export const formatDateTime = (date: string) => {
   const dateObj = new Date(date);
-  return `Dia: ${dateObj.toLocaleDateString()} às ${dateObj.toLocaleTimeString()}`;
+  const day = dateObj.toLocaleDateString();
+  const time = dateObj.toLocaleTimeString();
+  return { day, time };
 };
