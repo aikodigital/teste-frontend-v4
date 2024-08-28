@@ -41,13 +41,13 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const drawer = computed(() => {
   return props.Drawer;
-})
+});
 const optionsMains = computed(() => {
   return [
     { icon: 'home', title: 'Home', page: 'home' },
     { icon: 'search', title: 'Mapa', page: 'map' }
   ]
-})
+});
 
 function setMain(value: string) {
   mainSelected.value = value;
