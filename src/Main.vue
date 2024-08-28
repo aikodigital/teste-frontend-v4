@@ -1,73 +1,60 @@
 <template>
-  <q-list padding class="main-list">
-    <img src="../img/aiko.png" alt="aiko" />
-    <template v-for="(item, index) in mains" :key="index">
-      <q-item class="main-list__item" clickable v-ripple @click="goToPage(item)">
-        <q-icon :name="item.icon" />
-        <span> {{ item.title }} </span>
+<q-drawer
+  v-model="drawer"
+  show-if-above
+  :width="200"
+  :breakpoint="400"
+>
+  <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+    <div class="absolute-bottom bg-transparent">
+      <span class="text-weight-bold text-h5 bo">Operação Florestal</span>
+    </div>
+  </q-img>
+  <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+    <q-list padding>
+      <q-item v-for="(item, key) in optionsMains" :key="key" :active="mainSelected === item.page" clickable v-ripple @click="setMain(item.page)">
+        <q-item-section avatar>
+          <q-icon :name="item.icon" />
+        </q-item-section>
+
+        <q-item-section>
+          {{ item.title }}
+        </q-item-section>
       </q-item>
-    </template>
-  </q-list>
+    </q-list>
+  </q-scroll-area>
+</q-drawer>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+interface Props {
+  Drawer: boolean
+}
+
 const $router = useRouter();
-
-defineOptions({
-  name: 'Main'
+const mainSelected = ref<string>('');
+const props = withDefaults(defineProps<Props>(), {
+  Drawer: false
 });
-
-interface Main {
-  icon: string
-  title: string
-  page: string
-};
-
-const mains = computed(() => {
-  const main: Array<Main> = [
-    { icon: 'home', title: 'Início', page: 'home' },
-    { icon: 'build', title: 'Mapa', page: 'map' }
-  ];
-
-  return main;
+const drawer = computed(() => {
+  return props.Drawer;
+})
+const optionsMains = computed(() => {
+  return [
+    { icon: 'home', title: 'Home', page: 'home' },
+    { icon: 'search', title: 'Mapa', page: 'map' }
+  ]
 })
 
-const goToPage = (main: Main) => {
-  $router.push({ name: main.page });
-};
+function setMain(value: string) {
+  mainSelected.value = value;
+
+  return $router.push({ name: value });
+}
 </script>
 
 <style lang="scss" scoped>
-.main-list {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    position: absolute;
-    right: 2%;
-    width: 65px;
-    height: 30px;
-    margin-bottom: 8px;
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 1.1rem;
-    color: #000;
-    height: 100%;
-  }
-
-  &__item:hover {
-    height: 100%;
-  }
-}
 </style>

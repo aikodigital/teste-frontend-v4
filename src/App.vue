@@ -1,19 +1,29 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header reveal bordered class="bg-grey-2">
-      <Main />
-    </q-header>
+<q-layout view="hHh lpR fFf">
+  <q-header reveal bordered class="bg-white">
+    <q-toolbar>
+      <q-btn flat @click="drawer = !drawer" round dense icon="menu" color="dark" />
+      <q-toolbar-title>
+        <img class="img"src="../img/aiko.png">
+      </q-toolbar-title>
+    </q-toolbar>
+  </q-header>
 
-    <q-page-container>
-      <q-page>
-        <router-view />
-      </q-page>
-    </q-page-container>
-  </q-layout>
+  <Main :Drawer="drawer" />
+
+  <q-page-container>
+    <q-page>
+      <router-view />
+    </q-page>
+  </q-page-container>
+</q-layout>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import Main from './Main.vue';
+
+const drawer = ref<boolean>(false);
 
 defineOptions({
   name: 'App',
@@ -24,6 +34,11 @@ defineOptions({
 <style lang="scss">
 span {
   font-family: 'Inter', sans-serif;
+}
+
+.img {
+  padding-top: 5px;
+  height: 35px;
 }
 
 ::-webkit-scrollbar {
