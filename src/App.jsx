@@ -1,3 +1,4 @@
+import { Flex } from "@mantine/core";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Fragment, useEffect, useState } from "react";
@@ -158,27 +159,29 @@ export default function App() {
             icon={createIconDynamically(equipment.lastKnownState.color)}
           >
             <Popup>
-              <p>{equipment.name}</p>
-              <p>
-                Última posição conhecida. Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
-                {equipment.lastKnownPosition.coordinates[1]}, data: {formatDate(equipment.lastKnownPosition.date)}
-              </p>
-              <p>
-                Último estado conhecido: {equipment.lastKnownState.name}, data:{" "}
-                {formatDate(equipment.lastKnownState.date)}
-              </p>
-              <button onClick={() => toggleStateHistory()}>Ver histórico de estados</button>
-              {showStateHistory && (
-                <div style={{ height: "200px", overflowY: "auto", overflowX: "hidden" }}>
-                  {equipment.states.map((state) => {
-                    return (
-                      <div>
-                        {formatDate(state.date)}, {renderStateName(state.equipmentStateId)}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+              <Flex direction="column">
+                <p>{equipment.name}</p>
+                <p>
+                  Última posição conhecida. Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
+                  {equipment.lastKnownPosition.coordinates[1]}, data: {formatDate(equipment.lastKnownPosition.date)}
+                </p>
+                <p>
+                  Último estado conhecido: {equipment.lastKnownState.name}, data:{" "}
+                  {formatDate(equipment.lastKnownState.date)}
+                </p>
+                <button onClick={() => toggleStateHistory()}>Ver histórico de estados</button>
+                {showStateHistory && (
+                  <div style={{ height: "200px", overflowY: "auto", overflowX: "hidden" }}>
+                    {equipment.states.map((state) => {
+                      return (
+                        <div>
+                          {formatDate(state.date)}, {renderStateName(state.equipmentStateId)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </Flex>
             </Popup>
           </Marker>
         </Fragment>
