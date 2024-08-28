@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Button, Container, Divider, ScrollArea, Stack, Text, Title } from "@mantine/core";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Fragment, useEffect, useState } from "react";
@@ -34,7 +34,7 @@ export default function App() {
   // error
   // );
 
-  const formatDate = (unformattedDateString) => {
+  const formatDateAndTime = (unformattedDateString) => {
     const date = new Date(unformattedDateString);
 
     const readableDate = date.toLocaleDateString("pt-BR", {
@@ -44,7 +44,14 @@ export default function App() {
       timeZone: "America/Sao_Paulo",
     });
 
-    return readableDate;
+    const readableTime = date.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "America/Sao_Paulo", // Specifies Brasília Time
+    });
+
+    return `${readableDate}, ${readableTime}`;
   };
 
   const createIconDynamically = (color) => {
@@ -159,29 +166,55 @@ export default function App() {
             icon={createIconDynamically(equipment.lastKnownState.color)}
           >
             <Popup>
-              <Flex direction="column">
-                <p>{equipment.name}</p>
-                <p>
-                  Última posição conhecida. Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
-                  {equipment.lastKnownPosition.coordinates[1]}, data: {formatDate(equipment.lastKnownPosition.date)}
-                </p>
-                <p>
-                  Último estado conhecido: {equipment.lastKnownState.name}, data:{" "}
-                  {formatDate(equipment.lastKnownState.date)}
-                </p>
-                <button onClick={() => toggleStateHistory()}>Ver histórico de estados</button>
+              <Stack gap="md">
+                <Container>
+                  <Title size="h3">{equipment.name}</Title>
+                </Container>
+
+                <Stack spacing={8}>
+                  <Text weight={700} ta="center">
+                    Última posição conhecida
+                  </Text>
+                  <Text>
+                    Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
+                    {equipment.lastKnownPosition.coordinates[1]}
+                  </Text>
+                  <Text>Data e hora: {formatDateAndTime(equipment.lastKnownPosition.date)}</Text>
+                </Stack>
+
+                <Divider orientation="horizontal" />
+
+                <Stack spacing={8}>
+                  <Text weight={700} ta="center">
+                    Último estado conhecido
+                  </Text>
+                  <Text>Nome: {equipment.lastKnownState.name}</Text>
+                  <Text>Data e hora: {formatDateAndTime(equipment.lastKnownState.date)}</Text>
+                </Stack>
+
+                <Divider orientation="horizontal" />
+
+                <Button onClick={() => toggleStateHistory()}>Ver histórico de estados</Button>
                 {showStateHistory && (
-                  <div style={{ height: "200px", overflowY: "auto", overflowX: "hidden" }}>
+                  <ScrollArea h={200}>
                     {equipment.states.map((state) => {
                       return (
-                        <div>
-                          {formatDate(state.date)}, {renderStateName(state.equipmentStateId)}
-                        </div>
+                        <Stack
+                          pb={8}
+                          mb={16}
+                          spacing="xs"
+                          sx={{
+                            borderBottom: "1px solid black",
+                          }}
+                        >
+                          <Text>Nome: {renderStateName(state.equipmentStateId)}</Text>
+                          <Text>Data e hora: {formatDateAndTime(state.date)}</Text>
+                        </Stack>
                       );
                     })}
-                  </div>
+                  </ScrollArea>
                 )}
-              </Flex>
+              </Stack>
             </Popup>
           </Marker>
         </Fragment>
