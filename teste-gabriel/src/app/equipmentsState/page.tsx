@@ -1,5 +1,9 @@
+import EquipmentState from "./components/equipmentState";
+
 export default function Page(){
     return (
-        <h1>Equipement State Works</h1>
+        <div>
+            <EquipmentState />
+        </div>
     )
 }

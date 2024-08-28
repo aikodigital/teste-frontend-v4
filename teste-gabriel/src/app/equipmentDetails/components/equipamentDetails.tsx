@@ -38,12 +38,12 @@ const EquipmentDetails: React.FC = () => {
 
   return (
     <div>
-      <h2>Equipamento: {equipment.name}</h2>
       <p>
         <strong>ID:</strong> {equipment.id}
       </p>
+      <strong>Equipamento::</strong> {equipment.name}
       <p>
-        <strong>Modelo do Equipamento:</strong> {model.name}
+        <strong>Modelo:</strong> {model.name}
       </p>
     </div>
   );
