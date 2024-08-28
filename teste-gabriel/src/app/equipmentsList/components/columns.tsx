@@ -15,15 +15,13 @@ export const columns: ColumnDef<Equipment>[] = [
     header: "Nome",
   },
   {
-    accessorKey: "equipmentModelId",
-    header: "Modelo ID",
+    accessorKey: "modelName",
+    header: "Modelo",
   },
   {
     header: "Ações",
     id: "actions",
-    cell: ({ row }) => {
-      const item = row.original;
-
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

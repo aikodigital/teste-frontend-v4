@@ -1,4 +1,3 @@
-import EquipmentDetails from "@/components/EquipamentDetails";
 import EquipmentList from "./equipmentsList/components/equipementList";
 
 

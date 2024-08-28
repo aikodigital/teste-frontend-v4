@@ -19,6 +19,10 @@ const sidebarNavItems = [
     href: "/equipmentsList",
   },
   {
+    title: "Detalhe de Equipamentos",
+    href: "/equipmentDetails",
+  },
+  {
     title: "Histórico de Posições",
     href: "/equipmentsPosition",
   },
