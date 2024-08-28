@@ -2,9 +2,12 @@
 /** Interfaces */
 import type { IEquipmentDetails } from '~/interfaces/equipment';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   equipment: IEquipmentDetails;
-}>();
+  hideAction?: boolean;
+}>(), {
+  hideAction: false,
+});
 
 const iconName = 'fa6-solid:clock-rotate-left';
 const { setView } = useView();
@@ -44,7 +47,8 @@ function handleShowStateHistory() {
       </span>
     </span>
 
-    <button class="border rounded-md flex items-center gap-1 px-2 w-fit" @click="handleShowStateHistory">
+    <button v-if="!hideAction" class="border rounded-md flex items-center gap-1 px-2 w-fit"
+      @click="handleShowStateHistory">
       <Icon :name="iconName" />
 
       Histórico de estados

@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/leaflet', '@nuxt/icon'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/leaflet', '@nuxt/icon', 'dayjs-nuxt'],
   tailwindcss: {
     config: {
       theme: {
@@ -15,5 +15,9 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  dayjs: {
+    locales: ['pt-br'],
+    defaultLocale: 'pt-br',
   },
 });

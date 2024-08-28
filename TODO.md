@@ -11,9 +11,9 @@
   - [x] Visualizar o estado mais recente dos equipamentos.
   - [x] Implementar visualização do estado no mapa (pop-up, mouse hover, etc.).
 
-- [ ] **Histórico de estados do equipamento**
-  - [ ] Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
-  - [ ] Implementar uma interface para exibir o histórico de estados.
+- [x] **Histórico de estados do equipamento**
+  - [x] Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+  - [x] Implementar uma interface para exibir o histórico de estados.
 
 ## Funcionalidades Extras (Opcional)
 
