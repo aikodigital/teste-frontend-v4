@@ -20,8 +20,9 @@ import { Button, Modal } from "react-bootstrap";
 import "./Map.scss";
 
 const MAP_STYLE: React.CSSProperties = {
-  width: "100%",
+  width: "80%",
   height: "500px",
+  borderRadius: '5px'
 };
 
 const API_KEY: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
