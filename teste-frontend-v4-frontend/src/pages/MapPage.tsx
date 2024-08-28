@@ -5,7 +5,7 @@ import { useFullEquipments } from '@hooks/useFullEquipments'
 import { useEquipmentModels } from '@query/useEquipmentModels'
 import { useEquipmentStates } from '@query/useEquipmentState'
 
-import Map from '@components/Map'
+import Map from '@components/MainMap/Map'
 
 const MapPage = () => {
   const navigate = useNavigate()

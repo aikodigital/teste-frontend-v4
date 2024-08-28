@@ -449,6 +449,10 @@
             {
                 "date": "2021-02-28T20:00:00.000Z",
                 "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57"
+            },
+            {
+                "date": "2021-02-28T20:04:00.000Z",
+                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
             }
         ]
     },
@@ -1904,6 +1908,10 @@
             {
                 "date": "2021-02-28T18:00:00.000Z",
                 "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57"
+            },
+            {
+                "date": "2021-02-28T22:00:00.000Z",
+                "equipmentStateId": "baff9783-84e8-4e01-874b-6fd743b875ad"
             }
         ]
     },
@@ -3331,6 +3339,10 @@
             {
                 "date": "2021-02-28T15:00:00.000Z",
                 "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57"
+            },
+            {
+                "date": "2021-02-28T18:00:00.000Z",
+                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
             }
         ]
     },
@@ -4297,6 +4309,10 @@
             {
                 "date": "2021-03-01T01:00:00.000Z",
                 "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57"
+            },
+            {
+                "date": "2021-03-01T02:00:00.000Z",
+                "equipmentStateId": "baff9783-84e8-4e01-874b-6fd743b875ad"
             }
         ]
     }
