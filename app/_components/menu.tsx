@@ -10,7 +10,7 @@ const Menu = () => {
 
   const links = [
     { href: "/", icon: EarthIcon, label: "Monitor" },
-    { href: "/equipments", icon: MenuIcon, label: "Equipamentos" },
+    { href: "/select-equipments", icon: MenuIcon, label: "Equipamentos" },
   ];
   return (
     <nav className="px-5 py-3 bg-white rounded-full border border-gray-300 shadow-md">
