@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { IPosition } from './../../interfaces/iPosition';
+import { Injectable } from '@angular/core';
 
 import { equipmentList } from '../../../../assets/data/equipment';
 import { equipmentState } from '../../../../assets/data/equipmentState';
@@ -11,12 +11,14 @@ import { IEquipmentState } from '../../interfaces/iEquipmentState';
 import { IEquipment } from '../../interfaces/iEquipment';
 import { equipmentPositionHistory } from '../../../../assets/data/equipmentPositionHistory';
 import { IEquipemntPositionHistory } from '../../interfaces/iEquipmentPositionHistory';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ICustomEquipment } from '../../interfaces/iCustomEquipment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EquipmentService {
-  private http = inject(HttpClient);
+  positions = new BehaviorSubject<ICustomEquipment[]>([]);
 
   getEquipments(): IEquipment[] {
     return equipmentList;
@@ -40,11 +42,25 @@ export class EquipmentService {
     );
   }
 
-  getEquipmentpositionHistory(
+  getEquipmentPositionHistory(
     id: string
   ): IEquipemntPositionHistory | undefined {
     return equipmentPositionHistory.find(
       (equipmentState) => equipmentState.equipmentId === id
     );
+  }
+
+  getEquipmentLatestPosition(id: string): IPosition | undefined {
+    if (
+      !equipmentPositionHistory.find(
+        (equipmentState) => equipmentState.equipmentId === id
+      )
+    ) {
+      return undefined;
+    }
+
+    return equipmentPositionHistory
+      .find((equipmentState) => equipmentState.equipmentId === id)
+      ?.positions.slice(-1)[0];
   }
 }
