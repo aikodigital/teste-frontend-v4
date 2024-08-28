@@ -5,7 +5,28 @@
   justify-content: center;
   align-items: center;
 
-  .marker-container{
-    
+  
+  .custom-button {
+    border: solid 1px blue;
+    border-radius: 5px;
+    color: blue;
+    background-color: white;
+    transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease;
   }
+  
+  .custom-button:hover {
+    background-color: blue;
+    color: white;
+    transform: scale(1);
+  }
+
+  
+  .custom-modal-backdrop {
+    opacity: 0.05 !important;
+  }
+
+  .modal-backdrop.custom-modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+  
 }
