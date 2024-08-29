@@ -17,6 +17,10 @@ import type {
   IEquipmentStateHistory
 } from '~/interfaces/equipment';
 
+/**
+ * Composable para gerenciar os dados dos equipamentos
+ * @returns {Object} - Objeto contendo a referência para os equipamentos
+ */
 export function useEquipments() {
   const equipments = ref<IEquipment[]>(equipmentData);
   const equipmentsModel = ref<IEquipmentModel[]>(equipmentModelData);

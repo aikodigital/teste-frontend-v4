@@ -13,13 +13,32 @@ import {
   SelectViewport
 } from 'radix-vue';
 
+/** Função para recuperar o estado selecionado */
 const { selectedState } = useEquipmentFilter();
+
+/** Estados de equipamentos */
 const equipmentStates = getStates();
 
+
+/** 
+ * Ícone de seta para baixo
+ * @see https://icones.js.org/collection/fa6-solid?s=chevron-down&icon=fa6-solid:chevron-down
+ */
 const iconChevronDown = 'fa6-solid:chevron-down';
+
+/** 
+ * Ícone de check
+ * @see https://icones.js.org/collection/fa6-solid?s=check&icon=fa6-solid:check
+ */
 const iconCheck = 'fa6-solid:check';
+
+/**
+ * Ícone de X
+ * @see https://icones.js.org/collection/fa6-solid?s=xmark&icon=fa6-solid:xmark
+ */
 const iconXMark = 'fa6-solid:xmark';
 
+/** Função para atualizar o estado selecionado */
 const emit = defineEmits(['update:selectedState']);
 watch(selectedState, (newValue) => {
   emit('update:selectedState', newValue);

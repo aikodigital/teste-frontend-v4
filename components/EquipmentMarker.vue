@@ -2,6 +2,9 @@
 /** Interfaces */
 import type { IEquipmentDetails } from '~/interfaces/equipment';
 
+/** Propriedades do componente
+ * @property {IEquipmentDetails} equipment - Dados do equipamento
+ */
 const props = defineProps<{
   equipment: IEquipmentDetails;
 }>();

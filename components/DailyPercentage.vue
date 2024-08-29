@@ -1,16 +1,29 @@
 <script lang="ts" setup>
+/** Core */
 import { ProgressIndicator, ProgressRoot } from 'radix-vue';
 
+/** Instância da biblioteca dayJs */
 const dayjs = useDayjs();
 
+/** Função para definir a visualização atual. */
 const { setView } = useView();
+
+/** Função para recuperar e definir o equipamento selecionado. */
 const { selectedEquipment, setSelectedEquipment } = useSelectedEquipment();
 
+/** Dados manipulados para exibição da lista */
 const dailyReports = getDailyReport(selectedEquipment.value!);
-console.log(dailyReports);
 
-const iconName = 'fa6-solid:arrow-left';
+/**
+ * Ícone seta para direita
+ * @see https://icones.js.org/collection/fa6-solid?s=arrow&icon=fa6-solid:arrow-left
+ */
+const iconArrowLeft = 'fa6-solid:arrow-left';
 
+/** Função para retornar a classe do indicador de progresso
+ * @param {string} stateName Nome do estado
+ * @returns {string} Classe do indicador de progresso
+ */
 function getProgressIndicatorClass(stateName: string) {
   const baseClasses = 'rounded-full size-full';
 
@@ -26,6 +39,7 @@ function getProgressIndicatorClass(stateName: string) {
   }
 }
 
+/** Função para exibir a lista de equipamentos */
 function handleShowEquipmentList() {
   setView('equipment');
   setSelectedEquipment(null);
@@ -36,10 +50,12 @@ function handleShowEquipmentList() {
   <aside class="flex flex-col items-center w-1/4 h-screen p-2 gap-4">
     <div class="flex items-center justify-between w-full">
       <button @click="handleShowEquipmentList">
-        <Icon :name="iconName" />
+        <Icon :name="iconArrowLeft" />
       </button>
 
-      <h2 class="text-2xl font-bold">Produtividade diária</h2>
+      <h2 class="text-2xl font-bold">
+        Produtividade diária
+      </h2>
 
       <div class="invisible size-[1em]" />
     </div>

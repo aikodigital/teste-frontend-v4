@@ -13,13 +13,31 @@ import {
   SelectViewport
 } from 'radix-vue';
 
+/** Função para recuperar o modelo selecionado */
 const { selectedModel } = useEquipmentFilter();
+
+/** Modelos de equipamentos */
 const equipmentModels = getModels();
 
+/** 
+ * Ícone de seta para baixo
+ * @see https://icones.js.org/collection/fa6-solid?s=chevron-down&icon=fa6-solid:chevron-down
+ */
 const iconChevronDown = 'fa6-solid:chevron-down';
+
+/** 
+ * Ícone de check
+ * @see https://icones.js.org/collection/fa6-solid?s=check&icon=fa6-solid:check
+ */
 const iconCheck = 'fa6-solid:check';
+
+/**
+ * Ícone de X
+ * @see https://icones.js.org/collection/fa6-solid?s=xmark&icon=fa6-solid:xmark
+ */
 const iconXMark = 'fa6-solid:xmark';
 
+/** Função para atualizar o modelo selecionado */
 const emit = defineEmits(['update:selectedModel']);
 watch(selectedModel, (newValue) => {
   emit('update:selectedModel', newValue);

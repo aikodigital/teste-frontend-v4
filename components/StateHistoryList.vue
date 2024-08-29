@@ -1,13 +1,23 @@
 <script lang="ts" setup>
+/** Instância da biblioteca dayJs */
 const dayjs = useDayjs();
 
+/** Função para definir a visualização atual. */
 const { setView } = useView();
+
+/** Função para recuperar e definir o equipamento selecionado. */
 const { selectedEquipment, setSelectedEquipment } = useSelectedEquipment();
 
+/** Dados manipulados para exibição da lista */
 const stateHistory = computed(() => selectedEquipment.value?.stateHistory.toReversed() || []);
 
+/**
+ * Ícone seta para direita
+ * @see https://icones.js.org/collection/fa6-solid?s=arrow&icon=fa6-solid:arrow-left
+ */
 const iconName = 'fa6-solid:arrow-left';
 
+/** Função para exibir a lista de equipamentos */
 function handleShowEquipmentList() {
   setView('equipment');
   setSelectedEquipment(null);
@@ -21,7 +31,9 @@ function handleShowEquipmentList() {
         <Icon :name="iconName" />
       </button>
 
-      <h2 class="text-2xl font-bold">Histórico de Estados</h2>
+      <h2 class="text-2xl font-bold">
+        Histórico de Estados
+      </h2>
 
       <div class="invisible size-[1em]" />
     </div>
