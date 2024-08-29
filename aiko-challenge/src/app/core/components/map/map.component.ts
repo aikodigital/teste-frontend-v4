@@ -47,7 +47,6 @@ export class MapComponent implements OnInit {
 
   addMarker(equipment: ICustomEquipment): void {
     if (!this.map) return;
-    console.log(equipment);
     const icon = this.createCustomIcon(equipment.equipmentModelId);
     const layer = LF.marker(
       [equipment.latestPosition.lat, equipment.latestPosition.lon],
