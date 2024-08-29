@@ -1,9 +1,12 @@
 export const selectEquipmentsProductiveHours = (id) => (state) => {
     const equipmentStateHistory = state.equipmentStateHistory.data;
+    const equipments = state.equipment.data;
+
 
     if (equipmentStateHistory.length > 0) {
 
         const equipment = equipmentStateHistory.find(e => e.equipmentId === id);
+        const equipmentDetails = equipments.find(e => e.id === id);
 
         if (!equipment) return null;
 
@@ -49,8 +52,8 @@ export const selectEquipmentsProductiveHours = (id) => (state) => {
                 });
             }
 
-            if (index + 1 === equipment.states.length - 1) {
-                totalHour = (totalHour + new Date(equipment.states[index + 1].date)) / (1000 * 60 * 60);
+            if ((index + 1) == equipment.states.length - 1) {
+                totalHour = (new Date(equipment.states[index + 1].date) - totalHour) / (1000 * 60 * 60);
             }
 
             inicialHourState = {
@@ -62,7 +65,8 @@ export const selectEquipmentsProductiveHours = (id) => (state) => {
         return {
             equipmentId: equipment.equipmentId,
             totalHour,
-            hoursStates
+            hoursStates,
+            equipmentModelId: equipmentDetails.equipmentModelId
         };
     }
 

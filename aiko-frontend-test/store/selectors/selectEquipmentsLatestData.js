@@ -5,33 +5,30 @@ export const selectEquipmentsLatestData = (state) => {
     const equipments = state.equipment.data;
 
     if (Array.isArray(equipmentPositionHistory) && Array.isArray(equipmentStateHistory)) {
-
         const combinedData = equipmentPositionHistory.map((equipmentPosition) => {
             const matchingStateHistory = equipmentStateHistory.find((state) => state.equipmentId === equipmentPosition.equipmentId);
 
+            const latestPosition = equipmentPosition.positions[equipmentPosition.positions.length - 1];
 
-            const latestCombinedData = equipmentPosition.positions.reduce((latest, position) => {
-                const matchingState = matchingStateHistory.states.find((state) => state.date === position.date);
+            const latestState = matchingStateHistory.states
+                .filter((state) => new Date(state.date) <= new Date(latestPosition.date))
+                .reduce((latest, state) => {
+                    return new Date(state.date) > new Date(latest.date) ? state : latest;
+                }, { date: '1970-01-01T00:00:00Z' });
 
-                if (matchingState && new Date(position.date) > new Date(latest.date)) {
-                    const stateDetails = equipmentStates.find((s) => s.id === matchingState.equipmentStateId);
-                    const equipment = equipments.find((e) => e.id === equipmentPosition.equipmentId);
+            const stateDetails = equipmentStates.find((s) => s.id === latestState.equipmentStateId);
+            const equipment = equipments.find((e) => e.id === equipmentPosition.equipmentId);
 
-                    return {
-                        equipmentId: equipmentPosition.equipmentId,
-                        equipmentModelId: equipment ? equipment.equipmentModelId : 'Unknown',
-                        date: position.date,
-                        lat: position.lat,
-                        lon: position.lon,
-                        stateId: stateDetails ? stateDetails.id : 'Unknown',
-                        stateName: stateDetails ? stateDetails.name : 'Unknown',
-                        stateColor: stateDetails ? stateDetails.color : 'Unknown'
-                    };
-                }
-                return latest;
-            }, { date: '1970-01-01T00:00:00Z' });
-
-            return latestCombinedData;
+            return {
+                equipmentId: equipmentPosition.equipmentId,
+                equipmentModelId: equipment ? equipment.equipmentModelId : 'Unknown',
+                date: latestPosition.date,
+                lat: latestPosition.lat,
+                lon: latestPosition.lon,
+                stateId: stateDetails ? stateDetails.id : 'Unknown',
+                stateName: stateDetails ? stateDetails.name : 'Unknown',
+                stateColor: stateDetails ? stateDetails.color : 'Unknown'
+            };
         });
 
         return combinedData.filter(item => item !== null);

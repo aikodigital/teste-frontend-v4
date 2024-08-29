@@ -16,7 +16,7 @@ import { setFilteredHistory } from '../../../../store/slices/equipmentStateHisto
 export default function HistoryTable() {
     const filteredHistory = useSelector((state) => state.equipmentStateHistory.filteredHistory);
     const equipmentLatestHistory = useSelector((state) => state.equipmentPositionHistory.equipmentLatestHistory)
-    const { setEquipmentsMapMarkers } = useEquipmentsContext()
+    const { setEquipmentsMapMarkers, setGainProductivity } = useEquipmentsContext()
     const dispatch = useDispatch();
 
     const handleTrajeto = () => {
@@ -26,6 +26,7 @@ export default function HistoryTable() {
     const handleClose = () => {
         dispatch(setFilteredHistory([]))
         setEquipmentsMapMarkers(equipmentLatestHistory)
+        setGainProductivity(null)
     }
 
     return (

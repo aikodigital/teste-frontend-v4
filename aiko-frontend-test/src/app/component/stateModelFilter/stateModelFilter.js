@@ -3,11 +3,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { selectFilterStateModel } from '../../../../store/selectors/selectFilterStateModel';
 import { useEquipmentsContext } from '@/app/context/equipmentsContext';
+import { setFilteredHistory } from '../../../../store/slices/equipmentStateHistorySlice';
 
 export default function StateModelFilter() {
     const states = useSelector((state) => state.equipmentState.data)
@@ -15,7 +16,9 @@ export default function StateModelFilter() {
     const equipmentLatestHistory = useSelector((state) => state.equipmentPositionHistory.equipmentLatestHistory)
     const [selectedState, setSelectedState] = useState('')
     const [selectedModel, setSelectedModel] = useState('')
-    const { setEquipmentsMapMarkers } = useEquipmentsContext();
+    const { setEquipmentsMapMarkers, setGainProductivity } = useEquipmentsContext();
+    const dispatch = useDispatch();
+
 
     const handleChangeState = (event) => {
         setSelectedState(event.target.value);
@@ -35,6 +38,8 @@ export default function StateModelFilter() {
         setSelectedModel('')
         setSelectedState('')
         setEquipmentsMapMarkers(equipmentLatestHistory)
+        setGainProductivity(null)
+        dispatch(setFilteredHistory([]))
     }
 
     return (

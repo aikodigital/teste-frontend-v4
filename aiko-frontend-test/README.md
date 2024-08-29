@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Projeto Aiko
 
-## Getting Started
+## 1. Instalando Dependências e Executando o Projeto
 
-First, run the development server:
+Primeiro, execute o comando abaixo para instalar as dependências do projeto:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Em seguida, inicie a aplicação com o comando:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Sobre a Aplicação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Na tela inicial do projeto, você verá:
 
-## Deploy on Vercel
+- **Um mapa com marcadores posicionados** representando o último estado e posição registrados pelos equipamentos.
+- **Um filtro para Estado** (estado do equipamento) e/ou Modelo, acompanhado de um botão de limpar que retorna a aplicação à sua exibição inicial.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 4. Funcionalidades
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Interação com Marcadores**: Ao clicar em um marcador, você verá o histórico de estados daquele equipamento. Um card aparecerá mostrando a produtividade e os ganhos do equipamento em destaque.
+- **Mostrar Trajetória**: O botão "Mostrar Trajetória" exibirá no mapa todas as posições registradas daquele equipamento. Clicando no ícone de "X" ou no botão de limpar, a visualização retornará ao estado inicial.
+
+## 5. Tecnologias Utilizadas
+
+Este projeto foi desenvolvido utilizando o framework [Next.js](https://nextjs.org/), com o suporte das seguintes bibliotecas:
+
+- [Material UI](https://mui.com/)
+- [Leaflet](https://leafletjs.com/)
+
+## 6. Estrutura do Projeto
+
+- **Store**: Na pasta `store`, você encontrará os Slices utilizados pelo Redux e os Selectors que tratam a lógica mais complexa para a manipulação dos dados armazenados.
+- **App**: Na pasta `app` estão localizados os componentes, organizados em pastas respectivas para facilitar a localização e manutenção, além do contexto utilizado no projeto.
+- **Carregamento do Redux**: O carregamento dos dados via Redux é feito diretamente no arquivo `page.js`. Como o componente `MapDisplay` utiliza esses dados, uma verificação é feita no contexto antes que o componente seja totalmente carregado na aplicação.
+
+

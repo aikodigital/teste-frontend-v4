@@ -20,6 +20,7 @@
 }
 
 .filterDiv {
+    width: 1000px;
     display: flex;
-    gap: 32px;
+    justify-content: space-between;
 }

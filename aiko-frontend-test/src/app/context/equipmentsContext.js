@@ -35,9 +35,6 @@ export default function EquipmentsProvider({ children }) {
             dispatch(setEquipmentLatestHistory(equipmentsData));
             setInitialLoad(true);
 
-
-            console.log(selectEquipmentsProductiveHours(state))
-
         }
     }, [initialLoad, equipmentStateHistory, equipmentState, equipmentPositionHistory, equipment, dispatch]);
 
