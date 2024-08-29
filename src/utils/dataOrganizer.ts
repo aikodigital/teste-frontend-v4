@@ -7,6 +7,8 @@ import {
   OrganizedEquipment,
 } from '../types/types';
 
+import fetchAndCalculateData from '../utils/calculate';
+
 export const organizeData = (
   equipments: Equipment[],
   equipmentPositionHistories: EquipmentPositionHistory[],
@@ -17,11 +19,13 @@ export const organizeData = (
   const equipmentModelsMap = new Map<string, EquipmentModel>();
   equipmentModels.forEach((model) => equipmentModelsMap.set(model.id, model));
 
+  fetchAndCalculateData();
+
   const equipmentStatesMap = new Map<string, EquipmentState>();
   equipmentStates.forEach((state) => equipmentStatesMap.set(state.id, state));
 
   const equipmentMap = new Map<string, any>();
-  equipments.forEach((equipment) => {
+  equipments.forEach((equipment, index) => {
     const model = equipmentModelsMap.get(equipment.equipmentModelId);
     const positionHistory = equipmentPositionHistories.find(
       (history) => history.equipmentId === equipment.id,
@@ -36,6 +40,19 @@ export const organizeData = (
         stateName: equipmentStatesMap.get(earning.equipmentStateId)?.name,
       }));
 
+      const equipamenthourlyEarningsString = localStorage.getItem('item');
+      let equipamenthourlyEarnings = [];
+      if (equipamenthourlyEarningsString) {
+        try {
+          equipamenthourlyEarnings = JSON.parse(equipamenthourlyEarningsString);
+        } catch (error) {
+          console.error('Erro ao parsear equipamenthourlyEarnings:', error);
+        }
+      }
+
+      const averageProductivity =
+        equipamenthourlyEarnings[index]?.averageProductivityDay || null;
+
       equipmentMap.set(equipment.id, {
         ...equipment,
         modelName: model.name,
@@ -46,6 +63,7 @@ export const organizeData = (
             ...state,
             stateName: equipmentStatesMap.get(state.equipmentStateId)?.name,
           })) || [],
+        averageProductivity,
       });
     }
   });

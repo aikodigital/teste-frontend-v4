@@ -27,7 +27,6 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  
   const { setLocal } = useEquipmentContext();
   const [openStateId, setOpenStateId] = useState<number | null>(null);
   const [showAllStates, setShowAllStates] = useState(false);
@@ -35,6 +34,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
   const getStateColorAndPercentage = (
     stateName: string,
   ): { color: string; percentage: number; secondaryColor?: string } => {
+    //ver pra atualizar a % no gráfico
     switch (stateName) {
       case 'Operando':
         return { color: '#2ecc71', percentage: 100 };
@@ -119,25 +119,16 @@ const Card: React.FC<CardProps> = ({ data }) => {
                       percentage={percentage}
                       color={color}
                       secondaryColor={secondaryColor}
-                    />
+                    >
+                      {equipment.averageProductivity}
+                    </DonutChart>
                   </div>
                 </div>
                 <div className={styles.containerModel}>
                   <h5 className={styles.modelName}>{equipment.modelName}</h5>
                   <div className={styles.hourlyEarnings}>
-                    <h5
-                      className={styles.hourlyEarningsValue}
-                      style={{ color: color }}
-                    >
-                      {
-                        equipment.hourlyEarnings.find(
-                          (earning) =>
-                            earning.stateName === lastState.stateName,
-                        )?.value
-                      }
-                    </h5>
                     <h5 className={styles.hourlyEarningsText}>
-                      Lucro/Prejuízo
+                      Produtividade diária
                     </h5>
                   </div>
                 </div>

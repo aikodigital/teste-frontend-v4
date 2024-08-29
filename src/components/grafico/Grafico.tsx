@@ -5,12 +5,14 @@ interface DonutProps {
   percentage: number;
   color: string;
   secondaryColor?: string;
+  children: number;
 }
 
 const DonutChart: React.FC<DonutProps> = ({
   percentage,
   color,
   secondaryColor,
+  children,
 }) => {
   const background = secondaryColor
     ? `conic-gradient(${color} ${percentage}%, ${secondaryColor} ${percentage}% 100%)`
@@ -18,7 +20,9 @@ const DonutChart: React.FC<DonutProps> = ({
 
   return (
     <div className={styles.donutChart} style={{ background }}>
-      <div className={styles.centerHole} />
+      <div className={styles.centerHole}>
+        <h5 className={styles.percentage}>{children}%</h5>
+      </div>
     </div>
   );
 };

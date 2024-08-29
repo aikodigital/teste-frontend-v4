@@ -10,7 +10,10 @@ export const Aside: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Card data={dataToDisplay} onLocationSelect={(coordinates) => console.log(coordinates)} />
+      <Card
+        data={dataToDisplay}
+        onLocationSelect={(coordinates) => console.log(coordinates)}
+      />
     </div>
   );
 };
