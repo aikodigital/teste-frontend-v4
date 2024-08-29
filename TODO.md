@@ -36,9 +36,9 @@
   - [x] Visualizar o histórico de posições de um equipamento.
   - [x] Mostrar o trajeto realizado pelo equipamento no mapa.
 
-- [ ] **Documentação**
-  - [ ] Gerar documentação da aplicação.
-  - [ ] Incluir detalhes sobre decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso, etc.
+- [x] **Documentação**
+  - [x] Gerar documentação da aplicação.
+  - [x] Incluir detalhes sobre decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso, etc.
 
 ## Entregas
 
