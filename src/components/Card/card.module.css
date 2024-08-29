@@ -38,13 +38,14 @@
 .equipmentName {
   font-weight: 800;
   font-size: 16px;
+  margin: 0;
 }
 .modelName {
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
-  margin: 0 0 12px 0;
-  max-width: 80px;
+  margin: 0;
+  /* max-width: 80px; */
 }
 .containerModel {
   display: flex;
@@ -52,26 +53,9 @@
   align-items: center;
   border-bottom: 1px solid rgb(209, 209, 209);
   margin: 16px 0;
+  padding-bottom: 16px;
 }
-.hourlyEarnings {
-  margin-bottom: 12px;
-}
-.hourlyEarningsValue {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-  text-align: right;
-}
-.hourlyEarningsText {
-  font-weight: 400;
-  margin: 0;
-  max-width: 86px;
-  text-align: right;
-  display: flex;
-  align-items: center;
-  line-height: 14px;
-  font-size: 12px;
-}
+
 .containerState {
   display: flex;
   align-items: center;
@@ -103,9 +87,12 @@
   margin: 0;
   font-size: 12px;
 }
+
 .historyState {
   list-style: none;
+  font-weight: 400;
 }
+
 .lastUpdate {
   margin: 0 0 16px 0;
   font-weight: 400;
@@ -141,11 +128,51 @@
 
 .noData {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 16px;
   color: #888;
   padding: 20px;
 }
 
+.hourlyEarnings {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.averageGainContainer,
+.hourlyEarningsContainer {
+  display: flex;
+  align-items: center;
+}
+.hourlyEarningsValue {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: right;
+}
+.hourlyEarningsText,
+.averageGainText {
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  line-height: 12px;
+  font-size: 10px;
+}
+.hourlyEarningsText {
+  text-align: right;
+  margin: 0 8px 0 0;
+  max-width: 66px;
+}
+
+.averageGainText {
+  max-width: 106px;
+}
+.averageGainValue {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+}
 @media (max-width: 1080px) {
   .container {
     width: 200px;

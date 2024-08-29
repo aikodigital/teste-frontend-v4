@@ -41,7 +41,9 @@ export const organizeData = (
       }));
 
       const equipamenthourlyEarningsString = localStorage.getItem('item');
+
       let equipamenthourlyEarnings = [];
+
       if (equipamenthourlyEarningsString) {
         try {
           equipamenthourlyEarnings = JSON.parse(equipamenthourlyEarningsString);
@@ -52,6 +54,9 @@ export const organizeData = (
 
       const averageProductivity =
         equipamenthourlyEarnings[index]?.averageProductivityDay || null;
+
+      const averageGain =
+        equipamenthourlyEarnings[index]?.averageGainDay || null;
 
       equipmentMap.set(equipment.id, {
         ...equipment,
@@ -64,6 +69,7 @@ export const organizeData = (
             stateName: equipmentStatesMap.get(state.equipmentStateId)?.name,
           })) || [],
         averageProductivity,
+        averageGain,
       });
     }
   });

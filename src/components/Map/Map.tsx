@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  useMap,
+} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -17,7 +24,10 @@ const Map: React.FC = () => {
   const defaultLat = -19.163956;
   const defaultLon = -46.087835;
 
-  const [position, setPosition] = useState({ lat: defaultLat, lon: defaultLon });
+  const [position, setPosition] = useState({
+    lat: defaultLat,
+    lon: defaultLon,
+  });
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [historyPositions, setHistoryPositions] = useState([]);
 
@@ -52,13 +62,17 @@ const Map: React.FC = () => {
     Harvester: harvester,
   };
 
-  const defaultIconUrl = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png';
+  const defaultIconUrl =
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png';
 
   const dataToMap = filteredData.length > 0 ? filteredData : organizedData;
 
   const handleHistoryPosition = (equipment) => {
     setSelectedEquipment(equipment);
-    const historyPositions = equipment.positions.map(pos => [pos.lat, pos.lon]);
+    const historyPositions = equipment.positions.map((pos) => [
+      pos.lat,
+      pos.lon,
+    ]);
     setHistoryPositions(historyPositions);
 
     if (historyPositions.length > 0) {
@@ -76,6 +90,23 @@ const Map: React.FC = () => {
     iconAnchor: [5, 5],
   });
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const formattedTime = `${hours}:${minutes} ${ampm}`;
+
+    return `${formattedDate} ${formattedTime}`;
+  };
+
   return (
     <MapContainer
       center={[position.lat, position.lon]}
@@ -89,26 +120,23 @@ const Map: React.FC = () => {
       />
       <MenuFilter />
 
-      {/* Renderiza os pontos históricos se um equipamento estiver selecionado */}
       {selectedEquipment ? (
         <>
           {historyPositions.map((pos, index) => (
-            <Marker
-              key={index}
-              position={pos}
-              icon={customIcon}
-            />
+            <Marker key={index} position={pos} icon={customIcon} />
           ))}
           <Marker
             position={[
-              selectedEquipment.positions[selectedEquipment.positions.length - 1].lat,
-              selectedEquipment.positions[selectedEquipment.positions.length - 1].lon,
+              selectedEquipment.positions[
+                selectedEquipment.positions.length - 1
+              ].lat,
+              selectedEquipment.positions[
+                selectedEquipment.positions.length - 1
+              ].lon,
             ]}
             icon={customIcon}
           >
-            <Popup>
-              {selectedEquipment.name} - Última posição
-            </Popup>
+            <Popup>{selectedEquipment.name} - Última posição</Popup>
           </Marker>
           <Polyline
             positions={historyPositions}
@@ -121,10 +149,16 @@ const Map: React.FC = () => {
         dataToMap.map((item, index) => {
           const lastPosition = item.positions[item.positions.length - 1];
           const lastState = item.states[item.states.length - 1].stateName;
+          const lastUpdate = item.states[item.states.length - 1].date;
 
-          const stateClass = lastState === 'Operando' ? styles.operando :
-                             lastState === 'Parado' ? styles.parado :
-                             lastState === 'Manutenção' ? styles.manutencao : '';
+          const stateClass =
+            lastState === 'Operando'
+              ? styles.operando
+              : lastState === 'Parado'
+                ? styles.parado
+                : lastState === 'Manutenção'
+                  ? styles.manutencao
+                  : '';
 
           const itemIcon = L.divIcon({
             className: `${styles.modelContainer} ${stateClass}`,
@@ -143,9 +177,9 @@ const Map: React.FC = () => {
                 <h5 className={styles.title}>
                   {item.name} <br />
                 </h5>
-                <h5 className={styles.state}>
-                  {lastState}
-                </h5>
+                <h5 className={styles.state}>{lastState}</h5>
+                <h5 className={styles.state}>Última atualização</h5>
+                <h5 className={styles.state}>{formatDate(lastUpdate)}</h5>
                 <button
                   className={styles.positionHistory}
                   onClick={() => handleHistoryPosition(item)}

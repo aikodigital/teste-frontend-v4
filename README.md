@@ -100,9 +100,15 @@ src
 │ └── types.ts
 │
 ├── utils
+│ ├── calculate.ts
 │ └── dataOrganizer.ts
 │
 ├── index.tsx
 ├── App.tsx
 ├── index.css
 └── App.css
+
+DESIGN/UI/UX
+Diante da complexidade visual envolvendo cores, formas e a quantidade de informações, optei por um tema neutro que destaca apenas as informações essenciais. Utilizei ícones para diferenciar os equipamentos e dei especial atenção às cores dos estados dos equipamentos, garantindo que essas informações sejam claras e evidentes. Além disso, utilizei gráficos para tornar a leitura mais dinâmica e facilitar a identificação da produtividade dos equipamentos.
+
+RESPONSIVIDADE

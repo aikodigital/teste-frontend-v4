@@ -64,7 +64,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
   };
 
   if (data.length === 0) {
-    return <p className={styles.noData}>Não encontrado.</p>;
+    return <p className={styles.noData}>Nenhum item encontrado.</p>;
   }
 
   const handleHistoryState = (id: number) => {
@@ -141,23 +141,41 @@ const Card: React.FC<CardProps> = ({ data }) => {
                           className={styles.modelImg}
                         />
                       </div>
-                      <h5 className={styles.equipmentName}>{equipment.name}</h5>
+                      <div>
+                        <h5 className={styles.equipmentName}>
+                          {equipment.name}
+                        </h5>
+                        <h5 className={styles.modelName}>
+                          {equipment.modelName}
+                        </h5>
+                      </div>
                     </div>
-                    <DonutChart
-                      percentage={percentage}
-                      color={color}
-                      secondaryColor={secondaryColor}
-                    >
-                      {equipment.averageProductivity}
-                    </DonutChart>
                   </div>
                 </div>
                 <div className={styles.containerModel}>
-                  <h5 className={styles.modelName}>{equipment.modelName}</h5>
                   <div className={styles.hourlyEarnings}>
-                    <h5 className={styles.hourlyEarningsText}>
-                      Produtividade média diária
-                    </h5>
+                    <div className={styles.averageGainContainer}>
+                      <h5 className={styles.averageGainValue}>
+                        {equipment.averageGain}
+                      </h5>
+                      <h5 className={styles.averageGainText}>
+                        Ganho
+                        <br />
+                        médio
+                      </h5>
+                    </div>
+                    <div className={styles.hourlyEarningsContainer}>
+                      <h5 className={styles.hourlyEarningsText}>
+                        Produtividade média
+                      </h5>
+                      <DonutChart
+                        percentage={percentage}
+                        color={color}
+                        secondaryColor={secondaryColor}
+                      >
+                        {equipment.averageProductivity}
+                      </DonutChart>
+                    </div>
                   </div>
                 </div>
                 <div className={styles.containerState}>
@@ -190,6 +208,9 @@ const Card: React.FC<CardProps> = ({ data }) => {
                       {statesToDisplay.map((state, index) => (
                         <li key={index} className={styles.historyState}>
                           {state.stateName}
+                          {'   '}
+                          <br />
+                          {formatDate(state.date)}
                         </li>
                       ))}
                     </ul>
