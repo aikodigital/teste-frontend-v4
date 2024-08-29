@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Florestal Machines
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação web desenvolvida para gerenciar e monitorar equipamentos florestais. Utilizando React, a aplicação oferece funcionalidades como visualização em mapa, filtragem de equipamentos e exibição de histórico de estados.
 
-Currently, two official plugins are available:
+## Sumário
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Descrição do Projeto](#descrição-do-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Componentes Desenvolvidos](#componentes-desenvolvidos)
+- [Instruções de Uso](#instruções-de-uso)
 
-## Expanding the ESLint configuration
+## Descrição do Projeto
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+A aplicação "Florestal Machines" tem como objetivo fornecer uma interface intuitiva para visualizar e gerenciar equipamentos em uma área florestal. Através de um mapa interativo, os usuários podem visualizar a localização atual dos equipamentos, filtrar por estado e modelo, e acessar informações detalhadas sobre cada equipamento.
 
-- Configure the top-level `parserOptions` property like this:
+## Funcionalidades
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Visualização em Mapa**: Mostra a localização atual dos equipamentos em um mapa interativo usando a biblioteca Leaflet.
+- **Filtragem de Equipamentos**: Permite filtrar os equipamentos exibidos no mapa por estado e modelo.
+- **Informações do Equipamento**: Exibe detalhes do equipamento, incluindo estado atual e histórico de estados, em um popup ao clicar no marcador do equipamento.
+- **Diferenciação Visual**: Diferencia visualmente os equipamentos no mapa com base em seu modelo.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Tecnologias Utilizadas
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Frontend**: React, TypeScript, TailwindCSS, React-Leaflet, Leaflet
+- **Ferramentas de Desenvolvimento**: Vite (para bundling)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+### Estrutura de Diretórios
+
+- `src/`: Contém o código fonte do frontend.
+  - `components/`: Componentes React reutilizáveis.
+  - `data/`: Dados estáticos utilizados na aplicação.
+  - `types/`: Tipos TypeScript utilizados no projeto.
+  - `utils/`: Funções utilitárias.
+  - `App.tsx`: Componente principal da aplicação.
+  - `index.tsx`: Ponto de entrada da aplicação.
+- `public/`: Contém arquivos estáticos como imagens e ícones.
+
+## Componentes Desenvolvidos
+
+### `Map`
+
+- **Descrição**: Exibe um mapa interativo com marcadores para os equipamentos. Permite filtrar os equipamentos por estado e modelo.
+- **Props**: Nenhuma
+
+### `EquipmentPopup`
+
+- **Descrição**: Componente exibido em um popup ao clicar em um marcador no mapa. Mostra detalhes sobre o equipamento, incluindo seu estado atual e histórico de estados.
+- **Props**:
+  - `equipment`: Informações do equipamento.
+  - `state`: Estado atual do equipamento.
+  - `stateHistory`: Histórico de estados do equipamento.
+
+### `createIcon`
+
+- **Descrição**: Função utilitária para criar ícones personalizados para os equipamentos no mapa com base no modelo.
+
+## Instruções de Uso
+
+### Executar o Frontend
+
+1. Instalar Dependências:
+   `npm install`
+
+2. Iniciar o Servidor de Desenvolvimento:
+   `npm run dev`
+
+3. Acessar a Aplicação:
+   Abra o navegador e vá para `http://localhost:5173`.
