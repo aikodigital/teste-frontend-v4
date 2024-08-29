@@ -254,3 +254,12 @@ export function getIconModel(equipmentModelName?: string) {
       return 'fa6-solid:question';
   }
 }
+
+export function getEquipmentPositionHistory(equipment: IEquipmentDetails) {
+  return equipment.positionHistory.map((position) => {
+    return {
+      lat: position.lat,
+      lon: position.lon,
+    };
+  });
+}

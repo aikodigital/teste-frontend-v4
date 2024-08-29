@@ -32,14 +32,9 @@
 - [x] **Diferenciar os Equipamentos**
   - [x] Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
 
-- [ ] **Histórico de Posições**
-  - [ ] Visualizar o histórico de posições de um equipamento.
-  - [ ] Mostrar o trajeto realizado pelo equipamento no mapa.
-
-- [ ] **Testes**
-  - [ ] Desenvolver testes unitários.
-  - [ ] Desenvolver testes automatizados.
-  - [ ] Desenvolver testes de acessibilidade.
+- [x] **Histórico de Posições**
+  - [x] Visualizar o histórico de posições de um equipamento.
+  - [x] Mostrar o trajeto realizado pelo equipamento no mapa.
 
 - [ ] **Documentação**
   - [ ] Gerar documentação da aplicação.

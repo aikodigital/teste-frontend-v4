@@ -4,6 +4,8 @@ import type { PointExpression } from 'leaflet';
 
 const { recentEquipments } = useEquipments();
 const { filteredEquipments } = useFilteredEquipments();
+const { positionsToShow } = useShowRoutes();
+const positionsArray = computed(() => Array.from(positionsToShow.value.values()));
 
 const equipmentsRecentPositions = getEquipmentsRecentPosition(recentEquipments.value);
 const centralPosition = ref<PointExpression>(getCentralPosition(equipmentsRecentPositions));
@@ -20,6 +22,8 @@ const zoom = ref<number>(getZoomLevel(equipmentsRecentPositions));
       <div v-for="equipment in filteredEquipments" :key="equipment.id">
         <EquipmentMarker :equipment="equipment" />
       </div>
+
+      <LPolyline :lat-lngs="positionsArray" color="green" />
     </LMap>
   </div>
 </template>
