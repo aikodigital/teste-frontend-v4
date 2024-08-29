@@ -67,3 +67,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.leaflet-popup-tip {
+  @apply !bg-background;
+}
+.leaflet-popup-content-wrapper {
+  @apply !rounded-xl !bg-background text-foreground;
+}
