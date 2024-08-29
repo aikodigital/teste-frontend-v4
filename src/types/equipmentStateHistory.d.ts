@@ -1,7 +1,9 @@
+export interface EquipmentStateHistoryEntry {
+  date: string;
+  equipmentStateId: string;
+}
+
 export interface EquipmentStateHistory {
   equipmentId: string;
-  states: {
-    date: string;
-    equipmentStateId: string;
-  }[];
+  states: EquipmentStateHistoryEntry[];
 }

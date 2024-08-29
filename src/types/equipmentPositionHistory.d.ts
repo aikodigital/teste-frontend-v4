@@ -1,8 +1,10 @@
+export interface EquipmentPositionEntry {
+  date: string;
+  lat: number;
+  lon: number;
+}
+
 export interface EquipmentPositionHistory {
   equipmentId: string;
-  positions: {
-    date: string;
-    lat: number;
-    lon: number;
-  }[];
+  positions: EquipmentPositionEntry[];
 }
