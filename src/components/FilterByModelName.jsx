@@ -15,8 +15,8 @@ function FilterByModelName({ initialEquipments, setEquipments }) {
       <Select
         value={value}
         onChange={(value) => setValue(value ?? "")}
-        label="Your favorite framework/library"
-        placeholder="Pick one"
+        label="Filtre por modelo"
+        placeholder="Escolha um"
         data={[
           { value: "Caminhão de carga", label: "Caminhão de carga" },
           { value: "Harvester", label: "Harvester" },
