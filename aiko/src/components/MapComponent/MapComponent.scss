@@ -1,0 +1,30 @@
+.mapboxgl-popup-content {
+    max-height: 350px;
+    overflow: auto;
+}
+
+li {
+    list-style: none;
+}
+
+h2, h3 {
+    color: #003184;
+}
+
+label {
+    color: #fff;
+    font-weight: bold;
+}
+
+.container-filters {
+    display: flex;
+    justify-content: center;
+
+    label {
+        margin-right: 80px;
+
+        select {
+            margin-left: 30px;
+        }
+    }
+}
