@@ -11,10 +11,11 @@ const EquipmentDetails: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const equipmentResponse = await fetch("/data/equipment.json");
+        const equipmentResponse = await fetch("/../data/equipment.json");
+        console.log(equipmentResponse)
         const equipmentData: Equipment[] = await equipmentResponse.json();
 
-        const modelResponse = await fetch("/data/equipmentModel.json");
+        const modelResponse = await fetch("../data/equipmentModel.json");
         const modelData: EquipmentModel[] = await modelResponse.json();
 
         const selectedEquipment = equipmentData[0];

@@ -32,8 +32,6 @@ export const columns: ColumnDef<Equipment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Visualizar Equipamento</DropdownMenuItem>
-            <DropdownMenuItem>Verificar Últimas Posições</DropdownMenuItem>
-            <DropdownMenuItem>Histórico de Estados</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

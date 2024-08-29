@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import EquipmentStateHistoryComponent from "./stateList";
 
 const EquipmentState: React.FC = () => {
@@ -54,13 +53,14 @@ const EquipmentState: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="ml-10">
-          <Button>Buscar Estados</Button>
-        </div>
+        
       </div>
 
-      <div>
-        <EquipmentStateHistoryComponent equipmentId="a7c53eb1-4f5e-4eba-9764-ad205d0891f9" />
+      <div className="mt-10">
+
+        {selectedEquipment && (
+          <EquipmentStateHistoryComponent equipmentId={selectedEquipment} />
+        )}
       </div>
     </>
   );
