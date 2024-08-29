@@ -1,9 +1,19 @@
 import { Input } from "./ui/input";
 
-const Search = () => {
-    return ( 
-        <Input placeholder="Buscar equipamento" className="rounded-full bg-muted w-full" />
-     );
+interface SearchProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
- 
+
+const Search: React.FC<SearchProps> = ({ value, onChange }) => {
+  return (
+    <Input
+      placeholder="Buscar equipamento, modelo..."
+      className="rounded-full bg-muted w-full"
+      value={value}
+      onChange={onChange}
+    />
+  );
+};
+
 export default Search;
