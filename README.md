@@ -46,3 +46,9 @@ Os testes foram realizados com Cypress para garantir que os filtros, o mapa, e o
 
 ## Considerações Finais
 Este projeto implementa as principais funcionalidades de monitoramento, com filtros avançados e gráficos interativos. Futuras melhorias podem incluir a visualização de trajetos históricos em tempo real.
+
+## Visualização da Interface
+
+visualização da interface do projeto:
+
+![Interface do Projeto](public/interface.PNG)
