@@ -86,13 +86,13 @@ describe('EquipmentService', () => {
     const expectedPositionHistory = equipmentPositionHistory.find(
       (positionHistory) => positionHistory.equipmentId === id
     );
-    const result = service.getEquipmentpositionHistory(id);
+    const result = service.getEquipmentPositionHistory(id);
     expect(result).toEqual(expectedPositionHistory);
   });
 
   it('should return undefined if the equipment position history id does not exist', () => {
     const id = 'non-existent-equipment-id';
-    const result = service.getEquipmentpositionHistory(id);
+    const result = service.getEquipmentPositionHistory(id);
     expect(result).toBeUndefined();
   });
 });

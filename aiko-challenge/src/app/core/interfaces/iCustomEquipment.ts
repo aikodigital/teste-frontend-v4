@@ -1,4 +1,5 @@
 import { IEquipmentModel } from './iEquipmentModel';
+import { IEquipmentState } from './iEquipmentState';
 import { IPosition } from './iPosition';
 
 export interface ICustomEquipment {
@@ -7,4 +8,5 @@ export interface ICustomEquipment {
   name: string;
   latestPosition: IPosition;
   model: IEquipmentModel;
+  stateList: IEquipmentState[];
 }

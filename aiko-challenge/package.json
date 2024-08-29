@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -31,11 +32,19 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.1.2",
+    "@angular-eslint/builder": "17.5.2",
+    "@angular-eslint/eslint-plugin": "17.5.2",
+    "@angular-eslint/eslint-plugin-template": "17.5.2",
+    "@angular-eslint/schematics": "17.5.2",
+    "@angular-eslint/template-parser": "17.5.2",
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.1.0",
     "@angular/localize": "^17.1.0",
     "@types/jasmine": "~5.1.0",
     "@types/leaflet": "^1.9.12",
+    "@typescript-eslint/eslint-plugin": "7.11.0",
+    "@typescript-eslint/parser": "7.11.0",
+    "eslint": "^8.57.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

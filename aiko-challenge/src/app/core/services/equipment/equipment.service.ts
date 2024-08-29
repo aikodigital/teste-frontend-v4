@@ -18,15 +18,11 @@ import { ICustomEquipment } from '../../interfaces/iCustomEquipment';
   providedIn: 'root',
 })
 export class EquipmentService {
-  positions = new BehaviorSubject<ICustomEquipment[]>([]);
+  equipments = new BehaviorSubject<ICustomEquipment[]>([]);
 
-  equipmentStateHistory = new BehaviorSubject<{
-    stateHistory: IEquipmentState[];
-    equipmentInfo: ICustomEquipment | undefined;
-  }>({
-    stateHistory: [],
-    equipmentInfo: undefined,
-  });
+  selectedEquipment = new BehaviorSubject<ICustomEquipment | undefined>(
+    undefined
+  );
 
   getEquipments(): IEquipment[] {
     return equipmentList;
