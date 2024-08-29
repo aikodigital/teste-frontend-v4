@@ -1,0 +1,39 @@
+@if(equipment) {
+
+<div class="list-group p-2">
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ equipment.model.name }} {{ equipment.name }}
+      </h5>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted"
+        >Última atualização:
+        {{ equipment.latestPosition.date | dateTime }}</small
+      >
+    </div>
+  </div>
+
+  <p>Histórico de estado:</p>
+  @for (equipmentState of equipment.stateList; track $index) {
+  <span
+    class="list-group-item list-group-item-action flex-column align-items-start"
+  >
+    <div class="d-flex w-100 justify-content-start align-items-center gap-2">
+      <ng-icon
+        [name]="getIconName(equipmentState)"
+        [color]="equipmentState.color"
+        size="30"
+      ></ng-icon>
+      <h6 class="mb-1">{{ equipmentState.name }}</h6>
+    </div>
+  </span>
+  }
+</div>
+} @else {
+
+<div class="px-2 message">
+  <p>Selecione um equipamento para saber seu histórico.</p>
+</div>
+}
