@@ -233,7 +233,7 @@ const Map: React.FC<MapProps> = ({
             </Sheet>
           </Marker>
         ))}
-      {selectedVehiclePosition && polyline && (
+      {selectedVehiclePosition && (
         <>
           {vehicles
             .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
