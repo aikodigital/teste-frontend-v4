@@ -19,7 +19,7 @@
         @click="onSearch"
         block
       >
-        Limpa Filtro
+        Filtro de busca
       </v-btn>
     </v-col>
   </v-row>
