@@ -1,4 +1,4 @@
-# Versão do Node.js, React e Next;
+# Teste Desenvolvedor Front-end - Gestão de Equipamentos
 
 ## 1 - Para esse projeto, foram utilizadas as seguintes versões:
 
