@@ -1,0 +1,4 @@
+.MapContainer {
+  height: calc(100vh - 80px) !important;
+  width: 100%;
+}

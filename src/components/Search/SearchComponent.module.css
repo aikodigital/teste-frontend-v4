@@ -1,0 +1,23 @@
+.searchInput {
+  height: 80px;
+  border: 0;
+  outline: none;
+  width: 800px;
+  font-size: 30px;
+  border-left: 3px solid #f8f9fa;
+  padding: 0px 40px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #3442eb;
+  width: 90px;
+  border: none;
+}
+
+.searchButton:hover {
+  opacity: 0.8;
+}
