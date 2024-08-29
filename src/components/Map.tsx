@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import equipmentPositionHistory from '../data/equipmentPositionHistory.json';
 import equipment from '../data/equipment.json';
@@ -10,17 +9,7 @@ import { Equipment } from '../types/equipment';
 import { EquipmentPositionHistory } from '../types/equipmentPositionHistory';
 import { EquipmentState } from '../types/equipmentState';
 import EquipmentPopup from './EquipmentPopup';
-
-const svgIcon = L.divIcon({
-    html: `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-          <path fill="#e74c3c" d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zM12 11c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>
-        </svg>
-    `,
-    className: '',
-    iconSize: [24, 24],
-    iconAnchor: [12, 24],
-});
+import { createIcon } from '../utils/createIcons';
 
 const Map: FC = () => {
     const [filterState, setFilterState] = useState<string | null>(null);
@@ -101,11 +90,14 @@ const Map: FC = () => {
                         return null;
                     }
 
+                    const modelId = equipmentInfo.equipmentModelId;
+                    const icon = createIcon(modelId);
+
                     return (
                         <Marker
                             key={history.equipmentId}
                             position={[latestPosition.lat, latestPosition.lon]}
-                            icon={svgIcon}
+                            icon={icon}
                         >
                             <Popup>
                                 <EquipmentPopup 
