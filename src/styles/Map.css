@@ -42,14 +42,13 @@
   button.reset-button {
     background-color: rgb(197, 62, 9);
     color: white;
+    color: rgb(255, 255, 255);
   }
   
   button.filter-button:hover {
     transform: scale(1.05);
     box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.3);
-    background-color: white; 
-    color: #535626; 
-    
+    background-color: white;    
   }
 
   button.reset-button:hover {
