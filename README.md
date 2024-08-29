@@ -6,7 +6,7 @@
 
 ## 📷 Galeria
 
-Você pode encontrar outras fotos do projeto [aqui](https://github.com/oThinas/teste-frontend-v4/tree/master/.github/img).
+Você pode encontrar outras fotos do projeto [aqui](https://github.com/oThinas/teste-frontend-v4/tree/teste/thiago-martins-prado/.github/img).
 
 ## 📝 Funcionalidades
 
