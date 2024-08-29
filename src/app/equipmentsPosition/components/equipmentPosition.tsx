@@ -64,7 +64,8 @@ export default function EquipmentPosition () {
               date: pos.date
             }));
 
-            setPositions(convertedPositions);
+            const limitedPositions = convertedPositions.slice(-20);
+            setPositions(limitedPositions);
 
             const selectedEquipmentDetails = equipment.find(item => item.id === selectedEquipment);
             setLastState(selectedEquipmentDetails?.latestStateName ?? "");

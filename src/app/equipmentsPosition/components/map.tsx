@@ -26,7 +26,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => 
       <GoogleMap
         mapContainerStyle={mapStyle}
         center={center}
-        zoom={15}
+        zoom={12}
         mapTypeId="satellite"
       >
         {positions.map((item, index) => (
