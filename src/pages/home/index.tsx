@@ -1,9 +1,14 @@
 import { House, Search } from "lucide-react";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+
 import AikoLogo from "../../img/aiko-logo.png";
 
 export function HomePage() {
+  const initialPosition = { lat: -22.2154042, lng: -54.8331331 };
+
   return (
-    <div className="w-full h-screen flex flex-row gap-4">
+    <div className="w-full flex flex-row gap-4">
       <div className="w-[264px] p-6 bg-stone-950 rounded-3xl flex flex-col">
         <div className="w-full flex justify-center mb-6">
           <img className="w-2/4" src={AikoLogo} alt="Aiko logo" />
@@ -35,6 +40,21 @@ export function HomePage() {
 
         <div className="w-[300px] p-6 bg-stone-950 rounded-3xl flex flex-col gap-10">
           <h1 className="text-md font-medium text-zinc-100">Mapeamento</h1>
+          <MapContainer
+            className="w-full h-[50vh]"
+            center={initialPosition}
+            zoom={13}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={initialPosition}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
         </div>
       </div>
     </div>
