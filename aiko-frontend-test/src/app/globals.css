@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaflet-container {
+  height: 600px;
+  width: 1000px;
+  border: 6px solid #6a60e8;
+}
+
+/* .MuiInputBase-formControl {
+  border-color: 1px solid white;
+  background-color: green;
+  color: black;
+} */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
