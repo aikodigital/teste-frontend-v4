@@ -53,3 +53,7 @@
     justify-content: center;
 
   }
+
+  .drawer-overlay {
+    background-color: transparent !important; 
+  }
