@@ -57,4 +57,4 @@ visualização da interface do projeto:
 
 ## Demonstração em Vídeo
 
-[Assista ao vídeo da demonstração](./public/Monitoring.mp4)
+[Assista ao vídeo da demonstração](./public/AppMonitoring.mp4)
