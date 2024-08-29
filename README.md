@@ -20,7 +20,8 @@ Este projeto tem como objetivo monitorar e visualizar dados de equipamentos em o
 O campo de busca permite pesquisar o estado ou o modelo de qualquer equipamento.
 
 ### 2. Mapa de Localização
-Exibe a posição atual dos equipamentos com ícones diferenciados para cada estado. Ao clicar em um marcador, é possível visualizar o histórico de estados do equipamento e o trajeto percorrido individualmente.
+Exibe a posição atual dos equipamentos com ícones de cor diferenciada para cada estado. Ao clicar passar o mouse é possível visualizar o nome , modelo e estado do Equipamento.
+Ao clicar dispara outra ação que é a visualização do histórico de posição e historico de estados e logo apos vem o trajecto feito individual.
 
 ### 3. Botão "Clear" no Mapa
 Implementei o botão "Clear" para limpar o histórico de trajetos individualmente no mapa, permitindo maior flexibilidade na visualização do histórico de trajeto de cada equipamento.
@@ -37,6 +38,7 @@ Os testes foram realizados com Cypress para garantir que os filtros, o mapa, e o
 ## Decisões Técnicas
 - **Leaflet:** Escolhido para a visualização do mapa devido à sua flexibilidade e suporte a camadas customizadas.
 - **ReactApexChart:** Utilizado para gráficos devido à sua simplicidade e bom suporte a gráficos interativos.
+- **Tooltip:** Para ter efeito houver ao passar o mouse.
 - **Cypress:** Utilizado para testes automatizados, garantindo a integridade da interface em diversas situações.
 
 ## Link para a Aplicação
@@ -52,3 +54,7 @@ Este projeto implementa as principais funcionalidades de monitoramento, com filt
 visualização da interface do projeto:
 
 ![Interface do Projeto](public/interface.PNG)
+
+## Demonstração em Vídeo
+
+[Assista ao vídeo da demonstração](./public/Monitoring.mp4)
