@@ -3,6 +3,7 @@
 import type { PointExpression } from 'leaflet';
 
 const { recentEquipments } = useEquipments();
+const { filteredEquipments } = useFilteredEquipments();
 
 const equipmentsRecentPositions = getEquipmentsRecentPosition(recentEquipments.value);
 const centralPosition = ref<PointExpression>(getCentralPosition(equipmentsRecentPositions));
@@ -16,7 +17,7 @@ const zoom = ref<number>(getZoomLevel(equipmentsRecentPositions));
         attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
         layerType="base" name="OpenStreetMap" />
 
-      <div v-for="equipment in recentEquipments" :key="equipment.id">
+      <div v-for="equipment in filteredEquipments" :key="equipment.id">
         <EquipmentMarker :equipment="equipment" />
       </div>
     </LMap>
