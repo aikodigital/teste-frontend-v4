@@ -247,7 +247,7 @@ export function getModels() {
 /**
  * Retorna o relatório diário do equipamento
  * 
- * Esse método é bem complexo e possui muitas variáveis, então é importante que você entenda o que ele faz.
+ * Esse método é bem complexo e possui muita manipulação de dados, então é importante que você entenda o que ele faz.
  * Por isso, não remova os comentários internos.
  * 
  * @param {IEquipment} equipment - O equipamento para o qual o relatório diário será gerado
