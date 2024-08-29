@@ -1,5 +1,6 @@
 <template>
-  <div class="
+  <div
+  class="
     fixed
     p-5
     w-48
@@ -10,12 +11,10 @@
     rounded-md
     shadow-2xl
   ">
-    <Logo />
-    
     <ul>
       <li>
-        <NuxtLink to="/">Start</NuxtLink>
-        <NuxtLink to="#">Other</NuxtLink>
+        <NuxtLink to="/admin" class="block">Mapa</NuxtLink>
+        <NuxtLink to="/admin/equipments" class="block">Equipamentos</NuxtLink>
       </li>
     </ul>  
   </div>

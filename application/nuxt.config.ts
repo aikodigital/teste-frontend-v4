@@ -13,5 +13,16 @@ export default defineNuxtConfig({
     'nuxt-phosphor-icons',
     '@nuxt/eslint',
     'nuxt-vue-map-ui'
+  ],
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    },
+    {
+      path: '~/pages/admin/components',
+      pathPrefix: true,
+      prefix: 'Admin'
+    }
   ]
 })
