@@ -3,8 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import FilterByModelName from "./components/FilterByModelName";
-import PositionMarker from "./components/PositionMarker";
+import { Filter, PositionMarker } from "./components";
 import { useData } from "./context/DataContext";
 import "./index.css";
 
@@ -171,7 +170,7 @@ export default function App() {
   return (
     <>
       <Flex w="100%" justify="center">
-        <FilterByModelName initialEquipments={initialEquipments} setEquipments={setEquipments} />
+        <Filter initialEquipments={initialEquipments} setEquipments={setEquipments} />
       </Flex>
       <MapContainer center={initialMapPosition} zoom={13} style={{ zIndex: 1 }}>
         <TileLayer
