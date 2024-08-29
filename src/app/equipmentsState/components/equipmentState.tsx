@@ -1,7 +1,9 @@
 "use client";
 
 import { Equipment } from "@/types/Equipment";
+import EquipmentStateHistoryComponent from "./stateList";
 import React, { useEffect, useState } from "react";
+import { getEquipment } from "@/app/services/actions";
 import {
   Select,
   SelectContent,
@@ -11,10 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import EquipmentStateHistoryComponent from "./stateList";
-import { getEquipment } from "@/app/services/actions";
 
-const EquipmentState: React.FC = () => {
+export default function EquipmentState() {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
   const [selectedEquipmentId, setSelectedEquipment] = useState<string | null>(
     null
@@ -24,7 +24,6 @@ const EquipmentState: React.FC = () => {
     const fetchData = async () => {
       try {
         const equipmentData = await getEquipment();
-
         setEquipment(equipmentData);
       } catch (error) {
         console.error("Erro ao carregar os dados:", error);
@@ -35,6 +34,9 @@ const EquipmentState: React.FC = () => {
 
   return (
     <>
+      <h3 className="text-lg font-medium mb-10 font-semibold">
+        Histórico de Estados do Equipamento
+      </h3>
       <div className="flex flex-column">
         <div>
           <Select onValueChange={(value) => setSelectedEquipment(value)}>
@@ -53,17 +55,13 @@ const EquipmentState: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
-        
       </div>
 
       <div className="mt-10">
-
         {selectedEquipmentId && (
           <EquipmentStateHistoryComponent equipmentId={selectedEquipmentId} />
         )}
       </div>
     </>
   );
-};
-
-export default EquipmentState;
+}

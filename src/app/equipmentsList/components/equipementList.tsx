@@ -12,7 +12,7 @@ import {
   getStateNameById,
 } from "@/app/services/actions";
 
-const EquipmentList: React.FC = () => {
+export default function EquipmentList() {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const EquipmentList: React.FC = () => {
   return (
     <div>
       <div className="flex justify-center">
-        <h3 className="text-lg font-medium mb-10 font-semibold">
+        <h3 className="text-lg font-medium mb-5 font-semibold">
           Listagem de Equipamentos
         </h3>
       </div>
@@ -68,5 +68,3 @@ const EquipmentList: React.FC = () => {
     </div>
   );
 };
-
-export default EquipmentList;

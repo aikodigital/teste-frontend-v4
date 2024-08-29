@@ -2,24 +2,44 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Equipment } from "@/types/Equipment";
 import { useEffect, useState } from "react";
 import MapComponent from "./map";
+import { getEquipment, getEquipmentPositionHistory, getEquipmentState, getEquipmentStateHistory, getStateNameById } from "@/app/services/actions";
+import { Position } from "@/types/Position";
 
-interface Position {
-    lat: number;
-    lng: number;
-    date: string;
-}
+
 
 export default function EquipmentPosition () {
-    const [equipment, setEquipment] = useState<Equipment[]>([]);
+  const [equipment, setEquipment] = useState<Equipment[]>([]);
   const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
   const [positions, setPositions] = useState<Position[]>([]);
+  const [lastState, setLastState] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const equipmentResponse = await fetch("/data/equipment.json");
-        const equipmentData: Equipment[] = await equipmentResponse.json();
-        setEquipment(equipmentData);
+        const equipmentData = await getEquipment();
+        const stateHistoryData = await getEquipmentStateHistory();
+        const statesData = await getEquipmentState();
+
+        const stateMap = new Map(stateHistoryData.map((history: any) => {
+            const latestState = history.states[history.states.length - 1];
+            return [history.equipmentId, latestState.equipmentStateId];
+          })
+        );
+
+        const equipmentDetails = equipmentData.map((equipment) => {
+          const latestStateId = stateMap.get(equipment.id);
+
+          let latestStateName: string | undefined;
+          if (typeof latestStateId === "string") {
+            latestStateName = getStateNameById(latestStateId, statesData);
+          }
+
+          return {
+            ...equipment,
+            latestStateName: latestStateName,
+          };
+        });
+        setEquipment(equipmentDetails);
 
       } catch (error) {
         console.error("Erro ao carregar os dados:", error);
@@ -32,8 +52,7 @@ export default function EquipmentPosition () {
     const fetchPositionHistory = async () => {
       if (selectedEquipment) {
         try {
-          const positionHistoryResponse = await fetch("/data/equipmentPositionHistory.json");
-          const positionHistoryData = await positionHistoryResponse.json();
+          const positionHistoryData = await getEquipmentPositionHistory();
           
           const selectedEquipmentHistory = positionHistoryData.find((item: any) => item.equipmentId === selectedEquipment);
 
@@ -46,9 +65,12 @@ export default function EquipmentPosition () {
             }));
 
             setPositions(convertedPositions);
-            console.log(selectedEquipmentHistory.positions)
+
+            const selectedEquipmentDetails = equipment.find(item => item.id === selectedEquipment);
+            setLastState(selectedEquipmentDetails?.latestStateName ?? "");
           } else {
-            setPositions([]); 
+            setPositions([]);
+            setLastState("");
           }
         } catch (error) {
           console.error("Erro ao carregar o histórico:", error);
@@ -56,7 +78,7 @@ export default function EquipmentPosition () {
       }
     };
     fetchPositionHistory();
-  }, [selectedEquipment]);
+  }, [selectedEquipment, equipment]);
 
   return (
     <div>
@@ -82,7 +104,9 @@ export default function EquipmentPosition () {
           </Select>
         </div>
       
-        {positions.length > 0 && <MapComponent positions={positions} />}
+        {positions.length > 0 && 
+        <MapComponent positions={positions} lastState={lastState} 
+        />}
     </div>
   );
 }

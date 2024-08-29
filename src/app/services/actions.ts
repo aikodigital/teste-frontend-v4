@@ -33,3 +33,10 @@ export async function getEquipmentStateHistory() {
 
     return stateHistoryData;
 }
+
+export async function getEquipmentPositionHistory() {
+    const positionHistoryResponse = await fetch("/data/equipmentPositionHistory.json");
+    const positionHistoryData = await positionHistoryResponse.json();
+
+    return positionHistoryData;
+}
