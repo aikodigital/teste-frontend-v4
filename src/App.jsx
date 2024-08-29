@@ -45,13 +45,46 @@ export default function App() {
     return `${readableDate}, ${readableTime}`;
   };
 
-  const createIconDynamically = (color) => {
+  const createIconDynamically = (color, modelName) => {
+    const truck = `<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"`;
+
+    const harvester = `<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M5 21c.5 -4.5 2.5 -8 7 -10" />
+      <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"`;
+
+    const claw = `<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 15m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+      <path d="M7 15l0 .01" />
+      <path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M10.5 17l6.5 0" />
+      <path d="M20 15.2v-4.2a1 1 0 0 0 -1 -1h-6l-2 -5h-6v6.5" />
+      <path d="M18 5h-1a1 1 0 0 0 -1 1v4"`;
+
+    const regularPositionIcon = `<path d="M12 2C8.1 2 5 5.1 5 9c0 3.9 7 13 7 13s7-9.1 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 
+      0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/>`;
+
+    let icon = null;
+    switch (modelName) {
+      case "Caminhão de carga":
+        icon = truck;
+        break;
+      case "Harvester":
+        icon = harvester;
+        break;
+      case "Garra traçadora":
+        icon = claw;
+        break;
+      default:
+        icon = regularPositionIcon;
+    }
+
     return L.divIcon({
-      html: `<div style="width: 38px; height: 38px; margin-top: -24px; margin-left: -14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${
-        color ? color : "blue"
-      }" width="38px" height="38px">
-<path d="M12 2C8.1 2 5 5.1 5 9c0 3.9 7 13 7 13s7-9.1 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z"/>
-</svg></div>`,
+      className: "position-icon",
+      html: `<div style="width: 38px; height: 38px; margin-top: -24px; margin-left: -14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="
+      ${color ? color : "blue"}" width="38px" height="38px" stroke-width="2"> ${icon}</svg></div>`,
     });
   };
 
@@ -144,7 +177,7 @@ export default function App() {
           <Marker
             key={equipment.id}
             position={equipment.lastKnownPosition.coordinates}
-            icon={createIconDynamically(equipment.lastKnownState.color)}
+            icon={createIconDynamically(equipment.lastKnownState.color, equipment.modelName)}
           >
             <Popup>
               <Stack spacing="md">
