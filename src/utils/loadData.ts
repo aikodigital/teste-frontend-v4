@@ -11,8 +11,22 @@ const stateMap = new Map(
   ])
 );
 
-export const loadData = () => {
-  const data = equipmentData.map((equipment) => {
+type LoadDataOptions = {
+  model?: string;
+  state?: string;
+  getAllPositionHistory?: boolean;
+};
+
+export const loadData = (options?: LoadDataOptions) => {
+  let filteredEquipments = equipmentData;
+
+  if (options?.model) {
+    filteredEquipments = filteredEquipments.filter(
+      (equipment) => equipment.equipmentModelId === options.model
+    );
+  }
+
+  const data = filteredEquipments.map((equipment) => {
     const model = equipmentModelData.find(
       (equipmentModel) => equipmentModel.id === equipment.equipmentModelId
     );
@@ -32,22 +46,28 @@ export const loadData = () => {
         equipmentState.id === stateHistoryObj?.states.at(-1)?.equipmentStateId
     );
 
-    const positionHistoryObj = equipmentPositionHistoryData
+    const allPositionHistoryObj = equipmentPositionHistoryData
       .find((position) => position.equipmentId === equipment.id)
-      ?.positions.at(-1);
+      ?.positions.map((position) => [position.lat, position.lon]);
+
+    const latestPosition = allPositionHistoryObj?.at(-1);
 
     return {
       id: equipment.id,
       name: equipment.name,
       model: model?.name,
-      position: [
-        positionHistoryObj?.lat ?? 0,
-        positionHistoryObj?.lon ?? 0,
-      ] as [number, number],
+      position: latestPosition as [number, number],
+      positionHistory: allPositionHistoryObj as [number, number][],
       state: state?.name,
       stateHistory,
     };
   });
+
+  if (options?.state) {
+    return data.filter(
+      (data) => data.state === stateMap.get(options.state ?? '')?.name
+    );
+  }
 
   return data;
 };

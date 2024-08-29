@@ -1,14 +1,15 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 import { useDataContext } from '../../context/DataContext';
-import Marker from '../Marker/Marker';
-import Drawer from '../Drawer/Drawer';
+
+import Marker from '../Markers/DefaultMarker';
+import SelectedMarker from '../Markers/SelectedMarker';
 
 import 'leaflet/dist/leaflet.css';
 import './index.css';
 
 const Map = () => {
-  const { data } = useDataContext();
+  const { data, selected } = useDataContext();
 
   return (
     <>
@@ -18,12 +19,14 @@ const Map = () => {
           url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
 
-        {data.map((marker) => (
-          <Marker key={marker.id} {...marker} />
-        ))}
-      </MapContainer>
+        {selected &&
+          selected?.positionHistory?.map((position, index) => (
+            <SelectedMarker key={index} position={position} />
+          ))}
 
-      <Drawer />
+        {!selected &&
+          data.map((marker) => <Marker key={marker.id} {...marker} />)}
+      </MapContainer>
     </>
   );
 };
