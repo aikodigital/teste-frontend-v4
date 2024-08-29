@@ -9,7 +9,7 @@ import DrawerComponent from './Drawer';
 import FilterDrawer from './FilterDrawer';
 import '../styles/Map.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faX } from '@fortawesome/free-solid-svg-icons';
 import MarkerComponent from './Marker';
 import { getMarkerIcon } from '../utils/utils';
 
@@ -36,6 +36,7 @@ const Map: React.FC = () => {
     drawerOpened,
     selectedEquipmentHistory,
     setDrawerOpened,
+    handleResetMap,
   } = useMap({ equipment, models, history, states, positions });
 
   return (
@@ -44,7 +45,11 @@ const Map: React.FC = () => {
         <Button className="filter-button" onClick={handleFilterButtonClick}>
           <FontAwesomeIcon icon={faFilter} />
         </Button>
+        <Button className="reset-button" onClick={handleResetMap}>
+          <FontAwesomeIcon icon={faX} />
+        </Button>
       </div>
+
       <FilterDrawer
         opened={filterDrawerOpened}
         onClose={() => setFilterDrawerOpened(false)}
@@ -91,7 +96,7 @@ const Map: React.FC = () => {
         })}
       </MapContainer>
 
-      {selectedEquipmentModel && (
+      {drawerOpened && selectedEquipmentModel && (
         <DrawerComponent
           opened={drawerOpened}
           onClose={() => setDrawerOpened(false)}

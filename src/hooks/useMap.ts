@@ -83,10 +83,13 @@ const useMap = ({
   const handleViewHistory = (id: string) => {
     const equipmentPositions = positions[id] || [];
     setSelectedEquipmentHistory(equipmentPositions);
+    setSelectedEquipmentId(id);
 
     setFilterDrawerOpened(false);
+
     setTimeout(() => {
       handleOpenDrawer(id);
+      setDrawerOpened(true);
     }, 300);
   };
 
@@ -111,6 +114,15 @@ const useMap = ({
     return isStateMatch && isModelMatch && isSearchMatch;
   });
 
+  const handleResetMap = () => {
+    setSelectedEquipmentId(null);
+    setSelectedEquipmentModel(null);
+    setEquipmentHistory([]);
+    setSelectedEquipmentHistory([]);
+    setDrawerOpened(false);
+    setFilterDrawerOpened(false);
+  };
+
   return {
     opened,
     selectedEquipmentModel,
@@ -133,6 +145,7 @@ const useMap = ({
     setFilterDrawerOpened,
     setSelectedEquipmentHistory,
     selectedEquipmentHistory,
+    handleResetMap,
   };
 };
 

@@ -86,7 +86,7 @@ const MarkerComponent: React.FC<MarkerComponentProps> = ({
       </Marker>
 
       {isSelected && selectedEquipmentHistory.length > 1 && (
-        <Polyline positions={polylinePositions} color="blue" />
+        <Polyline positions={polylinePositions} color="green" />
       )}
     </>
   );

@@ -38,6 +38,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
 
   return (
     <Drawer
+      overlayProps={{ backgroundOpacity: 0, blur: 0 }}
       opened={opened}
       onClose={onClose}
       title="Filtros"

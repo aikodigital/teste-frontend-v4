@@ -25,6 +25,7 @@ const DrawerComponent: React.FC<EquipmentDrawerProps> = ({
 }) => {
   return (
     <Drawer
+      overlayProps={{ backgroundOpacity: 0, blur: 0 }}
       opened={opened}
       onClose={onClose}
       title="Histórico de Equipamento"
