@@ -1,15 +1,22 @@
 <template>
-  <div ref="mapContainer" class="map-container"></div>
+<div>
+  <div ref="mapContainer" class="map-container">
+  </div>
+  <DiaglogHistory ref="dialogHistory" />
+</div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
+import DiaglogHistory from './DialogHistory.vue';
 
 const mapContainer = ref(null);
+const dialogHistory = ref(null);
 
 defineOptions({
-  name: 'Map'
+  name: 'Map',
+  components: { DiaglogHistory }
 });
 
 interface Marker {
@@ -23,6 +30,10 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+function ShowHistory() {
+  dialogHistory.value.dialog = true;
+};
 
 onMounted(() => {
   const loader = new Loader({
@@ -41,7 +52,7 @@ onMounted(() => {
 
     const map = new google.maps.Map(mapContainer.value, {
       center: markersData[0],
-      zoom: 12,
+      zoom: 10,
     });
 
     markersData.forEach(markerData => {
@@ -61,6 +72,7 @@ onMounted(() => {
       marker.addListener('mouseout', () => {
         infoWindow.close();
       });
+      marker.addListener('click', () => ShowHistory());
     });
   });
 });

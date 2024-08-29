@@ -11,17 +11,25 @@
       <c-date-picker @update:selectedValue="updateValueDate" />
       <c-model-equipment @update:selectedValue="updateValueEquipmentModel" />
       <c-state-equipment @update:selectedValue="updateValueEquipmentState" />
-      <q-btn class="map__header__filters--btn" dense color="primary" icon="search" label="pesquisar" @click="showData" />
+      <q-btn class="map__header__filters--btn" dense color="primary" icon="search" label="pesquisar" @click="setFilter" />
     </div>
   </header>
-  <div class="map__details col-4">
+  <div class="map__details col-md-4 col-xs-12">
     <q-list bordered>
       <div class="map__details__header">
         <span>Equipamento:</span>
         <span>Status:</span>
       </div>
 
-      <q-item v-for="item in getEquipmentsWithModelAndState()" class="q-pa-md" clickable v-ripple style="border-top: 1px solid #ccc;">
+      <q-item
+        clickable
+        v-ripple
+        class="q-pa-md"
+        v-for="item in listEquipments"
+        style="border-top: 1px solid #ccc;"
+        :active="equipmentSelected === item.equipment"
+        @click="showPositionEquipment(item.equipment)"
+      >
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white">
             {{ item.modelName.substring(0, 2).toLocaleUpperCase() }}
@@ -41,27 +49,17 @@
       </q-item>
     </q-list>
   </div>
-  <div class="col-8">
-    <MapComponent :Markers="positionsHistory?.positions" />
+  <div class="map__local col-md-8 col-xs-12">
+    <MapComponent v-if="positionEquipment" :Markers="positionEquipment" />
   </div>
 </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { MapComponent } from '../components';
-import {
-  EquipmentState,
-  EquipmentModel
-} from '../interfaces/models.interface';
-import {
-  getEquipmentsWithModelAndState,
-  getEquipmentPositionHistory,
-  getEquipmentStateHistory,
-  getEquipmentsByState,
-  getModelsByStateEarnings,
-  calculateModelEarnings
-} from '../services/calcs';
+import { EquipmentState, EquipmentModel, Equipment } from '../interfaces/models.interface';
+import { useEquipmentsStore } from '../stores/equipment.store';
 
 defineOptions({
   name: 'Map'
@@ -70,7 +68,6 @@ defineOptions({
 const dateSelected = ref<string | null>(null);
 const equipmentStateSelected = ref<string | null>(null);
 const equipmentModelSelected = ref<string | null>(null);
-const positionsHistory = ref(getEquipmentPositionHistory('1c7e9615-cc1c-4d72-8496-190fe5791c8b'));
 
 function updateValueEquipmentState(value: EquipmentState) {
   return equipmentStateSelected.value = value.id;
@@ -81,20 +78,41 @@ function updateValueEquipmentModel(value: EquipmentModel) {
 function updateValueDate(value: string) {
   return dateSelected.value = value;
 };
-function setRequision() {
+function filterHeader() {
   return {
     date: dateSelected.value || null,
-    stateEquipment: equipmentStateSelected.value || null,
-    modelEquipment: equipmentModelSelected.value || null
+    equipmentModelId: equipmentModelSelected.value || null,
+    equipmentStateId: equipmentStateSelected.value || null
   }
 }
-function showData() {
-  console.log(setRequision());
+
+
+// Abaixo os tratamentos da Store
+const $useEquipmentsStore = useEquipmentsStore();
+
+const listEquipments = computed(() => $useEquipmentsStore.listEquipments);
+const equipmentSelected = computed(() => $useEquipmentsStore.equipmentSelected);
+const positionEquipment = computed(() => $useEquipmentsStore.positionEquipment);
+
+async function showPositionEquipment(value) {
+  $useEquipmentsStore.setNull();
+
+  await $useEquipmentsStore.setEquipment(value);
 }
+
+async function setFilter() {
+  return $useEquipmentsStore.setFilters(filterHeader());
+}
+
+onMounted(async () => {
+  await $useEquipmentsStore.getEquipments();
+});
 </script>
 
 <style lang="scss" scoped>
 .map {
+  height: 100%;
+
   &__header {
     display: flex;
     flex-direction: column;
@@ -151,5 +169,13 @@ function showData() {
       color: #fff;
     }
   }
+
+  &__local {
+    position: relative;
+  }
+}
+
+.q-item.q-router-link--active, .q-item--active {
+  background-color: #c0ebf7;
 }
 </style>

@@ -28,7 +28,7 @@ module.exports = configure(function () {
     framework: {
       config: {},
       lang: 'pt-BR',
-      plugins: []
+      plugins: ['Dialog']
       // components: [],
       // directives: [],
     },

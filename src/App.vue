@@ -2,9 +2,9 @@
 <q-layout view="hHh lpR fFf">
   <q-header reveal bordered class="bg-white">
     <q-toolbar>
-      <q-btn flat @click="drawer = !drawer" round dense icon="menu" color="dark" />
+      <q-btn flat @click="drawer = !drawer" dense icon="menu" color="dark" />
       <q-toolbar-title>
-        <img class="img"src="../img/aiko.png">
+        <img class="img" src="../img/aiko.png">
       </q-toolbar-title>
     </q-toolbar>
   </q-header>
@@ -39,6 +39,7 @@ span {
 .img {
   padding-top: 5px;
   height: 35px;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
