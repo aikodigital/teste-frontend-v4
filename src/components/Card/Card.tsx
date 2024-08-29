@@ -33,15 +33,31 @@ const Card: React.FC<CardProps> = ({ data }) => {
 
   const getStateColorAndPercentage = (
     stateName: string,
-  ): { color: string; percentage: number; secondaryColor?: string } => {
-    //ver pra atualizar a % no gráfico
+    averageProductivity: number,
+  ): {
+    color: string;
+    percentage: number;
+    secondaryColor?: string;
+  } => {
     switch (stateName) {
       case 'Operando':
-        return { color: '#2ecc71', percentage: 100 };
+        return {
+          color: '#2ecc71',
+          percentage: averageProductivity,
+          secondaryColor: '#cecece',
+        };
       case 'Parado':
-        return { color: '#f1c40f', percentage: 100 };
+        return {
+          color: '#f1c40f',
+          percentage: averageProductivity,
+          secondaryColor: '#cecece',
+        };
       case 'Manutenção':
-        return { color: '#e74c3c', percentage: 50, secondaryColor: '#cecece' };
+        return {
+          color: '#e74c3c',
+          percentage: averageProductivity,
+          secondaryColor: '#cecece',
+        };
       default:
         return { color: '#cecece', percentage: 100 };
     }
@@ -85,7 +101,10 @@ const Card: React.FC<CardProps> = ({ data }) => {
       {data.map((equipment, index) => {
         const lastState = equipment.states[equipment.states.length - 1];
         const { color, percentage, secondaryColor } =
-          getStateColorAndPercentage(lastState.stateName);
+          getStateColorAndPercentage(
+            lastState.stateName,
+            equipment.averageProductivity,
+          );
 
         const modelImage = imageMap[equipment.modelName] || caminhao;
 
@@ -128,7 +147,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
                   <h5 className={styles.modelName}>{equipment.modelName}</h5>
                   <div className={styles.hourlyEarnings}>
                     <h5 className={styles.hourlyEarningsText}>
-                      Produtividade diária
+                      Produtividade média diária
                     </h5>
                   </div>
                 </div>
