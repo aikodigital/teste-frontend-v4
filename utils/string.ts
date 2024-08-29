@@ -11,3 +11,11 @@ export function formatFromNumberToStringPercentage(value: number): string {
 
   return  `${formattedValue}%`
 }
+
+export function formatFromStringToHashColorHex(value: string): string {
+  const hash = Math.abs(Array.from(value).reduce((hash, char) => {
+    return char.charCodeAt(0) + 6 * hash
+  }, 0)) % 0xFFFFFF
+
+  return `#${hash.toString(16).padStart(6, '0')}`
+}

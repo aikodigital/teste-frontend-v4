@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
 
 <template>
-  <footer class="footer">
+  <footer>
     <nav>
       <div class="nav-section">
         <NuxtLink to="/">Início</NuxtLink>
-        <NuxtLink to="/equipments">Equipamentos</NuxtLink>
         <NuxtLink to="/map">Mapa</NuxtLink>
       </div>
       <div class="nav-section">
@@ -35,14 +34,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
 <style scoped>
-.footer {
+footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
   background-color: var(--primary-color);
   color: white;
-  padding: 24px;
+  padding: 16px 32px;
 
   nav {
     flex-direction: column;

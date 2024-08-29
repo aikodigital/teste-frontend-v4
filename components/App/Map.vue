@@ -11,20 +11,26 @@ interface MapMarker {
 
 interface MapProps {
   markers: MapMarker[]
+  zoom: number
+  markerRadius: number
+  hasPath?: boolean
 }
 
 const props = defineProps<MapProps>()
+
+const mapPath = props.markers.map(marker => ({ lat: marker.lat, lng: marker.lon }))
 </script>
 
 <template>
   <div id="leaflet-map-container">
-    <LMap :zoom="9" :center="[-19.0, -46.0]" :useGlobalLeaflet="false">
+    <LMap :zoom="props.zoom" :center="[-19.16, -45.95]" :useGlobalLeaflet="false">
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layerType="base" />
       <LCircleMarker
         v-for="marker in props.markers"
-        :lat-lng="[marker.lat, marker.lon]"
-        :color="marker.color"
-        :radius="5"
+        :key="marker.key"
+        :latLng="[marker.lat, marker.lon]"
+        :color="formatFromStringToHashColorHex(marker.model)"
+        :radius="props.markerRadius"
       >
         <LTooltip>
           <div>
@@ -35,13 +41,19 @@ const props = defineProps<MapProps>()
           </div>
         </LTooltip>
       </LCircleMarker>
+      <LPolyline
+        v-if="props.hasPath"
+        :latLngs="mapPath"
+        :color="'gray'"
+        :opacity="0.3"
+      />
     </LMap>
   </div>
 </template>
 
 <style scoped>
 #leaflet-map-container {
-  height: 300px;
+  height: 80vh;
   width: 100%;
 }
 </style>

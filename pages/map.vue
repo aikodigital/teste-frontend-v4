@@ -59,7 +59,11 @@ const mapMarkers = computed(() => {
       :models="models"
       :states="states"
     />
-    <AppMap :markers="mapMarkers" />
+    <AppMap
+      :markers="mapMarkers"
+      :markerRadius="8"
+      :zoom="9"
+    />
   </div>
 </template>
 
@@ -67,7 +71,7 @@ const mapMarkers = computed(() => {
 .container {
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
+  row-gap: 12px;
   align-items: stretch;
 }
 </style>

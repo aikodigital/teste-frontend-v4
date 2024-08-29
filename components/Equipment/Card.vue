@@ -3,6 +3,7 @@ import type EquipmentPosition from '~/types/EquipmentPosition';
 import type EquipmentStateDate from '~/types/EquipmentStateDate';
 
 interface CardProps {
+  equipmentId: string
   modelName: string
   recentStateDate: EquipmentStateDate | null
   recentPosition: EquipmentPosition | null
@@ -57,7 +58,7 @@ const formattedPosition = computed<string>(() => {
     </div>
     <div>
       <strong>Histórico de localizações: </strong>
-      <NuxtLink to="/equipments">Ver mapa</NuxtLink>
+      <NuxtLink :to="`/equipments/${equipmentId}/map`">Ver mapa</NuxtLink>
     </div>
   </div>
 </template>
