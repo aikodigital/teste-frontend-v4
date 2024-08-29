@@ -26,7 +26,7 @@ Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
 
 ### `npm test`
 
-Para roda os testes uniatrios no jest basta rodar no terminar npm test\
+Para roda os testes uniatrios no jest basta rodar no terminar npm test
 
 
 ### `npm run build`
