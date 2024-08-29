@@ -168,9 +168,10 @@ export default function App() {
   if (error) return <p>Erro: {error.message}</p>;
 
   return (
-    <>
-      <Flex w="100%" justify="center">
+    <Stack align="center" w="100%" pt={20} pb={0}>
+      <Flex align="end" w="100%" justify="center" gap={30}>
         <Filter initialEquipments={initialEquipments} setEquipments={setEquipments} />
+        <Button onClick={() => setEquipments(initialEquipments)}>Resetar</Button>
       </Flex>
       <MapContainer center={initialMapPosition} zoom={13} style={{ zIndex: 1 }}>
         <TileLayer
@@ -254,6 +255,6 @@ export default function App() {
             </Marker>
           ))}
       </MapContainer>
-    </>
+    </Stack>
   );
 }

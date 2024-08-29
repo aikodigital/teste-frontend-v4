@@ -22,9 +22,7 @@ code {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 1em;
   font-family: sans-serif;
-  color: #333;
 }
 
 .leaflet-container {
