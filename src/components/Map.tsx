@@ -10,6 +10,7 @@ import EquipmentPopup from './EquipmentPopup';
 import { Equipment } from '../types/equipment';
 import { EquipmentPositionHistory } from '../types/equipmentPositionHistory';
 import { EquipmentState } from '../types/equipmentState';
+import { EquipmentStateHistory } from '../types/equipmentStateHistory';
 
 // SVG do ícone
 const svgIcon = L.divIcon({
@@ -18,9 +19,9 @@ const svgIcon = L.divIcon({
           <path fill="#e74c3c" d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 16 8 16s8-10.75 8-16c0-4.42-3.58-8-8-8zM12 11c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/>
         </svg>
     `,
-    className: '',
-    iconSize: [24, 24], 
-    iconAnchor: [12, 24],
+    className: '', // Use uma classe vazia ou adicione sua própria
+    iconSize: [24, 24], // Tamanho do ícone
+    iconAnchor: [12, 24], // Âncora do ícone
 });
 
 const getLatestState = (equipmentId: string): EquipmentState | undefined => {
@@ -43,8 +44,9 @@ const Map: FC = () => {
                 const latestPosition = getLatestPosition(history.positions);
                 const equipmentInfo = equipment.find(eq => eq.id === history.equipmentId) as Equipment;
                 const state = getLatestState(history.equipmentId);
+                const stateHistory = equipmentStateHistory.find(h => h.equipmentId === history.equipmentId)?.states;
 
-                if (!state || !latestPosition || !equipmentInfo) {
+                if (!state || !latestPosition || !equipmentInfo || !stateHistory) {
                     console.warn('Missing data for equipment:', history.equipmentId);
                     return null;
                 }
@@ -56,7 +58,11 @@ const Map: FC = () => {
                         icon={svgIcon}
                     >
                         <Popup>
-                            <EquipmentPopup equipment={equipmentInfo} state={state} />
+                            <EquipmentPopup 
+                                equipment={equipmentInfo} 
+                                state={state} 
+                                stateHistory={stateHistory} 
+                            />
                         </Popup>
                     </Marker>
                 );
