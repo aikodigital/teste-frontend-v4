@@ -1,27 +1,24 @@
-# AikoChallenge
+# Desafio Aiko
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+## Principais implementações
 
-## Development server
+### 1. Posições dos Equipamentos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Descrição**: Exibe a localização mais recente do equipamentos no mapa.
 
-## Code scaffolding
+### 2. Estado Atual do Equipamento
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Descrição**: Permite visualizar o estado mais recente de cada equipamento.
 
-## Build
+### 3. Histórico de Estados do Equipamento
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Descrição**: Permite visualizar o histórico de estados de um equipamento específico.
 
-## Running unit tests
+### 4. Diferenciação dos Equipamentos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Descrição**: Equipamentos são diferenciados visualmente com base em seu modelo.
 
-## Running end-to-end tests
+### 5. Testes Unitários
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Descrição**: Testes unitários foram implementados para garantir a qualidade e funcionamento das funcionalidades.
+- **Ferramentas**: Utiliza Karma e Jasmine para a execução dos testes.
