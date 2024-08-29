@@ -4,7 +4,7 @@ import Link from "next/link";
 import EquipmentState from "./equipment-state";
 import { ChevronRightIcon } from "lucide-react";
 
-interface EquipmentItemProps{
+export interface EquipmentItemProps{
   equip: {
     id: string;
     name: string;

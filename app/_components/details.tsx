@@ -3,7 +3,7 @@
 import { SearchIcon } from "lucide-react";
 import Search from "./search";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import EquipmentItem from "./equipment-item";
 import equipment from "@/app/data/equipment.json";
 import equipmentStateHistory from "@/app/data/equipmentStateHistory.json";
@@ -19,27 +19,37 @@ const Details = () => {
     setSelectedCategory(category);
   };
 
-  const filteredEquipment = equipment.filter((equip) => {
-    if (selectedCategory === "Todos") return true;
-
+  const equipmentWithState = equipment.map((equip) => {
     const equipmentState = equipmentStateHistory.find(
       (state) => state.equipmentId === equip.id
     );
-    const lastStateId =
-      equipmentState?.states[equipmentState.states.length - 1]
-        .equipmentStateId || "";
+    const lastState = equipmentState?.states.slice(-1)[0];
 
-    return (
-      equipmentStateProps.find((state) => state.id === lastStateId)?.name ===
-      selectedCategory
-    );
+    console.log(`Equip: ${equip.name}, Last State:`, lastState);
+
+    return {
+      ...equip,
+      lastStateId: lastState ? lastState.equipmentStateId : null,
+    };
   });
+
+  const filteredEquipment = useMemo(() => {
+    return equipmentWithState.filter((equip) => {
+      if (selectedCategory === "Todos") return true;
+
+      return (
+        equipmentStateProps.find((state) => state.id === equip.lastStateId)
+          ?.name === selectedCategory
+      );
+    });
+  }, [equipmentWithState, selectedCategory]);
 
   return (
     <>
-      <Button className="p-5 rounded-full shadow-lg bg-white hover:bg-slate-200"
+      <Button
+        className="p-5 rounded-full shadow-lg bg-white hover:bg-slate-200"
         onClick={() => setModalOpen(!modalOpen)}
-        >
+      >
         <Image
           src="/aiko.png"
           alt="Logo"
@@ -90,19 +100,14 @@ const Details = () => {
             </div>
             <div className="mt-5 px-5 h-[calc(100vh-300px)] overflow-hidden">
               <ul className="flex flex-col gap-3 w-full overflow-y-auto h-full pb-5">
-                {filteredEquipment.map((equip, index) => {
-                  const equipmentState = equipmentStateHistory.find(
-                    (state) => state.equipmentId === equip.id
-                  );
-                  const lastStateId =
-                    equipmentState?.states[equipmentState.states.length - 1]
-                      .equipmentStateId || "";
-                  return (
-                    <li key={index}>
-                      <EquipmentItem equip={equip} statusId={lastStateId} />
-                    </li>
-                  );
-                })}
+                {filteredEquipment.map((equip, index) => (
+                  <li key={index}>
+                    <EquipmentItem
+                      equip={equip}
+                      statusId={equip.lastStateId || ""}
+                    />
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

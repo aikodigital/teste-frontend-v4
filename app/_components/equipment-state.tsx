@@ -20,15 +20,15 @@ const EquipmentState = ({ equipmentStateId, variant="badge" }: EquipmentStatePro
         <Badge
           className="whitespace-nowrap px-2 py-1"
           style={{
-            backgroundColor: status[0].color,
+            backgroundColor: status.slice(-1)[0].color,
           }}
         >
-          • {status[0].name}
+          • {status.slice(-1)[0].name}
         </Badge>
       ) : (
         <div className="p-1 flex flex-col items-center">
-          <RadioIcon size={30} color={status[0].color} />
-          <span>{status[0].name}</span>
+          <RadioIcon size={30} color={status.slice(-1)[0].color} />
+          <span>{status.slice(-1)[0].name}</span>
         </div>
       )}
     </>

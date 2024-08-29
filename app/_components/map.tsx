@@ -12,7 +12,11 @@ import {
 import "leaflet/dist/leaflet.css";
 
 import { formatDateTime } from "../_utils/time-format";
-import { mapIconHarvester, mapIconTracer, mapIconTruck } from "../_utils/mapIcons";
+import {
+  mapIconHarvester,
+  mapIconTracer,
+  mapIconTruck,
+} from "../_utils/mapIcons";
 import EquipmentState from "./equipment-state";
 import {
   Sheet,
@@ -36,6 +40,8 @@ type MapProps = {
   }[];
   equipmentModel: EquipmentModel[];
   equipmentStateHistory: EquipmentStatus[];
+  showModal?: boolean;
+  polyline?: boolean;
 };
 
 const Map: React.FC<MapProps> = ({
@@ -43,6 +49,8 @@ const Map: React.FC<MapProps> = ({
   equipmentPositionHistory,
   equipmentModel,
   equipmentStateHistory,
+  showModal = true,
+  polyline = false,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
@@ -78,8 +86,6 @@ const Map: React.FC<MapProps> = ({
     };
   });
 
-
-
   const handleSheetClose = () => {
     setModalOpen(false);
     setSelectedVehicle(null);
@@ -97,7 +103,7 @@ const Map: React.FC<MapProps> = ({
       (mapRef.current as any).flyTo(position, 11, { duration: 1 });
     }
 
-    setModalOpen(true);
+    if (showModal && !modalOpen) setModalOpen(true);
   };
 
   return (
@@ -161,6 +167,15 @@ const Map: React.FC<MapProps> = ({
                 </span>
               </div>
             </Tooltip>
+
+            {polyline && (
+              <Polyline
+                positions={
+                  vehicle.positionHistory?.map((p) => [p.lat, p.lon]) || []
+                }
+                pathOptions={{ color: "#00BE9C", weight: 1 }}
+              />
+            )}
             <Sheet open={modalOpen} onOpenChange={handleSheetClose}>
               <SheetContent
                 className="z-50 lg:mx-[200px] rounded-lg"
@@ -194,7 +209,8 @@ const Map: React.FC<MapProps> = ({
                             >
                               <div className="bg-background w-full px-4 py-2 rounded-lg shadow-md mb-2">
                                 <h4 className="text-xs font-semibold text-center">
-                                  Dia {formatDateTime(state.date).day}{" às "}
+                                  Dia {formatDateTime(state.date).day}
+                                  {" às "}
                                   {formatDateTime(state.date).time}
                                 </h4>
                                 <div className="text-sm text-center">
@@ -217,7 +233,7 @@ const Map: React.FC<MapProps> = ({
             </Sheet>
           </Marker>
         ))}
-      {selectedVehiclePosition && (
+      {selectedVehiclePosition && polyline && (
         <>
           {vehicles
             .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
@@ -231,15 +247,6 @@ const Map: React.FC<MapProps> = ({
                 opacity={(index + 1) / 100}
               />
             ))}
-          {/* <Polyline
-            positions={
-              vehicles
-                .find((vehicle) => vehicle.vehicle.id === selectedVehicle)
-                ?.positionHistory?.map((p, i) => [p.lat, p.lon]) || []
-            }
-            pathOptions={{ color: "#00BE9C", weight: 1 }}
-            opacity={(i + 1) / 100}
-          /> */}
         </>
       )}
     </MapContainer>

@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import equipmentDetails from "@/app/data/equipment.json";
 import equipmentModels from "@/app/data/equipmentModel.json";
-import equipmentPositionHistory from "@/app/data/equipmentPositionHistory.json";
 import equipmentStateHistory from "@/app/data/equipmentStateHistory.json";
 import equipmentStates from "@/app/data/equipmentState.json";
 import { ChevronLeftIcon, EarthIcon, History } from "lucide-react";
