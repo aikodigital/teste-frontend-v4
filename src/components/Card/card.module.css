@@ -95,8 +95,8 @@
 .titleList {
   margin: 0;
   text-transform: uppercase;
-  font-weight: 400;
-  margin-bottom: 8px;
+  font-weight: 800;
+  font-size: 12px;
 }
 .statesList {
   padding: 0;
@@ -105,6 +105,10 @@
 }
 .historyState {
   list-style: none;
+}
+.lastUpdate {
+  margin: 0 0 16px 0;
+  font-weight: 400;
 }
 .containerStateHistory {
   width: auto;
@@ -116,12 +120,13 @@
 }
 .toggleStatesButton {
   margin-top: 16px;
-  border: 1px solid black;
+  border: none;
   color: black;
-  border-radius: 4px;
-  background-color: white;
-  padding: 8px 16px;
+  background-color: transparent;
+  padding: 0;
   cursor: pointer;
+  text-decoration: underline;
+  text-align: left;
 }
 .tagState {
   width: 12px;
@@ -145,5 +150,8 @@
   .container {
     width: 200px;
     margin: 16px 4px;
+  }
+  .historyStateButton {
+    display: none;
   }
 }
