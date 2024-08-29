@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Header from "./header.vue";
 import Map from "./map.vue";
-import Table from "./table.vue";
+import TableEquipment from "./table-equipments.vue";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
 import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
 
@@ -17,7 +17,7 @@ function navigateMap(equipment: EquipmentWithLastPosition){
     <section class="w-full h-full bg-zinc-800">
       <Header/>
       <div class="flex flex-row">
-        <Table :equipments="listEquipmentsWithLastPosition()"
+        <TableEquipment :equipments="listEquipmentsWithLastPosition()"
           @navigate="navigateMap"  
         />
         <Map ref="map"/>

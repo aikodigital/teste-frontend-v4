@@ -16,6 +16,7 @@ import Input from '@/components/ui/input/Input.vue';
 import { twMerge } from 'tailwind-merge';
 import { variantColor } from '@/common/utils/helpers';
 import { getEquipmentHistoryStates, getStateById } from '@/common/services/StateService';
+import { formatDate } from '@/common/utils/helpers';
 
 const equipmentStates = ref<EquipmentStateHistory>();
 const states = ref<State[]>([]);
@@ -30,11 +31,6 @@ equipmentStates.value = getEquipmentHistoryStates(id as string);
 total.value = equipmentStates.value?.states.length ?? 0;
 updatePage(1);
 })
-
-function formatDate(date: string | undefined): string {
-if (!date) return ''
-return new Date(date).toLocaleString()
-}
 
 function updatePage(page: number) {
     states.value = getPaginatedItems<State>
@@ -53,14 +49,21 @@ function filterState(): State[] {
 
 function filterData(){
     const data = filterState();
-    states.value = data.slice(0, 5);
+    states.value = data.slice(0, itemsPerPage);
     total.value = data.length;
     pagination.value?.updatePage(1);
 }
+
+function setFilterData(value: string){
+    filter.value = formatDate(value);
+    filterData();
+}
+defineExpose({ setFilterData });
+
 </script>
 
 <template>
-<section class="flex flex-col items-start gap-2 px-8 h-[500px]">
+<section class="flex flex-col items-start gap-2 px-8 h-[500px] w-[500px]">
 <h1 class="text-xl text-zinc-50 font-semibold mb-4">
     Histórico de Estados
 </h1>
@@ -68,8 +71,8 @@ function filterData(){
     <div class="text-xs font-mono text-zinc-50">{{ total ?? 0 }} Registros</div>
     <Input class="h-8 w-42" placeholder="Filtrar" v-model="filter" @input="filterData"/>
 </div>
-<div class="h-full bg-zinc-200 rounded-t-xl flex flex-col justify-between pb-2">
-    <Table class="rounded-full">
+<div class="h-full bg-zinc-50 rounded-t-xl flex flex-col justify-between pb-2">
+    <Table class="rounded-full w-[428px]">
     <TableHeader class="bg-zinc-900 text-zinc-50">
         <TableRow>
         <TableHead class="rounded-tl-lg text-zinc-50 w-[200px]">
@@ -78,7 +81,7 @@ function filterData(){
         <TableHead class="text-zinc-50 w-[200px] rounded-tr-lg">Estado</TableHead>
         </TableRow>
     </TableHeader>
-    <TableBody class="bg-zinc-200">
+    <TableBody class="bg-zinc-50">
         <TableRow 
             v-for="state in states" v-bind:key="state.date + state.equipmentStateId"
             class="cursor-pointer"
@@ -89,7 +92,7 @@ function filterData(){
                 </span>
             </TableCell>
             <TableCell class="text-xs font-medium">
-                <div :class="twMerge('text-xs font-semibold rounded-sm h-5 w-[100px] flex items-center justify-center',
+                <div :class="twMerge('text-xs font-semibold rounded-sm h-5 flex items-center justify-center',
                      variantColor(state.equipmentStateId))">
                     {{ getStateById(state.equipmentStateId)?.name }}
                 </div>

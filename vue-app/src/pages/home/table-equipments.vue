@@ -37,7 +37,7 @@ function filterEquipments(): EquipmentWithLastPosition[] {
 <template>
   <section class="flex flex-col items-end gap-2 px-8 h-[600px] w-[800px]">
     <Input class="h-8 w-42" placeholder="Filtrar" v-model="filter"/>
-    <div class="h-full bg-zinc-200 rounded-t-xl">
+    <div class="h-full bg-zinc-50 rounded-t-xl">
       <Table class="rounded-full">
         <TableHeader class="bg-zinc-900 text-zinc-50">
           <TableRow>
@@ -49,14 +49,14 @@ function filterEquipments(): EquipmentWithLastPosition[] {
             <TableHead class="rounded-tr-lg text-zinc-50">Ultimo Estado</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody class="bg-zinc-200">
+        <TableBody class="bg-zinc-50">
           <TableRow 
           v-for="(equipment, index) in filterEquipments()" v-bind:key="equipment.id"
           class="cursor-pointer"
           @click="$emit('navigate', equipment)"
           >
             <TableCell class="flex items-center gap-2 text-xs font-medium">
-              <span>
+              <span class="font-semibold">
                 {{ equipment.name }}
               </span>
               <div :class="twMerge('w-2 h-2 rounded-full', pickColor(index))"/>

@@ -2,13 +2,14 @@
 import L from "leaflet";
 import { Map } from "leaflet";
 import { onMounted, ref } from "vue";
-import { pickColor } from "@/common/utils/helpers";
+import { formatDate, pickColor } from "@/common/utils/helpers";
 import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
 import router from "@/router";
 import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
+import { getEquipmentPositionHistory } from "@/common/services/PositionService";
 
 const map = ref({} as Map);
-
+const emit = defineEmits(['stateDate']);
 function detailEquipment(id: string) {
   router.push({ name: 'equipment', params: { id } });
 }
@@ -23,10 +24,10 @@ function initializeMap(){
       }).addTo(map.value as Map);
 }
 
-function setMarks(){
+function setMarksHome(){
   const equipments = listEquipmentsWithLastPosition();
   equipments.forEach((equipment, index) => {
-    const icon = L.divIcon({ className: `w-2 h-2 rounded-full ${pickColor(index)}` });
+    const icon = L.divIcon({ className: `w-2 h-2 rounded-full ${pickColor(index)} hover:opacity-50` });
     const mark = L.marker([equipment.lastPosition!.lat, equipment.lastPosition!.lon], {
       alt: equipment.id,
       icon: icon
@@ -42,6 +43,47 @@ function setMarks(){
   });
 }
 
+function setMarksEquipment(){
+  const getColor = (index: number, length: number) => {
+    if(index === 0) return 'bg-sky-500';
+    if(index === length - 1) return 'bg-amber-500';
+    return 'bg-teal-800';
+  }
+  const { id } = router.currentRoute.value.params
+  const historyPosition = getEquipmentPositionHistory(id as string);
+  const total = historyPosition?.positions.length || 0;
+  
+  historyPosition?.positions.forEach((position, index) => {
+    const icon = L.divIcon({ className: `w-2 h-2 hover:opacity-50 rounded-full ${getColor(index, total )}` });
+    const mark = L.marker([position!.lat, position!.lon], {
+      alt: position.date,
+      icon: icon
+    });
+    mark.bindTooltip(`Data: ${formatDate(position.date)} ${index === 0 ? '(início)' : index === total - 1 ? '(Fim)' : ''}`);
+    mark.addTo(map.value as Map)
+    mark.addEventListener('click', () => {
+      emit("stateDate", position.date);
+    });
+  })
+    var myLines = {
+        "type": "LineString" as 'LineString' | 'LineString',
+        "coordinates": historyPosition?.positions.map(position => [position!.lon, position!.lat])
+    };
+
+  var myStyle = {
+      "color": "#ff7800",
+      "weight": 1,
+      "opacity": 0.65
+  };
+
+  const layer = L.geoJSON();
+  layer.addData(myLines);
+  L.geoJSON(myLines, {
+      style: myStyle
+  }).addTo(map.value as Map);
+    
+  }
+
 function setView(equipment: EquipmentWithLastPosition){
   map.value!.setView([equipment.lastPosition!.lat, equipment.lastPosition!.lon], 15);
 }
@@ -52,11 +94,15 @@ defineExpose({
 
 onMounted(() => {
   initializeMap();
-  setMarks();
+  if(router.currentRoute.value.name === 'home') return setMarksHome();
+  setMarksEquipment();
 })
 </script>
 <template>
-  <section class="w-full pr-8 ">
+  <section class="w-full pr-8">
+    <h1 class="text-xl text-zinc-50 font-semibold mb-4">
+      Histórico de Posições
+  </h1>
     <div id="map" class="w-full h-full mr-8 rounded-md" />
   </section>
 </template>

@@ -35,8 +35,14 @@ export function getPaginatedItems<Type>(page: number, itemsPerPage: number, tota
   return items.slice(startIndex, endIndex);
 }
 
+export function formatDate(date: string | undefined): string {
+  if (!date) return ''
+  return new Date(date).toLocaleString()
+}
+
 export default {
     pickColor,
     variantColor,
-    getPaginatedItems
+    getPaginatedItems,
+    formatDate
 }
