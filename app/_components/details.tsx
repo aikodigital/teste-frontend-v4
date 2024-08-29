@@ -1,48 +1,66 @@
 "use client";
 
-import { SearchIcon } from "lucide-react";
 import Search from "./search";
 import { Button } from "./ui/button";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import EquipmentItem from "./equipment-item";
 import equipment from "@/app/data/equipment.json";
+import equipmentModels from "@/app/data/equipmentModel.json";
 import equipmentStateHistory from "@/app/data/equipmentStateHistory.json";
 import equipmentStateProps from "@/app/data/equipmentState.json";
 import { Badge } from "./ui/badge";
 import Image from "next/image";
 
+interface DetailsProps {
+  showModal?: boolean;
+}
+
 const Details = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const [modalOpen, setModalOpen] = useState(true);
-
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   const equipmentWithState = equipment.map((equip) => {
-    const equipmentState = equipmentStateHistory.find(
+    const equipmentStateHistoryEntry = equipmentStateHistory.find(
       (state) => state.equipmentId === equip.id
     );
-    const lastState = equipmentState?.states.slice(-1)[0];
 
-    console.log(`Equip: ${equip.name}, Last State:`, lastState);
+    const lastStateId = equipmentStateHistoryEntry
+      ? equipmentStateHistoryEntry.states.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0].equipmentStateId
+      : "";
+
+    const equipmentModel = equipmentModels.find(
+      (model) => model.id === equip.equipmentModelId
+    );
 
     return {
       ...equip,
-      lastStateId: lastState ? lastState.equipmentStateId : null,
+      lastStateId,
+      modelName: equipmentModel?.name || "",
     };
   });
 
-  const filteredEquipment = useMemo(() => {
-    return equipmentWithState.filter((equip) => {
-      if (selectedCategory === "Todos") return true;
+  const filteredEquipment = equipmentWithState.filter((equip) => {
+    const matchesCategory =
+      selectedCategory === "Todos" ||
+      equipmentStateProps.find((state) => state.id === equip.lastStateId)
+        ?.name === selectedCategory;
 
-      return (
-        equipmentStateProps.find((state) => state.id === equip.lastStateId)
-          ?.name === selectedCategory
-      );
-    });
-  }, [equipmentWithState, selectedCategory]);
+    const matchesSearchTerm =
+      equip.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      equip.modelName.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearchTerm;
+  });
 
   return (
     <>
@@ -60,16 +78,13 @@ const Details = () => {
         />
       </Button>
       {modalOpen ? (
-        <section className="rounded-lg w-full shadow-lg bg-white/80 py-5">
+        <section className="rounded-lg w-full shadow-lg bg-white/80 py-5 h-[90vh]">
           <div className="">
-            <h1 className="text-xl font-semibold mb-5 px-5">
+            <h1 className="text-xl font-semibold my-5 px-5">
               Selecionar Equipamento
             </h1>
-            <div className="flex items-center px-5">
-              <Search />
-              <Button variant="ghost" className="ml-3 px-2">
-                <SearchIcon size={20} />
-              </Button>
+            <div className="w-full px-5">
+              <Search value={searchTerm} onChange={handleSearchChange} />
             </div>
             <div className="mt-5 flex space-x-6 items-center overflow-x-auto border-t border-b w-full py-5 px-5">
               <span
@@ -98,7 +113,7 @@ const Details = () => {
                 </Badge>
               ))}
             </div>
-            <div className="mt-5 px-5 h-[calc(100vh-300px)] overflow-hidden">
+            <div className="mt-5 px-5 h-[calc(90vh-270px)] overflow-hidden">
               <ul className="flex flex-col gap-3 w-full overflow-y-auto h-full pb-5">
                 {filteredEquipment.map((equip, index) => (
                   <li key={index}>
