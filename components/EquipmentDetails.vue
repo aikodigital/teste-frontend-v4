@@ -41,6 +41,8 @@ function handleShowPercentage() {
         Modelo:
       </span>
 
+      <Icon :name="getIconModel(equipment.model?.name)" />
+
       {{ equipment.model?.name }}
     </span>
 

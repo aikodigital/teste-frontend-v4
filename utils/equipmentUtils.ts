@@ -241,3 +241,16 @@ export function getDailyReport(equipment: IEquipmentDetails) {
 
   return arrayOfDailyStateHoursReversed;
 }
+
+export function getIconModel(equipmentModelName?: string) {
+  switch (equipmentModelName) {
+    case 'Caminhão de carga':
+      return 'fa6-solid:truck';
+    case 'Harvester':
+      return 'fa6-solid:tractor';
+    case 'Garra traçadora':
+      return 'fa6-solid:truck-monster';
+    default:
+      return 'fa6-solid:question';
+  }
+}

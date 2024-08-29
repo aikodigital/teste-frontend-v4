@@ -25,12 +25,12 @@
   - [x] Calcular a produtividade do equipamento.
   - [x] Exibir percentual de produtividade na interface.
 
-- [ ] **Ganho por Equipamento**
-  - [ ] Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento.
-  - [ ] Exibir ganho do equipamento na interface.
+- [x] **Ganho por Equipamento**
+  - [x] Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento.
+  - [x] Exibir ganho do equipamento na interface.
 
-- [ ] **Diferenciar os Equipamentos**
-  - [ ] Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
+- [x] **Diferenciar os Equipamentos**
+  - [x] Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
 
 - [ ] **Histórico de Posições**
   - [ ] Visualizar o histórico de posições de um equipamento.
