@@ -1,5 +1,5 @@
 "use client";
-
+import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import equipmentDetails from "@/app/data/equipment.json";
@@ -16,8 +16,7 @@ const TrackPage = () => {
   const [stateHistory, setStateHistory] = useState(null);
 
   const router = useRouter();
-  const equipmentId = "";
-
+  const { id: equipmentId } = useParams();
   useEffect(() => {
     const equipmentFinded = equipmentDetails.find(
       (row) => row.id === equipmentId

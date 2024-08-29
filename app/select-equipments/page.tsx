@@ -72,8 +72,8 @@ const EquipmentPage = () => {
             </Badge>
           ))}
         </div>
-        <div className="mt-5 px-5">
-          <ul className="mt-3 flex flex-col gap-3 w-full overflow-y-auto pb-24">
+        <div className="mt-5 px-5 h-[calc(100vh-300px)] overflow-hidden">
+          <ul className="flex flex-col gap-3 w-full overflow-y-auto h-full pb-5">
             {filteredEquipment.map((equip, index) => {
               const equipmentState = equipmentStateHistory.find(
                 (state) => state.equipmentId === equip.id
@@ -90,9 +90,9 @@ const EquipmentPage = () => {
           </ul>
         </div>
       </section>
-        <div className="z-50 fixed bottom-3 left-auto right-auto">
-          <Menu />
-        </div>
+      <div className="z-50 fixed bottom-3 left-auto right-auto">
+        <Menu />
+      </div>
     </main>
   );
 };

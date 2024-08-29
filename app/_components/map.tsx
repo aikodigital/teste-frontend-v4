@@ -107,6 +107,7 @@ const Map: React.FC<MapProps> = ({
       ref={mapRef}
       style={{
         height: "100vh",
+        width: "100%",
       }}
       center={[
         selectedVehiclePosition?.lat || vehicles[0].position?.lat || 0,
