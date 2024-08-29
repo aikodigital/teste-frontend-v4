@@ -1,7 +1,7 @@
 # Documentação do Projeto de Monitoramento de Equipamentos Florestais
 
 ## Visão Geral
-Este projeto tem como objetivo monitorar e visualizar dados de equipamentos em operações florestais. A aplicação permite que gestores acompanhem a posição, estado atual, histórico de estados e desempenho dos equipamentos.
+Este projeto tem como objetivo monitorar e visualizar dados de equipamentos em operações florestais. A aplicação permite que gestores acompanhem a posição, o estado atual, o histórico de estados e o desempenho dos equipamentos.
 
 ## Tecnologias Utilizadas
 - **React & TypeScript:** Para o desenvolvimento da interface do usuário.
@@ -10,36 +10,37 @@ Este projeto tem como objetivo monitorar e visualizar dados de equipamentos em o
 - **Cypress:** Para testes end-to-end e de interface.
 
 ## Estrutura do Projeto
-- **Components:** Componentes reutilizáveis como `Header` e `FiltroCard`.
-- **Containers:** Contém lógica de negócio e interações mais complexas como `MapaLocalizacao` e `BarraLateral`.
+- **Components:** Componentes reutilizáveis, como `Header` e `FiltroCard`.
+- **Containers:** Contêm a lógica de negócio e interações mais complexas, como `MapaLocalizacao` e `BarraLateral`.
 - **Utils:** Cálculos e lógica específica de produtividade e ganhos.
 
 ## Funcionalidades
 
-### 1. Input (Busca)
-O Input de Busca de pesquisa para pesquisar qualquer estado do Equipamento ou modelo de Equipamento.
+### 1. Input de Busca
+O campo de busca permite pesquisar o estado ou o modelo de qualquer equipamento.
 
 ### 2. Mapa de Localização
-Exibe a posição atual dos equipamentos com ícones diferenciados para cada estado. Ao clicar em um marcador, é possível visualizar o histórico de estados do equipamento.
-E visualizar o trajecto feito de cada equipamento induvidualmente implementei o botão "clear" para não poluir o Mapa assim é possivel apagar o histórico do trajecto
-individualmente.
+Exibe a posição atual dos equipamentos com ícones diferenciados para cada estado. Ao clicar em um marcador, é possível visualizar o histórico de estados do equipamento e o trajeto percorrido individualmente.
 
-### 3. Filtros de Estado e Modelo
-Filtros permitem que o usuário visualize apenas equipamentos que estão em determinado estado (Operando, Parado, Manutenção) ou que pertencem a um determinado modelo.
+### 3. Botão "Clear" no Mapa
+Implementei o botão "Clear" para limpar o histórico de trajetos individualmente no mapa, permitindo maior flexibilidade na visualização do histórico de trajeto de cada equipamento.
 
-### 4. Gráficos de Produtividade e Ganho
-Gráficos mostram o desempenho dos equipamentos em termos de produtividade (percentual de tempo operando) e ganhos (calculado com base nos estados e horas de operação).
-Graficos Interativos.
+### 4. Filtros de Estado e Modelo
+Filtros permitem que o usuário visualize apenas os equipamentos que estão em determinado estado (Operando, Parado, Manutenção) ou que pertencem a um determinado modelo.
+
+### 5. Gráficos de Produtividade e Ganho
+Gráficos interativos mostram o desempenho dos equipamentos em termos de produtividade (percentual de tempo operando) e ganhos (calculados com base nos estados e horas de operação).
 
 ## Testes
-Testes foram realizados com Cypress para garantir que os filtros, mapa, e elementos principais da interface estejam funcionando corretamente.
-
+Os testes foram realizados com Cypress para garantir que os filtros, o mapa, e os elementos principais da interface funcionem corretamente.
 
 ## Decisões Técnicas
 - **Leaflet:** Escolhido para a visualização do mapa devido à sua flexibilidade e suporte a camadas customizadas.
 - **ReactApexChart:** Utilizado para gráficos devido à sua simplicidade e bom suporte a gráficos interativos.
-- **Cypress:** Para testes automatizados, garantindo a integridade da interface em diversas situações.
+- **Cypress:** Utilizado para testes automatizados, garantindo a integridade da interface em diversas situações.
 
+## Link para a Aplicação
+- [Link para o Vercel](https://monitoring-lake.vercel.app/)
 
 ## Considerações Finais
 Este projeto implementa as principais funcionalidades de monitoramento, com filtros avançados e gráficos interativos. Futuras melhorias podem incluir a visualização de trajetos históricos em tempo real.

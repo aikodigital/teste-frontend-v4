@@ -3,7 +3,7 @@
 describe('Testes da Interface Principal', () => {
   beforeEach(() => {
     // Visita a URL da aplicação antes de cada teste
-    cy.visit('https://test-phi-murex.vercel.app/')
+    cy.visit('https://monitoring-lake.vercel.app/')
   })
 
   it('Verifica se o header está visível na página', () => {

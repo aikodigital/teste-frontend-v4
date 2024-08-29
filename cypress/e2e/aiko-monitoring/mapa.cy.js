@@ -2,7 +2,7 @@
 
 describe('MapaLocalizacao - Marcadores', () => {
   beforeEach(() => {
-    cy.visit('https://test-phi-murex.vercel.app/')
+    cy.visit('https://monitoring-lake.vercel.app/')
   })
 
   it('Deve exibir um tooltip ao passar o mouse sobre um marcador no mapa', () => {
