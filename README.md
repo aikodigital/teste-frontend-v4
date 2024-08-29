@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Mapa de Equipamentos de Operação Florestal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrição
+Este projeto é uma aplicação web desenvolvida para visualizar dados de equipamentos utilizados em uma operação florestal. Ele exibe a posição atual dos equipamentos, permite visualizar o histórico de posições e estados dos mesmos.
 
-## Available Scripts
+## Tecnologias Usadas
+- React
+- TypeScript
+- Mantine
+- Leaflet
 
-In the project directory, you can run:
+## Instalação
 
-### `npm start`
+### Pré-Requisitos
+- Node.js
+- npm ou yarn
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Passo a Passo
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/usuario/projeto.git
+   ```
+2. Acesse o diretório do projeto:
+   ```bash
+   cd nome-do-projeto
+   ```
+3. Instale as dependências:
+   ```bash
+   npm install
+4. Inicie a aplicação:
+   ```bash
+   npm start
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Uso
 
-### `npm test`
+Após iniciar a aplicação, você verá um mapa interativo que exibe os equipamentos. Cada equipamento está representado por um marcador. Clique em um marcador para ver o histórico de posições e estados.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Principais Recursos
+- **Visualizar Equipamentos**: Todos os 
+equipamentos ativos são exibidos no mapa.
 
-### `npm run build`
+![Exemplo de Tela](/public//images/1.gif)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Pesquisar Equipamentos**: Use o input para pesquisar pelo equipamento.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Exemplo de Tela](/public//images/2.gif)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Filtrar Equipamentos**: Use o botão de filtro para filtrar os equipamentos por estado ou modelo.
 
-### `npm run eject`
+![Exemplo de Tela](/public//images/3.gif)
+- **Ver Histórico**: Clique em 'Ver histórico' para ver o histórico de posições, trajeto e estados de um equipamento específico.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Exemplo de Tela](/public//images/4.gif)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Referências
+- [Documentação do React](https://reactjs.org/docs/getting-started.html)
+- [Mantine Documentation](https://mantine.dev/docs/)
+- [Leaflet Documentation](https://leafletjs.com/reference.html)
