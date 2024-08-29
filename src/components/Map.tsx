@@ -34,6 +34,7 @@ const Map: React.FC = () => {
     setFilterDrawerOpened,
     handleViewHistory,
     drawerOpened,
+    selectedEquipmentHistory,
     setDrawerOpened,
   } = useMap({ equipment, models, history, states, positions });
 
@@ -66,18 +67,28 @@ const Map: React.FC = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        {filteredEquipment.map((equip) => (
-          <MarkerComponent
-            key={equip.id}
-            equipment={equip}
-            positions={positions[equip.id]}
-            models={models}
-            states={states}
-            history={history}
-            handleViewHistory={handleViewHistory}
-            icon={getMarkerIcon}
-          />
-        ))}
+        {filteredEquipment.map((equip) => {
+          if (selectedEquipmentId && equip.id !== selectedEquipmentId) {
+            return null;
+          }
+
+          return (
+            <MarkerComponent
+              key={equip.id}
+              equipment={equip}
+              positions={positions[equip.id]}
+              models={models}
+              states={states}
+              history={history}
+              handleViewHistory={handleViewHistory}
+              icon={getMarkerIcon}
+              isSelected={equip.id === selectedEquipmentId}
+              selectedEquipmentHistory={
+                equip.id === selectedEquipmentId ? selectedEquipmentHistory : []
+              }
+            />
+          );
+        })}
       </MapContainer>
 
       {selectedEquipmentModel && (

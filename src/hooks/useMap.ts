@@ -17,7 +17,13 @@ interface UseMapProps {
   positions: Record<string, Position[]>;
 }
 
-const useMap = ({ equipment, models, history, states }: UseMapProps) => {
+const useMap = ({
+  equipment,
+  models,
+  history,
+  states,
+  positions,
+}: UseMapProps) => {
   const [opened, setOpened] = useState(false);
   const [selectedEquipmentModel, setSelectedEquipmentModel] =
     useState<EquipmentModel | null>(null);
@@ -30,6 +36,9 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [selectedEquipmentHistory, setSelectedEquipmentHistory] = useState<
+    Position[]
+  >([]);
 
   const findEquipmentModel = (equipmentId: string) => {
     const equip = equipment.find((e) => e.id === equipmentId);
@@ -72,10 +81,12 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
   };
 
   const handleViewHistory = (id: string) => {
+    const equipmentPositions = positions[id] || [];
+    setSelectedEquipmentHistory(equipmentPositions);
+
     setFilterDrawerOpened(false);
     setTimeout(() => {
       handleOpenDrawer(id);
-      setDrawerOpened(true);
     }, 300);
   };
 
@@ -120,6 +131,8 @@ const useMap = ({ equipment, models, history, states }: UseMapProps) => {
     drawerOpened,
     setDrawerOpened,
     setFilterDrawerOpened,
+    setSelectedEquipmentHistory,
+    selectedEquipmentHistory,
   };
 };
 
