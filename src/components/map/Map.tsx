@@ -1,12 +1,10 @@
-import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Title, Body } from './styles/styles';
-import { mapEquipmentData } from '../../services/GetData';
+import { mapEquipmentData } from '../../services/mapEquipmentData';
 
 const markerIcon = require('./img/aiko.png');
-
 
 export default function Map() {
     const equipmentPositions = mapEquipmentData();
@@ -23,7 +21,7 @@ export default function Map() {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     {equipmentPositions.map((equipment) => (
-                        equipment && (
+                        equipment &&  (
                         <Marker 
                             key={equipment.id} 
                             position={[equipment.lat, equipment.lon]} 
@@ -37,8 +35,17 @@ export default function Map() {
                             })}
                         >
                             <Popup>
-                                <strong>{equipment.name}</strong><br />
+                                <strong>{equipment.name}</strong>
+                                <br />
                                 Estado: {equipment.state}
+                                <h4>Histórico de Estados</h4>
+                                <ul>
+                                    {equipment.stateHistory.map((history, index) => (
+                                        <li key={index}>
+                                            {history.date}: {history.state}
+                                        </li>
+                                    ))}
+                                </ul>
                             </Popup>
                         </Marker>
                         )
