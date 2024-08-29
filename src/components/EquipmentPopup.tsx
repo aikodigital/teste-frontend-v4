@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Equipment } from '../types/equipment';
 import { EquipmentState } from '../types/equipmentState';
 import { EquipmentStateHistoryEntry } from '../types/equipmentStateHistory';
+import equipmentState from '../data/equipmentState.json';
 
 interface EquipmentPopupProps {
     equipment: Equipment;
@@ -20,13 +21,13 @@ const EquipmentPopup: FC<EquipmentPopupProps> = ({ equipment, state, stateHistor
             <h4 className="text-md font-medium my-2">Histórico de Estados:</h4>
             <ul className="list-disc list-inside max-h-[200px] overflow-y-scroll">
                 {stateHistory.map((history, index) => {
-                    const stateItem = stateHistory.find(s => s.equipmentStateId === history.equipmentStateId);
-                    const equipmentState = stateItem ? state.color : 'unknown';
+                    const stateItem = equipmentState.find(s => s.id === history.equipmentStateId);
+                    
                     return (
                         <li key={index}>
                             <span className="font-medium">{new Date(history.date).toLocaleString()}:</span>{' '}
                             {stateItem ? (
-                                <span style={{ color: equipmentState }}>{state.name}</span>
+                                <span style={{ color: stateItem.color }}>{stateItem.name}</span>
                             ) : (
                                 'Estado desconhecido'
                             )}
