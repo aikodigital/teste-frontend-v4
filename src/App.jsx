@@ -1,8 +1,9 @@
-import { Button, Container, Divider, ScrollArea, Stack, Text, Title } from "@mantine/core";
+import { Button, Container, Divider, Flex, ScrollArea, Stack, Text, Title } from "@mantine/core";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import FilterByModelName from "./components/FilterByModelName";
 import PositionMarker from "./components/PositionMarker";
 import { useData } from "./context/DataContext";
 import "./index.css";
@@ -17,6 +18,7 @@ export default function App() {
     loading,
     error,
   } = useData();
+  const [initialEquipments, setInitialEquipments] = useState([]);
   const [equipments, setEquipments] = useState([]);
   const [showStateHistory, setShowStateHistory] = useState(false);
   const [trajectoryMarkers, setTrajectoryMarkers] = useState([]);
@@ -159,6 +161,7 @@ export default function App() {
       };
     });
 
+    setInitialEquipments(equipmentWithModels);
     setEquipments(equipmentWithModels);
   }, [equipmentBasicData, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
 
@@ -166,87 +169,92 @@ export default function App() {
   if (error) return <p>Erro: {error.message}</p>;
 
   return (
-    <MapContainer center={initialMapPosition} zoom={13}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <PositionMarker data={trajectoryMarkers} />
-      {equipments.length > 0 &&
-        equipments.map((equipment) => (
-          <Marker
-            key={equipment.id}
-            position={equipment.lastKnownPosition.coordinates}
-            icon={createIconDynamically(equipment.lastKnownState.color, equipment.modelName)}
-          >
-            <Popup>
-              <Stack spacing="md">
-                <Stack spacing={6}>
-                  <Container>
-                    <Title order={1} size="h3">
-                      {equipment.name}
-                    </Title>
-                  </Container>
-                  <Container>
-                    <Title order={2} size="h6">
-                      {equipment.modelName}
-                    </Title>
-                  </Container>
+    <>
+      <Flex w="100%" justify="center">
+        <FilterByModelName initialEquipments={initialEquipments} setEquipments={setEquipments} />
+      </Flex>
+      <MapContainer center={initialMapPosition} zoom={13} style={{ zIndex: 1 }}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <PositionMarker data={trajectoryMarkers} />
+        {equipments.length > 0 &&
+          equipments.map((equipment) => (
+            <Marker
+              key={equipment.id}
+              position={equipment.lastKnownPosition.coordinates}
+              icon={createIconDynamically(equipment.lastKnownState.color, equipment.modelName)}
+            >
+              <Popup>
+                <Stack spacing="md">
+                  <Stack spacing={6}>
+                    <Container>
+                      <Title order={1} size="h3">
+                        {equipment.name}
+                      </Title>
+                    </Container>
+                    <Container>
+                      <Title order={2} size="h6">
+                        {equipment.modelName}
+                      </Title>
+                    </Container>
+                  </Stack>
+
+                  <Divider orientation="horizontal" />
+
+                  <Stack spacing={8}>
+                    <Text weight={700} ta="center">
+                      Última posição conhecida
+                    </Text>
+                    <Text>
+                      Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
+                      {equipment.lastKnownPosition.coordinates[1]}
+                    </Text>
+                    <Text>Data e hora: {formatDateAndTime(equipment.lastKnownPosition.date)}</Text>
+                  </Stack>
+
+                  <Divider orientation="horizontal" />
+
+                  <Stack spacing={8}>
+                    <Text weight={700} ta="center">
+                      Último estado conhecido
+                    </Text>
+                    <Text>Nome: {equipment.lastKnownState.name}</Text>
+                    <Text>Data e hora: {formatDateAndTime(equipment.lastKnownState.date)}</Text>
+                  </Stack>
+
+                  <Divider orientation="horizontal" />
+
+                  <Button onClick={() => toggleStateHistory()}>
+                    {showStateHistory ? "Fechar histórico de estados" : "Ver histórico de estados"}
+                  </Button>
+                  {showStateHistory && (
+                    <ScrollArea h={200}>
+                      {equipment.states.map((state) => {
+                        return (
+                          <Stack
+                            key={state.id}
+                            pb={8}
+                            mb={16}
+                            spacing="xs"
+                            sx={{
+                              borderBottom: "1px solid black",
+                            }}
+                          >
+                            <Text>Nome: {renderStateName(state.equipmentStateId)}</Text>
+                            <Text>Data e hora: {formatDateAndTime(state.date)}</Text>
+                          </Stack>
+                        );
+                      })}
+                    </ScrollArea>
+                  )}
+                  <Button onClick={() => handleEquipmentTrajectory(equipment.id)}>Ver trajetória do equipamento</Button>
                 </Stack>
-
-                <Divider orientation="horizontal" />
-
-                <Stack spacing={8}>
-                  <Text weight={700} ta="center">
-                    Última posição conhecida
-                  </Text>
-                  <Text>
-                    Latitude: {equipment.lastKnownPosition.coordinates[0]}, longitude:
-                    {equipment.lastKnownPosition.coordinates[1]}
-                  </Text>
-                  <Text>Data e hora: {formatDateAndTime(equipment.lastKnownPosition.date)}</Text>
-                </Stack>
-
-                <Divider orientation="horizontal" />
-
-                <Stack spacing={8}>
-                  <Text weight={700} ta="center">
-                    Último estado conhecido
-                  </Text>
-                  <Text>Nome: {equipment.lastKnownState.name}</Text>
-                  <Text>Data e hora: {formatDateAndTime(equipment.lastKnownState.date)}</Text>
-                </Stack>
-
-                <Divider orientation="horizontal" />
-
-                <Button onClick={() => toggleStateHistory()}>
-                  {showStateHistory ? "Fechar histórico de estados" : "Ver histórico de estados"}
-                </Button>
-                {showStateHistory && (
-                  <ScrollArea h={200}>
-                    {equipment.states.map((state) => {
-                      return (
-                        <Stack
-                          key={state.id}
-                          pb={8}
-                          mb={16}
-                          spacing="xs"
-                          sx={{
-                            borderBottom: "1px solid black",
-                          }}
-                        >
-                          <Text>Nome: {renderStateName(state.equipmentStateId)}</Text>
-                          <Text>Data e hora: {formatDateAndTime(state.date)}</Text>
-                        </Stack>
-                      );
-                    })}
-                  </ScrollArea>
-                )}
-                <Button onClick={() => handleEquipmentTrajectory(equipment.id)}>Ver trajetória do equipamento</Button>
-              </Stack>
-            </Popup>
-          </Marker>
-        ))}
-    </MapContainer>
+              </Popup>
+            </Marker>
+          ))}
+      </MapContainer>
+    </>
   );
 }
