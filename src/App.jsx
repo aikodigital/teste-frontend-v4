@@ -1,8 +1,9 @@
 import { Button, Container, Divider, ScrollArea, Stack, Text, Title } from "@mantine/core";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import PositionMarker from "./components/PositionMarker";
 import { useData } from "./context/DataContext";
 import "./index.css";
 
@@ -18,21 +19,11 @@ export default function App() {
   } = useData();
   const [equipments, setEquipments] = useState([]);
   const [showStateHistory, setShowStateHistory] = useState(false);
+  const [trajectoryMarkers, setTrajectoryMarkers] = useState([]);
   const initialMapPosition =
     equipmentPositionHistory.length > 0
       ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
       : [-19.167338, -46.00347];
-
-  // console.log(
-  // equipmentPositionHistory,
-  // { equipmentPositionHistory },
-  // { equipmentBasicData }
-  // { equipmentModel },
-  // { equipmentState },
-  // { equipmentStateHistory },
-  // loading,
-  // error
-  // );
 
   const formatDateAndTime = (unformattedDateString) => {
     const date = new Date(unformattedDateString);
@@ -48,7 +39,7 @@ export default function App() {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
-      timeZone: "America/Sao_Paulo", // Specifies Brasília Time
+      timeZone: "America/Sao_Paulo",
     });
 
     return `${readableDate}, ${readableTime}`;
@@ -79,6 +70,14 @@ export default function App() {
       default:
         return "Não especificado";
     }
+  };
+
+  const handleEquipmentTrajectory = (equipmentIdToBeFound) => {
+    const selectedEquipment = equipmentPositionHistory.find(
+      (equipment) => equipment.equipmentId === equipmentIdToBeFound
+    );
+
+    setTrajectoryMarkers(selectedEquipment);
   };
 
   useEffect(() => {
@@ -117,38 +116,8 @@ export default function App() {
       };
     });
 
-    console.log(equipmentWithStates);
-
     setEquipments(equipmentWithStates);
   }, [equipmentBasicData, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
-
-  // equipmentBasicData
-  // {
-  //   "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-  //   "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-  //   "name": "CA-0001"
-  // }
-
-  // equipmentPositionHistory
-  // {
-  //   "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-  //   "positions": [
-  //       {
-  //           "date": "2021-02-01T03:00:00.000Z",
-  //           "lat": -19.126536,
-  //           "lon": -45.947756
-  //       },
-
-  //   ]
-  // }
-
-  // equipmentStateHistory
-  // "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-  // "states": [
-  //     {
-  //         "date": "2021-02-01T03:00:00.000Z",
-  //         "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-  //     },
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
@@ -159,9 +128,11 @@ export default function App() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {equipments.map((equipment) => (
-        <Fragment key={equipment.id}>
+      <PositionMarker data={trajectoryMarkers} />
+      {equipments.length > 0 &&
+        equipments.map((equipment) => (
           <Marker
+            key={equipment.id}
             position={equipment.lastKnownPosition.coordinates}
             icon={createIconDynamically(equipment.lastKnownState.color)}
           >
@@ -202,6 +173,7 @@ export default function App() {
                     {equipment.states.map((state) => {
                       return (
                         <Stack
+                          key={state.id}
                           pb={8}
                           mb={16}
                           spacing="xs"
@@ -216,11 +188,11 @@ export default function App() {
                     })}
                   </ScrollArea>
                 )}
+                <Button onClick={() => handleEquipmentTrajectory(equipment.id)}>Ver trajetória do equipamento</Button>
               </Stack>
             </Popup>
           </Marker>
-        </Fragment>
-      ))}
+        ))}
     </MapContainer>
   );
 }
