@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import EquipmentStateHistoryComponent from "./stateList";
+import { getEquipment } from "@/app/services/actions";
 
 const EquipmentState: React.FC = () => {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
@@ -22,8 +23,7 @@ const EquipmentState: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const equipmentResponse = await fetch("/data/equipment.json");
-        const equipmentData: Equipment[] = await equipmentResponse.json();
+        const equipmentData = await getEquipment();
 
         setEquipment(equipmentData);
       } catch (error) {
