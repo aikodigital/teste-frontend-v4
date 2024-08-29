@@ -9,12 +9,19 @@ const props = withDefaults(defineProps<{
   hideAction: false,
 });
 
-const iconName = 'fa6-solid:clock-rotate-left';
 const { setView } = useView();
 const { setSelectedEquipment } = useSelectedEquipment();
 
+const iconRotateLeft = 'fa6-solid:clock-rotate-left';
+const iconPercent = 'fa6-solid:percent';
+
 function handleShowStateHistory() {
   setView('stateHistory');
+  setSelectedEquipment(props.equipment);
+}
+
+function handleShowPercentage() {
+  setView('percentage');
   setSelectedEquipment(props.equipment);
 }
 </script>
@@ -49,9 +56,16 @@ function handleShowStateHistory() {
 
     <button v-if="!hideAction" class="border rounded-md flex items-center gap-1 px-2 w-fit"
       @click="handleShowStateHistory">
-      <Icon :name="iconName" />
+      <Icon :name="iconRotateLeft" />
 
       Histórico de estados
+    </button>
+
+    <button v-if="!hideAction" class="border rounded-md flex items-center gap-1 px-2 w-fit"
+      @click="handleShowPercentage">
+      <Icon :name="iconPercent" />
+
+      Porcentagem diária
     </button>
   </div>
 </template>

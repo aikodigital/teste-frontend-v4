@@ -2,7 +2,7 @@
 import type { PointExpression } from 'leaflet';
 
 /** Data */
-import { equipmentModelData, equipmentStateData } from '~/data/equipment';
+import { equipmentModelData, equipmentStateData, equipmentStateHistoryData } from '~/data/equipment';
 
 /** Interfaces */
 import type {
@@ -20,6 +20,10 @@ export function getCurrentStateClass(state: string) {
       : 'text-manutencao';
 }
 
+
+type EquipmentStatesOnSameDay = Record<string, { hour: string, stateName: string }[]>;
+type EquipmentDailyStateHours = Record<string, Record<string, number>>;
+
 function getModel(equipment: IEquipment, equipmentsModel: IEquipmentModel[]) {
   return equipmentsModel.find((model) => model.id === equipment.equipmentModelId);
 }
@@ -29,14 +33,15 @@ function getPositionHistory(equipment: IEquipment, equipmentsPositionHistory: IE
 }
 
 function getStateHistory(equipment: IEquipment, equipmentsStateHistory: IEquipmentStateHistory[], equipmentStates: IEquipmentState[]) {
-  const stateHistory = equipmentsStateHistory.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
-  return stateHistory.map((state) => {
-    const stateName = equipmentStates.find((equipmentState) => equipmentState.id === state.equipmentStateId)?.name;
+  const stateHistoryMap = new Map((equipmentsStateHistory.map((stateHistory) => [stateHistory.equipmentId, stateHistory.states])));
+  const stateNameMap = new Map(equipmentStates.map((state) => [state.id, state.name]));
 
-    return {
-      date: state.date,
-      name: stateName || 'Desconhecido',
-    };
+  const stateHistory = stateHistoryMap.get(equipment.id) || [];
+
+  return stateHistory.map((state) => {
+    const stateName = stateNameMap.get(state.equipmentStateId) || 'Desconhecido';
+
+    return { date: state.date, name: stateName };
   });
 }
 
@@ -46,6 +51,24 @@ function getCurrentPosition(positionHistory: { lat: number; lon: number }[]) {
 
 function getCurrentState(stateHistory: { date: string; name: string }[]) {
   return stateHistory.at(-1)!.name;
+}
+
+function convertObjectToArray(dailyStateHours: EquipmentDailyStateHours) {
+  return Object.entries(dailyStateHours).map(([date, states]) => {
+    return {
+      date,
+      states: Object.entries(states).map(([stateName, percentage]) => ({ stateName, percentage })),
+    };
+  });
+}
+
+function customSort(a: IEquipmentState['name'], b: IEquipmentState['name']) {
+  const stateOrder: IEquipmentState['name'][] = ['Operando', 'Manutenção', 'Parado', 'Desconhecido'];
+
+  const indexA = stateOrder.indexOf(a);
+  const indexB = stateOrder.indexOf(b);
+
+  return indexA - indexB;
 }
 
 export function getEquipmentDetails(
@@ -134,4 +157,66 @@ export function getStates() {
 
 export function getModels() {
   return equipmentModelData.map((model) => model.name);
+}
+
+export function getDailyStatePercentage(equipment: IEquipmentDetails) {
+  const equipmentStateHistory = equipmentStateHistoryData.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
+  const stateNameMap = new Map(equipmentStateData.map((state) => [state.id, state.name]));
+  const statesOnSameDay: EquipmentStatesOnSameDay = {};
+
+  for (let i = 0; i < equipmentStateHistory.length; i++) {
+    const state = equipmentStateHistory[i];
+    const [date, hour] = state.date.split('T');
+
+    const stateName = stateNameMap.get(state.equipmentStateId) || 'Desconhecido';
+
+    if (!statesOnSameDay[date]) {
+      statesOnSameDay[date] = [];
+    }
+
+    statesOnSameDay[date].push({ hour, stateName });
+  }
+
+  const dailyStateHours: EquipmentDailyStateHours = {};
+  let lastStateOfPreviousDay: { hour: string, stateName: string } = {
+    hour: '00:00:00.000Z',
+    stateName: 'Desconhecido',
+  };
+
+  for (const [day, states] of Object.entries(statesOnSameDay)) {
+    for (let i = 0; i < states.length; i++) {
+      const state = states[i];
+      const nextState = states[i + 1] || { hour: '24:00:00.000Z', stateName: state.stateName };
+
+      const [hour] = state.hour.split(':');
+      const [nextHour] = nextState.hour.split(':');
+
+      if (!dailyStateHours[day]) {
+        dailyStateHours[day] = {};
+      }
+
+      if (!dailyStateHours[day][state.stateName]) {
+        dailyStateHours[day][state.stateName] = 0;
+      }
+
+      dailyStateHours[day][state.stateName] += Number(nextHour) - Number(hour);
+
+      if (i === 0 && lastStateOfPreviousDay) {
+        dailyStateHours[day][lastStateOfPreviousDay.stateName] = Number(hour);
+      } else if (i === states.length - 1) {
+        lastStateOfPreviousDay = state;
+      }
+    }
+
+    for (const state of Object.keys(dailyStateHours[day])) {
+      dailyStateHours[day][state] = parseFloat(((dailyStateHours[day][state] / 24) * 100).toFixed(2));
+    }
+  }
+
+  const arrayOfDailyStateHoursReversed = convertObjectToArray(dailyStateHours).reverse();
+  for (const day of arrayOfDailyStateHoursReversed) {
+    day.states.sort((a, b) => customSort(a.stateName, b.stateName));
+  }
+
+  return arrayOfDailyStateHoursReversed;
 }

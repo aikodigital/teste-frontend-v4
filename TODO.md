@@ -21,12 +21,9 @@
   - [x] Implementar filtros para visualizações por estado atual.
   - [x] Implementar filtros para visualizações por modelo de equipamento.
 
-- [ ] **Pesquisa**
-  - [ ] Implementar funcionalidade de pesquisa por dados de um equipamento específico.
-
-- [ ] **Percentual de Produtividade do Equipamento**
-  - [ ] Calcular a produtividade do equipamento.
-  - [ ] Exibir percentual de produtividade na interface.
+- [x] **Percentual de Produtividade do Equipamento**
+  - [x] Calcular a produtividade do equipamento.
+  - [x] Exibir percentual de produtividade na interface.
 
 - [ ] **Ganho por Equipamento**
   - [ ] Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento.

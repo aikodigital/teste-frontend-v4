@@ -2,9 +2,8 @@
 const dayjs = useDayjs();
 
 const { setView } = useView();
-const { setSelectedEquipment } = useSelectedEquipment();
+const { selectedEquipment, setSelectedEquipment } = useSelectedEquipment();
 
-const { selectedEquipment } = useSelectedEquipment();
 const stateHistory = computed(() => selectedEquipment.value?.stateHistory.toReversed() || []);
 
 const iconName = 'fa6-solid:arrow-left';
@@ -51,7 +50,7 @@ function handleShowEquipmentList() {
               Hora:
             </span>
 
-            {{ dayjs(state.date).format('HH:MM:ss') }}
+            {{ dayjs(state.date).utc().format('HH:mm:ss') }}
           </span>
         </div>
 

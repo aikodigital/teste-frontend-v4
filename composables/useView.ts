@@ -1,4 +1,4 @@
-type ViewOptions = 'equipment' | 'stateHistory';
+type ViewOptions = 'equipment' | 'stateHistory' | 'percentage';
 
 const currentView = ref<ViewOptions>('equipment');
 
