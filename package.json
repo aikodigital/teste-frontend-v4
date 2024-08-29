@@ -1,0 +1,60 @@
+{
+  "name": "reactjs-vite-tailwindcss-boilerplate",
+  "description": "This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "João Paulo Moraes",
+    "email": "joaopaulomoraes@outlook.com",
+    "url": "https://github.com/joaopaulomoraes"
+  },
+  "bugs": {
+    "url": "https://github.com/joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate/issues",
+    "email": "joaopaulomoraes@outlook.com"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src --max-warnings=0",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.26.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^14.3.1",
+    "@types/leaflet": "^1.9.12",
+    "@types/node": "^20.16.1",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitest/ui": "^1.6.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "happy-dom": "^12.10.3",
+    "postcss": "^8.4.41",
+    "prettier": "3.1.1",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  }
+}
