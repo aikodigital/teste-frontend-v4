@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Documentação do Projeto de Monitoramento de Equipamentos Florestais
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Visão Geral
+Este projeto tem como objetivo monitorar e visualizar dados de equipamentos em operações florestais. A aplicação permite que gestores acompanhem a posição, estado atual, histórico de estados e desempenho dos equipamentos.
 
-## Available Scripts
+## Tecnologias Utilizadas
+- **React & TypeScript:** Para o desenvolvimento da interface do usuário.
+- **Leaflet:** Para a visualização de mapas e marcadores.
+- **ReactApexChart:** Para a geração de gráficos de produtividade e ganho.
+- **Cypress:** Para testes end-to-end e de interface.
 
-In the project directory, you can run:
+## Estrutura do Projeto
+- **Components:** Componentes reutilizáveis como `Header` e `FiltroCard`.
+- **Containers:** Contém lógica de negócio e interações mais complexas como `MapaLocalizacao` e `BarraLateral`.
+- **Utils:** Cálculos e lógica específica de produtividade e ganhos.
 
-### `npm start`
+## Funcionalidades
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 1. Input (Busca)
+O Input de Busca de pesquisa para pesquisar qualquer estado do Equipamento ou modelo de Equipamento.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 2. Mapa de Localização
+Exibe a posição atual dos equipamentos com ícones diferenciados para cada estado. Ao clicar em um marcador, é possível visualizar o histórico de estados do equipamento.
+E visualizar o trajecto feito de cada equipamento induvidualmente implementei o botão "clear" para não poluir o Mapa assim é possivel apagar o histórico do trajecto
+individualmente.
 
-### `npm test`
+### 3. Filtros de Estado e Modelo
+Filtros permitem que o usuário visualize apenas equipamentos que estão em determinado estado (Operando, Parado, Manutenção) ou que pertencem a um determinado modelo.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 4. Gráficos de Produtividade e Ganho
+Gráficos mostram o desempenho dos equipamentos em termos de produtividade (percentual de tempo operando) e ganhos (calculado com base nos estados e horas de operação).
+Graficos Interativos.
 
-### `npm run build`
+## Testes
+Testes foram realizados com Cypress para garantir que os filtros, mapa, e elementos principais da interface estejam funcionando corretamente.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Decisões Técnicas
+- **Leaflet:** Escolhido para a visualização do mapa devido à sua flexibilidade e suporte a camadas customizadas.
+- **ReactApexChart:** Utilizado para gráficos devido à sua simplicidade e bom suporte a gráficos interativos.
+- **Cypress:** Para testes automatizados, garantindo a integridade da interface em diversas situações.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Considerações Finais
+Este projeto implementa as principais funcionalidades de monitoramento, com filtros avançados e gráficos interativos. Futuras melhorias podem incluir a visualização de trajetos históricos e a integração de mais dados em tempo real.
