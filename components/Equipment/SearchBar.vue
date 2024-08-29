@@ -53,15 +53,16 @@ const stateOptions = computed<SelectOption[]>(() => props.states.map(state => ({
 
 <style scoped>
 #search-bar-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   background-color: var(--container-color);
   border-radius: 4px;
-  column-gap: 16px;
+  gap: 16px;
   padding: 16px;
   align-items: center;
 
   .search-bar-input {
+    flex: 1;
     display: flex;
     flex-direction: column;
     row-gap: 4px;

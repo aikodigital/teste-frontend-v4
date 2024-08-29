@@ -3,5 +3,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   plugins: ['~/plugins/fontawesome.ts'],
   ssr: false,
-  modules: ['@nuxtjs/leaflet']
+  modules: ['@nuxtjs/leaflet'],
+  devtools: { enabled: false }
 })

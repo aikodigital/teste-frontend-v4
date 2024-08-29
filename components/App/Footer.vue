@@ -45,17 +45,20 @@ footer {
 
   nav {
     flex-direction: column;
-  }
+    flex-wrap: wrap;
 
-  .nav-section {
-    display: flex;
-    gap: 16px;
+    .nav-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
 
-    a {
-      color: white;
+      a {
+        color: white;
+        text-wrap: nowrap;
 
-      &:hover {
-        color: var(--secondary-color);
+        &:hover {
+          color: var(--secondary-color);
+        }
       }
     }
   }

@@ -51,34 +51,35 @@ const positionHistoryTableRows = computed(() => sortedPositions.value.map(positi
 
 <template>
   <div id="equipment-container">
-    <div v-if="equipment" class="equipment-info">
-      <div class="info-title">{{ equipment.name }}</div>
-      <div class="info-actions">
-        <div class="back-button" @click="router.back">
-          <FontAwesomeIcon :icon="['fas', 'arrow-left']" />
-          Voltar
-        </div>
+    <section class="card-header">
+      <div class="card-title">{{ equipment?.name }}</div>
+      <div class="card-action" @click="router.back">
+        <FontAwesomeIcon :icon="['fas', 'arrow-left']" />
+        Voltar
       </div>
-      <EquipmentCard
-        class="info-card"
-        :equipmentId="equipment.id"
-        :modelName="equipment.model?.name ?? 'Não informado'"
-        :recentStateDate="recentStateDate"
-        :recentPosition="recentPosition"
-        :productivityRate="0.85"
-        :profit="8000"
-      />
+    </section>
+    <EquipmentCard
+      :equipmentId="equipment?.id"
+      :modelName="equipment?.model?.name ?? 'Não informado'"
+      :recentStateDate="recentStateDate"
+      :recentPosition="recentPosition"
+      :productivityRate="0.85"
+      :profit="8000"
+    />
+    <section class="card-tables">
       <AppTable
+        class="card-table"
         title="Histórico de estados"
         :headers="stateHistoryTableHeaders"
         :rows="stateHistoryTableRows"
       />
       <AppTable
+        class="card-table"
         title="Histórico de localizações (lista)"
         :headers="positionHistoryTableHeaders"
         :rows="positionHistoryTableRows"
       />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -86,37 +87,40 @@ const positionHistoryTableRows = computed(() => sortedPositions.value.map(positi
 #equipment-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  border-radius: 4px;
+  gap: 16px;
+  background-color: white;
+  padding: 16px 32px;
 
-  .equipment-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-radius: 4px;
-    gap: 32px;
-    background-color: white;
-    padding: 16px 32px;
+  .card-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    font-weight: bold;
 
-    .info-title {
+    .card-title {
       font-size: 24px;
-      font-weight: bold;
     }
 
-    .info-card {
-      grid-column: 1/3
-    }
+    .card-action {
+      color: var(--primary-color);
 
-    .info-actions {
-      align-self: center;
-      justify-self: end;
-
-      .back-button {
-        font-weight: bold;
-        color: var(--primary-color);
-
-        &:hover {
-          color: var(--secondary-color);
-        }
+      &:hover {
+        color: var(--secondary-color);
       }
+    }
+  }
+
+  .card-tables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+
+    .card-table {
+      flex: 1;
     }
   }
 }

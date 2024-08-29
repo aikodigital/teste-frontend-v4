@@ -76,6 +76,7 @@ function onClickRow(equipmentId: string): void {
       title="Equipamentos"
       :headers="tableHeaders"
       :rows="tableRows"
+      :clickable="true"
       @click="onClickRow"
     />
   </div>

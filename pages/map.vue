@@ -43,6 +43,7 @@ const mapMarkers = computed(() => {
     state: equipment.recentStateDate?.state?.name ?? 'Sem histórico',
     lat: equipment.recentPosition?.lat ?? 0,
     lon: equipment.recentPosition?.lon ?? 0,
+    date: equipment.recentPosition?.date ?? 'Não informado',
     color: equipment.recentStateDate?.state?.color ?? 'inherit'
   })) ?? []
 
@@ -54,16 +55,17 @@ const mapMarkers = computed(() => {
 
 <template>
   <div class="container">
-    <EquipmentSearchBar
-      :filters="filters"
-      :models="models"
-      :states="states"
-    />
-    <AppMap
-      :markers="mapMarkers"
-      :markerRadius="8"
-      :zoom="9"
-    />
+    <EquipmentSearchBar :filters="filters" :models="models" :states="states" />
+    <EquipmentMap :markers="mapMarkers" :zoom="9">
+      <template #tooltip="{ marker }">
+        <div>
+          <div><strong>Nome: </strong>{{ marker.name }}</div>
+          <div><strong>Modelo: </strong>{{ marker.model }}</div>
+          <div><strong>Estado: <span :style="`color: ${marker.color}`">{{ marker.state }}</span></strong></div>
+          <div><strong>Localização: </strong>({{ marker.lat }}, {{ marker.lon }})</div>
+        </div>
+      </template>
+    </EquipmentMap>
   </div>
 </template>
 

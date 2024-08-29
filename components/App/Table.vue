@@ -9,6 +9,7 @@ interface TableProps<T> {
   title: string
   headers: TableHeader<T>[]
   rows: T[]
+  clickable?: boolean
 }
 
 const props = defineProps<TableProps<any>>()
@@ -41,6 +42,7 @@ function cellStyle(color?: string): string {
           v-for="row in props.rows"
           :key="row.key"
           @click="onClickRow(row.key)"
+          :style="`cursor: ${props.clickable ? 'pointer' : 'default'}`"
         >
           <td
             v-for="header in props.headers"
@@ -58,6 +60,9 @@ function cellStyle(color?: string): string {
 <style scoped>
 #table-container {  
   background-color: var(--container-color);
+  max-height: 50vh;
+  overflow: auto;
+  border-radius: 4px;
 
   .table-title {
     text-align: center;
@@ -69,7 +74,6 @@ function cellStyle(color?: string): string {
   table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 4px;
 
     tr {
       border-top: 1px solid var(--border-color);
@@ -81,7 +85,6 @@ function cellStyle(color?: string): string {
 
     tbody tr {
       font-size: 14px;
-      cursor: pointer;
       height: 36px;
 
       &:hover {

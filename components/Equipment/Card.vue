@@ -3,7 +3,7 @@ import type EquipmentPosition from '~/types/EquipmentPosition';
 import type EquipmentStateDate from '~/types/EquipmentStateDate';
 
 interface CardProps {
-  equipmentId: string
+  equipmentId?: string
   modelName: string
   recentStateDate: EquipmentStateDate | null
   recentPosition: EquipmentPosition | null
@@ -34,51 +34,64 @@ const formattedPosition = computed<string>(() => {
 
 <template>
   <div id="card-container">
-    <div>
-      <strong>Modelo: </strong>
-      {{ props.modelName }}
-    </div>
-    <div>
-      <strong>Estado Atual: </strong>
-      <strong :style="stateDateColorStyle">
-        {{ formattedStateDate }}
-      </strong>
-    </div>
-    <div>
-      <strong>Percentual de produtividade: </strong>
-      {{ formatFromNumberToStringPercentage(props.productivityRate) }}
-    </div>
-    <div>
-      <strong>Localização Atual: </strong>
-      {{ formattedPosition }}
-    </div>
-    <div>
-      <strong>Ganho: </strong>
-      {{ props.profit }}
-    </div>
-    <div>
-      <strong>Histórico de localizações: </strong>
-      <NuxtLink :to="`/equipments/${equipmentId}/map`">Ver mapa</NuxtLink>
-    </div>
-  </div>
+    <section>
+      <div>
+        <strong>Modelo: </strong>
+        {{ props.modelName }}
+      </div>
+      <div>
+        <strong>Estado: </strong>
+        <strong :style="stateDateColorStyle">
+          {{ formattedStateDate }}
+        </strong>
+      </div>
+    </section>
+    <section>
+      <div>
+        <strong>Ganho do equipamento: </strong>
+        {{ props.profit }}
+      </div>
+      <div>
+        <strong>Percentual de produtividade: </strong>
+        {{ formatFromNumberToStringPercentage(props.productivityRate) }}
+      </div>
+    </section>
+    <section>
+      <div>
+        <strong>Localização: </strong>
+        {{ formattedPosition }}
+      </div>
+      <div v-if="equipmentId">
+        <strong>Histórico de localizações: </strong>
+        <NuxtLink :to="`/equipments/${equipmentId}/map`">Ver mapa</NuxtLink>
+      </div>
+    </section>
+  </div>    
 </template>
 
 
 <style scoped>
 #card-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   background-color: rgb(250, 250, 250);
-  row-gap: 16px;
+  gap: 16px;
   padding: 16px;
   font-size: 14px;
   
-  a {
-    font-weight: bold;
-    color: var(--primary-color);
+  section {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
 
-    &:hover {
-      color: var(--secondary-color);
+    a {
+      font-weight: bold;
+      color: var(--primary-color);
+
+      &:hover {
+        color: var(--secondary-color);
+      }
     }
   }
 }

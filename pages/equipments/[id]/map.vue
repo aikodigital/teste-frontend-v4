@@ -28,6 +28,7 @@ const mapMarkers = computed(() => {
     state: recentStateDate?.state?.name ?? 'Sem histórico',
     lat: position.lat,
     lon: position.lon,
+    date: formatFromRawStringDateToPrettyStringDate(position.date),
     color: recentStateDate?.state?.color ?? 'inherit'
   }))
 })
@@ -44,12 +45,14 @@ const mapMarkers = computed(() => {
         </div>
       </div>
     </div>
-    <AppMap
-      :markers="mapMarkers"
-      :markerRadius="5"
-      :zoom="11"
-      :hasPath="true"
-    />
+    <EquipmentMap :markers="mapMarkers" :zoom="11" :hasPath="true">
+      <template #tooltip="{ marker }">
+        <div>
+          <div><strong>Localização: </strong>({{ marker.lat }}, {{ marker.lon }})</div>
+          <div><strong>Data: </strong>{{ marker.date }}</div>
+        </div>
+      </template>
+    </EquipmentMap>
   </div>
 </template>
 
@@ -62,11 +65,12 @@ const mapMarkers = computed(() => {
   align-items: stretch;
 
   .map-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     background-color: var(--container-color);
     border-radius: 4px;
-    gap: 32px;
+    row-gap: 16px;
     padding: 16px 32px;
 
     .info-title {
