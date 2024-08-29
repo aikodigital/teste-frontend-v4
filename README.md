@@ -1,5 +1,5 @@
 # Florestal Machines
-![Imagem da aplicação](aiko-usage-print.jpg)
+![Imagem da aplicação](/images-for-readme/aiko-usage-print.jpg)
 
 Este projeto é uma aplicação web desenvolvida para gerenciar e monitorar equipamentos florestais. Utilizando React, a aplicação oferece funcionalidades como visualização em mapa, filtragem de equipamentos e exibição de histórico de estados.
 
