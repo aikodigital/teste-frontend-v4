@@ -1,4 +1,4 @@
-# Teste Desenvolvedor Front-end - Gestão de Equipamentos
+# Gestão de Equipamentos
 
 ## 1 - Para esse projeto, foram utilizadas as seguintes versões:
 
