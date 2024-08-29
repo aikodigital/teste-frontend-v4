@@ -1,5 +1,5 @@
 .container {
-  width: auto;
+  max-width: 200px;
   margin: 16px;
   border-radius: 8px;
   border: 1px solid rgb(209, 209, 209);
@@ -43,7 +43,6 @@
 .modelName {
   font-size: 12px;
   font-weight: 400;
-  text-transform: uppercase;
   margin: 0;
   /* max-width: 80px; */
 }
