@@ -3,11 +3,13 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Title, Body } from './styles/styles';
 import { mapEquipmentData } from '../../services/mapEquipmentData';
+import { mapEquipmentDataInterface } from '../../services/interfaces/equipmentInterfaces';
 
 const markerIcon = require('./img/aiko.png');
 
+
 export default function Map() {
-    const equipmentPositions = mapEquipmentData();
+    const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
 
     const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
 
@@ -35,7 +37,7 @@ export default function Map() {
                             })}
                         >
                             <Popup>
-                                <strong>{equipment.name}</strong>
+                                Nome: <strong>{equipment.name}</strong>
                                 <br />
                                 Estado: {equipment.state}
                                 <h4>Histórico de Estados</h4>

@@ -11,3 +11,16 @@ export interface EquipmentState {
     name: string;
     color: string;
 }
+
+export interface mapEquipmentDataInterface {
+    id: string;
+    name: string;
+    lat: any;
+    lon: any;
+    state: string;
+    color: string;
+    stateHistory: {
+        date: string;
+        state: string;
+    }[];
+}

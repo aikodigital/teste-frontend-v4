@@ -2,7 +2,7 @@ import equipmentData from '../data/equipment.json';
 import equipmentStateData from '../data/equipmentState.json';
 import equipmentPositionHistoryData from '../data/equipmentPositionHistory.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
-import { EquipmentState, EquipmentStateHistory } from './interfaces/equipamentInterfaces';
+import { EquipmentState, EquipmentStateHistory } from './interfaces/equipmentInterfaces';
 import { formatDate } from '../utils/utils';
 
 
