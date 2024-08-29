@@ -42,5 +42,7 @@ Os testes foram realizados com Cypress para garantir que os filtros, o mapa, e o
 ## Link para a Aplicação
 - [Link para o Vercel](https://monitoring-lake.vercel.app/)
 
+## **Responsividade: ** O projeto foi desenvolvido com foco na responsividade, garantindo que a interface se adapte a diferentes tamanhos de tela, desde dispositivos móveis até monitores de grande porte.
+
 ## Considerações Finais
 Este projeto implementa as principais funcionalidades de monitoramento, com filtros avançados e gráficos interativos. Futuras melhorias podem incluir a visualização de trajetos históricos em tempo real.
