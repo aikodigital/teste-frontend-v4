@@ -85,6 +85,7 @@ export default function App() {
       return {
         id: equipment.id,
         name: equipment.name,
+        modelId: equipment.equipmentModelId,
       };
     });
 
@@ -116,8 +117,17 @@ export default function App() {
       };
     });
 
-    setEquipments(equipmentWithStates);
-  }, [equipmentBasicData, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
+    const equipmentWithModels = equipmentWithStates.map((equipment, index) => {
+      const { name: modelName } = equipmentModel.find((equipmentModel) => equipmentModel.id === equipment.modelId);
+
+      return {
+        ...equipmentWithStates[index],
+        modelName,
+      };
+    });
+
+    setEquipments(equipmentWithModels);
+  }, [equipmentBasicData, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory]);
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
@@ -137,10 +147,21 @@ export default function App() {
             icon={createIconDynamically(equipment.lastKnownState.color)}
           >
             <Popup>
-              <Stack gap="md">
-                <Container>
-                  <Title size="h3">{equipment.name}</Title>
-                </Container>
+              <Stack spacing="md">
+                <Stack spacing={6}>
+                  <Container>
+                    <Title order={1} size="h3">
+                      {equipment.name}
+                    </Title>
+                  </Container>
+                  <Container>
+                    <Title order={2} size="h6">
+                      {equipment.modelName}
+                    </Title>
+                  </Container>
+                </Stack>
+
+                <Divider orientation="horizontal" />
 
                 <Stack spacing={8}>
                   <Text weight={700} ta="center">
