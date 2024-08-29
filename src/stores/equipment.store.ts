@@ -56,6 +56,7 @@ export const useEquipmentsStore = defineStore('equipmentsStore', {
       }
     },
     async getStateHistory() {
+      this.listEquipmentsStateHistory = [];
       this.listEquipmentsStateHistory = await getEquipmentStateHistory(this.equipmentSelected?.id);
     },
     validateFilter(filter: Filter): boolean {

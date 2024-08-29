@@ -1,22 +1,37 @@
 <template>
-<q-dialog v-model="dialog">
-  <q-card style="width: 550px;">
-    <q-timeline layout="dense">
-      <q-timeline-entry
-        v-for="(entry, index) in groupedData"
-        :key="index"
-        :title="entry.date"
-      >
-        <template v-for="(item, key) in entry.entries" :key="key">
-          <div>Horário: {{ item.time }}</div>
-        </template>
-      </q-timeline-entry>
-    </q-timeline>
-    <q-card-actions align="right">
-      <q-btn flat label="fechar" color="negative" v-close-popup @click="dialog = false" />
-    </q-card-actions>
-  </q-card>
-</q-dialog>
+  <q-dialog v-model="dialog">
+    <q-layout container class="dialog">
+      <q-header class="row q-pa-md" style="width: 100%; position: fixed;">
+        <q-toolbar-title>Histórico</q-toolbar-title>
+        <q-btn flat dense icon="close" align="right" v-close-popup @click="dialog = false" />
+      </q-header>
+
+      <q-page-container>
+        <q-page padding>
+          <q-timeline
+            layout="loose"
+            color="secondary"
+            side="right"
+          >
+            <q-timeline-entry
+              v-for="(entry, index) in groupedData"
+              :key="index"
+              :title="entry.date"
+              subtitle="Data da alteração"
+              icon="calendar_month"
+              side="left"
+            >
+              <template v-for="(item, key) in entry.entries" :key="key">
+                <div class="column">
+                  <span><b>Horário:</b> {{ item.time }}</span>
+                </div>
+                </template>
+            </q-timeline-entry>
+          </q-timeline>
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </q-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -65,14 +80,25 @@ const groupedData = groupByDay(listStateHistory.value);
 watch(dialog, async (val) => {
   if (val) {
     await $useEquipmentsStore.getStateHistory();
-
-    console.log(groupedData);
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.q-timeline-entry {
-  margin-bottom: 20px;
+.dialog {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #fff;
+  width: 800px;
+  height: 750px;
+  border: 1px solid $secondary;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 499px) {
+  .dialog {
+    width: 100%;
+  }
 }
 </style>

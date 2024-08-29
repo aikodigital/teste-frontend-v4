@@ -54,7 +54,19 @@ export function getEquipmentPositionHistory(equipmentId: string) {
 }
 
 export function getEquipmentStateHistory(equipmentId: string) {
-  return equipmentStateHistoriesData.find(history => history.equipmentId === equipmentId)?.states;
+  const lists = [];
+  let equipmentStateHistory = equipmentStateHistoriesData.find(history => history.equipmentId === equipmentId)?.states;
+
+  equipmentStateHistory?.forEach(item => {
+    const state = equipmentStateData.find(value => value.id === item.equipmentStateId);
+
+    return lists.push({
+      date: item.date,
+      state: state
+    });
+  });
+
+  return lists;
 }
 
 export function getEquipmentsByState(stateId: string): Equipment[] {
