@@ -7,9 +7,11 @@ import React, {
 } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
-import equipmentPositionHistory from "../../../data/equipmentPositionHistory.json";
-import equipmentStateHistory from "../../../data/equipmentStateHistory.json";
-import equipmentStates from "../../../data/equipmentState.json";
+import equipmentPositionHistoryData from "../../../data/equipmentPositionHistory.json";
+import equipmentStateHistoryData from "../../../data/equipmentStateHistory.json";
+import equipmentStatesData from "../../../data/equipmentState.json";
+import equipmentModelData from "../../../data/equipmentModel.json"
+import equipmentData from "../../../data/equipment.json"
 
 import operational from "../../../assets/icons/Truck_8.png";
 import maintenance from "../../../assets/icons/Ban_8.png";
@@ -94,11 +96,16 @@ const Map: React.FC = () => {
       },
     });
 
+    const equipmentDatails = getEquipmentDetails(markerId);
+
+    console.log({equipmentDatails})
+
     markerRef.current = marker;
 
     const infoWindow = new google.maps.InfoWindow({
       content: `
         <div style="font-size: 20px; text-align: center;">${stateAttrs.name}</div>
+        <div style="font-size: 10px; text-align: center;">100,00p/h</div>
         <div style="padding: 10px; text-align: center;">${label}</div>
         <button id="open-modal-button-${markerId}" class="custom-button" style="color: ${stateAttrs.color}">
           Histórico completo
@@ -134,7 +141,7 @@ const Map: React.FC = () => {
   }
 
   function averageGeolocation(): { latitude: number; longitude: number } {
-    const coords = equipmentPositionHistory.map((history) => {
+    const coords = equipmentPositionHistoryData.map((history) => {
       const lastPosition = history.positions[history.positions.length - 1];
       return { lat: lastPosition.lat, lon: lastPosition.lon };
     });
@@ -184,7 +191,7 @@ const Map: React.FC = () => {
   
 
   useEffect(() => {
-    if (equipmentPositionHistory && isLoaded) {
+    if (equipmentPositionHistoryData && isLoaded) {
       const center = averageGeolocation();
       if (mapRef.current) {
         mapRef.current.setCenter({
@@ -193,14 +200,77 @@ const Map: React.FC = () => {
         });
       }
     }
-  }, [equipmentPositionHistory, isLoaded]);
+  }, [equipmentPositionHistoryData, isLoaded]);
 
   const onLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
   }, []);
 
+  type EquipmentStateHistoryEntry = {
+    date: string;
+    equipmentStateId: string;
+  };
+
+  function calculateTotalHours(
+    equipmentData: EquipmentStateHistoryEntry[],
+    targetStateId: string
+  ): number {
+    const filteredData = equipmentData
+      .filter(entry => entry.equipmentStateId === targetStateId)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  
+    let totalHours = 0;
+  
+    for (let i = 0; i < filteredData.length - 1; i++) {
+      const startDate = new Date(filteredData[i].date);
+      const endDate = new Date(filteredData[i + 1].date);
+      const hoursDifference = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+      totalHours += hoursDifference;
+    }
+  
+    return totalHours;
+  }
+
+  function getEquipmentDetails(id: string) {
+
+    const equipment = equipmentData.filter(equipment => equipment.id === id);
+    const equipmentModel = equipmentModelData.filter(model => model.id === equipment[0].equipmentModelId)
+    const relevantStateIds = new Set(equipmentModel[0].hourlyEarnings.map(hours => hours.equipmentStateId));
+
+    const equipmentStateHistory = equipmentStateHistoryData.filter(state =>
+      state.states.some(item => relevantStateIds.has(item.equipmentStateId))
+    );
+    
+    const allStates: EquipmentStateHistoryEntry[] = equipmentStateHistory
+    .flatMap(history => history.states);
+    const uniqueStateIds = Array.from(new Set(allStates.map(state => state.equipmentStateId)));
+    const hoursByStateId: { [key: string]: number } = {};
+
+    const stateHoursRelationDetails = uniqueStateIds.map(stateId => {
+      const stateName = equipmentStatesData.find(stateData => stateData.id === stateId)?.name || 'Unknown';
+      hoursByStateId[stateId] = calculateTotalHours(allStates, stateId);
+      console.log(`Estado ${stateName}: ${hoursByStateId[stateId]} horas`);
+      
+      return {
+        id: stateId,
+        name: stateName,
+        hours: hoursByStateId[stateId],
+      };
+    });
+    
+    if (!stateHoursRelationDetails) {
+      return {
+        id: 'unknown',
+        name: 'unknown',
+        hours: 0,
+      };
+    }
+
+    return stateHoursRelationDetails
+  }
+
   function getEquipmentStatesHistory(id: string): EquipmentState {
-    const history = equipmentStateHistory.find(
+    const history = equipmentStateHistoryData.find(
       (history) => history.equipmentId === id
     );
     if (!history) {
@@ -214,7 +284,7 @@ const Map: React.FC = () => {
     }
 
     const statesHistory = history.states.map((state) => {
-      const stateInfo = equipmentStates.find(
+      const stateInfo = equipmentStatesData.find(
         (s) => s.id === state.equipmentStateId
       );
       return {
@@ -231,7 +301,7 @@ const Map: React.FC = () => {
       history.states.length > 0
         ? history.states[history.states.length - 1].equipmentStateId
         : "";
-    const findEquipmentStateById = equipmentStates.find(
+    const findEquipmentStateById = equipmentStatesData.find(
       (state) => state.id === lastStateId
     );
 
@@ -280,8 +350,8 @@ const Map: React.FC = () => {
           <div className="marker-container">
             {mapRef.current &&
               isLoaded &&
-              equipmentPositionHistory.length > 0 &&
-              equipmentPositionHistory.map((history, index) => {
+              equipmentPositionHistoryData.length > 0 &&
+              equipmentPositionHistoryData.map((history, index) => {
                 const positionId = history.equipmentId;
                 const lastPosition = history.positions[history.positions.length - 1];
                 const equipmentStates = getEquipmentStatesHistory(positionId);
