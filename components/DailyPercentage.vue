@@ -6,8 +6,8 @@ const dayjs = useDayjs();
 const { setView } = useView();
 const { selectedEquipment, setSelectedEquipment } = useSelectedEquipment();
 
-const dailyPercentages = getDailyStatePercentage(selectedEquipment.value!);
-console.log(dailyPercentages);
+const dailyReports = getDailyReport(selectedEquipment.value!);
+console.log(dailyReports);
 
 const iconName = 'fa6-solid:arrow-left';
 
@@ -53,29 +53,40 @@ function handleShowEquipmentList() {
     </div>
 
     <ul class="w-full border border-black rounded-lg divide-y-2 divide-black max-h-full overflow-y-auto">
-      <li v-for="(dailyPercentage, index) in dailyPercentages" :key="index" class="p-2 flex flex-col gap-2">
-        <span>
-          <span class="font-bold">
-            Data:
-          </span>
-
-          {{ dayjs(dailyPercentage.date).utc().format('DD/MM/YYYY') }}
-        </span>
-
-        <div class="flex flex-col gap-1">
-          <span v-for="(state, index) in dailyPercentage.states" :key="index">
+      <li v-for="(dailyReport, index) in dailyReports" :key="index" class="p-2 flex flex-col gap-2">
+        <div class="flex justify-between">
+          <span>
             <span class="font-bold">
-              {{ state.stateName }}:
+              Data:
             </span>
 
-            {{ `${state.percentage}%` }}
+            {{ dayjs(dailyReport.date).utc().format('DD/MM/YYYY') }}
+          </span>
 
-            <ProgressRoot v-model="state.percentage"
+          <span>
+            <span class="font-bold">
+              Ganhos:
+            </span>
+
+            {{ dailyReport.totalEarnings }}
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <span v-for="(percentages, j) in dailyReport.percentages" :key="j">
+            <span class="font-bold">
+              {{ percentages.stateName }}:
+            </span>
+
+            <span>
+              {{ dailyReports[index].hours[j].hour }}h - {{ `${percentages.percentage}%` }}
+            </span>
+
+            <ProgressRoot v-model="percentages.percentage"
               class="relative overflow-hidden bg-slate-300 rounded-full flex-1 h-2">
-              <ProgressIndicator :class="getProgressIndicatorClass(state.stateName)"
-                :style="`transform: translateX(-${100 - state.percentage}%)`" />
+              <ProgressIndicator :class="getProgressIndicatorClass(percentages.stateName)"
+                :style="`transform: translateX(-${100 - percentages.percentage}%)`" />
             </ProgressRoot>
-
           </span>
         </div>
       </li>

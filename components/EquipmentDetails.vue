@@ -65,7 +65,7 @@ function handleShowPercentage() {
       @click="handleShowPercentage">
       <Icon :name="iconPercent" />
 
-      Porcentagem diária
+      Produtividade diária
     </button>
   </div>
 </template>

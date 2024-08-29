@@ -22,7 +22,13 @@ export function getCurrentStateClass(state: string) {
 
 
 type EquipmentStatesOnSameDay = Record<string, { hour: string, stateName: string }[]>;
-type EquipmentDailyStateHours = Record<string, Record<string, number>>;
+interface EquipmentDailyStateHours {
+  [date: string]: {
+    percentages: Record<string, number>;
+    hours: Record<string, number>;
+    totalEarnings: number;
+  }
+}
 
 function getModel(equipment: IEquipment, equipmentsModel: IEquipmentModel[]) {
   return equipmentsModel.find((model) => model.id === equipment.equipmentModelId);
@@ -54,10 +60,12 @@ function getCurrentState(stateHistory: { date: string; name: string }[]) {
 }
 
 function convertObjectToArray(dailyStateHours: EquipmentDailyStateHours) {
-  return Object.entries(dailyStateHours).map(([date, states]) => {
+  return Object.entries(dailyStateHours).map(([date, value]) => {
     return {
       date,
-      states: Object.entries(states).map(([stateName, percentage]) => ({ stateName, percentage })),
+      hours: Object.entries(value.hours).map(([stateName, hour]) => ({ stateName, hour })),
+      percentages: Object.entries(value.percentages).map(([stateName, percentage]) => ({ stateName, percentage })),
+      totalEarnings: value.totalEarnings,
     };
   });
 }
@@ -159,9 +167,16 @@ export function getModels() {
   return equipmentModelData.map((model) => model.name);
 }
 
-export function getDailyStatePercentage(equipment: IEquipmentDetails) {
+export function getDailyReport(equipment: IEquipmentDetails) {
   const equipmentStateHistory = equipmentStateHistoryData.find((stateHistory) => stateHistory.equipmentId === equipment.id)?.states || [];
   const stateNameMap = new Map(equipmentStateData.map((state) => [state.id, state.name]));
+
+  const hourlyEarnings = equipmentModelData.find((model) => model.id === equipment.model!.id)?.hourlyEarnings;
+  const hourlyEarningsWithStateNames = hourlyEarnings!.map((hourlyEarning) => {
+    const stateName = stateNameMap.get(hourlyEarning.equipmentStateId) || 'Desconhecido';
+    return { stateName, value: hourlyEarning.value };
+  });
+
   const statesOnSameDay: EquipmentStatesOnSameDay = {};
 
   for (let i = 0; i < equipmentStateHistory.length; i++) {
@@ -192,30 +207,36 @@ export function getDailyStatePercentage(equipment: IEquipmentDetails) {
       const [nextHour] = nextState.hour.split(':');
 
       if (!dailyStateHours[day]) {
-        dailyStateHours[day] = {};
+        dailyStateHours[day] = { totalEarnings: 0, hours: {}, percentages: {} };
       }
 
-      if (!dailyStateHours[day][state.stateName]) {
-        dailyStateHours[day][state.stateName] = 0;
+      if (!dailyStateHours[day].hours[state.stateName]) {
+        dailyStateHours[day].hours[state.stateName] = 0;
       }
 
-      dailyStateHours[day][state.stateName] += Number(nextHour) - Number(hour);
+      dailyStateHours[day].hours[state.stateName] += Number(nextHour) - Number(hour);
 
       if (i === 0 && lastStateOfPreviousDay) {
-        dailyStateHours[day][lastStateOfPreviousDay.stateName] = Number(hour);
+        dailyStateHours[day].hours[lastStateOfPreviousDay.stateName] = Number(hour);
       } else if (i === states.length - 1) {
         lastStateOfPreviousDay = state;
       }
     }
 
-    for (const state of Object.keys(dailyStateHours[day])) {
-      dailyStateHours[day][state] = parseFloat(((dailyStateHours[day][state] / 24) * 100).toFixed(2));
+    const { hours } = dailyStateHours[day];
+    for (const [state, hour] of Object.entries(hours)) {
+      dailyStateHours[day].percentages[state] = parseFloat(((hour / 24) * 100).toFixed(2));
+
+      if (state !== 'Desconhecido') {
+        dailyStateHours[day].totalEarnings += hourlyEarningsWithStateNames.find((hourlyEarning) => hourlyEarning.stateName === state)?.value! * hour;
+      }
     }
   }
 
   const arrayOfDailyStateHoursReversed = convertObjectToArray(dailyStateHours).reverse();
   for (const day of arrayOfDailyStateHoursReversed) {
-    day.states.sort((a, b) => customSort(a.stateName, b.stateName));
+    day.hours.sort((a, b) => customSort(a.stateName, b.stateName));
+    day.percentages.sort((a, b) => customSort(a.stateName, b.stateName));
   }
 
   return arrayOfDailyStateHoursReversed;
