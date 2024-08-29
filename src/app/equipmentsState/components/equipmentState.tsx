@@ -15,7 +15,7 @@ import EquipmentStateHistoryComponent from "./stateList";
 
 const EquipmentState: React.FC = () => {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
-  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(
+  const [selectedEquipmentId, setSelectedEquipment] = useState<string | null>(
     null
   );
 
@@ -58,8 +58,8 @@ const EquipmentState: React.FC = () => {
 
       <div className="mt-10">
 
-        {selectedEquipment && (
-          <EquipmentStateHistoryComponent equipmentId={selectedEquipment} />
+        {selectedEquipmentId && (
+          <EquipmentStateHistoryComponent equipmentId={selectedEquipmentId} />
         )}
       </div>
     </>

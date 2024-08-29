@@ -49,7 +49,7 @@ const EquipmentStateHistoryComponent: React.FC<{ equipmentId: string }> = ({
             (s) => s.id === state.equipmentStateId
           );
           return (
-            <Card className='mt-10 w-full rounded-md1 border-black' style={{ backgroundColor: stateDetails?.color }}>
+            <Card className='mt-10 w-full rounded-md1 border-black' style={{ backgroundColor: stateDetails?.color }} key={index}>
                 <CardContent className='p-8' key={index}>
                 <li key={index}>
                     <CardTitle>Data: {new Date(state.date).toLocaleString()}</CardTitle>

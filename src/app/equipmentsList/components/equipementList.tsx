@@ -4,6 +4,13 @@ import { DataTable } from "@/components/ui/data-table";
 import { Equipment } from "@/types/Equipment";
 import { columns } from "./columns";
 import React, { useEffect, useState } from "react";
+import {
+  getEquipment,
+  getEquipmentModel,
+  getEquipmentState,
+  getEquipmentStateHistory,
+  getStateNameById,
+} from "@/app/services/actions";
 
 const EquipmentList: React.FC = () => {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
@@ -11,22 +18,38 @@ const EquipmentList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const equipmentResponse = await fetch("/data/equipment.json");
-        const equipmentData: Equipment[] = await equipmentResponse.json();
-
-        const modelResponse = await fetch("/data/equipmentModel.json");
-        const modelData = await modelResponse.json();
+        const equipmentData = await getEquipment();
+        const modelData = await getEquipmentModel();
+        const stateHistoryData = await getEquipmentStateHistory();
+        const statesData = await getEquipmentState();
 
         const modelMap = new Map(
           modelData.map((model: any) => [model.id, model.name])
         );
 
-        const equipmentWithModel = equipmentData.map((equipment) => ({
-          ...equipment,
-          modelName: modelMap.get(equipment.equipmentModelId),
-        }));
+        const stateMap = new Map(
+          stateHistoryData.map((history: any) => {
+            const latestState = history.states[history.states.length - 1];
+            return [history.equipmentId, latestState.equipmentStateId];
+          })
+        );
 
-        setEquipment(equipmentWithModel);
+        const equipmentDetails = equipmentData.map((equipment) => {
+          const latestStateId = stateMap.get(equipment.id);
+
+          let latestStateName: string | undefined;
+          if (typeof latestStateId === "string") {
+            latestStateName = getStateNameById(latestStateId, statesData);
+          }
+
+          return {
+            ...equipment,
+            modelName: modelMap.get(equipment.equipmentModelId),
+            latestStateName: latestStateName,
+          };
+        });
+
+        setEquipment(equipmentDetails);
       } catch (error) {
         console.error("Erro ao carregar os dados:", error);
       }
@@ -35,7 +58,7 @@ const EquipmentList: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto py-10 w-full">
+    <div>
       <div className="flex justify-center">
         <h3 className="text-lg font-medium mb-10 font-semibold">
           Listagem de Equipamentos
