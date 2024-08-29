@@ -9,11 +9,13 @@
 
 ## 2 - Instalação e execução do projeto;
 
-	Instalação de dependências:
-		npm install
+Instalação de dependências:
+
+    npm install
 	
-	Executar projeto no modo de desenvolvimento:
-		npm run dev
+Executar projeto no modo de desenvolvimento:
+	
+    npm run dev
 	
 ## 3 - Demonstração:
 
