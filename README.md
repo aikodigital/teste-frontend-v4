@@ -57,9 +57,7 @@ visualização da interface do projeto:
 
 ## Demonstração em Vídeo
 
-[Assista ao vídeo da demonstração](./public/AppMonitoring.mp4)
-
 <p align="center">
-    <img width="470" src="/public/AppMonitoring.gif">
+    <img width="570" src="/public/AppMonitoring.gif">
 </p>
 
