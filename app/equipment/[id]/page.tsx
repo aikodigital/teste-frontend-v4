@@ -62,17 +62,23 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
     let productiveHours = 0;
     let totalEarnings = 0;
 
-    for (let i = 0; i < states.length - 1; i++) {
-      const start = new Date(states[i].date);
-      const end = new Date(states[i + 1].date);
+    if (states.length < 2) return;
+
+    const sortedStates = states.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    for (let i = 0; i < sortedStates.length - 1; i++) {
+      const start = new Date(sortedStates[i].date);
+      const end = new Date(sortedStates[i + 1].date);
       const hours = (end.getTime() - start.getTime()) / 1000 / 60 / 60;
       totalHours += hours;
 
       const state = equipmentStates.find(
-        (s) => s.id === states[i].equipmentStateId
+        (s) => s.id === sortedStates[i].equipmentStateId
       );
       const earningsEntry = hourlyEarnings.find(
-        (e) => e.equipmentStateId === states[i].equipmentStateId
+        (e) => e.equipmentStateId === sortedStates[i].equipmentStateId
       );
 
       if (state && state.name === "Operando") {
@@ -84,7 +90,7 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
       }
     }
 
-    setProductivity((productiveHours / totalHours) * 100);
+    setProductivity(totalHours > 0 ? (productiveHours / totalHours) * 100 : 0);
     setEarnings(totalEarnings);
   };
 
@@ -130,7 +136,6 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
             <Link
               href={`/equipment/${equipment.id}/track`}
               className="p-1 flex flex-col items-center"
-              
             >
               <History size={30} />
               <span>Histórico</span>
@@ -140,7 +145,10 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
               equipmentStateId={
                 equipmentStateHistory
                   .find((history) => history.equipmentId === equipment.id)
-                  ?.states.slice(-1)[0].equipmentStateId || ""
+                  ?.states.sort(
+                    (a, b) =>
+                      new Date(b.date).getTime() - new Date(a.date).getTime()
+                  )[0].equipmentStateId || ""
               }
             />
           </CardContent>
@@ -152,7 +160,6 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
             <strong>Modelo:</strong>
           </p>
           <p className="text-xs">
-            {" "}
             {
               equipmentModels.find(
                 (model) => model.id === equipment.equipmentModelId
