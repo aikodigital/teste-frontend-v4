@@ -17,11 +17,11 @@ const AllEquipamentsMap = () => {
   const getEquipmentPositionHistory = async () => {
     try {
       const resp = await fetch("../data/equipmentPositionHistory.json");
-      const data : IEquipmentPositionHistory [] = await resp.json();
+      const data: IEquipmentPositionHistory[] = await resp.json();
 
       setEquipmentsHistory(data);
     } catch (e) {
-      console.log('errrorr', e);
+      console.log("errrorr", e);
     }
   };
 
