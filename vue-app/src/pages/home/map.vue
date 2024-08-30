@@ -7,6 +7,11 @@ import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition"
 import router from "@/router";
 import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
 import { getEquipmentPositionHistory } from "@/common/services/PositionService";
+import { twMerge } from "tailwind-merge";
+
+const props = defineProps<{
+  class?: string;
+}>();
 
 const map = ref({} as Map);
 const emit = defineEmits(['stateDate']);
@@ -64,6 +69,7 @@ function setMarksEquipment(){
     mark.addEventListener('click', () => {
       emit("stateDate", position.date);
     });
+    if(index === 0) map.value!.setView([position.lat, position.lon], 10)
   })
     var myLines = {
         "type": "LineString" as 'LineString' | 'LineString',
@@ -81,6 +87,7 @@ function setMarksEquipment(){
   L.geoJSON(myLines, {
       style: myStyle
   }).addTo(map.value as Map);
+
     
   }
 
@@ -99,7 +106,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <section class="w-full pr-8">
+  <section :class="twMerge('w-full pr-8', props.class)">
     <h1 class="text-xl text-zinc-50 font-semibold mb-4">
       Histórico de Posições
   </h1>

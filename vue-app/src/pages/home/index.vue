@@ -23,5 +23,10 @@ function navigateMap(equipment: EquipmentWithLastPosition){
         <Map ref="map"/>
       </div>
     </section>
-  </template>
+</template>
+<style scoped>
+section {
+  background-image: url("@/assets/img/background.png");
+}
+</style>
   

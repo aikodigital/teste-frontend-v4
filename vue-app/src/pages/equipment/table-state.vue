@@ -15,21 +15,23 @@ import { getPaginatedItems } from '@/common/utils/helpers';
 import Input from '@/components/ui/input/Input.vue';
 import { twMerge } from 'tailwind-merge';
 import { variantColor } from '@/common/utils/helpers';
-import { getEquipmentHistoryStates, getStateById } from '@/common/services/StateService';
+import {  getEquipmentHistoryStates, getStateById } from '@/common/services/StateService';
 import { formatDate } from '@/common/utils/helpers';
+import { getEquipmentById } from '@/common/services/EquipmentService';
 
 const equipmentStates = ref<EquipmentStateHistory>();
 const states = ref<State[]>([]);
 const total = ref(0);
-const itemsPerPage = 7;
+const itemsPerPage = 8;
 const filter = ref('');
 const pagination = ref<InstanceType<typeof Pagination>>();
 
-onMounted(() => {
 const { id } = router.currentRoute.value.params
-equipmentStates.value = getEquipmentHistoryStates(id as string);
-total.value = equipmentStates.value?.states.length ?? 0;
-updatePage(1);
+
+onMounted(() => {
+    equipmentStates.value = getEquipmentHistoryStates(id as string);
+    total.value = equipmentStates.value?.states.length ?? 0;
+    updatePage(1);
 })
 
 function updatePage(page: number) {
@@ -63,9 +65,9 @@ defineExpose({ setFilterData });
 </script>
 
 <template>
-<section class="flex flex-col items-start gap-2 px-8 h-[500px] w-[500px]">
+<section class="flex flex-col items-start gap-2 px-8 h-[550px] w-[500px]">
 <h1 class="text-xl text-zinc-50 font-semibold mb-4">
-    Histórico de Estados
+    Histórico de Estados ({{ getEquipmentById(id as string)?.name }})
 </h1>
 <div class="flex flex-row justify-between w-full items-end">
     <div class="text-xs font-mono text-zinc-50">{{ total ?? 0 }} Registros</div>
@@ -92,7 +94,7 @@ defineExpose({ setFilterData });
                 </span>
             </TableCell>
             <TableCell class="text-xs font-medium">
-                <div :class="twMerge('text-xs font-semibold rounded-sm h-5 flex items-center justify-center',
+                <div :class="twMerge('text-xs font-bold rounded-sm h-5 flex items-center justify-center',
                      variantColor(state.equipmentStateId))">
                     {{ getStateById(state.equipmentStateId)?.name }}
                 </div>

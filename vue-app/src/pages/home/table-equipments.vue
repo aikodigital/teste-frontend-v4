@@ -36,6 +36,9 @@ function filterEquipments(): EquipmentWithLastPosition[] {
 
 <template>
   <section class="flex flex-col items-end gap-2 px-8 h-[600px] w-[800px]">
+    <h1 class="text-xl text-zinc-50 font-semibold mb-4 self-start">
+      Equipamentos
+    </h1>
     <Input class="h-8 w-42" placeholder="Filtrar" v-model="filter"/>
     <div class="h-full bg-zinc-50 rounded-t-xl">
       <Table class="rounded-full">

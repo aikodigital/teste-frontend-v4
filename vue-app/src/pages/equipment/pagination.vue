@@ -5,14 +5,12 @@ import {
 import {
   Pagination,
   PaginationEllipsis,
-  PaginationFirst,
-  PaginationLast,
   PaginationList,
   PaginationListItem,
   PaginationNext,
   PaginationPrev,
 } from '@/components/ui/pagination'
-import { ref } from 'vue';
+import {  ref } from 'vue';
 
 const page = ref(1)
 
@@ -43,7 +41,6 @@ defineExpose({
     :default-page="props.defaultPage ?? 1" 
     class="px-4">
     <PaginationList v-slot="{ items }" class="flex items-center gap-1 justify-center">
-      <PaginationFirst class="w-8 h-8 p-0 text-xs"/>
       <PaginationPrev class="w-8 h-8 p-0 text-xs"/>
       <template v-for="(item, index) in items">
         <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>
@@ -55,7 +52,6 @@ defineExpose({
       </template>
 
       <PaginationNext class="w-8 h-8 p-0 text-xs"/>
-      <PaginationLast class="w-8 h-8 p-0 text-xs"/>
     </PaginationList>
   </Pagination>
 </template>
