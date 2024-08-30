@@ -8,6 +8,8 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
     }
   },
+  css: ['animate.css'],
+  vite: { ssr: { noExternal: ['moment'] } },
   modules: [
     '@nuxtjs/tailwindcss',
     'nuxt-phosphor-icons',

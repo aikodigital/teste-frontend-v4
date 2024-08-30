@@ -27,7 +27,7 @@ const statesColors:StateColor[] = [
 const defaultState:StateColor = {
   id: '',
   name: 'Sem Estado',
-  color: '#e74c3c'
+  color: '#000000'
 }
 
 const getStateSelected = (id: string) => {

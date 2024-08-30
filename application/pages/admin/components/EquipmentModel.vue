@@ -9,15 +9,11 @@
       </div>
       <div>
         <span class="mb-2 block font-light text-emerald-950">{{ data?.name }}</span>
-        <ul class="flex flex-row justify-start gap-2">
-          <li
-            v-for="(earning, index) in data?.hourlyEarnings"
-            :key="index"
-            class="bg-emerald-800 py-1 px-4 inline-flex text-xs rounded-full text-emerald-200"
-          >
-            <span>{{ earning.value }}</span>
-          </li>
-        </ul>
+
+        <button type="button" class="btn" @click="dispatchClickHistory">
+          <PhosphorIconClockCounterClockwise class="mr-1" weight="thin" />
+          Histórico de Estados
+        </button>  
       </div>
     </div>
   </div>
@@ -29,10 +25,31 @@ const props = defineProps<{
   modelId: string
 }>()
 
+const emit = defineEmits(['click-history'])
     
 const { data } = await useAsyncData(
   'model',
   () => $fetch(`/api/equipment/model/${ props.modelId }`)
 )
 
+const dispatchClickHistory = () => {
+  emit('click-history')
+}
+
 </script>
+
+<style scope>
+.btn {
+  @apply
+    bg-indigo-300
+    flex
+    flex-row
+    items-center
+    justify-center
+    py-1
+    px-3
+    text-xs
+    rounded-md
+    text-indigo-800
+}
+</style>
