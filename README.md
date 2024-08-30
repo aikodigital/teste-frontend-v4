@@ -79,3 +79,4 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 <img src="/public/img/project_02.png">
 <img src="/public/img/project_03.png">
 <img src="/public/img/project_04.png">
+<img src="/public/img/project_05.png">
