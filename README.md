@@ -25,7 +25,7 @@ Na tela inicial, são listados todos os equipamentos, sendo exibidos:
 	<li>Nome</li>
 	<li>Modelo</li>
 	<li>Estado Atual</li>
-</ul
+</ul>
 
 <img src="/public/img/listagem.png">
 
