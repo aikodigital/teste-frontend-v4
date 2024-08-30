@@ -16,17 +16,10 @@ Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do 
 
 > Siga estas etapas para utilizar o projeto:
 
-#### Clonar o Repositório:
-
-Clone este repositório para o seu ambiente de desenvolvimento local usando o seguinte comando:
-
-1 - ```git clone https://github.com/Leozhr/teste-frontend-v4.git```
-
-2 - Abra a solução no ambiente de desenvolvimento de sua preferência (por exemplo, VSCode).
-
-3 - ```npm install```
-
-4 - ```npm run dev```
+```
+npm install
+npm run dev
+```
 
 <br />
 
