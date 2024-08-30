@@ -10,6 +10,7 @@
     React - 18
     Next.js - 14.0.4
 	TypeScript - 5.3.3
+	Tailwind CSS: 3.3.0
 	Google Maps API - 2.19.3
 	CI/CD - AWS Amplify 
 
