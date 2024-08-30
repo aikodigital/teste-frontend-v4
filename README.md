@@ -10,7 +10,7 @@ Você pode encontrar outras fotos do projeto [aqui](https://github.com/oThinas/t
 
 ## 📝 Funcionalidades
 
-- Posição dos equipametos nas suas posições mais recentes;
+- Posição dos equipamentos nas suas posições mais recentes;
 - Visualização do estado do equipamento no mapa via pop-up;
 - Visualização do histórico de estados de um equipamento específico;
 - Visualização do histórico de posições de um equipamento específico;
