@@ -1,0 +1,313 @@
+header{
+  display: block;
+  height: 80px;
+  border-bottom: 1px solid #000;
+  box-sizing: border-box;
+  padding-left: 85px;
+}
+
+#aikoLogo{
+  width: 145px;
+}
+
+#container{
+  display: flex;
+  margin: 50px auto 90px;
+
+  width: 1260px;
+  height: 636px;
+  border: 1px solid #000;
+  padding: 0;
+
+  box-shadow: -5px 5px 15px 2px #00000078;
+}
+
+#filter{
+  width: 39%;
+  height: 100%;
+  background-color: #003380;
+  padding: 15px;
+  
+  display: flex;
+  flex-direction: column;
+
+  transform-origin: 0px;
+  /* transform: scaleX(0);
+  filter: blur(5px); */
+}
+
+#search{
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  display: flex;
+}
+
+#searchField{
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 16px 16px;
+  color: #fafafa;
+  outline: none;
+  border: none;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #ffffff66;
+  font-size: 1.2rem;
+  transition: 350ms ease-in-out all;
+}
+
+#searchField:focus{
+  border: 1px solid black;
+  box-shadow: 0 0 1px 1px #ffffff66;
+  border-radius: 5px;
+}
+
+#filterButtonContainer{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: end;
+}
+
+#filterButton{
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 5px 25px;
+  border-radius: 10px;
+  border: none;
+  background-color: #00C100;
+  color: white;
+}
+
+#filterButton:hover{
+  background-color: #00d900;
+}
+
+#popover-filter{
+  width: 450px;
+  background-color: #fff;
+}
+
+.popover-row{
+  background-color: #D9D9D9;
+  width: 100%;
+  padding: 5px 15px;
+  border-radius: 15px;
+}
+
+#popover-line{
+  width: 100%;
+  height: 1px;
+  background-color: #D9D9D9;
+  margin: 10px 0;
+}
+
+#filterClear{
+  background-color: #00C100;
+  border: none;
+}
+
+.title-label{
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#equipmentList{
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 28px 15px 0;
+  height: 100%;
+  overflow: auto;
+}
+
+#noCardContainer{
+  color: #d92929e7;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  background: #D9D9D9;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  padding: 25px;
+}
+
+#equipmentCardContainer{}
+  
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  overflow: auto;
+}
+
+.modal-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 800px;
+  margin: 50px auto;
+  z-index: 10001;
+}
+
+.modal-header{
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header-title{
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header-title h2{
+  font-size: 1.5rem;
+}
+
+.modal-header-title h3{
+  font-size: 1.2rem;
+}
+
+.modal-closer{
+  font-size: 2rem;
+  color: red;
+  user-select: none;
+  cursor: pointer;
+}
+
+.modal-body{
+  border-top: 1px solid black;
+}
+
+.modal-info{
+  margin-top: 25px;
+}
+
+.modal-body-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+.modal-map-container{
+  width: 100%;
+  height: 400px;
+  margin: 15px auto;
+  border: 1px solid #616161;
+}
+
+Popup{
+  white-space: nowrap;
+}
+
+.modal-body-state{
+  display: flex;
+  justify-content: space-between;
+}
+
+.equipmentCard{
+  display: flex;
+  background-color: #D9D9D9;
+  padding: 11px 18px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 10px 2px #616161;
+  transition: 350ms ease-in-out all;
+  cursor: pointer;
+  text-align: left;
+}
+
+.equipmentCard:hover{
+  box-shadow: 0 0 5px 0px #616161;
+}
+
+.equipmentCard-col-1{
+  width: 80%;
+  margin-right: 5%;
+  font-size: 1.3rem;
+}
+
+.equipmentCard-col-2{
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusCircle{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #727070;
+  display: inline-block;
+  position: relative;
+}
+
+.statusCircle::after{
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #616161;
+  color: #D9D9D9;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 200ms ease-in-out;
+}
+
+.statusCircle:hover::after{
+  opacity: 1;
+  visibility: visible;
+}
+
+#maps{
+  width: 61%;
+  height: 100%;
+  max-height: 100%;
+}
+
+#mapContainer{
+  width: 100%;
+  height: 100%;
+  border-radius: 0 5px 5px 0;
+}
+
+.custom-icon{
+  font-size: 24px;
+  color: #003380;
+  transition: 150ms ease-in-out all;
+}
+
+.custom-icon:hover, .custom-icon:focus{
+  text-shadow: 0 0 5px #00000057;
+  color: #0291ce;
+}
+
+footer{
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #003380;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  position: static;
+  bottom: 0;
+}
+
+.hidden{
+  display: none;
+}
