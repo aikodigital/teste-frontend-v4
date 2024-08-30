@@ -6,7 +6,7 @@
     React - 18
     Next.js - 14.0.4
 	TypeScript - 5.3.3
-	Google Maps API
+	Google Maps API - 2.19.3
 
 ## 2 - Instalação e execução do projeto:
 
