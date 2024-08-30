@@ -33,15 +33,15 @@ function clearFilters() {
 
 <template>
   <div class="grid w-full h-full min-h-[100vh] items-center">
-    <div class="flex mx-auto">
+    <div class="flex mx-auto md:my-0 my-14">
       <img
         class="object-scale-down aspect-w-3 aspect-h-2 w-[100px]"
         src="/src/assets/aiko.png"
       >
     </div>
-    <div class="flex flex-col sm:flex-row h-[40rem] w-[90%] mx-auto mb-[5rem] gap-2">
-      <div class="grid grid-cols-2 items-start justify-start border border-neutral rounded-lg bg-base-200 w-full sm:w-1/3">
-        <div class="flex w-full h-[100px] border-b border-neutral col-span-2 p-8 justify-between">
+    <div class="flex flex-col md:flex-row h-[40rem] w-[90%] mx-auto mb:-mt-14 md:mb-0 mb-[25rem] gap-2">
+      <div class="flex flex-col items-start justify-start border border-neutral rounded-lg bg-base-200 w-full md:w-1/3">
+        <div class="flex w-full h-[100px] border-b border-neutral p-8 justify-between">
           <h1
             class="text-xl font-bold"
           >
@@ -55,7 +55,7 @@ function clearFilters() {
             Limpar filtros
           </button>
         </div>
-        <div class="flex flex-col w-full border-b border-neutral col-span-2 p-7 gap-2">
+        <div class="flex flex-col w-full items-start justify-start border-b border-neutral col-span-2 p-7 gap-2">
           <SelectButton
             v-model="equipmentFiltered"
             :options="equipmentOptions(equipments)"
@@ -67,8 +67,53 @@ function clearFilters() {
             label="Filtrar por status:"
           />
         </div>
+        <div class="flex flex-col items-start w-full border-b border-neutral col-span-2 p-7 gap-2">
+          <p
+            class="font-bold"
+          >
+            Legenda:
+          </p>
+          <div class="flex gap-x-6 items-center self-center">
+            <div class="flex flex-col items-center justify-center">
+              <img
+                src="/src/assets/images/green-marker.png"
+                alt="Marcador verde - Operando"
+                class="w-[20px]"
+              />
+              <span
+                class="text-sm mt-1"
+              >
+                Operando
+              </span>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <img
+                src="/src/assets/images/red-marker.png"
+                alt="Marcador vermelho - Manutenção"
+                class="w-[20px]"
+              />
+              <span
+                class="text-sm mt-1"
+              >
+                Manutenção
+              </span>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <img
+                src="/src/assets/images/yellow-marker.png"
+                alt="Marcador amarelo - Parado"
+                class="w-[20px]"
+              />
+              <span
+                class="text-sm mt-1"
+              >
+                Parado
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="h-full w-full sm:w-2/3">
+      <div class="h-full min-h-[30rem] w-full md:w-2/3">
         <Map
           :equipment-filtered="equipmentFiltered"
           :status-filtered="statusFiltered"
