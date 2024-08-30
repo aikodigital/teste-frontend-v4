@@ -1,7 +1,7 @@
 # Documentação da Aplicação
 
 ## *Visão Geral*
-Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Map e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
+Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Mapa, os filtros e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
 
 ## *Como rodar o projeto*
 - *Instalar dependências:* ```npm install```
@@ -23,7 +23,7 @@ Esta aplicação React é uma plataforma que utiliza mapas interativos para visu
 
 - *Map.tsx*  
   Componente que renderiza o mapa interativo usando react-leaflet. Inclui pontos de dados e históricos de posições. Vantagens de usar Leaflet:
-  Código aberto e gratuito, leve e rápido, extensível, facilidade de uso
+  Código aberto e gratuito, leve e rápido, extensível, facilidade de uso.
 
 - *Input.tsx*  
   Componente de entrada (input) usado no Navbar.
