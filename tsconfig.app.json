@@ -1,0 +1,23 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "teste-frontend-v4/src/**/*", "teste-frontend-v4/src/**/*.vue", "teste-frontend-v4/src/**/*.ts", "teste-frontend-v4/src/**/*.d.ts", "teste-frontend-v4/src/**/*.tsx", "teste-frontend-v4/src/**/*.vue"],
+  "exclude": ["teste-frontend-v4/src/**/__tests__/*", "node_modules"],
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,  // Ignora verificações de tipos em arquivos de declaração
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "vue", "vite"]
+
+  },
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+}

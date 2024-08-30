@@ -1,0 +1,25 @@
+// Importando a fonte
+//@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans");
+
+// Definindo suas variáveis personalizadas
+$aiko-primary: #9f9d9d;
+$aiko-primary-light: #ffffff;
+$aiko-primary-dark: #000000;
+$aiko-secondary: #664199;
+$aiko-secondary-light: #9c8ab5;
+$aiko-secondary-dark: #340477;
+$aiko-complementary: #3b6d90;
+$aiko-complementary-light: #829bac;
+$aiko-complementary-dark: #034370;
+
+// Substituindo as variáveis do Bulma
+$primary: $aiko-primary;
+$success: $primary;
+
+
+$family-sans-serif: "Arial", sans-serif;
+$serif-family: "Playfair Display", serif;
+$puplic-sans:"Public Sans"
+
+// Defina outras variáveis de estilo personalizadas aqui
