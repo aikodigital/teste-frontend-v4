@@ -91,6 +91,6 @@ A descrição do desafio foi bem feita ao mesmo tempo que deu muita liberdade na
 
 * Bug nos filtros de datas: infelizmente a opção de "limpar" no datepicker dos campos de data gera um bug na aplicação. A solução é relativamente simples (não emitir evento quando o valor do campo for vazio ou inválido), mas deixei dessa forma.
 
-* API de localização: mostrar informações do local em vez apenas do lat/lon. Por exemplo usar o https://nominatim.openstreetmap.org/ para retornar essas informações
+* API de localização: mostrar informações do local em vez apenas do lat/lon. Por exemplo usar o https://nominatim.openstreetmap.org/ para retornar essas informações.
 
 * Melhorias no mapa: Seria interessante ter uma rota entre os pontos do mapa em vez de linhas retas. Embora não tenha pensado diretamente em uma solução para o caso, acredito que seja uma feature bem interessante de implementar.
