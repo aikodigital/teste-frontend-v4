@@ -6,6 +6,8 @@ Este documento tem como finalidade explicar o setup do projeto e as decisões de
 
 Para rodar o projeto abra dois terminais, em um deles rode o comando `npm run dev` que inicia o projeto, e no outro o comando `npm run api` que inicia o mock da api pelo Json Server.
 
+Para rodar os testes use o comando `npm run test:unit`
+
 ## Bibliotecas e tecnologias utilizadas
 
 ### Vuejs e Typescript
