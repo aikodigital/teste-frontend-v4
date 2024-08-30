@@ -18,7 +18,12 @@ const equipmentId = ref<string>('')
 const modelId = ref<string>('')
 
 const setEquipmentId = (equipment: ChangeEquipmentEmit) => {
-  equipmentId.value = equipment.id
-  modelId.value = equipment.idModel
+  equipmentId.value = ''
+  modelId.value = ''
+
+  setTimeout(() => {
+    equipmentId.value = equipment.id
+    modelId.value = equipment.idModel
+  }, 10)
 }
 </script>
