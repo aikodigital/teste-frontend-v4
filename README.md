@@ -1,6 +1,8 @@
 # Aiko Front-end V4 - Desafio Técnico
 
-![Aiko](img/aiko.png)
+Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja Operando, Parado ou em Manutenção. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+
+Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
 
 <br/>
 
@@ -18,27 +20,24 @@ Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do 
 
 > Siga estas etapas para utilizar o projeto:
 
-#### Clonar o Repositório:
-
-Clone este repositório para o seu ambiente de desenvolvimento local usando o seguinte comando:
-
-1 - ```git clone https://github.com/Leozhr/teste-frontend-v4.git```
-
-2 - Abra a solução no ambiente de desenvolvimento de sua preferência (por exemplo, VSCode).
-
-3 - ```npm install```
-
-4 - ```npm run dev```
+```
+npm install
+npm run dev
+```
 
 <br />
 
 ## ⚙️ Tecnologias
 
-✅ - Vue 3
-✅ - TailwindCSS 
-✅ - Leatflet
-✅ - Pinia (store)
-✅ - DateFns
+✅ Vue 3
+
+✅ TailwindCSS 
+
+✅ Leatflet
+
+✅ Pinia (store)
+
+✅ DateFns
 
 <br />
 
