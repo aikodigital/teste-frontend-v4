@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^0.5.3",
+    "@nuxt/image": "^1.8.0",
     "animate.css": "^4.1.1",
     "eslint": "^9.9.1",
     "leaflet": "^1.9.4",

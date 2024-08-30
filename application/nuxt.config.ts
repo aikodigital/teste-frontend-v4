@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-phosphor-icons',
     '@nuxt/eslint',
-    'nuxt-vue-map-ui'
+    'nuxt-vue-map-ui',
+    '@nuxt/image'
   ],
   components: [
     {

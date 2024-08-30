@@ -8,7 +8,13 @@
         :key="index"
         :latlng="[pos.lat, pos.lon]"
       >
-        <VMapPinIcon :color="`${ getStateColor(pos.stateId) || '' }`">
+        <VMapDivMarker
+          v-if="displayPositionCard === index"
+          :latlng="[pos.lat, pos.lon]"
+        >
+          Teste
+        </VMapDivMarker>
+        <VMapPinIcon :color="`${ getStateColor(pos.stateId) || '' }`" @click="displayPositionCard = index">
           <PhosphorIconTractor />
         </VMapPinIcon>
       </VMapMarker>
@@ -27,6 +33,7 @@ const props = defineProps<{
 
 const position = ref<LatLngTuple | LatLng> ([-19.167338, -46.00347])
 const history = ref<PositionHistoryWithStateId[]>([])
+const displayPositionCard = ref<number>(-1)
 
 watchEffect(async () => {
   if(props.equipmentId) {
@@ -36,8 +43,6 @@ watchEffect(async () => {
     )
 
     history.value = data || []
-
-    console.log(history.value)
   }
 })
 

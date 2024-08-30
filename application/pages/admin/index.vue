@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="admin">
     <AdminSelectEquipments @change-equipment="setEquipmentId" />
-    <div class="w-full h-full relative z-10 max-h-[83vh]">
+    <div class="w-full h-full relative z-10 max-h-[74vh]">
       <AdminEquipmentModel 
         v-if="modelId"
         :model-id="modelId"
