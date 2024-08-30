@@ -123,11 +123,22 @@ export const useEquipmentStore = defineStore('equipment', () => {
     )
     const latestPosition = positionHistory?.positions[positionHistory.positions.length - 1]
 
+    // Mapeamento do histórico de estados para incluir o nome do estado
+    const stateHistoryWithDetails =
+      stateHistory?.states.map((state) => {
+        const stateDetails = equipmentStates.value.find((s) => s.id === state.equipmentStateId)
+        return {
+          date: state.date,
+          stateName: stateDetails?.name || 'Estado Desconhecido',
+          stateColor: stateDetails?.color || 'grey'
+        }
+      }) || []
+
     return {
       ...equipment,
       currentState,
       latestPosition,
-      stateHistory: stateHistory?.states || []
+      stateHistory: stateHistoryWithDetails
     }
   }
 

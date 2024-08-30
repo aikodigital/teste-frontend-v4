@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useEquipmentStore } from '@/stores/useEquipmentStore'
 
 const props = defineProps<{ equipmentId: string }>()
@@ -13,44 +13,36 @@ const equipmentDetails = computed(() => {
   }
   return null
 })
-
-onMounted(async () => {
-  await store.fetchEquipmentData()
-  await store.fetchEquipmentStates()
-  await store.fetchEquipmentStateHistory()
-  await store.fetchEquipmentPositionHistory()
-})
-
-watch(
-  () => props.equipmentId,
-  async () => {
-    if (props.equipmentId) {
-      await store.fetchEquipmentData()
-      await store.fetchEquipmentStates()
-      await store.fetchEquipmentStateHistory()
-      await store.fetchEquipmentPositionHistory()
-    }
-  }
-)
 </script>
 
 <template>
-  <v-dialog v-model:visible="visible" max-width="800">
+  <v-dialog v-model:visible="visible" max-width="600">
     <v-card>
       <v-card-title>{{ equipmentDetails?.name }}</v-card-title>
-      <v-card-subtitle>{{ equipmentDetails?.currentState?.name }}</v-card-subtitle>
+      <v-card-subtitle>{{ equipmentDetails?.currentState?.name }} </v-card-subtitle>
       <v-card-text>
+        <h4 class="mb-2">Histórico de Estados</h4>
         <v-data-table
           density="compact"
-          :items="equipmentDetails?.stateHistory"
           items-per-page="5"
+          :items="equipmentDetails?.stateHistory"
           :sort-by="[{ key: 'date', order: 'desc' }]"
           hide-default-header
+          :items-per-page-options="[5, 10]"
         >
           <template v-slot:item="{ item }">
             <tr>
               <td>{{ new Date(item.date).toLocaleString() }}</td>
-              <td>{{ item.equipmentStateId }}</td>
+              <td>
+                <v-chip
+                  :color="item.stateColor"
+                  :text="item.stateName"
+                  class="text-uppercase"
+                  size="small"
+                  label
+                  variant="text"
+                ></v-chip>
+              </td>
             </tr>
           </template>
         </v-data-table>

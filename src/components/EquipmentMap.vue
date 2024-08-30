@@ -7,18 +7,6 @@ import EquipmentHistoryModal from '@/components/EquipmentHistoryModal.vue'
 const visible = ref<boolean>(false)
 const equipmentId = ref<string>('')
 
-const props = defineProps({
-  markers: {
-    type: Array as () => Array<{
-      id: string
-      name: string
-      state: string
-      position: L.LatLngExpression
-    }>,
-    default: () => []
-  }
-})
-
 // Função para popular os markers
 const populateMarkers = async () => {
   const store = useEquipmentStore()
