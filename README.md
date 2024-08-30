@@ -94,3 +94,39 @@ Para fazer uma visualização com determinado critério, é possível utilizar o
 - [React Leaflet](https://react-leaflet.js.org/)
 - [Tabler Icons](https://tabler.io/icons/)
 - [Loom](https://www.loom.com/)
+
+## Justitificativas
+
+### Posiçao inicial do mapa
+
+Para simular um caso real, pensei que seria bom ter uma posição inicial definida, em vez de selecionar um ponto qualquer, como as coordenadas de um ponto no centro de São Paulo. Em um projeto, acredito que esse failsafe value seria estabelecido pela liderança. Aqui, como estou sozinho, escolhi um ponto entre os disponíveis.
+
+### Os objetos possuírem `states` e `lastKnownState`
+
+Escolhi ter o último estado conhecido direto no objeto, em vez de ser algo possível de ser descoberto olhando diretamente o array para melhorar a legibilidade do código. Com essa escolha, o código ficou assim:
+
+```
+Último estado conhecido: {equipment.lastKnownState.name}
+```
+
+em vez de
+
+```
+Último estado conhecido: {equipment.equipment.states[equipment.states.length - 1].name}
+```
+
+Ainda que seja necessario usar esse trecho `equipment.states.length - 1`, isso fica dentro da função, que somente quem desejar saber as minúcias irá olhar. Quem estiver lendo o componente em alto nível não precisaria saber esse detalhe, então com isso almejo diminuir a carga cognitiva do leitor.
+
+### TypeScript
+
+Era meu objetivo usar essa tecnologia do projeto, mas não consegui resolver alguns conflitos que o TS apresentou com as props de componentes libs do Leaflet. Como isso estava tomando tempo, optei por focar na entrega em si.
+
+### Histórico de posições
+
+Infelizmente não consegui encontrar em tempo hábil uma maneira de mostrar somente os marcadores de posição de um equipamento por vez, sendo possível, por isso, ver todos juntos, o que fica confuso.
+
+Além disso, optei por indicar as posições com números para tentar auxiliar o usuário a ter uma representação da trajetória. Acredito que só traçar linhas ficaria confuso, pois não seria possível determinar início e fim, seria só um amontoado de linhas e pontos.
+
+### Utilização de fetch
+
+Usei fetch para ler os arquivos de texto para tentar deixar o código mais “plug & play”, supondo que ele poderia ser integrado mais facilmente a um back-end do que somente importar os arquivos json e usar.
