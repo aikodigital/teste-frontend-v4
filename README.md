@@ -18,9 +18,9 @@ Executar projeto no modo de desenvolvimento:
 	
 	npm run dev
 
-### Google Maps API
+Google Maps API:
 
-Insira sua GOOGLE_API_KEY no arquivo .env-example e renomeio para .env
+	Insira sua GOOGLE_API_KEY no arquivo .env-example e renomeio para .env
 
 
 ## 3 - Demonstração:
