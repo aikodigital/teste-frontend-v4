@@ -40,10 +40,12 @@ export async function fetchCityFromCoordinates(lat, lng) {
 
 export async function fetchCities(stateHistory, equipmentId) {
   const updatedCities = {}
-  const positions =
-    equipmentPositionHistory.find((pos) => pos.equipmentId === equipmentId)?.positions || []
 
   for (const state of stateHistory) {
+    const positions =
+      equipmentPositionHistory.find((pos) => pos.equipmentId === (equipmentId || state.equipmentId))
+        ?.positions || []
+
     const closestPosition = findClosestPosition(positions, state.date)
 
     if (closestPosition) {

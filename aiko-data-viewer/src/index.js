@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { PositionHistory } from './pages/PositionHistory'
 import { StateHistory } from './pages/StateHistory'
 import { Home } from './pages/Home'
+import { Details } from './pages/Details'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: 'state/details/:id',
     element: <StateHistory />,
+  },
+  {
+    path: '/details',
+    element: <Details />,
   },
 ])
 
