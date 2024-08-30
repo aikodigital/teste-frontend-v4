@@ -15,28 +15,28 @@ export async function getEquipment() {
 
 export async function getEquipmentModel() {
     const modelResponse = await fetch("/data/equipmentModel.json");
-    const modelData = await modelResponse.json();
+    const modelData = modelResponse.json();
 
     return modelData;
 }
 
 export async function getEquipmentState() {
     const statesResponse = await fetch("data/equipmentState.json");
-    const statesData = await statesResponse.json();
+    const statesData = statesResponse.json();
 
     return statesData;
 }
 
 export async function getEquipmentStateHistory() {
     const stateHistoryResponse = await fetch("/data/equipmentStateHistory.json");
-    const stateHistoryData = await stateHistoryResponse.json();
+    const stateHistoryData = stateHistoryResponse.json();
 
     return stateHistoryData;
 }
 
 export async function getEquipmentPositionHistory() {
     const positionHistoryResponse = await fetch("/data/equipmentPositionHistory.json");
-    const positionHistoryData = await positionHistoryResponse.json();
+    const positionHistoryData = positionHistoryResponse.json();
 
     return positionHistoryData;
 }
