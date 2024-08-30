@@ -1,10 +1,10 @@
-# Projeto para o teste Frontend V4
+# Projeto para o Teste Frontend V4
 
 ## Sobre a realização do projeto e a documentação
 
 Deixo aqui um agradecimento para a Aiko Digital por ter realizado este desafio. Agradeço pela oportunidade de conhecer mais da empresa e dos serviços prestados por meio do projeto apresentado. Quanto ao projeto em si, pensei em usar parte dos conhecimentos requeridos pela vaga, como **Vue 3**, **Typescript** e **integração com API**, além de não ter a intenção de deixar um código muito verboso e/ou extenso. Por isso utilizei o framework **Nuxt 3** como principal tecnologia para o projeto.
 
-No que compete a documentação: pensei em uma documentação mais descritiva e menos técnica, procurando explicar conceitualmente sobre as principais pastas e arquivos do projeto. Por fim, deixo abaixo alguns detalhes sobre minhas escolhas:
+No que compete à documentação: pensei em uma documentação mais descritiva e menos técnica, procurando explicar conceitualmente sobre as principais pastas e arquivos do projeto. Por fim, deixo abaixo alguns detalhes sobre minhas escolhas:
 
 * **Vue 3**: Sem dúvida uma ferramenta poderosa no desenvolvimento web. Comparando com React e Angular, ele mantém a simplicidade na codificação e não é tão opinativo quanto a sua forma de uso. Além disso ele tem boa curva de aprendizado e documentação bem completa. Por fim, tenho mais familiaridade com a linguagem, considerando todos os projetos que já desenvolvi.
 
