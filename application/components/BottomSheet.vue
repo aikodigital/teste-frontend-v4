@@ -6,7 +6,7 @@
 
     <div class="bottom-sheet-body">
       <div class="bottom-sheet-head">
-        <strong class="bottom-sheet-title">{{ title }}</strong>
+        <strong class="bottom-sheet-title">{{ props.title }}</strong>
         <button class="bottom-sheet-x" type="button" @click="emit('on-close')">
           <PhosphorIconXCircle weight="thin" />
           <span class="sr-only">Close BottomSheet</span>
@@ -35,11 +35,11 @@ const props = defineProps<{
 }
 
 .bottom-sheet-bd {
-  @apply absolute top-0 left-0 w-screen h-screen bg-slate-800 bg-opacity-80 z-0
+  @apply absolute top-0 left-0 w-screen h-screen bg-transparent bg-opacity-80 z-0
 }
 
 .bottom-sheet-body {
-  @apply relative w-full bg-white z-10
+  @apply relative w-full bg-white z-10 rounded-t-2xl overflow-hidden
 }
 
 .bottom-sheet-head {
@@ -55,6 +55,6 @@ const props = defineProps<{
 }
 
 .bottom-sheet-container {
-  @apply min-h-[30vh] max-h-[70vh] overflow-y-auto p-4 mt-12 w-full overflow-x-hidden
+  @apply min-h-[30vh] max-h-[72vh] overflow-y-auto p-4 mt-12 w-full overflow-x-hidden
 }
 </style>

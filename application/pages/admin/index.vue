@@ -11,7 +11,10 @@
         :equipment-id="equipmentId"
       />
     </div>
-    <Transition>
+    <Transition
+      enter-active-class="animate__animated animate__fadeInUp"
+      leave-active-class="animate__animated animate__fadeOutDown"
+    >
       <template v-if="displayStateHistory">
         <AdminStateHistory
           :equipment-id="equipmentId"

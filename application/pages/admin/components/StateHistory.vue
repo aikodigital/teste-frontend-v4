@@ -4,8 +4,11 @@
       <li
         v-for="state in data"
         :key="state.equipmentStateId"
-        class="border-l-4 p-2 flex flex-row items-center"
-        :style="{ 'border-color': getState(state.equipmentStateId).color }"
+        class="border-l-8 p-2 flex flex-row items-center rounded-lg"
+        :style="{
+          'border-color': getState(state.equipmentStateId).color, 
+          'background-color': `${getState(state.equipmentStateId).color}40` 
+        }"
       >
 
         <div class="text-2xl">
@@ -27,8 +30,8 @@
         </div>
         
         <div class="flex flex-col ml-4">
-          <strong>{{ getState(state.equipmentStateId).name }}</strong>
-          <span>{{ dateFormatPtBr(state.date)  }}</span>
+          <strong class="text-slate-800 text-sm">{{ getState(state.equipmentStateId).name }}</strong>
+          <span class="text-slate-600 text-xs ">{{ dateFormatPtBr(state.date)  }}</span>
         </div>
       </li>
     </ul>
