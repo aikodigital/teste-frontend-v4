@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import { useNavigate } from 'react-router-dom';
 import { IEquipment } from "../../models/Equipment";
 import EquipmentTable from "../../components/equipments/EquipmentsTable";
 import { EquipmentStateContextProvider } from "../../context/EquipmentStateContext";
-import { Container, StyledTitle } from "./InitialPage";
+import { Container } from "./InitialPage";
 import ResponsiveImageLogo from "../../components/ResponsiveImageLogo/ResponsiveImageLogo";
-import { Typography, useTheme } from "@mui/material";
+import { Typography, useTheme, Button } from "@mui/material";
+import "./App.css";
+
 
 const InitialPage = () => {
   const [equipments, setEquipments] = useState<IEquipment[]>([]);
+  const theme = useTheme();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     getEquipments();
   }, []);
+
 
   const getEquipments = async () => {
     try {
@@ -23,7 +29,11 @@ const InitialPage = () => {
       console.log(e);
     }
   };
-  const theme = useTheme();
+
+
+  const goToAllEquipments = () => {
+    navigate('/map')
+  }
 
   return (
     <EquipmentStateContextProvider>
@@ -42,6 +52,10 @@ const InitialPage = () => {
           </Typography>
 
           <EquipmentTable equipments={equipments} />
+          <div style={{padding: 20}}>
+            <Button onClick={goToAllEquipments} variant="contained">Verificar todos os equipamentos</Button>
+          </div>
+
         </div>
       </Container>
     </EquipmentStateContextProvider>

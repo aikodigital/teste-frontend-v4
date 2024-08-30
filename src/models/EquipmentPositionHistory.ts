@@ -4,6 +4,7 @@ export interface IEquipmentPositionHistory {
 }
 
 export interface IPosition {
+    equipmentId?: string
     date: string,
     lat: number,
     lon: number

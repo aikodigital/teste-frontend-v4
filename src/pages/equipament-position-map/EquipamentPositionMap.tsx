@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import { useParams } from 'react-router-dom';
 import './Map.css';
 import { IEquipmentPositionHistory } from '../../models/EquipmentPositionHistory';
@@ -19,7 +18,7 @@ const EquipamentPositionMapPage = () => {
 
   const getEquipmentPositionHistory = async () => {
     try {
-      const resp = await fetch("../data/equipmentPositionHistory.json");
+      const resp = await fetch("/data/equipmentPositionHistory.json");
       const data : IEquipmentPositionHistory [] = await resp.json();
 
       setEquipmentHistory(data.find(eq=> eq.equipmentId === equipmentId));
@@ -35,7 +34,12 @@ const EquipamentPositionMapPage = () => {
 
   return (
     <div className="map-container">
-      <MapComponent positions={equipmentHistory.positions} />
+      <MapComponent positions={equipmentHistory.positions.map(p=> {
+        return {
+          ...p,
+          equipmentId: equipmentHistory.equipmentId
+        }
+      })} />
     </div>
   );
 };

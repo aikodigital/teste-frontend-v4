@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
-import { useParams } from 'react-router-dom';
 import './Map.css';
-import { IEquipmentPositionHistory } from '../../models/EquipmentPositionHistory';
+import { IEquipmentPositionHistory, IPosition } from '../../models/EquipmentPositionHistory';
 import MapComponent from '../../components/map/MapComponent';
 
 
@@ -10,8 +8,7 @@ import MapComponent from '../../components/map/MapComponent';
 const AllEquipamentsMap = () => {
 
 
-  const { equipmentId } = useParams<{ equipmentId: string }>();
-  const [equipmentHistory, setEquipmentHistory] = useState<IEquipmentPositionHistory>();
+  const [equipmentsHistory, setEquipmentsHistory] = useState<IEquipmentPositionHistory[]>([]);
 
   useEffect(() => {
     getEquipmentPositionHistory();
@@ -22,20 +19,30 @@ const AllEquipamentsMap = () => {
       const resp = await fetch("../data/equipmentPositionHistory.json");
       const data : IEquipmentPositionHistory [] = await resp.json();
 
-      setEquipmentHistory(data.find(eq=> eq.equipmentId === equipmentId));
+      setEquipmentsHistory(data);
     } catch (e) {
       console.log('errrorr', e);
     }
   };
 
-  if (!equipmentHistory?.positions?.length) {
+  if (!equipmentsHistory.length) {
     return null;
   }
 
+  const positions : IPosition[] = equipmentsHistory.map(equipment => {
+
+    const mostRecentPosition =  equipment.positions.reduce((latest, current) => {
+      return new Date(current.date) > new Date(latest.date) ? current : latest;
+    });
+    return {
+      ...mostRecentPosition,
+      equipmentId: equipment.equipmentId
+    };
+  })
 
   return (
     <div className="map-container">
-      <MapComponent positions={equipmentHistory.positions} />
+      <MapComponent positions={positions} />
     </div>
   );
 };

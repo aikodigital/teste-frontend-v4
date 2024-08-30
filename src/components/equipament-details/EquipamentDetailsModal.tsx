@@ -53,7 +53,7 @@ const EquipmentDetailsModal = ({
 
 
   const goToMap = () => {
-    navigate(`map/${equipment.id}`);
+    navigate(`/map/${equipment.id}`);
   }
 
   return (
