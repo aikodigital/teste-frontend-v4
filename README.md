@@ -11,7 +11,7 @@
     Next.js - 14.0.4
 	TypeScript - 5.3.3
 	Google Maps API - 2.19.3
-	AWS Amplify 
+	CI/CD - AWS Amplify 
 
 
 ## 2 - Instalação e execução do projeto:
@@ -45,7 +45,7 @@ Na tela inicial, são listados todos os equipamentos, sendo exibidos:
 
 ### Histórico de Posições
 
-No histórico de posições, é possível selecionar o equipamento desejado e assim, verificar a sua última posição, estado atual e também suas últimas vinte posições.
+No histórico de posições, é possível selecionar o equipamento desejado e assim, verificar a sua última posição, estado atual e também suas últimas vinte posições, através Google Maps.
 <img src="/public/img/posicoes_01.png">
 
 <img src="/public/img/posicoes_02.png">
