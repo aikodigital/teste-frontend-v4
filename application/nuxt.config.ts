@@ -24,9 +24,9 @@ export default defineNuxtConfig({
       pathPrefix: false
     },
     {
-      path: '~/pages/admin/components',
+      path: '~/pages/equipment/components',
       pathPrefix: true,
-      prefix: 'Admin'
+      prefix: 'Equipment'
     }
   ],
   ssr: false

@@ -1,13 +1,13 @@
 <template>
   <NuxtLayout name="admin">
-    <AdminSelectEquipments @change-equipment="setEquipmentId" />
+    <EquipmentSelectEquipments @change-equipment="setEquipmentId" />
     <div class="w-full h-full relative z-10 max-h-[74vh]">
-      <AdminEquipmentModel 
+      <EquipmentModel 
         v-if="modelId"
         :model-id="modelId"
         @click-history="displayStateHistory = true"
       />
-      <AdminMapEquipment
+      <EquipmentMapEquipment
         :equipment-id="equipmentId"
         :equipment-name="equipmentName"
       />
@@ -17,7 +17,7 @@
       leave-active-class="animate__animated animate__fadeOutDown"
     >
       <template v-if="displayStateHistory">
-        <AdminStateHistory
+        <EquipmentStateHistory
           :equipment-id="equipmentId"
           @close-bottom-sheet="displayStateHistory = false"
         />
