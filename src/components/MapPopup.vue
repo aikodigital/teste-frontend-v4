@@ -8,7 +8,6 @@ const props = defineProps<{
 }>()
 
 const date = format(new Date(props.equipments.isLatestPosition.date), "dd/MM/yyyy 'às' HH:mm")
-console.log(props.effect)
 </script>
 
 <template>
