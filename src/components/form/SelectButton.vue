@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 
 interface Props {
   label: string
@@ -11,25 +11,25 @@ interface Props {
   placeholder?: string
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
-}>();
+  (e: 'update:modelValue', value: string): void
+}>()
 
-const localValue = ref(props.modelValue);
+const localValue = ref(props.modelValue)
 
 watch(() => props.modelValue, (newValue) => {
-  localValue.value = newValue;
-});
+  localValue.value = newValue
+})
 
 function handleChange(event: Event) {
-  const selectElement = event.target as HTMLSelectElement;
-  emit('update:modelValue', selectElement.value);
+  const selectElement = event.target as HTMLSelectElement
+  emit('update:modelValue', selectElement.value)
 }
 </script>
 
 <template>
-  <label class="form-control w-full max-w-xs">
+  <label class="form-control w-full">
     <div class="label">
       <span class="label-text">
         {{ label }}
