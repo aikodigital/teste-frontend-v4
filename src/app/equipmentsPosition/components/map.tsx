@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { GoogleMap, InfoWindow, LoadScript, LoadScriptNext, Marker } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, LoadScriptNext, Marker } from "@react-google-maps/api";
 import { Position } from "@/types/Position";
 
 interface MapComponentProps {
