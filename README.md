@@ -121,6 +121,10 @@ Ainda que seja necessario usar esse trecho `equipment.states.length - 1`, isso f
 
 Era meu objetivo usar essa tecnologia do projeto, mas não consegui resolver alguns conflitos que o TS apresentou com as props de componentes libs do Leaflet. Como isso estava tomando tempo, optei por focar na entrega em si.
 
+### Testes
+
+Como tinha pouco contato com tecnologia de mapas, percebi que seria melhor para a entrega focar nas funciondalidades primeiro, mas tinha a intenção de implementar testes. Para um _próximos passos_ buscaria implementar testes com Cypress.
+
 ### Histórico de posições
 
 Infelizmente não consegui encontrar em tempo hábil uma maneira de mostrar somente os marcadores de posição de um equipamento por vez, sendo possível, por isso, ver todos juntos, o que fica confuso.
