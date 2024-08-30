@@ -48,9 +48,11 @@ export function Details() {
     return filterEquipmentHistory(allStateHistory, filters, stateDictionary)
   }, [allStateHistory, filters, stateDictionary])
 
+  const orderByDate = filteredItems.sort((a, b) => new Date(b.date) - new Date(a.date))
+
   const currentItems = useMemo(() => {
-    return filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-  }, [filteredItems, currentPage])
+    return orderByDate.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  }, [orderByDate, currentPage])
 
   const totalPages = useMemo(() => Math.ceil(filteredItems.length / itemsPerPage), [filteredItems])
 
@@ -64,6 +66,7 @@ export function Details() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(Math.max(1, Math.min(totalPages, pageNumber)))
   }
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target
 

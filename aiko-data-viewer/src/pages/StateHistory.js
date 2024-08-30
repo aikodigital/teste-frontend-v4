@@ -58,7 +58,10 @@ export function StateHistory() {
     if (selectedEquipment) {
       const equipamento = findEquipment(id)
       setEquipmentName(equipamento?.name || 'Desconhecido')
-      setStateHistory(selectedEquipment.states || [])
+      const orderStatesByDate = selectedEquipment.states.sort(
+        (a, b) => new Date(b.date) - new Date(a.date),
+      )
+      setStateHistory(orderStatesByDate || [])
       const equipmentDetail = findEquipmentModel(id)
       setEquipmentModelName(equipmentDetail?.name || 'Desconhecido')
     } else {

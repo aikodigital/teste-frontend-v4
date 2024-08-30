@@ -1,97 +1,128 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import equipment from '../data/equipment.json'
 import equipmentModel from '../data/equipmentModel.json'
-import equipmentPositionHistory from '../data/equipmentPositionHistory.json'
 import equipmentState from '../data/equipmentState.json'
 import equipmentStateHistory from '../data/equipmentStateHistory.json'
+import { createStateDictionary } from '../utils/createStateDictionary'
+import { filterEquipmentHistory } from '../utils/filterEquipmentHistory'
+import { updateLocation } from '../utils/updateLocation'
 
-function findClosestState(states, lastPositionDate) {
+function findClosestState(states, referenceDate) {
   return states.reduce((closest, state) => {
     const stateDate = new Date(state.date)
-    if (stateDate <= lastPositionDate && (!closest || stateDate > new Date(closest.date))) {
+    const isCloser = !closest || stateDate > new Date(closest.date)
+    const isAfterReferenceDate = stateDate <= referenceDate
+    if (isAfterReferenceDate && isCloser) {
       return state
     }
     return closest
   }, null)
 }
 
-function findEquipmentState(stateId) {
-  return equipmentState.find(({ id }) => id === stateId)
+function getEquipmentState(equipmentId) {
+  return equipmentState.find(({ id }) => id === equipmentId)
 }
 
-function findEquipmentDetail(equipmentId) {
-  return equipment.find(({ id }) => id === equipmentId)
-}
-
-function findEquipmentModelDetail(equipmentModelId) {
-  return equipmentModel.find(({ id }) => id === equipmentModelId)
+function getEquipmentDetails(equipmentId) {
+  const equipmentDetail = equipment.find(({ id }) => id === equipmentId)
+  const modelDetail = equipmentDetail
+    ? equipmentModel.find(({ id }) => id === equipmentDetail.equipmentModelId)
+    : null
+  return { equipmentDetail, modelDetail }
 }
 
 function getEquipmentStateHistory(equipmentId) {
-  return equipmentStateHistory.find((history) => history.equipmentId === equipmentId)
+  return equipmentStateHistory.find(({ equipmentId: id }) => id === equipmentId)
 }
 
 function getLastPositionAndState(equipmentId, lastPosition) {
   const history = getEquipmentStateHistory(equipmentId)
-  if (!history) return null
+  if (!history) return { lastPosition, state: null }
 
   const closestState = findClosestState(history.states, new Date(lastPosition.date))
-  const lastEquipmentState = closestState ? findEquipmentState(closestState.equipmentStateId) : null
+  const state = closestState ? getEquipmentState(closestState.equipmentStateId) : null
 
-  return { lastPosition, state: lastEquipmentState }
+  return { lastPosition, state }
 }
 
 export function useEquipmentInfo() {
   const [info, setInfo] = useState([])
-
   const [statusFilter, setStatusFilter] = useState('')
   const [modelFilter, setModelFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
+  const [allStateHistory, setAllStateHistory] = useState([])
+  const [stateDictionary, setStateDictionary] = useState({})
+  const [locations, setLocations] = useState([])
+  const [filters, setFilters] = useState({
+    dateStart: '',
+    dateEnd: '',
+    name: '',
+    model: '',
+    status: '',
+  })
 
   useEffect(() => {
-    function getEquipmentInfo() {
-      const lastPositionInfo = equipmentPositionHistory.map(({ equipmentId, positions }) => ({
-        equipmentId,
-        lastPosition: positions[positions.length - 1],
-      }))
+    setStateDictionary(createStateDictionary())
 
-      let filteredInfo = lastPositionInfo.map(({ equipmentId, lastPosition }) => {
-        const { lastPosition: position, state } = getLastPositionAndState(equipmentId, lastPosition)
-        const equipmentDetail = findEquipmentDetail(equipmentId)
-        const equipmentModelDetail = equipmentDetail
-          ? findEquipmentModelDetail(equipmentDetail.equipmentModelId)
-          : null
+    const mergedHistory = equipmentStateHistory.flatMap((history) => {
+      const { equipmentDetail, modelDetail } = getEquipmentDetails(history.equipmentId)
+      return history.states.map((state) => ({
+        ...state,
+        equipmentId: history.equipmentId,
+        equipmentName: equipmentDetail?.name || 'Desconhecido',
+        equipmentModelName: modelDetail?.name || 'Desconhecido',
+      }))
+    })
+    setAllStateHistory(mergedHistory)
+  }, [])
+
+  const filteredItems = useMemo(() => {
+    return filterEquipmentHistory(allStateHistory, filters, stateDictionary)
+  }, [allStateHistory, filters, stateDictionary])
+
+  useEffect(() => {
+    async function fetchAndUpdateLocations() {
+      await updateLocation(filteredItems, setLocations, dateFilter)
+    }
+    fetchAndUpdateLocations()
+  }, [filteredItems, dateFilter])
+
+  useEffect(() => {
+    function filterAndSetInfo() {
+      const filteredInfo = locations.map(({ equipmentId, positions }) => {
+        const { lastPosition, state } = getLastPositionAndState(equipmentId, positions)
+        const { equipmentDetail, modelDetail } = getEquipmentDetails(equipmentId)
 
         return {
           equipmentId,
-          lastPosition: position,
+          lastPosition,
           state,
           equipmentName: equipmentDetail?.name,
-          equipmentModel: equipmentModelDetail,
+          equipmentModel: modelDetail,
         }
       })
 
-      if (statusFilter) {
-        filteredInfo = filteredInfo.filter((item) => item.state?.name === statusFilter)
+      const applyFilters = (items) => {
+        if (statusFilter) {
+          items = items.filter((item) => item.state?.name === statusFilter)
+        }
+        if (modelFilter) {
+          items = items.filter((item) => item.equipmentModel?.name === modelFilter)
+        }
+        if (dateFilter) {
+          const filterDate = new Date(dateFilter).toISOString().split('T')[0]
+          items = items.filter(
+            (item) => new Date(item.lastPosition.date).toISOString().split('T')[0] === filterDate,
+          )
+        }
+        return items
       }
 
-      if (modelFilter) {
-        filteredInfo = filteredInfo.filter((item) => item.equipmentModel?.name === modelFilter)
-      }
-
-      if (dateFilter) {
-        const filterDate = new Date(dateFilter).toISOString().split('T')[0]
-        filteredInfo = filteredInfo.filter((item) => {
-          const positionDate = new Date(item.lastPosition.date).toISOString().split('T')[0]
-          return positionDate === filterDate
-        })
-      }
-
-      setInfo(filteredInfo)
+      setInfo(applyFilters(filteredInfo))
     }
 
-    getEquipmentInfo()
-  }, [statusFilter, modelFilter, dateFilter])
+    filterAndSetInfo()
+  }, [statusFilter, modelFilter, dateFilter, locations])
 
   return {
     info,

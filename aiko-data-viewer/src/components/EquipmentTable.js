@@ -19,7 +19,10 @@ export function EquipmentTable({ currentItems, stateDictionary, cities }) {
             color: '#ffffff',
           }
           return (
-            <tr key={state.date} style={{ backgroundColor: status.color }}>
+            <tr
+              key={`${state.equipmentId}-${state.date}`}
+              style={{ backgroundColor: status.color }}
+            >
               <td>{state.equipmentName}</td>
               <td>{state.equipmentModelName}</td>
               <td>{new Date(state.date).toLocaleString()}</td>

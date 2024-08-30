@@ -9,7 +9,11 @@ export function filterEquipmentHistory(allStateHistory, filters, stateDictionary
 
     return (
       (filters.dateStart === '' ||
-        dayjs(item.date).isBetween(dayjs(filters.dateStart), dayjs(filters.dateEnd), [])) &&
+        dayjs(item.date).isBetween(
+          dayjs(filters.dateStart),
+          dayjs(filters.dateEnd).add(1, 'day'),
+          [],
+        )) &&
       (filters.name === '' ||
         item.equipmentName.toLowerCase().includes(filters.name.toLowerCase())) &&
       (filters.model === '' ||
