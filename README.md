@@ -9,6 +9,10 @@
 	Google Maps API - 2.19.3
 	AWS Amplify 
 
+### Link de testes: 
+	
+	https://teste-gabriel-napolis.d25m11dkmgcmi0.amplifyapp.com/
+
 ## 2 - Instalação e execução do projeto:
 
 Instalação de dependências:
