@@ -1,0 +1,78 @@
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: #fff;
+  /* border: 1px solid #000; */
+  border-radius: 4px;
+  box-shadow: 24px;
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  & > h2 {
+    text-align: center;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;               /* width of the entire scrollbar */
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;        /* color of the tracking area */
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: #003184;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+  }
+}
+
+.status-dot {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.history-table {
+  margin-top: 12px;
+  width: 100%;
+  display: table;
+  border-spacing: 0;
+
+  & tr {
+    height: 30px;
+  }
+
+  & tr > td:first-child {
+    padding-left: 4px;
+  }
+
+  & th {
+    text-align: left;
+  }
+
+  & td {
+    border-top: 1px solid rgb(160 160 160);
+  }
+
+  & tbody > tr:nth-of-type(even) {
+    background-color: rgb(237 238 242);
+  }
+
+  & > thead > tr > th:first-child {
+    width: 26px;
+    margin-right: 8px;
+  }
+}
+
+.history-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+  border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+}
