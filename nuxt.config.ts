@@ -16,4 +16,20 @@ export default defineNuxtConfig({
       },
     },
   },
+  build: {
+    extend(config, { isDev, isClient }) {
+      if (!config.plugins) {
+        config.plugins = [];
+      }
+
+      config.plugins.push(
+        require('@rollup/plugin-url')({
+          include: ['**/*.png', '**/*.jpg', '**/*.gif', '**/*.svg'],
+          limit: 8192, // Tamanho limite para inline base64
+          emitFiles: true, // Emite arquivos para o diretório de saída
+          fileName: '[name][hash][extname]'
+        })
+      );
+    }
+  }
 });
