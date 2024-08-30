@@ -1,6 +1,6 @@
 # Gestão de Equipamentos
 
-### Ambiente de Desenvolvimento: 
+### Ambiente de Testes: 
 	
 	https://teste-gabriel-napolis.d25m11dkmgcmi0.amplifyapp.com/
 
@@ -80,3 +80,4 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 <img src="/public/img/project_03.png">
 <img src="/public/img/project_04.png">
 <img src="/public/img/project_05.png">
+<img src="/public/img/project_06.png">
