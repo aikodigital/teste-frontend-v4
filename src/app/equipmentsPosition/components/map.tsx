@@ -22,7 +22,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => 
   };
 
   return (
-    <LoadScriptNext googleMapsApiKey={process.env.GOOGLE_API_KEY}>
+    <LoadScriptNext googleMapsApiKey={process.env.GOOGLE_API_KEY ?? ""}>
       <GoogleMap
         mapContainerStyle={mapStyle}
         center={center}
