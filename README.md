@@ -43,20 +43,23 @@ Este projeto é uma aplicação web desenvolvida em Vue 3 para exibir o históri
    Abra o navegador e acesse http://localhost:3000.
 
 
-## Estrutura do projeto
+## Estrutura do Projeto
 
+A estrutura do projeto segue o padrão de uma aplicação Vue 3 moderna:
+
+```plaintext
 ├── public/                      # Arquivos públicos (favicon, index.html, etc.)
 ├── src/                         # Código fonte da aplicação
 │   ├── assets/                  # Arquivos estáticos (imagens, estilos, etc.)
 │   ├── components/              # Componentes reutilizáveis Vue
-│   │   ├── icon/                # Componentes icones recebe props em vue
+│   │   ├── icon/                # Componentes de ícones que recebem props em Vue
 │   │   ├── LMap.vue             # Componente de mapa interativo utilizando Leaflet
-│   │   └── Table.vue            # Componente de tabela para exibição de dados com paginação
-│   │   └── Button.vue           # Componente de botão
-│   │   └── Header.vue           # Componente de menu responsivo
-│   │   └── Input.vue            # Componente de com validador vee-validate integrado
-│   │   └── Pagination.vue       # Componente de paginação utilizado na tabela
-│   │   └── Select.vue           # Componente de select integrado com vue-select
+│   │   ├── Table.vue            # Componente de tabela para exibição de dados com paginação
+│   │   ├── Button.vue           # Componente de botão
+│   │   ├── Header.vue           # Componente de menu responsivo
+│   │   ├── Input.vue            # Componente de input com validador VeeValidate integrado
+│   │   ├── Pagination.vue       # Componente de paginação utilizado na tabela
+│   │   ├── Select.vue           # Componente de select integrado com Vue-Select
 │   │   └── Spinner.vue          # Componente de loading
 │   ├── composables/             # Funções reutilizáveis e lógica compartilhada
 │   │   └── useDataEquipments.ts # Composable para gerenciamento de dados de equipamentos
@@ -67,8 +70,8 @@ Este projeto é uma aplicação web desenvolvida em Vue 3 para exibir o históri
 │   │   ├── positionList.ts      # Tipos para posições de equipamentos
 │   │   └── table.ts             # Tipos para estrutura de dados da tabela
 │   ├── pages/                   # Páginas principais da aplicação
-│   │   └── EquipmentHistory.vue # Página de histórico de equipamentos
-│   │   └── Home.vue             # Página de principal onde exibe o mapa com as localizações e markers dos equipamentos
+│   │   ├── EquipmentHistory.vue # Página de histórico de equipamentos
+│   │   ├── Home.vue             # Página principal onde exibe o mapa com as localizações e markers dos equipamentos
 │   │   └── Login.vue            # Página de login para autenticação no sistema
 │   ├── App.vue                  # Componente raiz da aplicação
 │   └── main.ts                  # Arquivo de entrada principal
