@@ -1,6 +1,5 @@
 Para rodar o projeto corretamente, utilize os seguintes comandos:
 
-npm create vite@latest ./ -- --template react
 npm i
 npm install leaflet
 npm install react react-dom leaflet
