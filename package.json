@@ -3,6 +3,11 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
+  "description": "Desafio técnico para vaga de Desenvolvedor Frontend - Aiko",
+  "author": "Gabriel Barreto",
+  "engines": {
+    "node": ">=20.11.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
