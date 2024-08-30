@@ -7,7 +7,6 @@
         :model-id="modelId"
       />
       <AdminMapEquipment
-        v-if="equipmentId"
         :equipment-id="equipmentId"
       />
     </div>

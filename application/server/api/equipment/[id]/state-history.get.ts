@@ -4306,14 +4306,17 @@ export default defineEventHandler((event) => {
              }
          ]
      }
-   ]
+    ]
 
-   const res = find(equipments, e => e.equipmentId === id)
+    const res = find(equipments, e => e.equipmentId === id)
    
-   const equipmentWithStateHistory: StateHistory = {
-    equipmentId: res?.equipmentId || '',
-    states: res?.states || []
-   }
+    const states: StateHistory[] = res?.states.map(s => {
+        const state: StateHistory = {
+            date: s.date,
+            equipmentStateId: s.equipmentStateId
+        }
+        return state
+    }) || []
    
-   return equipmentWithStateHistory
+   return states
 })

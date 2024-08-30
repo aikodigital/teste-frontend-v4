@@ -1,7 +1,10 @@
+import type PositionHistoryWithStateId from '~/interfaces/admin/equipment/PositionHistoryWithState'
 import find  from 'lodash/find'
+import findIndex from 'lodash/findIndex'
 
-export default defineEventHandler((event) => {
-    const id =  getRouterParam(event, 'id')
+export default defineEventHandler(async (event) => {
+    try {
+        const id =  getRouterParam(event, 'id')
 
     const list = [
       {
@@ -3661,5 +3664,24 @@ export default defineEventHandler((event) => {
       }
     ]
 
-    return find(list, e => e.equipmentId === id)?.positions
+    const response = find(list, e => e.equipmentId === id)?.positions 
+    const states = await $fetch(`/api/equipment/${id}/state-history`)
+
+    const positionWithHistoryId:PositionHistoryWithStateId[] = response?.map(p => {
+        const indexStateId = findIndex(states, s => s.date === p.date)
+
+        const pos:PositionHistoryWithStateId = {
+            date: p.date,
+            lat: p.lat,
+            lon: p.lon,
+            stateId: indexStateId > -1 ? states[indexStateId].equipmentStateId : ''
+        }
+        return pos
+    }) || []
+
+    return positionWithHistoryId
+    
+    } catch (error) {
+        console.warn(error)
+    }
 })
