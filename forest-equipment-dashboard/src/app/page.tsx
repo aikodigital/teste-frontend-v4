@@ -2,11 +2,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 import useEquipment from '@/hooks/useEquipment';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
+import { FilterEquipments } from './_components/filter-equipments';
 
-export default async function Home() {
+interface Props {
+  searchParams: {
+    model?: string;
+    state?: string;
+    equipment?: string;
+  };
+}
+
+export default async function Home({ searchParams }: Props) {
   const { getEquipmentLastPosition } = useEquipment();
+  const { model = 'all', state = 'all', equipment = '' } = searchParams;
 
-  const data = getEquipmentLastPosition;
+  const data = getEquipmentLastPosition(model, state, equipment);
 
   const Map = useMemo(
     () =>
@@ -18,10 +28,18 @@ export default async function Home() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="bg-white-700 mx-auto my-5 h-[600px] w-[98%]">
+    <main className="flex flex-col items-center space-y-4 py-12">
+      <section className="bg-white-700 mx-auto w-10/12 max-w-screen-2xl">
+        <FilterEquipments
+          selectedModel={model}
+          selectedState={state}
+          selectedEquipment={equipment}
+        />
+      </section>
+
+      <section className="bg-white-700 mx-auto h-[600px] w-10/12 max-w-screen-2xl">
         <Map data={data} />
-      </div>
+      </section>
     </main>
   );
 }

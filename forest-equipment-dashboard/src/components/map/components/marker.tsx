@@ -5,9 +5,10 @@ import { EquipmentInfo } from './equipment-info';
 interface MarkerProps {
   position: LatLngExpression | LatLngTuple;
   equipmentId: string;
+  disablePopup?: boolean;
 }
 
-function Marker({ position, equipmentId }: MarkerProps) {
+function Marker({ position, equipmentId, disablePopup }: MarkerProps) {
   return (
     <LMarker
       position={position}
@@ -22,7 +23,7 @@ function Marker({ position, equipmentId }: MarkerProps) {
         })
       }
     >
-      <EquipmentInfo equipmentId={equipmentId} />
+      {!disablePopup && <EquipmentInfo equipmentId={equipmentId} />}
     </LMarker>
   );
 }

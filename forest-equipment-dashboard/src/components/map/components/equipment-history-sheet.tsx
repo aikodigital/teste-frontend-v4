@@ -30,7 +30,7 @@ function EquipmentHistorySheet({ equipmentId }: EquipmentHistorySheetProps) {
   const { getStateHistory } = useEquipment();
   const stateHistory = getStateHistory(equipmentId);
   const [selectedState, setSelectedState] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const filteredStateHistory = useMemo(() => {
     if (!stateHistory) return [];

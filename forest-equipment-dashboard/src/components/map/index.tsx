@@ -9,10 +9,11 @@ import { useCallback, useMemo } from 'react';
 
 interface MapProps {
   zoom?: number;
-  data: {
+  data: Array<{
     position: IPositions;
     equipmentId: string;
-  }[];
+  }>;
+  disablePopup?: boolean;
 }
 
 const defaults = {
@@ -20,7 +21,7 @@ const defaults = {
 };
 
 function Map(Map: MapProps) {
-  const { zoom = defaults.zoom, data } = Map;
+  const { zoom = defaults.zoom, data, disablePopup = false } = Map;
 
   const calculateGeographicCenter = useCallback(
     (positions: IPositions[]) => {
@@ -78,6 +79,7 @@ function Map(Map: MapProps) {
             lat: marker.position?.lat ?? 0,
             lng: marker.position?.lon ?? 0,
           }}
+          disablePopup={disablePopup}
         />
       ))}
     </LMapContainer>
