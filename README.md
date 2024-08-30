@@ -73,3 +73,9 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 
 <img src="/public/img/estados_02.png">
 
+## 4 - Estrutura do Projeto
+
+<img src="/public/img/project_01.png">
+<img src="/public/img/project_02.png">
+<img src="/public/img/project_03.png">
+<img src="/public/img/project_04.png">
