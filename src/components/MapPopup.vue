@@ -8,6 +8,7 @@ const props = defineProps<{
 }>()
 
 const date = format(new Date(props.equipments.isLatestPosition.date), "dd/MM/yyyy 'às' HH:mm")
+console.log(props.effect)
 </script>
 
 <template>
@@ -17,7 +18,7 @@ const date = format(new Date(props.equipments.isLatestPosition.date), "dd/MM/yyy
       <p class="m-0 p-0 text-base">
         <span class="font-bold">Tipo:</span> {{ props.equipments.model.name }}
       </p>
-      <p v-if="props.equipments.isLatestState && props.effect" class="m-0 p-0 text-base">
+      <p v-if="props.effect" class="m-0 p-0 text-base">
         <span class="font-bold">Status: </span>
         <span :style="{ color: props.equipments.isLatestState.color }">{{
           props.equipments.isLatestState.name

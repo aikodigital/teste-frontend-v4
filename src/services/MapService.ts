@@ -27,7 +27,7 @@ export async function setEquipmentsMarker(map: Map, equipments: EquipmentData[])
 
   for (const data of equipments) {
     const icon = await markerIcon(data, true)
-    const popup = await markerPopup(data)
+    const popup = await markerPopup(data, true)
 
     const marker = Leaflet.marker([data.isLatestPosition.lat, data.isLatestPosition.lon], {
       icon: Leaflet.divIcon({ html: icon })
