@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { getAllEquipment } from './services/EquipmentService'
+import MapViewer from '@/components/MapViewer.vue'
+import MapFilters from '@/components/MapFilters.vue'
+
+const allEquipments = getAllEquipment()
 </script>
 
 <template>
-  <div class="border-b bg-white border-root-border">
+  <header class="border-b bg-white border-root-border">
     <nav class="container mx-auto flex justify-center py-4">
       <img src="@/assets/aiko.png" alt="Aiko Logo" class="w-24" />
     </nav>
-  </div>
-  <RouterView />
+  </header>
+  <main class="w-full h-screen relative">
+    <MapViewer :equipments="allEquipments" />
+    <MapFilters :equipments="allEquipments" />
+  </main>
 </template>

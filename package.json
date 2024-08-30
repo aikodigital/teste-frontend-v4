@@ -14,14 +14,18 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vue/server-renderer": "^3.4.38",
+    "date-fns": "^3.6.0",
+    "leaflet": "^1.9.4",
     "pinia": "^2.1.7",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue": "^3.4.29"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/jsdom": "^21.1.7",
+    "@types/leaflet": "^1.9.12",
+    "@types/leaflet-routing-machine": "^3.2.8",
     "@types/node": "^20.14.5",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",

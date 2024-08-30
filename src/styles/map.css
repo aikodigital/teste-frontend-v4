@@ -1,0 +1,21 @@
+.leaflet-div-icon, .leaflet-popup-content p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+.leaflet-div-icon {
+  background: none !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.leaflet-control-zoom {
+  display: none !important;
+}
+
+#map {
+  z-index: 0 !important;
+}

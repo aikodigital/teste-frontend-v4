@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['IBM Plex Sans', 'sans-serif']
+        sans: ['Inter', 'sans-serif']
       },
       colors: {
         'root-background': '#F4F4F4',
