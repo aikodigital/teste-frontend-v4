@@ -1,0 +1,170 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 90vh;
+}
+
+/* leaflet map */
+
+.leaflet-container{
+  height: 86vh;
+  z-index: 0;
+  margin-top: 1vh;
+}
+
+.informacao{
+  text-align: center;
+  justify-content: center;
+}
+
+.historicoBtn{
+  border-radius: 5px;
+  height: 6vh;
+  width: 23vh;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+  margin-top: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.historico {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas */
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.historico li {
+  border: 1px black solid;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.historicoBtn:hover, .btn:hover{
+  background-color: rgb(182, 243, 253);
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vh;
+  max-height: 90vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.titulo {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 20px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.btn {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 5vh;
+  height: 5vh;
+}
+
+.top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.filter-container {
+  position: absolute;
+  background: white;
+  padding: 10px;
+  top: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.selectState {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 5px;
+}
+
+.map-title {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 24px;
+  padding: 5px;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    width: 80vw; /* Largura do modal em 80% da largura da tela */
+    max-height: 80vh; /* Altura máxima do modal em 80% da altura da tela */
+    margin-top: 10vh; /* Espaço superior para centrar melhor o modal */
+    padding: 15px; /* Aumentar o padding para telas menores */
+  }
+
+  .titulo {
+    font-size: 1.2rem; /* Ajustar o tamanho da fonte do título */
+    text-align: center; /* Centralizar o título */
+  }
+
+  .historicoBtn{
+    font-size: medium;
+    height: 7vh;
+  }
+
+  .btn {
+    font-size: medium; /* Ajustar o tamanho do botão para telas menores */
+    width: 6vh; /* Ajustar a largura do botão */
+    height: 6vh; /* Ajustar a altura do botão */
+  }
+
+  .map-title{
+    visibility: hidden;
+  }
+
+  .filter-container{
+    font-size: large;
+    top: 10px;
+  }
+
+  .selectState{
+    font-size: large;
+  }
+
+  .informacao{
+    font-size: medium;
+  }
+
+}
