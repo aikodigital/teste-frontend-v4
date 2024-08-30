@@ -9,7 +9,7 @@ export async function updateLocation(currentItems, setLocations, dateFilter) {
 
   const filteredData = updatedLocations.filter((item) => {
     const date = new Date(item.positions.date)
-    return date.toISOString().startsWith(dateFilter || '2021-03-01')
+    return date.toISOString().startsWith(dateFilter)
   })
 
   const getLastPositionByEquipment = (data) => {
