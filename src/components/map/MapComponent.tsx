@@ -1,11 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { IEquipment } from '../../models/Equipment';
 import { IEquipmentModel } from '../../models/EquipmentModel';
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
-import { useNavigate, useParams } from "react-router-dom";
+import { APIProvider, Map, useMap, Marker, useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useNavigate } from "react-router-dom";
 import { IPosition } from "../../models/EquipmentPositionHistory";
 
 import "./MapComponent.css";
+
+
+
+const PolylineCustom = ( { firstPosition, positions } : { firstPosition: {lat: number, lng: number}, positions: IPosition[] }) => {
+
+
+  const map = useMap();
+  const maps = useMapsLibrary("maps");
+
+  const flightPlanCoordinates = positions.map(p=> {
+    return {
+      lat: p.lat,
+      lng: p.lon
+    }
+  });
+
+  if (!maps) {
+    return null;
+  }
+
+  const flightPath = new maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+  });
+
+  const getCustomMarkerIcon = (index: number) => {
+
+
+   
+
+    return {
+      url: `https://dummyimage.com/40x40/000/fff&text=${index}`, 
+      scaledSize: new window.google.maps.Size(40, 40), 
+      origin: new window.google.maps.Point(0, 0),
+      anchor: new window.google.maps.Point(20, 20)
+    }
+  };
+
+
+  flightPath.setMap(map);
+  return (
+    <Map
+      defaultZoom={10}
+      center={firstPosition}
+      >
+        {positions.map((position, index) => (
+            <Marker
+              title={`${index})`}
+              key={index}
+              position={{ lat: position.lat, lng: position.lon }}
+              icon={getCustomMarkerIcon(index)}
+            />
+          ))}
+      </Map>
+  );
+
+}
+
 
 interface MyObject {
   [key: string]: string;
@@ -17,19 +78,21 @@ const colorsObject: MyObject = {
   "9c3d009e-0d42-4a6e-9036-193e9bca3199": "#F0E2A3"
 }
 
-const MapComponent = ({ positions, equipamentId }: { positions: IPosition[], equipamentId?: string }) => {
+
+const MapComponent = ({ positions, trackingPoints = false }: { positions: IPosition[], trackingPoints?: boolean }) => {
 
   const [hoveredMarker, setHoveredMarker] = useState<{ name: string, model: string, modelId: string } | null>();
   const [equipments, setEquipments] = useState<IEquipment[]>([]);
   const [equipmentModels, setEquipmentModels] = useState<IEquipmentModel[]>([]);
   const navigate = useNavigate();
+ 
 
 
   useEffect(() => {
-    if (!equipamentId) {
-      getEquipments();
-      getEquipmentModels();
-    }
+    
+    getEquipments();
+    getEquipmentModels();
+    
   }, []);
 
 
@@ -103,6 +166,7 @@ const MapComponent = ({ positions, equipamentId }: { positions: IPosition[], equ
         </button>
       </div>
       <APIProvider apiKey={process.env.REACT_APP_MAP_KEY || ""}>
+      {!trackingPoints ? 
         <Map defaultCenter={firstPosition} defaultZoom={10} className="map">
           {positions.map((position, index) => (
             <Marker
@@ -114,7 +178,11 @@ const MapComponent = ({ positions, equipamentId }: { positions: IPosition[], equ
               icon={getCustomMarkerIcon(position.equipmentId || '')}
             />
           ))}
+         
         </Map>
+         : 
+         <PolylineCustom firstPosition={firstPosition}  positions={positions} />
+         }
       </APIProvider>
     </div>
   );

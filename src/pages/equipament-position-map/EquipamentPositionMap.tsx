@@ -32,7 +32,7 @@ const EquipamentPositionMapPage = () => {
 
   return (
     <div className="map-container">
-      <MapComponent positions={equipmentHistory.positions.map(p=> {
+      <MapComponent trackingPoints={true} positions={equipmentHistory.positions.map(p=> {
         return {
           ...p,
           equipmentId: equipmentHistory.equipmentId
