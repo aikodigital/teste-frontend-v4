@@ -42,6 +42,13 @@ No histórico de posições, é possível selecionar o equipamento desejado e as
 
 ### Histórico de Estados
 
+Selecionando o equipamento, é possível verificar todo seu histórico de estados, sendo exibidos:
+
+<ul>
+	<li>Nome do Estado</li>
+	<li>Data do Estado</li>
+</ul>
+
 <img src="/public/img/estados_01.png">
 
 <img src="/public/img/estados_02.png">
