@@ -80,7 +80,7 @@ function clearFilters() {
                 src="/src/assets/images/green-marker.png"
                 alt="Marcador verde - Operando"
                 class="w-[20px]"
-              />
+              >
               <span
                 class="text-sm mt-1"
               >
@@ -92,7 +92,7 @@ function clearFilters() {
                 src="/src/assets/images/red-marker.png"
                 alt="Marcador vermelho - Manutenção"
                 class="w-[20px]"
-              />
+              >
               <span
                 class="text-sm mt-1"
               >
@@ -104,7 +104,7 @@ function clearFilters() {
                 src="/src/assets/images/yellow-marker.png"
                 alt="Marcador amarelo - Parado"
                 class="w-[20px]"
-              />
+              >
               <span
                 class="text-sm mt-1"
               >
