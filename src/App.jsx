@@ -21,7 +21,7 @@ export default function App() {
   const [equipments, setEquipments] = useState([]);
   const [showStateHistory, setShowStateHistory] = useState(false);
   const [trajectoryMarkers, setTrajectoryMarkers] = useState([]);
-  const [resetTrajectoryMarkers, setResetTrajectoryMarkers] = useState(false);
+  const [reset, setReset] = useState(false);
   const initialMapPosition =
     equipmentPositionHistory.length > 0
       ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
@@ -168,8 +168,6 @@ export default function App() {
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
 
-  console.log(trajectoryMarkers);
-
   return (
     <Stack align="center" w="100%" pt={20} pb={0}>
       <Flex align="end" w="100%" justify="center" gap={30}>
@@ -177,8 +175,8 @@ export default function App() {
         <Button
           onClick={() => {
             setEquipments(initialEquipments);
-            // setTrajectoryMarkers([]);
-            setResetTrajectoryMarkers(true);
+            setTrajectoryMarkers([]);
+            setReset(true);
           }}
         >
           Resetar
@@ -191,7 +189,7 @@ export default function App() {
         />
         <PositionMarker
           trajectoryMarkers={trajectoryMarkers}
-          reset={resetTrajectoryMarkers}
+          reset={reset}
           setTrajectoryMarkers={setTrajectoryMarkers}
         />
         {equipments.length > 0 &&
@@ -241,7 +239,12 @@ export default function App() {
 
                   <Divider orientation="horizontal" />
 
-                  <Button onClick={() => toggleStateHistory()}>
+                  <Button
+                    onClick={() => {
+                      toggleStateHistory();
+                      setReset(false);
+                    }}
+                  >
                     {showStateHistory ? "Fechar histórico de estados" : "Ver histórico de estados"}
                   </Button>
                   {showStateHistory && (
@@ -264,7 +267,14 @@ export default function App() {
                       })}
                     </ScrollArea>
                   )}
-                  <Button onClick={() => handleEquipmentTrajectory(equipment.id)}>Ver trajetória do equipamento</Button>
+                  <Button
+                    onClick={() => {
+                      handleEquipmentTrajectory(equipment.id);
+                      setReset(false);
+                    }}
+                  >
+                    Ver trajetória do equipamento
+                  </Button>
                 </Stack>
               </Popup>
             </Marker>
