@@ -30,6 +30,10 @@
 <script setup lang="ts">
 import type ChangeEquipmentEmit from '~/interfaces/admin/equipment/ChangeEquipmentEmit'
 
+useSeoMeta({
+  title: 'Equipamentos'
+})
+
 const equipmentId = ref<string>('')
 const modelId = ref<string>('')
 const equipmentName = ref<string>('')
