@@ -1,12 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",  // Define o diretório base para resolução de caminhos
-    "paths": {
-      // "@map/*": ["src/components/modules/Map/*"],
-      "@mainScreen/*": ["src/components/modules/MainScreen/*"],
-      // "@equipment/*": ["src/components/modules/Equipment/*"],
-      // "@assets/*": ["public/assets/*"]
-    },
     "jsx": "react-jsx",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
