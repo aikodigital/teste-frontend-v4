@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Teste Frontend V4
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## O Desafio
 
-## Available Scripts
+O desafio consiste em criar uma aplicação web que permita ao cliente monitorar sua frota de equipamentos por meio de uma interface com um mapa. Nele, é possível ver todos os equipamentos cadastrados, assim como informações específicas dos mesmos.
 
-In the project directory, you can run:
+## Acessar a aplicação
 
-### `npm start`
+A aplicação está hospedada no serviço do Netlify e pode ser encontrada [aqui](https://track-equipment-on-map.netlify.app/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Para rodar a aplicação localmente
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Clone o projeto
 
-### `npm test`
+```
+https://github.com/seu-user-aqui/teste-frontend-v4.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image](https://github.com/user-attachments/assets/9079262d-54d9-4332-bafa-ffe04ad7ad9d)
 
-### `npm run build`
+- Acesse o diretório
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+cd teste-frontend-v4
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Instale as dependências
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+- Suba o servidor
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Acesse a URL no navegador
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Costumeiramente, uma aba nova é aberta no seu navegador padrão.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Como usar
 
-## Learn More
+![image](https://github.com/user-attachments/assets/29ac3532-fbe7-4966-96ba-ccdf220500d2)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Legenda
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Os equipamentos são representados no mapa por meio de ícones e cores.
 
-### Code Splitting
+#### Ícones
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Folha: representa o equipamento do tipo _harvester_.
 
-### Analyzing the Bundle Size
+![image](https://github.com/user-attachments/assets/9c594b45-c125-4974-8961-8450f130c641)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Trator: representa o equipamento do tipo _garra traçadora_.
 
-### Making a Progressive Web App
+![image](https://github.com/user-attachments/assets/5f932136-1418-44a0-b95c-9cca9701f771)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Caminhão: representa o equipamento do tipo _caminhão de carga_.
 
-### Advanced Configuration
+![image](https://github.com/user-attachments/assets/03500f54-41a2-44c8-b9c3-2dca365251f9)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Cores
 
-### Deployment
+As cores representam os três estados possíveis para os equipamentos.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Operando (verde)
+- Parado (amarelo)
+- Manutenção (vermelho)
 
-### `npm run build` fails to minify
+### Interagir com um equipamento
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Basta clicar no seu ícone que um pop up será aberto e mostrará as informações básicas do equipamento. [Vídeo](https://www.loom.com/share/243682926d694f20b8dc6752e1f8be09?sid=fed296f9-bc06-4f50-9a5d-dd10d445c30a)
+
+### Ver histórico de estados
+
+Basta clicar no botão e uma área com esses dados surgirá logo abaixo. É possível rolar o botão de rolagem do mouse para ver mais registros. [Vídeo](https://www.loom.com/share/cda2a1c703c440b7bea5241685fa2518?sid=c9eac89b-f99e-495e-9c11-053469b0d294)
+
+### Ver histórico de localizações
+
+Ao clicar no botão, marcadores serão adicionados no mapa, indicando todas as localizações em que este equipamento esteve. Cada ponto é numerado para ser possível identificar a ordem do deslocamento. Clicar em um marcador revela as suas coordenadas. Automaticamente, um pop up com as coordenadas da localização mais recente abrirá. Para removê-los, clique no botão "Resetar" no topo da página. A aplicação não impede que mais de um grupo de localizações seja adicionada no mapa ao mesmo tempo, então é recomendável usar o botão de reset quando desejar conferir as posições de outro equipamento. [Vídeo](https://www.loom.com/share/3ed8b6adb4a44e3c9ace6cf7f71571dc?sid=ad9b4da7-551b-43bb-afe9-01349805b1fc)
+
+### Filtrar equipamentos por modelo ou estado
+
+Para fazer uma visualização com determinado critério, é possível utilizar o filtro no topo da página. Primeiro, é necessário escolher o critério desejado, estado ou modelo, no dropdown da esquerda. O dropdown da direita, então, será populado com as opções disponíveis. Selecionada a opção, o botão que aplica o filtro ficará habilitado para clique. Para desfazer tudo, basta usar o botão de reset ou alterar os critérios do filtro. [Vídeo](https://www.loom.com/share/ecb29506c6a04079a3afe5a8e70d1238?sid=8143178c-af77-42ff-a7bc-b0e29c867b0c)
+
+## Tecnologias e recursos
+
+- [React](https://pt-br.legacy.reactjs.org/)
+- [Mantine](https://mantine.dev/)
+- [Leaflet](https://leafletjs.com/)
+- [React Leaflet](https://react-leaflet.js.org/)
+- [Tabler Icons](https://tabler.io/icons/)
+- [Loom](https://www.loom.com/)
