@@ -4,14 +4,15 @@ import React, {
   useEffect,
   useRef,
   useState,
+  FC,
 } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
 import equipmentPositionHistoryData from "../../../data/equipmentPositionHistory.json";
 import equipmentStateHistoryData from "../../../data/equipmentStateHistory.json";
 import equipmentStatesData from "../../../data/equipmentState.json";
-import equipmentModelData from "../../../data/equipmentModel.json"
-import equipmentData from "../../../data/equipment.json"
+import equipmentModelData from "../../../data/equipmentModel.json";
+import equipmentData from "../../../data/equipment.json";
 
 import operational from "../../../assets/icons/Truck_8.png";
 import maintenance from "../../../assets/icons/Truck_11.png";
@@ -24,16 +25,32 @@ import "./Map.scss";
 const MAP_STYLE: React.CSSProperties = {
   width: "80%",
   height: "500px",
-  borderRadius: '5px'
+  borderRadius: "5px",
 };
 
 const API_KEY: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const Map: React.FC = () => {
+interface MapProps {
+  model: string;
+  state: string;
+}
+
+const Map: FC<MapProps> = ({ model, state }) => {
   interface StateInfo {
     id: string;
     name: string;
     color: string;
+  }
+
+  interface Position {
+    date: string;
+    lat: number;
+    lon: number;
+  }
+
+  interface EquipmentPositionsHistoryEntry {
+    equipmentId: string;
+    positions: Position[];
   }
 
   interface StateHistory {
@@ -66,8 +83,10 @@ const Map: React.FC = () => {
     { lat: number; lng: number } | undefined
   >(undefined);
   const [isHovered, setIsHovered] = useState<string>("");
+  const [equipmentMapPositions, setEquipmentMapPositions] = useState<
+    EquipmentPositionsHistoryEntry[]
+  >([]);
   const [historyModal, setHistoryModal] = useState<boolean>(false);
-  const [selectedMarkerId, setSelectedMarkerId] = useState<string | null>(null);
   const [modalContent, setModalContent] = useState<EquipmentState>({
     id: "",
     name: "",
@@ -137,7 +156,6 @@ const Map: React.FC = () => {
       const button = document.getElementById(`open-modal-button-${markerId}`);
       if (button) {
         button.addEventListener("click", () => {
-          setSelectedMarkerId(markerId);
           setHistoryModal(true);
         });
       }
@@ -153,57 +171,56 @@ const Map: React.FC = () => {
   }
 
   function averageGeolocation(): { latitude: number; longitude: number } {
-    const coords = equipmentPositionHistoryData.map((history) => {
+    const coords = equipmentMapPositions.map((history) => {
       const lastPosition = history.positions[history.positions.length - 1];
       return { lat: lastPosition.lat, lon: lastPosition.lon };
     });
-  
+
     if (coords.length === 1) {
       return {
         latitude: coords[0].lat,
         longitude: coords[0].lon,
       };
     }
-  
+
     let x = 0;
     let y = 0;
     let z = 0;
-  
+
     coords.forEach(({ lat, lon }) => {
       const latitude = (lat * Math.PI) / 180;
       const longitude = (lon * Math.PI) / 180;
-  
+
       x += Math.cos(latitude) * Math.cos(longitude);
       y += Math.cos(latitude) * Math.sin(longitude);
       z += Math.sin(latitude);
     });
-  
+
     const total = coords.length;
-  
+
     x /= total;
     y /= total;
     z /= total;
-  
+
     const centralLongitude = Math.atan2(y, x);
     const centralSquareRoot = Math.sqrt(x * x + y * y);
     const centralLatitude = Math.atan2(z, centralSquareRoot);
-  
+
     const result = {
       latitude: (centralLatitude * 180) / Math.PI,
       longitude: (centralLongitude * 180) / Math.PI,
     };
-  
+
     setCenterCoords({
       lat: result.latitude,
       lng: result.longitude,
     });
-  
+
     return result;
   }
-  
 
   useEffect(() => {
-    if (equipmentPositionHistoryData && isLoaded) {
+    if (equipmentMapPositions && isLoaded) {
       const center = averageGeolocation();
       if (mapRef.current) {
         mapRef.current.setCenter({
@@ -212,7 +229,32 @@ const Map: React.FC = () => {
         });
       }
     }
-  }, [equipmentPositionHistoryData, isLoaded]);
+  }, [equipmentMapPositions, isLoaded]);
+
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.setMap(null);
+    }
+
+    if (model && model !== "all") {
+      const filteredEquipment = equipmentData.filter(
+        (equipment) => equipment.equipmentModelId === model
+      );
+
+      const filterEquipmentModel = equipmentPositionHistoryData.filter(
+        (model) =>
+          filteredEquipment.some(
+            (equipment) => equipment.id === model.equipmentId
+          )
+      );
+
+      if (filterEquipmentModel.length > 0) {
+        setEquipmentMapPositions(filterEquipmentModel);
+      }
+    } else if (model === "all") {
+      setEquipmentMapPositions(equipmentPositionHistoryData);
+    }
+  }, [model]);
 
   const onLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
@@ -228,9 +270,11 @@ const Map: React.FC = () => {
     targetStateId: string
   ): number {
     // Ordena os dados por data em ordem decrescente
-    const sortedData = equipmentData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const sortedData = equipmentData.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
-    const now = new Date(sortedData[0].date);  // Considera a data mais recente disponível nos dados
+    const now = new Date(sortedData[0].date); // Considera a data mais recente disponível nos dados
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
     let totalHours = 0;
@@ -241,7 +285,9 @@ const Map: React.FC = () => {
 
       if (entryDate < twentyFourHoursAgo) {
         // Se a data de entrada for antes do limite de 24 horas, calcula o tempo restante e termina o loop
-        const hoursDifference = (lastDate.getTime() - twentyFourHoursAgo.getTime()) / (1000 * 60 * 60);
+        const hoursDifference =
+          (lastDate.getTime() - twentyFourHoursAgo.getTime()) /
+          (1000 * 60 * 60);
         if (sortedData[i - 1]?.equipmentStateId === targetStateId) {
           totalHours += hoursDifference;
         }
@@ -249,7 +295,8 @@ const Map: React.FC = () => {
       }
 
       // Calcula a diferença de horas entre esta entrada e a anterior
-      const hoursDifference = (lastDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60);
+      const hoursDifference =
+        (lastDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60);
 
       if (sortedData[i].equipmentStateId === targetStateId) {
         totalHours += hoursDifference;
@@ -267,36 +314,35 @@ const Map: React.FC = () => {
     hourlyEarnings: {
       equipmentStateId: string;
       value: number;
-    }[]
+    }[];
   };
-  
+
   type StateHours = {
     id: string;
     name: string;
     hours: number;
   };
-  
+
   function calculateTotalEarnings(
     stateHours: StateHours[],
     equipmentModel: EquipmentModel
   ): string {
-
     const earningsMap = new globalThis.Map<string, number>();
 
-    equipmentModel.hourlyEarnings.forEach(earning => {
+    equipmentModel.hourlyEarnings.forEach((earning) => {
       earningsMap.set(earning.equipmentStateId, earning.value);
     });
 
     let totalEarnings = 0;
-  
-    stateHours.forEach(state => {
+
+    stateHours.forEach((state) => {
       const hourlyRate = earningsMap.get(state.id) || 0;
       totalEarnings += state.hours * hourlyRate;
     });
 
-    let BRLCurrency = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
+    let BRLCurrency = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     });
 
     return BRLCurrency.format(totalEarnings);
@@ -308,73 +354,85 @@ const Map: React.FC = () => {
     name: string;
   };
 
-  function calculateProductivity(
-    stateHours: StateHoursEntry[],
-  ): string {
-
-    const operationalHours = stateHours.filter(hours => hours.name === "Operando")
-
-    const calculateProductivity = ((operationalHours[0].hours / 24) * 100 ).toFixed() + '%'
-
-    return calculateProductivity
-  }
-  
-  function getEquipmentDetails(id: string) {
-
-    const equipment = equipmentData.filter(equipment => equipment.id === id);
-    const equipmentModel: EquipmentModelEntry[] = equipmentModelData.filter(model => model.id === equipment[0].equipmentModelId)
-    const equipModelHourEarningsById = new Set(equipmentModel[0].hourlyEarnings.map(hours => hours.equipmentStateId));
-    const equipmentStateHistory = equipmentStateHistoryData.filter(state =>
-      state.states.some(item => equipModelHourEarningsById.has(item.equipmentStateId))
+  function calculateProductivity(stateHours: StateHoursEntry[]): string {
+    const operationalHours = stateHours.filter(
+      (hours) => hours.name === "Operando"
     );
-    
-    const allStates: EquipmentStateHistoryEntry[] = equipmentStateHistory
-    .flatMap(history => history.states);
-    const uniqueStateIds = Array.from(new Set(allStates.map(state => state.equipmentStateId)));
+
+    const calculateProductivity =
+      ((operationalHours[0].hours / 24) * 100).toFixed() + "%";
+
+    return calculateProductivity;
+  }
+
+  function getEquipmentDetails(id: string) {
+    const equipment = equipmentData.filter((equipment) => equipment.id === id);
+    const equipmentModel: EquipmentModelEntry[] = equipmentModelData.filter(
+      (model) => model.id === equipment[0].equipmentModelId
+    );
+    const equipModelHourEarningsById = new Set(
+      equipmentModel[0].hourlyEarnings.map((hours) => hours.equipmentStateId)
+    );
+    const equipmentStateHistory = equipmentStateHistoryData.filter((state) =>
+      state.states.some((item) =>
+        equipModelHourEarningsById.has(item.equipmentStateId)
+      )
+    );
+
+    const allStates: EquipmentStateHistoryEntry[] =
+      equipmentStateHistory.flatMap((history) => history.states);
+    const uniqueStateIds = Array.from(
+      new Set(allStates.map((state) => state.equipmentStateId))
+    );
     const hoursByStateId: { [key: string]: number } = {};
 
     const icon =
-    equipmentModel[0].name === "Caminhão de carga"
-      ? operational
-      : equipmentModel[0].name === "Harvester"
-      ? maintenance
-      : equipmentModel[0].name === "Garra traçadora"
-      ? stoped
-      : "";
-    
-    const stateHoursRelationDetails = uniqueStateIds.map(stateId => {
-      const stateName = equipmentStatesData.find(stateData => stateData.id === stateId)?.name || 'Unknown';
+      equipmentModel[0].name === "Caminhão de carga"
+        ? operational
+        : equipmentModel[0].name === "Harvester"
+        ? maintenance
+        : equipmentModel[0].name === "Garra traçadora"
+        ? stoped
+        : "";
+
+    const stateHoursRelationDetails = uniqueStateIds.map((stateId) => {
+      const stateName =
+        equipmentStatesData.find((stateData) => stateData.id === stateId)
+          ?.name || "Unknown";
       hoursByStateId[stateId] = calculateTotalHours(allStates, stateId);
-      
+
       return {
         id: stateId,
         name: stateName,
-        hours: hoursByStateId[stateId]
+        hours: hoursByStateId[stateId],
       };
     });
 
-    const totalEarnings = calculateTotalEarnings(stateHoursRelationDetails, equipmentModel[0]);
+    const totalEarnings = calculateTotalEarnings(
+      stateHoursRelationDetails,
+      equipmentModel[0]
+    );
     const productivity = calculateProductivity(stateHoursRelationDetails);
 
     if (!stateHoursRelationDetails || !equipmentModel) {
       return {
         hourDetails: {
-          id: 'unknown',
-          name: 'unknown',
+          id: "unknown",
+          name: "unknown",
           hours: 0,
         },
         equipmentModel: {
-          id: 'unknown',
-          name: 'unknown',
+          id: "unknown",
+          name: "unknown",
           hourlyEarnings: {
-            equipmentStateId: 'unknown',
+            equipmentStateId: "unknown",
             value: 0,
-          }
+          },
         },
-        productivity: 'unknown',
-        totalEarnings: 'unknown',
-        icon: 'unknown'
-      }
+        productivity: "unknown",
+        totalEarnings: "unknown",
+        icon: "unknown",
+      };
     }
 
     return {
@@ -382,8 +440,8 @@ const Map: React.FC = () => {
       equipmentModel: equipmentModel[0],
       productivity: productivity,
       totalEarnings: totalEarnings,
-      icon: icon
-    }
+      icon: icon,
+    };
   }
 
   function getEquipmentStatesHistory(id: string): EquipmentState {
@@ -455,10 +513,11 @@ const Map: React.FC = () => {
           <div className="marker-container">
             {mapRef.current &&
               isLoaded &&
-              equipmentPositionHistoryData.length > 0 &&
-              equipmentPositionHistoryData.map((history, index) => {
+              equipmentMapPositions.length > 0 &&
+              equipmentMapPositions.map((history, index) => {
                 const positionId = history.equipmentId;
-                const lastPosition = history.positions[history.positions.length - 1];
+                const lastPosition =
+                  history.positions[history.positions.length - 1];
                 const equipmentStates = getEquipmentStatesHistory(positionId);
                 const equipmentDatails = getEquipmentDetails(positionId);
                 const date = new Date(lastPosition.date);
@@ -501,7 +560,9 @@ const Map: React.FC = () => {
                     >
                       <Modal.Header closeButton>
                         <Modal.Title>Histórico do equipamento</Modal.Title>
-                        <p>{modalContent.statesHistory.length + 1} Ocorrências</p>
+                        <p>
+                          {modalContent.statesHistory.length + 1} Ocorrências
+                        </p>
                       </Modal.Header>
                       <Modal.Body
                         style={{ maxHeight: "400px", overflowY: "auto" }}
@@ -523,7 +584,6 @@ const Map: React.FC = () => {
                         )}
                       </Modal.Body>
                       <Modal.Footer>
-                        {/* <p>{equipmentDatails.hourDetails}</p> */}
                         <Button
                           onClick={() => setHistoryModal(false)}
                           variant="secondary"
