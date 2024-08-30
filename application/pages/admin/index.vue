@@ -6,7 +6,10 @@
         v-if="modelId"
         :model-id="modelId"
       />
-      <AdminMapEquipment :equipment-id="equipmentId" />
+      <AdminMapEquipment
+        v-if="equipmentId"
+        :equipment-id="equipmentId"
+      />
     </div>
   </NuxtLayout>
 </template>
