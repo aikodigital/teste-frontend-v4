@@ -31,7 +31,7 @@ Na tela inicial, são listados todos os equipamentos, sendo exibidos:
 
 ### Histórico de Posições
 
-No histório de posições, é possível selecionar o equipamento desejado e assim, verificar a sua último posição e seu estado atual e também suas últimas vinte posições.
+No histórico de posições, é possível selecionar o equipamento desejado e assim, verificar a sua última posição, estado atual e também suas últimas vinte posições.
 <img src="/public/img/posicoes_01.png">
 
 <img src="/public/img/posicoes_02.png">
