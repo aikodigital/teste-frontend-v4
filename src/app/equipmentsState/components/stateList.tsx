@@ -1,4 +1,7 @@
-import { getEquipmentState, getEquipmentStateHistory } from "@/app/services/actions";
+import {
+  getEquipmentState,
+  getEquipmentStateHistory,
+} from "@/app/services/actions";
 import {
   Card,
   CardContent,
@@ -12,18 +15,35 @@ import React, { useEffect, useState } from "react";
 const EquipmentStateHistoryComponent: React.FC<{ equipmentId: string }> = ({
   equipmentId,
 }) => {
-  const [stateHistory, setStateHistory] = useState<EquipmentStateHistory | null>(null);
+  const [stateHistory, setStateHistory] = useState<EquipmentStateHistory>();
   const [equipmentStates, setEquipmentStates] = useState<EquipmentState[]>([]);
 
   useEffect(() => {
     const fetchStateHistory = async () => {
       try {
         const historyData = await getEquipmentStateHistory();
-        
+
         const history = historyData.find(
           (item: { equipmentId: string }) => item.equipmentId === equipmentId
         );
-        setStateHistory(history || null);
+
+        if (history) {
+          history.states.sort(
+            (
+              stateA: {
+                date: Date;
+                equipmentStateId: string;
+              },
+              stateB: {
+                date: Date;
+                equipmentStateId: string;
+              }
+            ) =>
+              new Date(stateB.date).getTime() - new Date(stateA.date).getTime()
+          );
+        }
+
+        setStateHistory(history);
       } catch (error) {
         console.error("Erro ao carregar o histórico:", error);
       }

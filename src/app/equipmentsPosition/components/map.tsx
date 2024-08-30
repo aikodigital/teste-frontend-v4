@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, LoadScript, LoadScriptNext, Marker } from "@react-google-maps/api";
 import { Position } from "@/types/Position";
 
 interface MapComponentProps {
@@ -22,7 +22,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => 
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.GOOGLE_API_KEY}>
+    <LoadScriptNext googleMapsApiKey={process.env.GOOGLE_API_KEY}>
       <GoogleMap
         mapContainerStyle={mapStyle}
         center={center}
@@ -31,21 +31,21 @@ const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => 
       >
         {positions.map((item, index) => (
           <Marker key={index} position={item} title={new Date(item.date).toLocaleString()}>
-          {index === positionLastIndex && (
-            <InfoWindow position={{ lat: item.lat, lng: item.lng }}>
-              <div className="w-auto h-max">
-                <p className="font-bold">Última Posição:</p>
-                <p>{new Date(item.date).toLocaleString()}</p>
+            {index === positionLastIndex && (
+              <InfoWindow position={{ lat: item.lat, lng: item.lng }}>
+                <div className="w-auto h-max">
+                  <p className="font-bold">Última Posição:</p>
+                  <p>{new Date(item.date).toLocaleString()}</p>
 
-                <p className="font-bold mt-3">Estado:</p>
-                <p>{lastState}</p>
-              </div>
-            </InfoWindow>
-          )}
-        </Marker>
+                  <p className="font-bold mt-3">Estado:</p>
+                  <p>{lastState}</p>
+                </div>
+              </InfoWindow>
+            )}
+          </Marker>
         ))}
       </GoogleMap>
-    </LoadScript>
+    </LoadScriptNext>
   );
 };
 

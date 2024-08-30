@@ -1,7 +1,7 @@
 export interface EquipmentStateHistory {
   equipmentId: string;
   states: {
-    date: string;
+    date: Date;
     equipmentStateId: string;
   }[];
 }
