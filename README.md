@@ -56,6 +56,11 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 	<li>Status</li>
 	<li>Data</li>
 	<li>Cor do Estado</li>
+	<ul>
+          <li>Verde: Operando</li>
+          <li>Amarelo: Parado</li>
+          <li>Vermelho: Manutenção</li>
+    </ul>
 </ul>
 
 <img src="/public/img/estados_01.png">
