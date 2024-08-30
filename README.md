@@ -36,6 +36,8 @@ Gráficos interativos mostram o desempenho dos equipamentos em termos de produti
 Os testes foram realizados com Cypress para garantir que os filtros, o mapa, e os elementos principais da interface funcionem corretamente.
 
 ## Decisões Técnicas
+- **EsLint:** manter a qualidade e consistência do código detectando erros e padrões inadequados.
+- **Prettier:** para garantir uma formatação consistente e automatizada do código.
 - **Leaflet:** Escolhido para a visualização do mapa devido à sua flexibilidade e suporte a camadas customizadas.
 - **ReactApexChart:** Utilizado para gráficos devido à sua simplicidade e bom suporte a gráficos interativos.
 - **Tooltip:** Para ter efeito houver ao passar o mouse.
