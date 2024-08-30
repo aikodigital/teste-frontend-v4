@@ -6,6 +6,7 @@
     React - 18
     Next.js - 14.0.4
 	TypeScript - 5.3.3
+	Google Maps API
 
 ## 2 - Instalação e execução do projeto:
 
@@ -14,7 +15,13 @@ Instalação de dependências:
     npm install
 
 Executar projeto no modo de desenvolvimento:
-npm run dev
+	
+	npm run dev
+
+### Google Maps API
+
+Insira sua GOOGLE_API_KEY no arquivo .env-example e renomeio para .env
+
 
 ## 3 - Demonstração:
 
