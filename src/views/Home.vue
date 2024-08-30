@@ -6,6 +6,7 @@ import Map from '~/components/Map.vue'
 import SelectButton from '~/components/form/SelectButton.vue'
 import type { Equipment, EquipmentStatus } from '~/models/Equipment'
 import { notify } from '~/utils/notify'
+import { calculateEquipmentGain, calculateProductivityForEquipment, returnEquipmentBasedOnId } from '~/utils/formatValue'
 
 const equipmentFiltered = ref()
 const statusFiltered = ref()
@@ -111,6 +112,41 @@ function clearFilters() {
                 Parado
               </span>
             </div>
+          </div>
+        </div>
+        <div
+          v-if="equipmentFiltered"
+          class="flex flex-col items-start w-full border-neutral col-span-2 p-7 gap-2"
+        >
+          <div class="flex gap-x-2">
+            <p
+              class="font-bold"
+            >
+              Equipamento selecionado:
+            </p>
+            <span>
+              {{ returnEquipmentBasedOnId(equipmentFiltered) }}
+            </span>
+          </div>
+          <div class="flex gap-x-2">
+            <p
+              class="font-bold"
+            >
+              Produtividade (%):
+            </p>
+            <span>
+              {{ calculateProductivityForEquipment(equipmentFiltered) }}
+            </span>
+          </div>
+          <div class="flex gap-x-2">
+            <p
+              class="font-bold"
+            >
+              Ganho por equipamento:
+            </p>
+            <span>
+              {{ calculateEquipmentGain(equipmentFiltered) }}
+            </span>
           </div>
         </div>
       </div>

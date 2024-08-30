@@ -1,5 +1,6 @@
 import states from '../../data/equipmentState.json'
 import equipments from '../../data/equipment.json'
+import equipmentModels from '../../data/equipmentModel.json'
 import statesHistory from '../../data/equipmentStateHistory.json'
 import type { EquipmentStatus } from '~/models/Equipment'
 
@@ -46,4 +47,80 @@ export function returnEquipmentStateBasedOnDate(equipmentId: string, date: strin
   }
 
   return undefined
+}
+
+function hoursDifference(startDate: string, endDate: string): number {
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+  return (end.getTime() - start.getTime()) / (1000 * 60 * 60)
+}
+
+export function calculateProductivityForEquipment(equipmentId: string) {
+  const equipmentHistory = statesHistory.find(e => e.equipmentId === equipmentId)
+
+  if (!equipmentHistory) {
+    return null
+  }
+
+  let totalHours = 0
+  let productiveHours = 0
+  const equipmentStates = equipmentHistory.states
+
+  for (let i = 1; i < equipmentStates.length; i++) {
+    const prevState = equipmentStates[i - 1]
+    const currentState = equipmentStates[i]
+
+    const duration = hoursDifference(prevState.date, currentState.date)
+
+    if (prevState.equipmentStateId === '0808344c-454b-4c36-89e8-d7687e692d57') {
+      productiveHours += duration
+    }
+
+    totalHours += duration
+  }
+
+  const productivityPercentage = totalHours > 0 ? (productiveHours / totalHours) * 100 : 0
+
+  return Number.parseFloat(productivityPercentage.toFixed(2))
+}
+
+function getEquipmentByModelId(equipmentModelId: string) {
+  const equipment = equipments.find(equipment => equipment.id === equipmentModelId)
+  const model = equipmentModels.find(model => model.id === equipment?.equipmentModelId)
+
+  return model
+}
+
+export function calculateEquipmentGain(equipmentId: string): number | null {
+  const equipmentHistory = statesHistory.find(e => e.equipmentId === equipmentId)
+
+  if (!equipmentHistory) {
+    return null
+  }
+
+  const equipmentModel = getEquipmentByModelId(equipmentId)
+
+  if (!equipmentModel) {
+    return null
+  }
+
+  const hourlyEarnings = equipmentModel.hourlyEarnings.reduce((acc, { equipmentStateId, value }) => {
+    acc[equipmentStateId] = value
+    return acc
+  }, {} as { [stateId: string]: number })
+
+  let totalGain = 0
+  const equipmentStates = equipmentHistory.states
+
+  for (let i = 1; i < equipmentStates.length; i++) {
+    const prevState = equipmentStates[i - 1]
+    const currentState = equipmentStates[i]
+
+    const duration = hoursDifference(prevState.date, currentState.date)
+    const rate = hourlyEarnings[prevState.equipmentStateId] || 0
+
+    totalGain += duration * rate
+  }
+
+  return Number.parseFloat(totalGain.toFixed(2))
 }
