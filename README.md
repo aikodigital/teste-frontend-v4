@@ -21,4 +21,16 @@ Executar projeto no modo de desenvolvimento:
 
 <img src="/public/img/listagem.png">
 
+<img src="/public/img/posicoes_01.png">
+
+<img src="/public/img/posicoes_02.png">
+
+<img src="/public/img/posicoes_03.png">
+
+<img src="/public/img/posicoes_04.png">
+
+<img src="/public/img/estados_01.png">
+
+<img src="/public/img/estados_02.png">
+
 ## 4 - Explicação dos componentes
