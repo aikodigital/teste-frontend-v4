@@ -12,14 +12,14 @@
       <label class="cursor-pointer">
         <input
           v-model="search"
-          class="w-full p-2 z-0 focus:outline-none appearance-none"
+          class="w-full p-2 z-0 focus:outline-none bg-slate-100"
           type="text"
-          placeholder="Select an equipment"
+          placeholder="Selecione um equipamento"
           @focus="setSearchFocus(true)"
           @keyup="isTyping = true"
         >
 
-        <div class="absolute text-emerald-700 top-0 right-0 z-10 h-full w-10 flex items-center justify-center">
+        <div class="absolute text-indigo-800 top-0 right-0 z-10 h-full w-10 flex items-center justify-center">
           <PhosphorIconCaretDoubleUp
             v-if="searchFocus"
             weight="thin"
@@ -34,7 +34,10 @@
       </label>
     </div>
 
-    <Transition>
+    <Transition
+      enter-active-class="animate__animated animate__fadeIn"
+      leave-active-class="animate__animated animate__fadeOut"
+    >
       <template v-if="searchFocus">
         <ul class="flex flex-col absolute top-10 left-0 w-full">
           <li
@@ -45,16 +48,26 @@
               )
           )"
             :key="equipment.id"
-            class="p-2 text-sm cursor-pointer flex flex-row items-center justify-between text-gray-800"
-            :class="index%2 === 0 ? 'bg-slate-300' : 'bg-slate-400'"
+            class="list-item"
+            :class="{
+              'bg-slate-200': index%2 === 0,
+              'bg-slate-300': index%2 !== 0,
+              'bg-indigo-500 !text-white': equipment.id === selecetedId
+            }"
             @click="setSelectedEquipment(equipment.id, equipment.equipmentModelId, equipment.name)"
           >
             {{ equipment.name }} {{ index }}
             <PhosphorIconCheckCircle
-              v-show="equipment.id === selecetedId"
-              weight="thin"
-              size="25"
-              class="text-emerald-700"
+              v-if="equipment.id === selecetedId"
+              weight="fill"
+              size="20"
+              class="text-white"
+            />
+            <PhosphorIconCircle
+              v-else
+              weight="regular"
+              size="20"
+              class="text-gray-400"
             />
           </li>
         </ul>
@@ -94,4 +107,20 @@ const setSelectedEquipment = (id: string, idModel: string, name: string) => {
 }
 
 </script>
+
+<style scoped>
+.list-item {
+  @apply 
+    p-2
+    text-sm
+    cursor-pointer
+    flex
+    flex-row
+    items-center
+    justify-between
+    text-slate-600
+    hover:brightness-90
+    transition-all
+}
+</style>
 
