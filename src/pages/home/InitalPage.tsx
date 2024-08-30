@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { IEquipment } from '../../models/Equipment';
-import EquipmentTable from '../../components/equipments/EquipmentsTable';
-import { EquipmentStateContextProvider } from '../../context/EquipmentStateContext';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { IEquipment } from "../../models/Equipment";
+import EquipmentTable from "../../components/equipments/EquipmentsTable";
+import { EquipmentStateContextProvider } from "../../context/EquipmentStateContext";
 import { Container, StyledTitle } from "./InitialPage";
 import ResponsiveImageLogo from "../../components/ResponsiveImageLogo/ResponsiveImageLogo";
+import { Typography, useTheme } from "@mui/material";
 
 const InitialPage = () => {
   const [equipments, setEquipments] = useState<IEquipment[]>([]);
@@ -22,19 +23,28 @@ const InitialPage = () => {
       console.log(e);
     }
   };
+  const theme = useTheme();
 
   return (
     <EquipmentStateContextProvider>
       <Container className="App">
         <div>
           <ResponsiveImageLogo />
-          <StyledTitle variant="h2">Meus Equipamentos</StyledTitle>
+          <Typography
+            variant="h2"
+            sx={{
+              fontWeight: "bold",
+              color: theme.palette.primary.main,
+              mb: theme.spacing(2),
+            }}
+          >
+            Meus Equipamentos
+          </Typography>
 
           <EquipmentTable equipments={equipments} />
         </div>
       </Container>
     </EquipmentStateContextProvider>
-
   );
 };
 
