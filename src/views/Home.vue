@@ -37,6 +37,7 @@ function clearFilters() {
       <img
         class="object-scale-down aspect-w-3 aspect-h-2 w-[100px]"
         src="/src/assets/aiko.png"
+        alt="Logo Aiko"
       >
     </div>
     <div class="flex flex-col md:flex-row h-[40rem] w-[90%] mx-auto mb:-mt-14 md:mb-0 mb-[25rem] gap-2">
