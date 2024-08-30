@@ -15,7 +15,23 @@
           Teste
         </VMapDivMarker>
         <VMapPinIcon :color="`${ getStateColor(pos.stateId) || '' }`" @click="displayPositionCard = index">
-          <PhosphorIconTractor />
+          <PhosphorIconTruck
+            v-if="props.equipmentName?.includes('CA')"
+            weight="thin"
+            :color="`${ getStateColor(pos.stateId) || '' }`"
+          />
+
+          <PhosphorIconAxe
+            v-if="props.equipmentName?.includes('HV')"
+            weight="thin"
+            :color="`${ getStateColor(pos.stateId) || '' }`"
+          />
+
+          <PhosphorIconTractor
+            v-if="props.equipmentName?.includes('GT')"
+            weight="thin"
+            :color="`${ getStateColor(pos.stateId) || '' }`"
+          />
         </VMapPinIcon>
       </VMapMarker>
     </VMap>
@@ -28,7 +44,8 @@ import type { LatLng, LatLngTuple } from 'leaflet'
 import getStateSelected from '~/interfaces/admin/equipment/GetStateSelected';
 
 const props = defineProps<{
-  equipmentId?: string
+  equipmentId?: string,
+  equipmentName?: string
 }>()
 
 const position = ref<LatLngTuple | LatLng> ([-19.167338, -46.00347])

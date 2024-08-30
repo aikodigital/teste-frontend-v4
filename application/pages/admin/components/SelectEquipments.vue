@@ -39,7 +39,7 @@
       leave-active-class="animate__animated animate__fadeOut"
     >
       <template v-if="searchFocus">
-        <ul class="flex flex-col absolute top-10 left-0 w-full">
+        <ul class="flex flex-col absolute top-10 left-0 w-full shadow-lg">
           <li
             v-for="(equipment, index) in data?.filter(
               e => (
@@ -95,13 +95,14 @@ const setSearchFocus = (status:boolean) => {
   isTyping.value = false
 }
 
-const setSelectedEquipment = (id: string, idModel: string, name: string) => {
+const setSelectedEquipment = (id: string, idModel: string, equipmentName: string) => {
   selecetedId.value = id
-  search.value = name
+  search.value = equipmentName
   setSearchFocus(false)
   const change: ChangeEquipmentEmit = {
     id,
-    idModel
+    idModel,
+    equipmentName
   }
   emit('change-equipment', change)
 }

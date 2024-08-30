@@ -9,6 +9,7 @@
       />
       <AdminMapEquipment
         :equipment-id="equipmentId"
+        :equipment-name="equipmentName"
       />
     </div>
     <Transition
@@ -27,24 +28,22 @@
 
 <script setup lang="ts">
 import type ChangeEquipmentEmit from '~/interfaces/admin/equipment/ChangeEquipmentEmit'
-import moment from 'moment'
 
 const equipmentId = ref<string>('')
 const modelId = ref<string>('')
+const equipmentName = ref<string>('')
 const displayStateHistory = ref<boolean>(false)
 
 const setEquipmentId = (equipment: ChangeEquipmentEmit) => {
   equipmentId.value = ''
   modelId.value = ''
+  equipmentName.value = ''
 
   setTimeout(() => {
     equipmentId.value = equipment.id
     modelId.value = equipment.idModel
+    equipmentName.value = equipment.equipmentName
   }, 10)
 }
-
-onMounted(() => {
-  console.log(moment().format('DD/MM/YYYY'))
-})
 
 </script>
