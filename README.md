@@ -1,10 +1,11 @@
 # Gestão de Equipamentos
 
-## 1 - Para esse projeto, foram utilizadas as seguintes versões:
+## 1 - Para esse projeto, foram utilizadas as seguintes tecnologias e versões:
 
     Node.js - 18.17.0
     React - 18
     Next.js - 14.0.4
+	TypeScript - 5.3.3
 
 ## 2 - Instalação e execução do projeto;
 
