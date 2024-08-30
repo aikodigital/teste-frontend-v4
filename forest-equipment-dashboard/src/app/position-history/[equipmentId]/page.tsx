@@ -81,8 +81,8 @@ export default function Page({ params, searchParams }: Props) {
       </section>
       <section className="mx-auto w-10/12 max-w-screen-2xl space-y-2">
         <FilterPositions sortOrder={sortOrder} />
-        <div className="flex gap-4">
-          <div className="w-full basis-1/4">
+        <div className="flex flex-col gap-4 lg:flex-row">
+          <div className="w-full lg:basis-1/4">
             <PositionsList
               data={positionHistory}
               sortOrder={sortOrder}
@@ -90,7 +90,7 @@ export default function Page({ params, searchParams }: Props) {
             />
           </div>
 
-          <div className="h-[calc(100vh-200px)] w-full basis-3/4">
+          <div className="h-[600px] w-full lg:h-[calc(100vh-200px)] lg:basis-3/4">
             <Map data={formattedPositions ?? []} disablePopup />
           </div>
         </div>

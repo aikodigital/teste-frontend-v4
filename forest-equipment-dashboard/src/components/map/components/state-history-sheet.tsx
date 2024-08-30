@@ -19,6 +19,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { StateBadge } from './state-badge';
 
 interface StateHistorySheetProps {
   equipmentId: string;
@@ -135,7 +136,10 @@ function StateHistorySheet({ equipmentId }: StateHistorySheetProps) {
                   <span className="text-base">Estado:</span>
                 </div>
                 <div>
-                  <span className="text-sm">{state?.name}</span>
+                  <StateBadge
+                    stateColor={state?.color ?? '#000'}
+                    stateName={state?.name ?? 'Não definido'}
+                  />
                 </div>
                 <div className="text-muted-foreground">
                   <span className="text-base">Data: </span>

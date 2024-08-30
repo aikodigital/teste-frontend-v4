@@ -34,7 +34,7 @@ function FilterEquipments({
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col gap-4 lg:flex-row">
       <Select
         value={selectedState}
         onValueChange={(value) => navigate([{ state: value }])}

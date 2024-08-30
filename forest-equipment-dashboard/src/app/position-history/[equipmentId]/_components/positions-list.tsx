@@ -1,6 +1,6 @@
 'use client';
 
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { IEquipmentsPositionHistory } from '../../../../../@types/equipment';
 import { format } from 'date-fns';
 import { useRouter } from '@/hooks/useRouter';
@@ -33,8 +33,8 @@ function PositionsList({
   const { navigate } = useRouter();
 
   return (
-    <ScrollArea className="h-[calc(100vh-200px)]">
-      <div className="grid gap-4">
+    <ScrollArea className="w-96 whitespace-nowrap lg:h-[calc(100vh-200px)] lg:w-full">
+      <div className="flex w-max gap-4 lg:grid">
         {positions?.map((position) => (
           <div
             key={position.date}
@@ -73,6 +73,7 @@ function PositionsList({
           </div>
         ))}
       </div>
+      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 }
