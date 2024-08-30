@@ -1,7 +1,7 @@
 # Documentação da Aplicação
 
 ## *Visão Geral*
-Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Mapa, os filtros e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
+Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Mapa, os Filtros e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
 
 ## *Como rodar o projeto*
 - *Instalar dependências:* ```npm install```
