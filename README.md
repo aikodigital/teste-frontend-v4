@@ -1,207 +1,94 @@
-# Teste Frontend V4
+# Projeto para o Teste Frontend V4
 
-![Aiko](img/aiko.png)
+## Sobre a realização do projeto e a documentação
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+Deixo aqui um agradecimento para a Aiko Digital por ter realizado este desafio. Agradeço pela oportunidade de conhecer mais da empresa e dos serviços prestados por meio do projeto apresentado. Quanto ao projeto em si, pensei em usar parte dos conhecimentos requeridos pela vaga, como **Vue 3**, **Typescript** e **integração com API**, além de não ter a intenção de deixar um código muito verboso e/ou extenso. Por isso utilizei o framework **Nuxt 3** como principal tecnologia para o projeto.
 
-## O Desafio
+No que compete à documentação: pensei em uma documentação mais descritiva e menos técnica, procurando explicar conceitualmente sobre as principais pastas e arquivos do projeto. Por fim, deixo abaixo alguns detalhes sobre minhas escolhas:
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+* **Vue 3**: Sem dúvida uma ferramenta poderosa no desenvolvimento web. Comparando com React e Angular, ele mantém a simplicidade na codificação e não é tão opinativo quanto a sua forma de uso. Além disso ele tem boa curva de aprendizado e documentação bem completa. Por fim, tenho mais familiaridade com a linguagem, considerando todos os projetos que já desenvolvi.
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+* **Nuxt 3**: Aproveita o melhor do Vue 3 (como o **composition API**, reatividade e suporte mehorado para o Typescript) e da sua engine **Nitro** (como **SSR**, **roteamento** flexível e **API integrada** para facilidades com backend). Ele ficou mais aprimorado em relação ao Nuxt 2 (**HMR** e compilação mais eficiente) e tem features como os **auto-imports**, um grupo de **hooks** mais robusto e uma convenção de **estrutura de pastas** bem definido para criação das rotas, componentes e outras funcionalidades.
 
-## Requisitos
+* **Typescript**: Apesar de já ser implementado por causa do Nuxt 3, a **tipagem estástica** garante facilidade na detecção de erros em tempo de compilação, além da segurança, manutenção e consistência do código.
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+* **Composition API e scoped CSS**: Dei preferência ao padrão `<script setup lang="ts">`, `<template>` e `<style scoped>`. O composition API é mais flexível e moderno do que a abordagem tradicional de cptions API, simplificando o código a medida que avança em complexidade. Não optei por uso do **Tailwind** simplesmente para reduzir a verbosidade usada no template e fazer o melhor uso do scoped CSS, mas acredito que ambas as abordagens seriam válidas.
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+* **Leaflet**: Ótima ferramenta para a construção de mapas interativos. O Nuxt possui o módulo do **Nuxt Leaflet**, o que facilitou demais a construção do mapa e marcadores, por meio de componentes. Apenas depende de alguns detalhes como limitações ao **client side**, mas nada que não pudesse ser configurado com certa facilidade.
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+## Funcionalidades
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+A aplicação desenvolvida é dividida em 4 páginas. A seguintes funcionalidades são descritas abaixo:
 
-## Dados
+* **Layout (header e footer)**: Navegação aplicada a todas as páginas. Links para a aba inicial e mapa dos equipamentos, além dos meus links pessoais. Embora não tenha relevância direta com o desafio, mantive para garantir uma experiência de usuário mínima.
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+* **Início - Lista de equipamentos**: Possui a lista dos equipamentos com filtros para nome, modelo e estado atual do equipamento. A listagem em si é "clicável" e redireciona para as páginas de detalhes de cada equipamento.
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+* **Mapa de equipamentos**: Possui os detalhes da localização mais recente de cada equipamento, mantendo os mesmos filtros da página inicial. Sobre os marcadores no mapa é possível ver detalhes gerais de cada equipamento.
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+* **Detalhes do equipamento**: Possui os detalhes do equipamento, em especial o cálculo dos ganhos e do percentual de produtividade por período. Os filtros de início e fim servem para definir esse período, tanto nas listagem de estados e localizações quanto nos cálculos considerados.
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+* **Mapa de localizações do equipamento**: Possui o histórico de localizações do equipamento. Mantém os filtros por período para facilitar a visualização da rota do equipamento em curtos períodos.
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+## Principais pastas e arquivos
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+### Componentes
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+Divididos em duas pastas: **App** para componentes aplicáveis a um contexto geral, e **Equipments** para components que tem dependência das informações específicas dos equipamentos.
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+**Observação**: as pastas dos componentes não são apenas definidas para efeitos de organização, mas também se tornam "prefixos" do nome dos componentes ao fazer o auto-import. **Exemplo**: o componente em `/components/App/Table.vue` é usado como `AppTable` dentro dos templates.
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+#### App:
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+* **Header e Footer**: Compõe os componentes encapsulados no layout das páginas.
+* **Table**: Tabela que aceita uma tipagem genérica para definir as linhas e colunas da mesma.
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+#### Equipments:
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+* **Card**: Possui as informações específicas do equipamento. Ficou separado para segmentar as informações da página em que é usado.
+* **ListSearchBar e DateSearchBar**: Compõe os filtros das páginas, separei em dois tipos de filtros por causa dos propósitos distintos de cada um.
+* **Map**: Mapa para gerar localizações dos equipamentos. Como eram muitas informações específicas decidi encapsular dentro do contexto de equipamentos.
 
+### Composables
 
-## O que é permitido
+Também possui auto-import e foi usado apenas para definir o estado dos equipamentos. Pela complexidade das informações que seriam persistidas entre os componentes, optei por não usar o **Vuex** ou **Pinia** para gerenciamento de estado global. O hook de `useState()` serviu como uma alternativa nesse caso.
 
-* Vue, React e Angular.
+### Pages
 
-* Typescript.
+Já descrito anteriormente, o sistema de roteamento da aplicação é definido em `/pages`. Procurei manter essa estrutura de páginas pelo propósito de cada uma. Caso tivesse uma página inicial além da página de listar equipamentos, eu teria modificado essa estrutura para deixar a listagem em `/pages/equipments/index.vue`.
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+### Server API
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+A rota `/api/equipments` que possui o handler que puxa todas as informações do equipmento de uma vez. Acredito que também pudesse ter separado em pequenas rotas para simular uma API fazendo diferentes requisições como, por exemplo, `/equipaments?page=42` para listar equipamentos por página, `/equipaments/models` para listar modelos e `/equipaments/42` para obter informações do equipamento por id. Mas novamente, pelo argumento de complexidade e volume informações, decidi manter apenas uma única rota.
 
-* Template engines (Pug, Ejs, etc).
+A ideia foi simular um pouco da integração com o backend, mas não defini nenhuma validação das informações (exemplo: criar **DTOs** para converter os dados em data para a tipagem definida dentro dos componentes, ou verificar se a **response** pudesse retornar erros).
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+### Utils
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+Arquivos utilitários que facilitam a lógica usada nas páginas e componentes. Exemplo: dentro de `string.ts` existe a função `generateHashColorHex()` que gera um HEX de cores de acordo com a string passada. Isso facilitou a separação das cores dos equipamentos por modelo dentro do mapa sem precisar "hardcodar" as cores e garantindo maior escalabilidade (caso tivessem mais modelos).
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+### Outros
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
+* **types**: Definição das tipagens (no contexto dos equipamentos) usadas nos componentes.
 
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
+* **plugins**: Possui o plugin do **FontAwesomeIcons** para importação de ícones úteis.
 
-## O que não é permitido
+* **layout**: Podendo ser usado por meio do `NuxtLayout`, apenas um único layout definido para as páginas.
 
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
+* **assets**: Possui a imagem do logo e a estilização global das páginas. Um detalhe para a padronização de cores por meio das variáveis globais.
 
-## Recomendações
+* **data**: Arquivo com as informações que irão servir de base para popular a página. Mantive a posição da pasta na estrutura geral do projeto para garantir que o projeto pudesse recolher essas informações do mesmo meio, podendo inclusive modificar a quantidade de equipamentos, estados, modelos, etc. O projeto irá continuar funcionando do mesmo jeito.
 
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
+## Considerações finais
 
-## Extras
+A descrição do desafio foi bem feita ao mesmo tempo que deu muita liberdade na criação da interface e das funcionalidade. Por isso acredito que o projeto também me ajudou pessoalmente como desenvolvedor. Só gostaria de destacar os pontos a melhorar no projeto, que notei e gostaria de ter implementado:
 
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
+* Responsividade completa: embora a página tenha certa responsividade, acredito que possa ter melhorado ainda mais os detalhes para diferentes dispositivos.
 
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
+* Uma página inicial que fosse uma introdução da aplicação, em vez de ir diretamente para a listagem de equipamentos.
 
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
+* Bug nos filtros de datas: infelizmente a opção de "limpar" no datepicker dos campos de data gera um bug na aplicação. A solução é relativamente simples (não emitir evento quando o valor do campo for vazio ou inválido), mas deixei dessa forma.
 
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
+* API de localização: mostrar informações do local em vez apenas do lat/lon. Por exemplo usar o https://nominatim.openstreetmap.org/ para retornar essas informações.
 
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-* Relizar o fork e clonar esse repositório para sua máquina.
-  
-* Criar uma branch com o nome de `teste/[NOME]`.
-  * `[NOME]`: Seu nome.
-  * Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-  
-* Faça um commit da sua branch com a implementação do teste.
-  
-* Realize o pull request da sua branch nesse repositório.
+* Melhorias no mapa: Seria interessante ter uma rota entre os pontos do mapa em vez de linhas retas. Embora não tenha pensado diretamente em uma solução para o caso, acredito que seja uma feature bem interessante de implementar.
