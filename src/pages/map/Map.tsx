@@ -6,42 +6,49 @@ import { IEquipmentPositionHistory } from '../../models/EquipmentPositionHistory
 
 
 const MapComponent = () => {
+  const [equipmentHistory, setEquipmentHistory] =
+    useState<IEquipmentPositionHistory>({
+      equipmentId: "",
+      positions: [],
+    });
 
-  const [equipmentHistory, setEquipmentHistory ] = useState<IEquipmentPositionHistory[]>([]);
-  const position = {lat: 53.54992, lng: 10.00678};
-
-  
-  
-  
-  
-  useEffect(()=> {
+  useEffect(() => {
     getEquipmentPositionHistory();
-  }, [])
-
+  }, []);
 
   const getEquipmentPositionHistory = async () => {
     try {
-      const resp =  await fetch('data/equipmentPositionHistory.json');
-      const data :IEquipmentPositionHistory[] = await resp.json();
-      setEquipmentHistory(data);
-    }catch(e){
-      console.log(e)
+      const resp: any = await fetch("data/equipmentPositionHistory.json");
+      const data = await resp.json();
+      setEquipmentHistory(data[0]);
+    } catch (e) {
+      console.log(e);
     }
-   
+  };
+
+  if (!equipmentHistory.positions.length) {
+    return null;
   }
-  
+
+  const firstPosition = {
+    lat: equipmentHistory.positions[0].lat,
+    lng: equipmentHistory.positions[0].lon,
+  };
+
   return (
-    <div className='map-container'>
-      <APIProvider apiKey={process.env.REACT_APP_MAP_KEY || ''}>
-        <Map defaultCenter={position} defaultZoom={10}>
-          <Marker position={position} />
+    <div className="map-container">
+      <APIProvider apiKey={process.env.REACT_APP_MAP_KEY || ""}>
+        <Map defaultCenter={firstPosition} defaultZoom={10}>
+          {equipmentHistory.positions.map((position, index) => (
+            <Marker
+              key={index}
+              position={{ lat: position.lat, lng: position.lon }}
+            />
+          ))}
         </Map>
       </APIProvider>
     </div>
-   
   );
-}
-
-
+};
 
 export default MapComponent;
