@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { IEquipment } from '../../models/Equipment';
 import EquipmentTable from '../../components/equipments/EquipmentsTable';
+import { EquipmentStateContextProvider } from '../../context/EquipmentStateContext';
 
 
 
 const InitialPage = () => {
-
   const [equipments, setEquipments] = useState<IEquipment[]>([]);
 
 
   useEffect(() => {
     getEquipments();
   }, [])
-
-
 
 
   const getEquipments = async () => {
@@ -30,14 +28,15 @@ const InitialPage = () => {
 
 
   return (
-    <div className="App">
-      <h2>Meus Equipamentos</h2>
+    <EquipmentStateContextProvider>
+      <div className="App">
+        <h2>Meus Equipamentos</h2>
 
-      <EquipmentTable
-        equipments={equipments}
-      />
-
-    </div>
+        <EquipmentTable
+          equipments={equipments}
+        />
+      </div>
+    </EquipmentStateContextProvider>
   );
 }
 
