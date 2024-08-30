@@ -1,207 +1,136 @@
 # Teste Frontend V4
 
-![Aiko](img/aiko.png)
-
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
-
 ## O Desafio
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+O desafio consiste em criar uma aplicação web que permita ao cliente monitorar sua frota de equipamentos por meio de uma interface com um mapa. Nele, é possível ver todos os equipamentos cadastrados, assim como informações específicas dos mesmos.
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+## Acessar a aplicação
 
-## Requisitos
+A aplicação está hospedada no serviço do Netlify e pode ser encontrada [aqui](https://track-equipment-on-map.netlify.app/).
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+## Para rodar a aplicação localmente
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+- Clone o projeto
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
-
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
-
-## Dados
-
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
-
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
+```
+https://github.com/seu-user-aqui/teste-frontend-v4.git
 ```
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+![image](https://github.com/user-attachments/assets/9079262d-54d9-4332-bafa-ffe04ad7ad9d)
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
+- Acesse o diretório
+
+```
+cd teste-frontend-v4
 ```
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+- Instale as dependências
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
+```
+npm install
 ```
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+- Suba o servidor
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+```
+npm start
 ```
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+- Acesse a URL no navegador
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+Costumeiramente, uma aba nova é aberta no seu navegador padrão.
+
+## Como usar
+
+![image](https://github.com/user-attachments/assets/29ac3532-fbe7-4966-96ba-ccdf220500d2)
+
+### Legenda
+
+Os equipamentos são representados no mapa por meio de ícones e cores.
+
+#### Ícones
+
+- Folha: representa o equipamento do tipo _harvester_.
+
+![image](https://github.com/user-attachments/assets/9c594b45-c125-4974-8961-8450f130c641)
+
+- Trator: representa o equipamento do tipo _garra traçadora_.
+
+![image](https://github.com/user-attachments/assets/5f932136-1418-44a0-b95c-9cca9701f771)
+
+- Caminhão: representa o equipamento do tipo _caminhão de carga_.
+
+![image](https://github.com/user-attachments/assets/03500f54-41a2-44c8-b9c3-2dca365251f9)
+
+#### Cores
+
+As cores representam os três estados possíveis para os equipamentos.
+
+- Operando (verde)
+- Parado (amarelo)
+- Manutenção (vermelho)
+
+### Interagir com um equipamento
+
+Basta clicar no seu ícone que um pop up será aberto e mostrará as informações básicas do equipamento. [Vídeo](https://www.loom.com/share/243682926d694f20b8dc6752e1f8be09?sid=fed296f9-bc06-4f50-9a5d-dd10d445c30a)
+
+### Ver histórico de estados
+
+Basta clicar no botão e uma área com esses dados surgirá logo abaixo. É possível rolar o botão de rolagem do mouse para ver mais registros. [Vídeo](https://www.loom.com/share/cda2a1c703c440b7bea5241685fa2518?sid=c9eac89b-f99e-495e-9c11-053469b0d294)
+
+### Ver histórico de localizações
+
+Ao clicar no botão, marcadores serão adicionados no mapa, indicando todas as localizações em que este equipamento esteve. Cada ponto é numerado para ser possível identificar a ordem do deslocamento. Clicar em um marcador revela as suas coordenadas. Automaticamente, um pop up com as coordenadas da localização mais recente abrirá. Para removê-los, clique no botão "Resetar" no topo da página. A aplicação não impede que mais de um grupo de localizações seja adicionada no mapa ao mesmo tempo, então é recomendável usar o botão de reset quando desejar conferir as posições de outro equipamento. [Vídeo](https://www.loom.com/share/3ed8b6adb4a44e3c9ace6cf7f71571dc?sid=ad9b4da7-551b-43bb-afe9-01349805b1fc)
+
+### Filtrar equipamentos por modelo ou estado
+
+Para fazer uma visualização com determinado critério, é possível utilizar o filtro no topo da página. Primeiro, é necessário escolher o critério desejado, estado ou modelo, no dropdown da esquerda. O dropdown da direita, então, será populado com as opções disponíveis. Selecionada a opção, o botão que aplica o filtro ficará habilitado para clique. Para desfazer tudo, basta usar o botão de reset ou alterar os critérios do filtro. [Vídeo](https://www.loom.com/share/ecb29506c6a04079a3afe5a8e70d1238?sid=8143178c-af77-42ff-a7bc-b0e29c867b0c)
+
+## Tecnologias e recursos
+
+- [React](https://pt-br.legacy.reactjs.org/)
+- [Mantine](https://mantine.dev/)
+- [Leaflet](https://leafletjs.com/)
+- [React Leaflet](https://react-leaflet.js.org/)
+- [Tabler Icons](https://tabler.io/icons/)
+- [Loom](https://www.loom.com/)
+
+## Justitificativas
+
+### Posiçao inicial do mapa
+
+Para simular um caso real, pensei que seria bom ter uma posição inicial definida, em vez de selecionar um ponto qualquer, como as coordenadas de um ponto no centro de São Paulo. Em um projeto, acredito que esse failsafe value seria estabelecido pela liderança. Aqui, como estou sozinho, escolhi um ponto entre os disponíveis.
+
+### Os objetos possuírem `states` e `lastKnownState`
+
+Escolhi ter o último estado conhecido direto no objeto, em vez de ser algo possível de ser descoberto olhando diretamente o array para melhorar a legibilidade do código. Com essa escolha, o código ficou assim:
+
+```
+Último estado conhecido: {equipment.lastKnownState.name}
 ```
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+em vez de
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+```
+Último estado conhecido: {equipment.equipment.states[equipment.states.length - 1].name}
 ```
 
+Ainda que seja necessario usar esse trecho `equipment.states.length - 1`, isso fica dentro da função, que somente quem desejar saber as minúcias irá olhar. Quem estiver lendo o componente em alto nível não precisaria saber esse detalhe, então com isso almejo diminuir a carga cognitiva do leitor.
 
-## O que é permitido
+### TypeScript
 
-* Vue, React e Angular.
+Era meu objetivo usar essa tecnologia do projeto, mas não consegui resolver alguns conflitos que o TS apresentou com as props de componentes libs do Leaflet. Como isso estava tomando tempo, optei por focar na entrega em si.
 
-* Typescript.
+### Testes
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+Como tinha pouco contato com tecnologia de mapas, percebi que seria melhor para a entrega focar nas funciondalidades primeiro, mas tinha a intenção de implementar testes. Para um _próximos passos_ buscaria implementar testes com Cypress.
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+### Histórico de posições
 
-* Template engines (Pug, Ejs, etc).
+Infelizmente não consegui encontrar em tempo hábil uma maneira de mostrar somente os marcadores de posição de um equipamento por vez, sendo possível, por isso, ver todos juntos, o que fica confuso.
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+Além disso, optei por indicar as posições com números para tentar auxiliar o usuário a ter uma representação da trajetória. Acredito que só traçar linhas ficaria confuso, pois não seria possível determinar início e fim, seria só um amontoado de linhas e pontos.
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+### Utilização de fetch
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
-
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-## O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-* Relizar o fork e clonar esse repositório para sua máquina.
-  
-* Criar uma branch com o nome de `teste/[NOME]`.
-  * `[NOME]`: Seu nome.
-  * Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-  
-* Faça um commit da sua branch com a implementação do teste.
-  
-* Realize o pull request da sua branch nesse repositório.
+Usei fetch para ler os arquivos de texto para tentar deixar o código mais “plug & play”, supondo que ele poderia ser integrado mais facilmente a um back-end do que somente importar os arquivos json e usar.
