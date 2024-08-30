@@ -84,7 +84,7 @@ const TrackPage = () => {
 
   return (
     <div>
-      <div className="relative w-full flex items-center py-5 justify-center bg-gray-200 border-b z-50">
+      <div className="relative w-full flex items-center py-5 justify-center bg-gray-200 border-b z-50 md:top-0">
         <Button
           variant="ghost"
           onClick={() => router.back()}

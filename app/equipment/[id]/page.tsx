@@ -15,13 +15,13 @@ import { formatCurrency } from "@/app/_utils/format-currence";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import EquipmentState from "@/app/_components/equipment-state";
 
-interface EquipamentPageProps {
+interface EquipmentPageProps {
   params: {
     id: string;
   };
 }
 
-const EquipamentPage = ({ params }: EquipamentPageProps) => {
+const EquipmentPage = ({ params }: EquipmentPageProps) => {
   const [equipment, setEquipment] = useState<
     (typeof equipmentDetails)[0] | null
   >(null);
@@ -184,4 +184,4 @@ const EquipamentPage = ({ params }: EquipamentPageProps) => {
   );
 };
 
-export default EquipamentPage;
+export default EquipmentPage;
