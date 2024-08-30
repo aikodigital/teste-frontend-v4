@@ -1,15 +1,7 @@
 <template>
-  <div
-    class="absolute top-0 left-0 w-full p-5 z-20 text-lg"
-    :class="{
-      [ColorEquipmentType.CA]: data?.name === 'Caminhão de carga',
-      [ColorEquipmentType.HV]: data?.name === 'Harvester',
-      [ColorEquipmentType.GT]: data?.name === 'Garra traçadora'
-
-    }"
-  >
-    <div class="border-inherit flex flex-row items-center">
-      <div class="border border-inherit w-16 h-16 flex items-center justify-center rounded-full mr-2">
+  <div class="wrap">
+    <div class="flex flex-row items-center">
+      <div class="border-slate-600 border w-16 h-16 flex items-center justify-center rounded-full mr-2">
         
         <PhosphorIconTruck
           v-if="data?.name === 'Caminhão de carga'"
@@ -29,8 +21,31 @@
           size="35"
         />
       </div>
-      <div class="border-inherit">
+      <div>
         <span class="mb-2 block font-light text-2xl">{{ data?.name }}</span>
+        <div class="flex flex-row gap-1 mb-2">
+          <div
+            v-for="(earning, index) in data?.hourlyEarnings"
+            :key="index"
+            class="text-sm inline-flex items-center py-[2px] px-2 rounded-md"
+            :style="{ 'background-color': getState(earning.equipmentStateId).color }"
+          >
+            <PhosphorIconProhibit
+              v-show="getState(earning.equipmentStateId).name === 'Parado'"
+              weight="thin"
+            />
+            <PhosphorIconWrench
+              v-show="getState(earning.equipmentStateId).name === 'Manutenção'"
+              weight="thin"
+            />
+            <PhosphorIconSealCheck
+              v-show="getState(earning.equipmentStateId).name === 'Operando'"
+              weight="thin"
+            />
+            <span class="ml-1">{{ getState(earning.equipmentStateId).name }}</span>
+            <span class="text-xs ml-2">{{ formatBRL(earning.value) }}</span>
+          </div>
+        </div>
 
         <button type="button" class="btn" @click="dispatchClickHistory">
           <PhosphorIconClockCounterClockwise class="mr-1" weight="thin" />
@@ -42,15 +57,11 @@
 </template>
 
 <script setup lang="ts">
-
-enum ColorEquipmentType {
-  CA = 'bg-red-700 text-slate-100 border-slate-100',
-  HV = 'bg-emerald-700 text-slate-100 border-slate-100',
-  GT = 'bg-amber-500 text-slate-800 border-slate-800'
-}
+import getStateSelected from '~/interfaces/admin/equipment/GetStateSelected';
 
 const props = defineProps<{
-  modelId: string
+  modelId: string,
+  equipmentId: string
 }>()
 
 const emit = defineEmits(['click-history'])
@@ -64,12 +75,38 @@ const dispatchClickHistory = () => {
   emit('click-history')
 }
 
+const getState = (stateId: string) => {
+  return getStateSelected(stateId)
+}
+
+const formatBRL = (value: number) => {
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+
+  return formatter.format(value);  
+}
+
 </script>
 
 <style scope>
+.wrap {
+  @apply
+    absolute
+    top-0
+    left-0
+    w-full
+    p-5 
+    z-20
+    text-lg
+    bg-gradient-to-r from-slate-200 to-slate-300
+
+}
 .btn {
   @apply
-    border-inherit
     bg-transparent
     flex
     flex-row
@@ -80,6 +117,7 @@ const dispatchClickHistory = () => {
     text-xs
     rounded-full
     border
+    border-slate-600
     hover:brightness-75
     transition-all
 }

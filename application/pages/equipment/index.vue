@@ -5,6 +5,7 @@
       <EquipmentModel 
         v-if="modelId"
         :model-id="modelId"
+        :equipment-id="equipmentId"
         @click-history="displayStateHistory = true"
       />
       <EquipmentMapEquipment
@@ -21,7 +22,7 @@
           :equipment-id="equipmentId"
           @close-bottom-sheet="displayStateHistory = false"
         />
-      </template>  
+      </template>
     </Transition>
   </NuxtLayout>
 </template>
