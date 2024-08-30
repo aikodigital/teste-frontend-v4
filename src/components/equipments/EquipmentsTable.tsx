@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { Table, TableBody, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import EquipmentDetailsModal from '../equipament-details/EquipamentDetailsModal';
+import EquipmentDetailsModal from "../equipament-details/EquipamentDetailsModal";
 import { styled, useTheme } from "@mui/material/styles";
 
 import { IEquipment } from "../../models/Equipment";
@@ -9,7 +16,7 @@ import { useMediaQuery } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "rgb(3, 43, 111)",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -31,24 +38,23 @@ const EquipmentTable = ({ equipments }: { equipments: IEquipment[] }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [ isModalOpen, setIsModalOpen ] = useState<boolean>(false);
-  const [ currentEquipment, setCurrentEquipment ] = useState<IEquipment | null>(null);
-
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [currentEquipment, setCurrentEquipment] = useState<IEquipment | null>(
+    null
+  );
 
   const openEquipamentDetailsModal = (equipment: IEquipment) => {
     setCurrentEquipment(equipment);
     setIsModalOpen(true);
-  }
+  };
 
   const onCloseModal = () => {
     setIsModalOpen(false);
     setCurrentEquipment(null);
-
-  }
+  };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ width: "100%", overflowX: "auto" }}>
       <Table
         sx={{
           minWidth: isMobile ? "100%" : 650,
@@ -82,9 +88,16 @@ const EquipmentTable = ({ equipments }: { equipments: IEquipment[] }) => {
         <TableBody>
           {equipments.map((equipment) => (
             <StyledTableRow
-              onClick={()=> openEquipamentDetailsModal(equipment)}
+              onClick={() => openEquipamentDetailsModal(equipment)}
               key={equipment.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0, cursor: 'pointer' } }}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "#5d99d580", // Cor ao passar o mouse
+                },
+                transition: "background-color 0.3s", // Transição suave para a mudança de cor
+              }}
             >
               <StyledTableCell component="th" scope="row">
                 {equipment.id}
@@ -97,12 +110,13 @@ const EquipmentTable = ({ equipments }: { equipments: IEquipment[] }) => {
           ))}
         </TableBody>
       </Table>
-      {currentEquipment &&
+      {currentEquipment && (
         <EquipmentDetailsModal
           isOpen={isModalOpen}
           onClose={onCloseModal}
           equipment={currentEquipment}
-        />}
+        />
+      )}
     </TableContainer>
   );
 };
