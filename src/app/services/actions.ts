@@ -22,7 +22,7 @@ export async function getEquipmentModel() {
 }
 
 export async function getEquipmentState() {
-    const statesResponse = await getData("data/equipmentState.json");
+    const statesResponse = await getData("/data/equipmentState.json");
     const statesData = statesResponse;
 
     return statesData;
