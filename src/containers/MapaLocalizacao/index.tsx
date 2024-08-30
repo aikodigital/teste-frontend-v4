@@ -155,7 +155,7 @@ const MapaLocalizacao = ({ filtro, busca }: MapaLocalizacaoProps) => {
     <MapWrapper>
       <MapContainer
         center={[-19.93, -43.93]}
-        zoom={13}
+        zoom={7}
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
