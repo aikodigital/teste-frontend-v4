@@ -11,21 +11,34 @@
   .marker-container{
     width: 70%;
   }
-  
+
+  .info-window-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
   .custom-button {
-    border: solid 1px blue;
+    border: solid 1px rgb(112, 112, 112);
     border-radius: 5px;
-    color: blue;
-    background-color: white;
+    width: 100px;
+    color: white;
+    background-color: rgb(100, 100, 100);
     transition: background-color 0.1s ease, color 0.1s ease, transform 0.1s ease;
   }
   
   .custom-button:hover {
-    background-color: blue;
+    background-color: rgb(46, 46, 46);
     color: white;
-    transform: scale(1);
   }
 
+  .custom-button:active {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+  }
   
   .custom-modal-backdrop {
     opacity: 0.05 !important;
