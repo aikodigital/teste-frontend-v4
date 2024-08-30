@@ -44,8 +44,9 @@
     opacity: 0.05 !important;
   }
 
-  .modal-backdrop.custom-modal-backdrop.show {
-    background-color: rgba(0, 0, 0, 0.5) !important;
+  .modal-backdrop.fade {
+    background-color: rgba(0, 0, 0, 0.151) !important;
+    opacity: 0.05 !important;
   }
   
 }

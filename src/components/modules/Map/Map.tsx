@@ -127,12 +127,12 @@ const Map: FC<MapProps> = ({ model, state }) => {
   function handleClick(
     position: google.maps.LatLng | google.maps.LatLngLiteral,
     label: string,
-    stateAttrs: StateAttributes,
     markerId: string
   ): (() => void) | void {
     if (!mapRef.current) return;
 
     const equipmentDatails = getEquipmentDetails(markerId);
+    const equipmentStates = getEquipmentStatesHistory(markerId);
 
     if (markerRef.current) {
       markerRef.current.setMap(null);
@@ -154,7 +154,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
       content: `
         <div class="info-window-container">
           <div style="font-size: 15px; text-align: center;">${equipmentDatails.equipmentModel.name}</div>
-          <div style="font-size: 20px; text-align: center;">${stateAttrs.name}</div>
+          <div style="font-size: 20px; text-align: center;">${equipmentStates.name}</div>
           <div style="font-size: 12px; text-align: center; margin-top: 3px">Produtividade em 24h: ${equipmentDatails.productivity}</div>
           <div style="font-size: 12px; text-align: center; margin-top: 3px">Total de ganhos em 24h: ${equipmentDatails.totalEarnings}</div>
           <div style="padding: 10px; text-align: center;">${label}</div>
@@ -177,13 +177,12 @@ const Map: FC<MapProps> = ({ model, state }) => {
       const button = document.getElementById(`open-modal-button-${markerId}`);
       if (button) {
         button.addEventListener("click", () => {
+          setModalContent(equipmentStates);
           setHistoryModal(true);
         });
       }
     });
 
-    const equipmentStates = getEquipmentStatesHistory(markerId);
-    setModalContent(equipmentStates);
 
     return () => {
       marker.setMap(null);
@@ -469,11 +468,12 @@ const Map: FC<MapProps> = ({ model, state }) => {
         statesHistory: [],
       };
     }
-
+  
     const statesHistory = history.states.map((state) => {
       const stateInfo = equipmentStatesData.find(
-        (s) => s.name === state.equipmentStateId
+        (s) => s.id === state.equipmentStateId
       );
+  
       return {
         date: state.date,
         state: stateInfo || {
@@ -483,15 +483,16 @@ const Map: FC<MapProps> = ({ model, state }) => {
         },
       };
     });
-
+  
     const lastStateId =
       history.states.length > 0
         ? history.states[history.states.length - 1].equipmentStateId
         : "";
+  
     const findEquipmentStateById = equipmentStatesData.find(
       (state) => state.id === lastStateId
     );
-
+  
     if (!findEquipmentStateById) {
       return {
         name: "Unknown",
@@ -500,7 +501,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
         statesHistory,
       };
     }
-
+  
     return {
       name: findEquipmentStateById.name,
       id: findEquipmentStateById.id,
@@ -508,7 +509,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
       statesHistory,
     };
   }
-
+  
   if (!API_KEY) {
     alert('API key is missing.');
     return null;
@@ -531,8 +532,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
                 const positionId = history.equipmentId;
                 const lastPosition =
                   history.positions[history.positions.length - 1];
-                const equipmentStates = getEquipmentStatesHistory(positionId);
-                const equipmentDatails = getEquipmentDetails(positionId);
+                const equipmentDetails = getEquipmentDetails(positionId);
                 const date = new Date(lastPosition.date);
                 const lastPositionCoords = {
                   lat: lastPosition.lat,
@@ -549,12 +549,11 @@ const Map: FC<MapProps> = ({ model, state }) => {
                         handleClick(
                           lastPositionCoords,
                           date.toLocaleDateString("pt-BR"),
-                          equipmentStates,
                           positionId
                         )
                       }
                       icon={{
-                        url: equipmentDatails.icon,
+                        url: equipmentDetails.icon,
                         scaledSize: new google.maps.Size(
                           isHovered === positionId ? 60 : 50,
                           isHovered === positionId ? 60 : 50
@@ -563,6 +562,19 @@ const Map: FC<MapProps> = ({ model, state }) => {
                       }}
                     />
 
+                    <div
+                      style={{
+                        display: historyModal ? 'block' : 'none',
+                        backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 999, // Certifique-se de que o backdrop esteja acima de outros elementos
+                      }}
+                    ></div>
+
                     <Modal
                       backdropClassName="custom-modal-backdrop"
                       onBackdropClick={() => setHistoryModal(false)}
@@ -570,6 +582,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
                       onHide={() => setHistoryModal(false)}
                       size="lg"
                       centered
+                      backdrop={false}
                     >
                       <Modal.Header closeButton>
                         <Modal.Title>Histórico do equipamento</Modal.Title>
