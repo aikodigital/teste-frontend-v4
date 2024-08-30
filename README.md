@@ -70,28 +70,24 @@ O projeto conta com uma interface responsiva para todos os tipos de telas, se ad
 Clone o repositório:
 
 ```sh
-Copiar código
 git clone https://github.com/m4rrec0s/teste-frontend-v4/tree/teste/marcos-henrique-araujo
 ```
 
 Navegue até o diretório do projeto:
 
 ```sh
-Copiar código
 cd seu-repositorio
 ```
 
 Instale as dependências:
 
 ```sh
-Copiar código
 npm install
 ```
 
 Inicie o servidor de desenvolvimento:
 
 ```sh
-Copiar código
 npm run dev
 ```
 
