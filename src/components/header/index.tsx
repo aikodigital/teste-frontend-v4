@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export default function Header() {
-
   return (
     <nav
       className="bg-white shadow text-white p-5 sm:p-2 md:flex md:justify-between 

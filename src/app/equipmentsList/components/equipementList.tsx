@@ -67,4 +67,4 @@ export default function EquipmentList() {
       <DataTable columns={columns} data={equipment} />
     </div>
   );
-};
+}

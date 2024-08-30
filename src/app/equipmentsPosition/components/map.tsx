@@ -1,6 +1,11 @@
 "use client";
 import React from "react";
-import { GoogleMap, InfoWindow, LoadScriptNext, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScriptNext,
+  Marker,
+} from "@react-google-maps/api";
 import { Position } from "@/types/Position";
 
 interface MapComponentProps {
@@ -8,13 +13,16 @@ interface MapComponentProps {
   lastState?: string;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => {
+const MapComponent: React.FC<MapComponentProps> = ({
+  positions,
+  lastState,
+}) => {
   const mapStyle = {
     width: "850px",
     height: "500px",
   };
 
-  const positionLastIndex = positions?.length -1 || 0;
+  const positionLastIndex = positions?.length - 1 || 0;
 
   const center = {
     lat: positions[positionLastIndex]?.lat || 0,
@@ -30,7 +38,11 @@ const MapComponent: React.FC<MapComponentProps> = ({ positions, lastState }) => 
         mapTypeId="satellite"
       >
         {positions.map((item, index) => (
-          <Marker key={index} position={item} title={new Date(item.date).toLocaleString()}>
+          <Marker
+            key={index}
+            position={item}
+            title={new Date(item.date).toLocaleString()}
+          >
             {index === positionLastIndex && (
               <InfoWindow position={{ lat: item.lat, lng: item.lng }}>
                 <div className="w-auto h-max">
