@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import type { Equipment, EquipmentPosition } from '~/models/Equipment'
 import historic from '../../data/equipmentPositionHistory.json'
 import equipment from '../../data/equipment.json'
+import type { Equipment, EquipmentPosition } from '~/models/Equipment'
 
 interface State {
   equipments: Array<Equipment>
