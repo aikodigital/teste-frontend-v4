@@ -1,11 +1,13 @@
 import { Box, Stack, Text } from "@mantine/core";
 import L from "leaflet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import { useMap } from "react-leaflet";
 
-const PositionMarker = ({ data }) => {
+const PositionMarker = ({ trajectoryMarkers, reset }) => {
   const map = useMap();
+  const [lol, setLol] = useState(trajectoryMarkers.positions ? trajectoryMarkers.positions : []);
+  const markerGroup = L.layerGroup().addTo(map);
 
   const renderComponentToHtml = (component) => {
     return ReactDOMServer.renderToStaticMarkup(component);
@@ -35,8 +37,8 @@ const PositionMarker = ({ data }) => {
   };
 
   useEffect(() => {
-    if (data.positions?.length > 0) {
-      data.positions?.forEach((position, index) => {
+    if (trajectoryMarkers.positions?.length > 0) {
+      trajectoryMarkers.positions?.forEach((position, index) => {
         const content = renderComponentToHtml(
           <Stack spacing={8}>
             <Text weight={700} ta="center">
@@ -48,12 +50,19 @@ const PositionMarker = ({ data }) => {
           </Stack>
         );
 
-        const marker = L.marker([position.lat, position.lon], { icon: positionIcon(index + 1) }).addTo(map);
+        const marker = L.marker([position.lat, position.lon], { icon: positionIcon(index + 1) }).addTo(markerGroup);
         marker.bindPopup(content).openPopup();
+        setLol((prevLol) => [...prevLol, marker]);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data.positions, map]);
+  }, [trajectoryMarkers.positions, map]);
+
+  useEffect(() => {
+    if (reset) {
+      lol?.forEach((marker) => marker.remove());
+    }
+  }, [lol, reset]);
 };
 
 export default PositionMarker;

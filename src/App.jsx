@@ -21,6 +21,7 @@ export default function App() {
   const [equipments, setEquipments] = useState([]);
   const [showStateHistory, setShowStateHistory] = useState(false);
   const [trajectoryMarkers, setTrajectoryMarkers] = useState([]);
+  const [resetTrajectoryMarkers, setResetTrajectoryMarkers] = useState(false);
   const initialMapPosition =
     equipmentPositionHistory.length > 0
       ? [equipmentPositionHistory[0].positions[0].lat, equipmentPositionHistory[0].positions[0].lon]
@@ -167,18 +168,32 @@ export default function App() {
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error.message}</p>;
 
+  console.log(trajectoryMarkers);
+
   return (
     <Stack align="center" w="100%" pt={20} pb={0}>
       <Flex align="end" w="100%" justify="center" gap={30}>
         <Filter initialEquipments={initialEquipments} setEquipments={setEquipments} />
-        <Button onClick={() => setEquipments(initialEquipments)}>Resetar</Button>
+        <Button
+          onClick={() => {
+            setEquipments(initialEquipments);
+            // setTrajectoryMarkers([]);
+            setResetTrajectoryMarkers(true);
+          }}
+        >
+          Resetar
+        </Button>
       </Flex>
       <MapContainer center={initialMapPosition} zoom={13} style={{ zIndex: 1 }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <PositionMarker data={trajectoryMarkers} />
+        <PositionMarker
+          trajectoryMarkers={trajectoryMarkers}
+          reset={resetTrajectoryMarkers}
+          setTrajectoryMarkers={setTrajectoryMarkers}
+        />
         {equipments.length > 0 &&
           equipments.map((equipment) => (
             <Marker
