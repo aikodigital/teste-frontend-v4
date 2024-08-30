@@ -1,0 +1,32 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import Header from "./header.vue";
+import Map from "./map.vue";
+import TableEquipment from "./table-equipments.vue";
+import EquipmentWithLastPosition from "@/common/types/EquipmentWithLastPosition";
+import { listEquipmentsWithLastPosition } from "@/common/services/EquipmentService";
+
+
+const map = ref<InstanceType<typeof Map>>();
+
+function navigateMap(equipment: EquipmentWithLastPosition){
+  map.value!.setView(equipment);
+}
+</script>
+<template>
+    <section class="w-full h-full bg-zinc-800">
+      <Header/>
+      <div class="flex flex-row">
+        <TableEquipment :equipments="listEquipmentsWithLastPosition()"
+          @navigate="navigateMap"  
+        />
+        <Map ref="map"/>
+      </div>
+    </section>
+</template>
+<style scoped>
+section {
+  background-image: url("@/assets/img/background.png");
+}
+</style>
+  
