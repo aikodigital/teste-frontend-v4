@@ -12,7 +12,9 @@
   "dependencies": {
     "@nuxt/eslint": "^0.5.3",
     "@nuxt/image": "^1.8.0",
+    "@nuxt/scripts": "^0.7.1",
     "animate.css": "^4.1.1",
+    "dotenv": "^16.4.5",
     "eslint": "^9.9.1",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",

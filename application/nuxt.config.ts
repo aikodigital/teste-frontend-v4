@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     'nuxt-phosphor-icons',
     '@nuxt/eslint',
     'nuxt-vue-map-ui',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxt/scripts'
   ],
   components: [
     {
@@ -27,5 +28,6 @@ export default defineNuxtConfig({
       pathPrefix: true,
       prefix: 'Admin'
     }
-  ]
+  ],
+  ssr: false
 })

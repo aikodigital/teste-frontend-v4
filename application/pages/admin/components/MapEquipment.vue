@@ -43,6 +43,7 @@ watchEffect(async () => {
     )
 
     history.value = data || []
+    position.value = [history.value[0].lat, history.value[0].lon]
   }
 })
 
