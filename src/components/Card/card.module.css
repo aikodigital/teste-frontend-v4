@@ -1,0 +1,182 @@
+.container {
+  width: auto;
+  margin: 16px;
+  border-radius: 8px;
+  border: 1px solid rgb(209, 209, 209);
+  background-color: white;
+  padding: 16px;
+}
+.modelContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.modelImg {
+  width: 70%;
+  height: 70%;
+  filter: invert(100%);
+}
+.nameHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  cursor: pointer;
+}
+
+.equipmentName {
+  font-weight: 800;
+  font-size: 16px;
+  margin: 0;
+}
+.modelName {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0;
+}
+.containerModel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(209, 209, 209);
+  margin: 16px 0;
+  padding-bottom: 16px;
+}
+
+.containerState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  height: 16px;
+}
+.contentState {
+  display: flex;
+  align-items: center;
+}
+.historyStateButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: right;
+  text-decoration: underline;
+  font-size: 10px;
+}
+
+.titleList {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 12px;
+}
+.statesList {
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.historyState {
+  list-style: none;
+  font-weight: 400;
+}
+
+.lastUpdate {
+  margin: 0 0 16px 0;
+  font-weight: 400;
+}
+.containerStateHistory {
+  width: auto;
+  margin: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: white;
+  padding: 16px;
+}
+.toggleStatesButton {
+  margin-top: 16px;
+  border: none;
+  color: black;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: left;
+}
+.tagState {
+  width: 12px;
+  height: 12px;
+  margin: 0 8px 0 0;
+  border-radius: 100px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noData {
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+  padding: 20px;
+}
+
+.hourlyEarnings {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.averageGainContainer,
+.hourlyEarningsContainer {
+  display: flex;
+  align-items: center;
+}
+.hourlyEarningsValue {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: right;
+}
+.hourlyEarningsText,
+.averageGainText {
+  font-weight: 400;
+  margin: 0 0 0 8px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  line-height: 12px;
+  font-size: 10px;
+}
+.hourlyEarningsText {
+  text-align: right;
+  margin: 0 8px 0 0;
+  max-width: 66px;
+}
+
+.averageGainText {
+  max-width: 106px;
+}
+.averageGainValue {
+  font-size: 14px;
+  font-weight: 800;
+  margin: 0;
+}
+@media (max-width: 1080px) {
+  .container {
+    width: 200px;
+    margin: 16px 4px;
+  }
+  .historyStateButton {
+    display: none;
+  }
+}

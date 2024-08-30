@@ -1,0 +1,64 @@
+.grayscaleTile {
+  filter: grayscale(100%);
+}
+.modelContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.modelImg {
+  width: 70%;
+  height: 70%;
+  filter: invert(100%);
+}
+
+.operando {
+  background-color: #2ecc71;
+}
+
+.parado {
+  background-color: #f1c40f;
+}
+
+.manutencao {
+  background-color: #e74c3c;
+}
+
+.popup {
+  position: absolute;
+  top: -200px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+.state {
+  margin: 8px 0;
+  font-weight: 400;
+}
+.positionHistory {
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+@media (max-width: 1080px) {
+  .container {
+    width: auto;
+    /* margin: 16px;
+    border-radius: 8px;
+    border: 1px solid rgb(209, 209, 209);
+    background-color: white;
+    padding: 16px; */
+  }
+}
