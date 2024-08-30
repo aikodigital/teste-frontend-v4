@@ -19,6 +19,6 @@ Executar projeto no modo de desenvolvimento:
 	
 ## 3 - Demonstração:
 
-<img src="\img\listagem.png">
+<img src="img/listagem.png">
 
 ## 4 - Explicação dos componentes
