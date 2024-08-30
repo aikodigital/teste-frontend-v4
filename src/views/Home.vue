@@ -127,25 +127,3 @@ function clearFilters() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all 0.5s ease-out;
-}
-.slide-fade-enter-from {
-  transform: translateY(20px);
-  opacity: 0;
-}
-.slide-fade-enter-to {
-  transform: translateY(0);
-  opacity: 1;
-}
-.slide-fade-leave-from {
-  transform: translateY(0);
-  opacity: 1;
-}
-.slide-fade-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
-}
-</style>
