@@ -16,6 +16,8 @@ Projeto desenvolvido para o teste técnico da empresa Aiko para Desenvolvedor Fr
 - Iconify
 
 ## Layout
+O layout é responsivo e se adapta à resolução do usuário.
+
 Inspiração para o layout de filtros:
 - [Componente de filtros](https://dribbble.com/shots/23563390-Filtering-Component)
 
