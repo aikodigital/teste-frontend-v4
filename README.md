@@ -62,4 +62,3 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 
 <img src="/public/img/estados_02.png">
 
-## 4 - Explicação dos componentes
