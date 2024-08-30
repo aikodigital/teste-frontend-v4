@@ -1,7 +1,7 @@
 # Documentação da Aplicação
 
 ## *Visão Geral*
-Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o [Navbar](#srccomponentsnavbar) o [Aside](#srccomponentsaside) o [Map](#srccomponentsmap) e a página [Home](#srcpageshome). A aplicação também faz uso do [Context API](#srccontextequipmentcontext) para gerenciar o estado global.
+Esta aplicação React é uma plataforma que utiliza mapas interativos para visualizar dados de equipamentos. Os principais componentes incluem o Navbar, o Aside, o Map e a página Home. A aplicação também faz uso do Context API para gerenciar o estado global.
 
 ## *Como rodar o projeto*
 - *Instalar dependências:* ```npm install```
@@ -9,26 +9,26 @@ Esta aplicação React é uma plataforma que utiliza mapas interativos para visu
 
 ## *Estrutura de componentes*
 
-- *[App.tsx](#srcapp.tsx)*  
-  Componente principal que renderiza a página [Home](#srcpageshome).
+- *App.tsx*  
+  Componente principal que renderiza a página Home.
 
-- *[Home.tsx](#srcpageshome)*  
-  Componente de página que organiza a estrutura da aplicação, incluindo o [Navbar](#srccomponentsnavbar) [Aside](#srccomponentsaside) e [Map](#srccomponentsmap).
+- *Home.tsx*  
+  Componente de página que organiza a estrutura da aplicação, incluindo o Navbar, Aside e Map.
 
-- *[Navbar.tsx](#srccomponentsnavbar)*  
+- *Navbar.tsx*  
   Barra de navegação no topo da aplicação, que inclui o logotipo, um campo de busca, e um botão de menu.
 
-- *[Aside.tsx](#srccomponentsaside)*  
+- *Aside.tsx*  
   Componente de barra lateral que pode ser usado para filtros e outras informações adicionais.
 
-- *[Map.tsx](#srccomponentsmap)*  
+- *Map.tsx*  
   Componente que renderiza o mapa interativo usando react-leaflet. Inclui pontos de dados e históricos de posições. Vantagens de usar Leaflet:
   Código aberto e gratuito, leve e rápido, extensível, facilidade de uso
 
-- *[Input.tsx](#srccomponentsinput)*  
-  Componente de entrada (input) usado no [Navbar](#srccomponentsnavbar).
+- *Input.tsx*  
+  Componente de entrada (input) usado no Navbar.
 
-- *[EquipmentContext](#srccontextequipmentcontext)*  
+- *EquipmentContext*  
   Contexto para fornecer e gerenciar o estado dos equipamentos globalmente na aplicação.
 
 ## *Data*
