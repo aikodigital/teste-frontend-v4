@@ -7,7 +7,7 @@
     Next.js - 14.0.4
 	TypeScript - 5.3.3
 
-## 2 - Instalação e execução do projeto;
+## 2 - Instalação e execução do projeto:
 
 Instalação de dependências:
 
