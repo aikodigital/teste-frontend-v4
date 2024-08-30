@@ -101,10 +101,6 @@ watch(
               <h2 class="text-root-blue font-medium">{{ equipment.name }}</h2>
               <span class="text-sm">{{ equipment.model.name }}</span>
             </div>
-            <div class="flex flex-col gap-1 items-end">
-              <span class="text-sm">75% de produtividade</span>
-              <span class="text-sm">R$ 720,00</span>
-            </div>
           </li>
         </ul>
       </div>
