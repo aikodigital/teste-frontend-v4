@@ -1,0 +1,24 @@
+
+.status-dot {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.leaflet-popup-content {
+  margin: 24px 12px 8px;
+}
+
+.truck-icon .tractor-icon .crane-icon {
+  background-color: transparent;
+}
+
+.header {
+  height: 100px;
+  display: flex;
+  padding: 16px;
+}
+
+.main-container {
+  height: calc(100vh - 100px);
+}
