@@ -186,6 +186,10 @@ watch(
       displayEquipmentHistory(props.equipmentFiltered, newValue)
     }
 
+    if (newValue !== oldValue && newValue && !props.equipmentFiltered) {
+      notify('Por favor selecione um equipamento 😭', 'warning')
+    }
+
     if (!newValue) {
       displayTheLastPositionOfAllEquipments()
     }
