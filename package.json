@@ -20,9 +20,5 @@
   },
   "devDependencies": {
     "@iconify-json/fa6-solid": "^1.1.24"
-  },
-  "engines": {
-    "node": "20.15.1",
-    "npm": "10.7.0"
   }
 }
