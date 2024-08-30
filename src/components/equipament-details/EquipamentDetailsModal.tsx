@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -22,6 +23,7 @@ interface IEquipmentDetailsModal {
 
 const EquipmentDetailsModal = ({ equipment, isOpen, onClose }: IEquipmentDetailsModal) => {
 
+  const navigate = useNavigate();
   const [equipmentModel, setEquipmentModel] = useState<IEquipmentModel>();
   const equipamentStateContext = useContext(EquipmentStateContext);
 
@@ -47,7 +49,7 @@ const EquipmentDetailsModal = ({ equipment, isOpen, onClose }: IEquipmentDetails
 
 
   const goToMap = () => {
-
+    navigate(`map/${equipment.id}`);
   }
 
   return (

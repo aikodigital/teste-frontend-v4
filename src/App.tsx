@@ -3,8 +3,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 import {BrowserRouter , Routes , Route} from 'react-router-dom'
-import Map from './pages/map/Map';
+import EquipamentPositionMap from './pages/equipament-position-map/EquipamentPositionMap';
 import InitialPage from './pages/home/InitalPage';
+import AllEquipamentsMap from './pages/all-equipaments-map/AllEquipamentsMap';
 
 const theme = createTheme({});
 
@@ -15,8 +16,10 @@ const AppRouter = () => {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
+          <Route path='/map/:equipmentId' element={<EquipamentPositionMap/>} />
+          <Route path='/map/' element={<AllEquipamentsMap/>} />   
           <Route path='/' element={<InitialPage/>} />
-          <Route path='/map' element={<Map/>} />    
+ 
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
