@@ -5,7 +5,12 @@ import { RouterView } from 'vue-router'
 <template>
   <v-app>
     <v-system-bar>
-      <span>Teste Frontend V4 (Aiko) by Heloisa Araújo</span>
+      <span
+        >Teste Frontend V4 (Aiko) by
+        <a href="https://github.com/heloisasvl/teste-frontend-v4" target="_blank"
+          >Heloisa Araújo</a
+        ></span
+      >
     </v-system-bar>
 
     <v-app-bar>
