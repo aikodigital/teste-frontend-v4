@@ -6,7 +6,6 @@ interface SearchBarProps {
 }
 
 const props = defineProps<SearchBarProps>()
-const emit = defineEmits(['search'])
 
 const filters = ref<EquipmentDateFilters>(props.filters)
 </script>
@@ -15,11 +14,21 @@ const filters = ref<EquipmentDateFilters>(props.filters)
   <div id="search-bar-container">
     <div class="search-bar-input">
       <label for="dateStart">Do início do dia</label>
-      <input id="dateStart" type="date" v-model="filters.start" onkeydown="return false" />
+      <input
+        id="dateStart"
+        type="date"
+        v-model="filters.start"
+        onkeydown="return false"
+      />
     </div>
     <div class="search-bar-input">
       <label for="dateEnd">Até o fim do dia</label>
-      <input id="dateEnd" type="date" v-model="filters.end" onkeydown="return false" />
+      <input
+        id="dateEnd"
+        type="date"
+        v-model="filters.end"
+        onkeydown="return false"
+      />
     </div>
   </div>
 </template>
