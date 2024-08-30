@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import './Map.css';
+import { EquipmentPositionHistory } from '../../models/EquipmentPositionHistory';
 
 
 
 const MapComponent = () => {
 
+  const [equipmentHistory, setEquipmentHistory ] = useState([]);
   const position = {lat: 53.54992, lng: 10.00678};
 
+  
+  
+  
+  
+  useEffect(()=> {
+    getEquipmentPositionHistory();
+  }, [])
+
+
+  const getEquipmentPositionHistory = async () => {
+    try {
+      const resp : any =  await fetch('data/equipmentPositionHistory.json');
+      const data = await resp.json();
+      setEquipmentHistory(data);
+    }catch(e){
+      console.log(e)
+    }
+   
+  }
+  
   return (
     <div className='map-container'>
        <APIProvider apiKey={process.env.REACT_APP_MAP_KEY || ''}>
