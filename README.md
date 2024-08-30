@@ -19,6 +19,14 @@ npm run dev
 
 ### Listagem de Equipamentos
 
+Na tela inicial, são listados todos os equipamentos, sendo exibidos:
+
+<ul>
+	<li>Nome</li>
+	<li>Modelo</li>
+	<li>Estado Atual</li>
+<ul
+
 <img src="/public/img/listagem.png">
 
 ### Histórico de Posições
