@@ -79,6 +79,27 @@ const Map: FC<MapProps> = ({ model, state }) => {
     }[];
   };
 
+  type EquipmentModel = {
+    id: string;
+    name: string;
+    hourlyEarnings: {
+      equipmentStateId: string;
+      value: number;
+    }[];
+  };
+
+  type StateHours = {
+    id: string;
+    name: string;
+    hours: number;
+  };
+
+  type StateHoursEntry = {
+    id: string;
+    hours: number;
+    name: string;
+  };
+
   const [centerCoords, setCenterCoords] = useState<
     { lat: number; lng: number } | undefined
   >(undefined);
@@ -235,26 +256,42 @@ const Map: FC<MapProps> = ({ model, state }) => {
     if (markerRef.current) {
       markerRef.current.setMap(null);
     }
-
-    if (model && model !== "all") {
-      const filteredEquipment = equipmentData.filter(
+  
+    let filteredEquipmentModel = equipmentPositionHistoryData;
+  
+    if (model !== "all") {
+      const filteredByModel = equipmentData.filter(
         (equipment) => equipment.equipmentModelId === model
       );
-
-      const filterEquipmentModel = equipmentPositionHistoryData.filter(
-        (model) =>
-          filteredEquipment.some(
-            (equipment) => equipment.id === model.equipmentId
+  
+      filteredEquipmentModel = filteredEquipmentModel.filter(
+        (positionHistory) =>
+          filteredByModel.some(
+            (equipmentModel) => equipmentModel.id === positionHistory.equipmentId
           )
       );
-
-      if (filterEquipmentModel.length > 0) {
-        setEquipmentMapPositions(filterEquipmentModel);
-      }
-    } else if (model === "all") {
-      setEquipmentMapPositions(equipmentPositionHistoryData);
     }
-  }, [model]);
+  
+    if (state !== "all") {
+      const filteredByState = filteredEquipmentModel.filter((positionHistory) => {
+        const equipmentState = equipmentStateHistoryData.find(
+          (stateHistory) =>
+            stateHistory.equipmentId === positionHistory.equipmentId &&
+            stateHistory.states[stateHistory.states.length - 1].equipmentStateId === state
+        );
+        return equipmentState !== undefined;
+      });
+  
+      if (filteredByState.length > 0) {
+        setEquipmentMapPositions(filteredByState);
+      } else {
+        setEquipmentMapPositions([]);
+      }
+    } else {
+      setEquipmentMapPositions(filteredEquipmentModel);
+    }
+  }, [model, state]);
+  
 
   const onLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
@@ -269,12 +306,11 @@ const Map: FC<MapProps> = ({ model, state }) => {
     equipmentData: EquipmentStateHistoryEntry[],
     targetStateId: string
   ): number {
-    // Ordena os dados por data em ordem decrescente
     const sortedData = equipmentData.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
-    const now = new Date(sortedData[0].date); // Considera a data mais recente disponível nos dados
+    const now = new Date(sortedData[0].date); 
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
     let totalHours = 0;
@@ -284,7 +320,6 @@ const Map: FC<MapProps> = ({ model, state }) => {
       const entryDate = new Date(sortedData[i].date);
 
       if (entryDate < twentyFourHoursAgo) {
-        // Se a data de entrada for antes do limite de 24 horas, calcula o tempo restante e termina o loop
         const hoursDifference =
           (lastDate.getTime() - twentyFourHoursAgo.getTime()) /
           (1000 * 60 * 60);
@@ -294,7 +329,6 @@ const Map: FC<MapProps> = ({ model, state }) => {
         break;
       }
 
-      // Calcula a diferença de horas entre esta entrada e a anterior
       const hoursDifference =
         (lastDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60);
 
@@ -307,21 +341,6 @@ const Map: FC<MapProps> = ({ model, state }) => {
 
     return totalHours;
   }
-
-  type EquipmentModel = {
-    id: string;
-    name: string;
-    hourlyEarnings: {
-      equipmentStateId: string;
-      value: number;
-    }[];
-  };
-
-  type StateHours = {
-    id: string;
-    name: string;
-    hours: number;
-  };
 
   function calculateTotalEarnings(
     stateHours: StateHours[],
@@ -347,12 +366,6 @@ const Map: FC<MapProps> = ({ model, state }) => {
 
     return BRLCurrency.format(totalEarnings);
   }
-
-  type StateHoursEntry = {
-    id: string;
-    hours: number;
-    name: string;
-  };
 
   function calculateProductivity(stateHours: StateHoursEntry[]): string {
     const operationalHours = stateHours.filter(
@@ -459,7 +472,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
 
     const statesHistory = history.states.map((state) => {
       const stateInfo = equipmentStatesData.find(
-        (s) => s.id === state.equipmentStateId
+        (s) => s.name === state.equipmentStateId
       );
       return {
         date: state.date,
@@ -497,7 +510,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
   }
 
   if (!API_KEY) {
-    alert("API key is missing.");
+    alert('API key is missing.');
     return null;
   }
 

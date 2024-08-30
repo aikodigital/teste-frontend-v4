@@ -1,11 +1,8 @@
 import React, { FC, Fragment, useState, useEffect } from 'react';
 import './Header.scss';
 
-import equipmentPositionHistoryData from "../../../../data/equipmentPositionHistory.json";
-import equipmentStateHistoryData from "../../../../data/equipmentStateHistory.json";
 import equipmentStatesData from "../../../../data/equipmentState.json";
 import equipmentModelData from "../../../../data/equipmentModel.json"
-import equipmentData from "../../../../data/equipment.json"
 
 type Option = {
   id: string;
@@ -31,7 +28,7 @@ const Header: FC<HeaderProps> = ({ setModel, setState, model, state }) => {
       const states = equipmentStatesData.map(state => ({
         id: state.id,
         label: state.name,
-        value: state.id  // Use o id como value
+        value: state.id 
       }));
 
       states.push({ id: 'all', label: 'Todos', value: 'all' });
@@ -42,7 +39,7 @@ const Header: FC<HeaderProps> = ({ setModel, setState, model, state }) => {
       const equipments = equipmentModelData.map(model => ({
         id: model.id,
         label: model.name,
-        value: model.id  // Use o id como value
+        value: model.id 
       }));
 
       equipments.push({ id: 'all', label: 'Todos', value: 'all' });
@@ -78,7 +75,7 @@ const Header: FC<HeaderProps> = ({ setModel, setState, model, state }) => {
             <select id="state-select" className='text-input' value={selectedState} onChange={handleStateChange}>
               <option value="">Selecione...</option>
               {stateOptions.map(option => (
-                <option key={option.id} value={option.value}>  {/* Use o value correto */}
+                <option key={option.id} value={option.value}> 
                   {option.label}
                 </option>
               ))}
@@ -90,7 +87,7 @@ const Header: FC<HeaderProps> = ({ setModel, setState, model, state }) => {
             <select id="equipment-select" className='text-input' value={selectedEquipment} onChange={handleEquipmentChange}>
               <option value="">Selecione...</option>
               {equipmentOptions.map(option => (
-                <option key={option.id} value={option.value}>  {/* Use o value correto */}
+                <option key={option.id} value={option.value}> 
                   {option.label}
                 </option>
               ))}
