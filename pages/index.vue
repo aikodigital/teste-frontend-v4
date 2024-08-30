@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import type EquipmentFilters from '~/types/EquipmentFilters';
-
-const { equipments, models, states } = useEquipments()
+import type EquipmentListFilters from '~/types/EquipmentListFilters';
 
 const router = useRouter()
-const { query } = useRoute()
 
-const filters = ref<EquipmentFilters>({
-  equipment: typeof query.equipment === 'string' ? query.equipment : '',
-  model: typeof query.model === 'string' ? query.model : '',
-  state: typeof query.state === 'string' ? query.state : ''
+const {
+  equipments,
+  models,
+  states,
+  getSortedPositionsByDate,
+  getSortedStateDatesByDate
+} = useEquipments()
+
+const filters = ref<EquipmentListFilters>({
+  equipment: '',
+  model: '',
+  state: ''
 })
 
 const tableHeaders = [
@@ -22,42 +27,32 @@ const tableHeaders = [
 const tableRows = computed(() => {
   if (!equipments.value) return []
 
-  const formattedEquipments = equipments.value?.map(equipment => {
-    const recentStateDate = equipment.stateDates.length ?
-      equipment.stateDates.reduce((recentStateDate, stateDate) => {
-        return recentStateDate.date > stateDate.date ? recentStateDate : stateDate
-      }) : null
-
-    const formattedStateDate = recentStateDate?.state?.name ?? 'Sem histórico'
-
-    const recentPosition = equipment.positions.length ?
-      equipment.positions.reduce((recentPosition, position) => {
-        return recentPosition.date > position.date ? recentPosition : position
-      }) : null
-
+  const formattedEquipments = equipments.value.map(equipment => {
+    const recentPosition = getFirstOrNull(getSortedPositionsByDate(equipment))
     const formattedPosition = recentPosition ? `(${recentPosition.lat}, ${recentPosition.lon})` : 'Sem histórico'
+
+    const recentStateDate = getFirstOrNull(getSortedStateDatesByDate(equipment))
+    const formattedStateDate = recentStateDate?.state?.name ?? 'Sem histórico'
 
     return {
       key: equipment.id,
       name: equipment.name,
       modelId: equipment.model?.id,
       modelName: equipment.model?.name,
+      position: formattedPosition,
       stateDateId: recentStateDate?.state?.id,
       stateDateName: formattedStateDate,
-      position: formattedPosition,
       color: recentStateDate?.state?.color
     }
-  }) ?? []
+  })
 
-  const filteredEquipments = formattedEquipments.filter(equipment => {
+  return formattedEquipments.filter(equipment => {
     if (filters.value.equipment && !equipment.name.toLowerCase().includes(filters.value.equipment.toLowerCase())) return false
     else if (filters.value.model && equipment.modelId !== filters.value.model) return false
     else if (filters.value.state && equipment.stateDateId !== filters.value.state) return false
 
     return true
   })
-
-  return filteredEquipments
 })
 
 function onClickRow(equipmentId: string): void {
@@ -67,13 +62,13 @@ function onClickRow(equipmentId: string): void {
 
 <template>
   <div id="equipments-container">
-    <EquipmentSearchBar
+    <EquipmentListSearchBar
       :filters="filters"
       :models="models"
       :states="states"
     />
     <AppTable
-      title="Equipamentos"
+      title="Equipamentos (clique na linha para ver detalhes)"
       :headers="tableHeaders"
       :rows="tableRows"
       :clickable="true"

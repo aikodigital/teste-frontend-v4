@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type EquipmentFilters from '~/types/EquipmentFilters';
+import type EquipmentListFilters from '~/types/EquipmentListFilters';
 import type EquipmentModel from '~/types/EquipmentModel';
 import type EquipmentState from '~/types/EquipmentState';
 
 interface SearchBarProps {
-  filters: EquipmentFilters
+  filters: EquipmentListFilters
   models: EquipmentModel[]
   states: EquipmentState[]
 }
@@ -17,12 +17,11 @@ interface SelectOption {
 const props = defineProps<SearchBarProps>()
 const emit = defineEmits(['search'])
 
-const filters = ref<EquipmentFilters>(props.filters)
+const filters = ref<EquipmentListFilters>(props.filters)
 
 const modelOptions = computed<SelectOption[]>(() => props.models.map(model => ({ label: model.name, value: model.id })))
 const stateOptions = computed<SelectOption[]>(() => props.states.map(state => ({ label: state.name, value: state.id })))
 </script>
-
 
 <template>
   <div id="search-bar-container">

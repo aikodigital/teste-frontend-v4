@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import type Equipment from '~/types/Equipment';
+import type EquipmentDateFilters from '~/types/EquipmentDateFilters';
 import type EquipmentPosition from '~/types/EquipmentPosition'
 import type EquipmentStateDate from '~/types/EquipmentStateDate'
 
@@ -8,63 +10,94 @@ const router = useRouter()
 const route = useRoute()
 const equipmentId = route.params.id.toString()
 
-const { getEquipment } = useEquipments()
-const equipment = getEquipment(equipmentId)
+const {
+  getEquipment,
+  getSortedPositionsByDate,
+  getSortedStateDatesByDate,
+  calculateTotalEarningsByPeriod,
+  calculateProductivityByPeriod
+} = useEquipments()
 
-const sortedStateDates = computed<EquipmentStateDate[]>(() => equipment?.stateDates.sort((stateDateA, stateDateB) => {
-  return stateDateB.date.localeCompare(stateDateA.date)
-}) ?? [])
+const filters = ref<EquipmentDateFilters>({ start: '2021-02-01', end: '2021-02-28' })
 
-const recentStateDate = computed(() => getFirstOrNull(sortedStateDates.value))
+const formattedFilters = computed<EquipmentDateFilters>(() => ({
+  start: formatInputDateToISOString(filters.value.start),
+  end: formatInputDateToISOString(filters.value.end)
+}))
+
+const equipment = computed<Equipment | null>(() => getEquipment(equipmentId))
+
+const sortedPositionsByDate = computed<EquipmentPosition[]>(() => getSortedPositionsByDate(equipment.value))
+const recentPosition = computed<EquipmentPosition | null>(() => getFirstOrNull(sortedPositionsByDate.value))
+
+const sortedStateDatesByDate = computed<EquipmentStateDate[]>(() => getSortedStateDatesByDate(equipment.value))
+const recentStateDate = computed<EquipmentStateDate | null>(() => getFirstOrNull(sortedStateDatesByDate.value))
 
 const stateHistoryTableHeaders = [
   { key: 'date', label: 'Data' },
   { key: 'state', label: 'Estado', applyColor: true }
 ]
 
-const stateHistoryTableRows = computed(() => sortedStateDates.value.map(stateDate => ({
-  key: stateDate.date,
-  date: formatFromRawStringDateToPrettyStringDate(stateDate.date),
-  state: stateDate.state?.name ?? 'Não informado',
-  color: stateDate.state?.color
-})))
-
-const sortedPositions = computed<EquipmentPosition[]>(() => equipment?.positions.sort((positionA, positionB) => {
-  return positionB.date.localeCompare(positionA.date)
-}) ?? [])
-
-const recentPosition = computed(() => getFirstOrNull(sortedPositions.value))
-
 const positionHistoryTableHeaders = [
   { key: 'date', label: 'Data' },
   { key: 'position', label: 'Localização' }
 ]
 
-const positionHistoryTableRows = computed(() => sortedPositions.value.map(position => {
-  return {
+const stateHistoryTableRows = computed(() => {
+  const filteredStateDates = sortedStateDatesByDate.value.filter(stateDate => {
+    const endNextDay = formatToNextDayISOString(formattedFilters.value.end)
+
+    return stateDate.date >= formattedFilters.value.start && stateDate.date < endNextDay
+  })
+
+  return filteredStateDates.map(stateDate => ({
+    key: stateDate.date,
+    date: formatToPrettyStringDate(stateDate.date),
+    state: stateDate.state?.name ?? 'Não informado',
+    color: stateDate.state?.color
+  }))
+})
+
+const positionHistoryTableRows = computed(() => {
+  const filteredPositions = sortedPositionsByDate.value.filter(position => {
+    const endNextDay = formatToNextDayISOString(formattedFilters.value.end)
+
+    return position.date > formattedFilters.value.start && position.date < endNextDay
+  })
+
+  return filteredPositions.map(position => ({
     key: position.date,
-    date: formatFromRawStringDateToPrettyStringDate(position.date),
+    date: formatToPrettyStringDate(position.date),
     position: `(${position.lat}, ${position.lon})`
-  }
-}))
+  }))
+})
+
+const totalEarningsByPeriod = computed(() => {
+  return calculateTotalEarningsByPeriod(equipment.value, formattedFilters.value.start, formattedFilters.value.end)
+})
+
+const productivityByPeriod = computed(() => {
+  return calculateProductivityByPeriod(equipment.value, formattedFilters.value.start, formattedFilters.value.end)
+})
 </script>
 
 <template>
   <div id="equipment-container">
     <section class="card-header">
-      <div class="card-title">{{ equipment?.name }}</div>
+      <div class="card-title">{{ equipment?.name ?? 'Não encontrado' }}</div>
       <div class="card-action" @click="router.back">
         <FontAwesomeIcon :icon="['fas', 'arrow-left']" />
         Voltar
       </div>
     </section>
+    <EquipmentDateSearchBar :filters="filters"/>
     <EquipmentCard
       :equipmentId="equipment?.id"
       :modelName="equipment?.model?.name ?? 'Não informado'"
       :recentStateDate="recentStateDate"
       :recentPosition="recentPosition"
-      :productivityRate="0.85"
-      :profit="8000"
+      :productivityRate="productivityByPeriod"
+      :earning="totalEarningsByPeriod"
     />
     <section class="card-tables">
       <AppTable

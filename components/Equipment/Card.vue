@@ -8,7 +8,7 @@ interface CardProps {
   recentStateDate: EquipmentStateDate | null
   recentPosition: EquipmentPosition | null
   productivityRate: number
-  profit: number
+  earning: number
 }
 
 const props = defineProps<CardProps>()
@@ -48,12 +48,12 @@ const formattedPosition = computed<string>(() => {
     </section>
     <section>
       <div>
-        <strong>Ganho do equipamento: </strong>
-        {{ props.profit }}
+        <strong>Ganho (no período): </strong>
+        {{ props.earning }}
       </div>
       <div>
-        <strong>Percentual de produtividade: </strong>
-        {{ formatFromNumberToStringPercentage(props.productivityRate) }}
+        <strong>Produtividade (no período): </strong>
+        {{ formatNumberToStringPercentage(props.productivityRate) }}
       </div>
     </section>
     <section>
@@ -75,7 +75,7 @@ const formattedPosition = computed<string>(() => {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  background-color: rgb(250, 250, 250);
+  background-color: var(--container-color);
   gap: 16px;
   padding: 16px;
   font-size: 14px;

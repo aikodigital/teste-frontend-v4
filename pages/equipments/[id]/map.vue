@@ -1,34 +1,51 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import type Equipment from '~/types/Equipment';
+import type EquipmentDateFilters from '~/types/EquipmentDateFilters';
 
 const router = useRouter()
 
 const route = useRoute()
 const equipmentId = route.params.id.toString()
 
-const { getEquipment } = useEquipments()
-const equipment = getEquipment(equipmentId)
+const {
+  getEquipment,
+  getSortedPositionsByDate,
+  getSortedStateDatesByDate
+} = useEquipments()
+
+const filters = ref<EquipmentDateFilters>({
+  start: '2021-02-01',
+  end: '2021-02-28'
+})
+
+const formattedFilters = computed<EquipmentDateFilters>(() => ({
+  start: formatInputDateToISOString(filters.value.start),
+  end: formatInputDateToISOString(filters.value.end)
+}))
+
+const equipment = computed<Equipment | null>(() => getEquipment(equipmentId))
 
 const mapMarkers = computed(() => {
-  if (!equipment || !equipment.positions.length) return []
+  if (!equipment.value || !equipment.value.positions.length) return []
 
-  const recentStateDate = equipment.stateDates.length ?
-    equipment.stateDates.reduce((recentStateDate, stateDate) => {
-      return recentStateDate.date > stateDate.date ? recentStateDate : stateDate
-    }) : null
+  const recentStateDate = getFirstOrNull(getSortedStateDatesByDate(equipment.value))
+  const sortedPositionsByDate = getSortedPositionsByDate(equipment.value)
 
-  const sortedEquipmentPositions = equipment.positions.sort((positionA, positionB) => {
-    return positionA.date.localeCompare(positionB.date)
+  const filteredPositions = sortedPositionsByDate.filter(position => {
+    const endNextDay = formatToNextDayISOString(formattedFilters.value.end)
+
+    return position.date >= formattedFilters.value.start && position.date < endNextDay
   })
 
-  return sortedEquipmentPositions.map(position => ({
-    key: equipment.id,
-    name: equipment.name,
-    model: equipment.model?.name ?? 'Não informado',
+  return filteredPositions.map(position => ({
+    key: position.date,
+    name: equipment.value?.name ?? 'Não encontrado',
+    model: equipment.value?.model?.name ?? 'Não informado',
     state: recentStateDate?.state?.name ?? 'Sem histórico',
     lat: position.lat,
     lon: position.lon,
-    date: formatFromRawStringDateToPrettyStringDate(position.date),
+    date: formatToPrettyStringDate(position.date),
     color: recentStateDate?.state?.color ?? 'inherit'
   }))
 })
@@ -45,6 +62,7 @@ const mapMarkers = computed(() => {
         </div>
       </div>
     </div>
+    <EquipmentDateSearchBar :filters="filters"/>
     <EquipmentMap :markers="mapMarkers" :zoom="11" :hasPath="true">
       <template #tooltip="{ marker }">
         <div>

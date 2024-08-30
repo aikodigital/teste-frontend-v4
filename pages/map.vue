@@ -1,61 +1,56 @@
 <script setup lang="ts">
-import type EquipmentFilters from '~/types/EquipmentFilters';
+import type EquipmentListFilters from '~/types/EquipmentListFilters';
 
-const { equipments, models, states } = useEquipments()
+const {
+  equipments,
+  models,
+  states,
+  getSortedPositionsByDate,
+  getSortedStateDatesByDate,
+} = useEquipments()
 
-const { query } = useRoute()
-const filters = ref<EquipmentFilters>({
-  equipment: typeof query.equipment === 'string' ? query.equipment : '',
-  model: typeof query.model === 'string' ? query.model : '',
-  state: typeof query.state === 'string' ? query.state : ''
+const filters = ref<EquipmentListFilters>({
+  equipment: '',
+  model: '',
+  state: ''
 })
 
 const mapMarkers = computed(() => {
-  if (!equipments.value) return []
+  if (!equipments.value || !equipments.value.length) return []
 
-  const equipmentsWithExtraData = equipments.value?.map(equipment => {
-    const recentStateDate = equipment.stateDates.length ?
-      equipment.stateDates.reduce((recentStateDate, stateDate) => {
-        return recentStateDate.date > stateDate.date ? recentStateDate : stateDate
-      }) : null
+  const filteredEquipments = equipments.value.filter(equipment => {
+    const recentPosition = getFirstOrNull(getSortedPositionsByDate(equipment))
+    const recentStateDate = getFirstOrNull(getSortedStateDatesByDate(equipment))
 
-    const recentPosition = equipment.positions.length ?
-      equipment.positions.reduce((recentPosition, position) => {
-        return recentPosition.date > position.date ? recentPosition : position
-      }) : null
-
-    return { ...equipment, recentStateDate, recentPosition }
-  }) ?? []
-
-  const filteredEquipments = equipmentsWithExtraData.filter(equipment => {
-    if(!equipment.recentPosition) return false
-    if (filters.value.equipment && !equipment.name.toLowerCase().includes(filters.value.equipment.toLowerCase())) return false
+    if (!recentPosition) return false
+    else if (filters.value.equipment && !equipment.name.toLowerCase().includes(filters.value.equipment.toLowerCase())) return false
     else if (filters.value.model && equipment.model?.id !== filters.value.model) return false
-    else if (filters.value.state && equipment.recentStateDate?.state?.id !== filters.value.state) return false
+    else if (filters.value.state && recentStateDate?.state?.id !== filters.value.state) return false
 
     return true
   })
 
-  const formattedEquipments = filteredEquipments.map(equipment => ({
-    key: equipment.id,
-    name: equipment.name,
-    model: equipment.model?.name ?? 'Não informado',
-    state: equipment.recentStateDate?.state?.name ?? 'Sem histórico',
-    lat: equipment.recentPosition?.lat ?? 0,
-    lon: equipment.recentPosition?.lon ?? 0,
-    date: equipment.recentPosition?.date ?? 'Não informado',
-    color: equipment.recentStateDate?.state?.color ?? 'inherit'
-  })) ?? []
+  return filteredEquipments.map(equipment => {
+    const recentPosition = getFirstOrNull(getSortedPositionsByDate(equipment))
+    const recentStateDate = getFirstOrNull(getSortedStateDatesByDate(equipment))
 
-
-  return formattedEquipments
+    return {
+      key: equipment.id,
+      name: equipment.name,
+      model: equipment.model?.name ?? 'Não informado',
+      state: recentStateDate?.state?.name ?? 'Sem histórico',
+      lat: recentPosition?.lat ?? 0,
+      lon: recentPosition?.lon ?? 0,
+      date: recentPosition?.date ?? 'Não informado',
+      color: recentStateDate?.state?.color ?? 'inherit'
+    }
+  })
 })
-
 </script>
 
 <template>
   <div class="container">
-    <EquipmentSearchBar :filters="filters" :models="models" :states="states" />
+    <EquipmentListSearchBar :filters="filters" :models="models" :states="states" />
     <EquipmentMap :markers="mapMarkers" :zoom="9">
       <template #tooltip="{ marker }">
         <div>

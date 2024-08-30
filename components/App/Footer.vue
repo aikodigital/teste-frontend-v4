@@ -41,7 +41,7 @@ footer {
   gap: 24px;
   background-color: var(--primary-color);
   color: white;
-  padding: 16px 32px;
+  padding: 32px;
 
   nav {
     flex-direction: column;

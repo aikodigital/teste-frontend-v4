@@ -18,7 +18,7 @@ interface MapProps {
 
 const props = defineProps<MapProps>()
 
-const mapPath = props.markers.map(marker => ({ lat: marker.lat, lng: marker.lon }))
+const mapPath = computed(() => props.markers.map(({ lat, lon }) => ({ lat, lng: lon })))
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const mapPath = props.markers.map(marker => ({ lat: marker.lat, lng: marker.lon 
         v-for="marker in props.markers"
         :key="marker.key"
         :latLng="[marker.lat, marker.lon]"
-        :color="formatFromStringToHashColorHex(marker.model)"
+        :color="generateHashColorHex(marker.model)"
         :radius="8"
       >
         <LTooltip>
