@@ -80,9 +80,17 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 Seguindo a estrutura do Next.js, na raiz do projeto, diretório src/app, contém os módulos da aplicação.
 <img src="/public/img/project_01.png">
 
-Cada módulo, contém um arquivo <strong>page.tsx</strong>
+Cada módulo, contém um arquivo <strong>page.tsx</strong> onde é redirecionado ao acessar a URL, "/equipmentPosition", por exemplo.
 <img src="/public/img/project_02.png">
+
+E também em cada módulo, contém um diretório <strong>components</strong> onde ficam os componentes do módulo.
 <img src="/public/img/project_03.png">
+
+Componente do Google Maps:
 <img src="/public/img/project_04.png">
+
+Arquivo <strong>layout.tsx</strong> onde se encontra a raiz do HTML, e são chamados os childrens, ao acessar cada módulo.
 <img src="/public/img/project_05.png">
+
+No diretório services, no arquivo <strong>actions.tsx</strong> contém todas as chamadas para os arquivos, simulando uma API. 
 <img src="/public/img/project_06.png">
