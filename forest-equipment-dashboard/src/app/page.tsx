@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import useEquipment from '@/hooks/useEquipment';
+import { useEquipment } from '@/hooks/useEquipment';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import { FilterEquipments } from './_components/filter-equipments';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default async function Home({ searchParams }: Props) {
-  const { getEquipmentLastPosition } = useEquipment();
+  const { getLatestLocations: getEquipmentLastPosition } = useEquipment();
   const { model = 'all', state = 'all', equipment = '' } = searchParams;
 
   const data = getEquipmentLastPosition(model, state, equipment);

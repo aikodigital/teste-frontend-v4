@@ -5,7 +5,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import useEquipment from '@/hooks/useEquipment';
+import { useEquipment } from '@/hooks/useEquipment';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { format } from 'date-fns';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -20,17 +20,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-interface EquipmentHistorySheetProps {
+interface StateHistorySheetProps {
   equipmentId: string;
 }
 
-const states = ['Operando', 'Parado', 'Manutenção'];
-
-function EquipmentHistorySheet({ equipmentId }: EquipmentHistorySheetProps) {
-  const { getStateHistory } = useEquipment();
+function StateHistorySheet({ equipmentId }: StateHistorySheetProps) {
+  const { getStateHistory, getStates } = useEquipment();
   const stateHistory = getStateHistory(equipmentId);
   const [selectedState, setSelectedState] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const states = useMemo(() => getStates(), [getStates]);
 
   const filteredStateHistory = useMemo(() => {
     if (!stateHistory) return [];
@@ -64,7 +63,7 @@ function EquipmentHistorySheet({ equipmentId }: EquipmentHistorySheetProps) {
         <SheetHeader>
           <SheetTitle>Histórico de Estados</SheetTitle>
         </SheetHeader>
-        <div className="grid gap-8 px-2 pt-2">
+        <div className="grid gap-8 pt-2">
           <div className="flex flex-col items-start gap-4 sm:flex-row">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -126,7 +125,7 @@ function EquipmentHistorySheet({ equipmentId }: EquipmentHistorySheetProps) {
           <div className="grid gap-6 md:gap-8" />
         </div>
         <ScrollArea className="h-[calc(100vh-200px)]">
-          <div className="grid gap-4 px-2">
+          <div className="grid gap-4">
             {filteredStateHistory?.map((state) => (
               <div
                 key={state?.date}
@@ -155,4 +154,4 @@ function EquipmentHistorySheet({ equipmentId }: EquipmentHistorySheetProps) {
   );
 }
 
-export { EquipmentHistorySheet };
+export { StateHistorySheet };

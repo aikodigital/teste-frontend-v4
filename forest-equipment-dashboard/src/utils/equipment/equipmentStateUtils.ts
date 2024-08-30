@@ -151,7 +151,7 @@ function getGainPerEquipment(equipmentId: string) {
     Manutenção: getStateId('Manutenção'),
   };
 
-  const total = Object.entries(states).reduce((acc, [_stateName, stateId]) => {
+  const total = Object.entries(states).reduce((acc, [, stateId]) => {
     if (!stateId) return acc;
 
     const hours = calculateStateHours(equipmentId, stateId);

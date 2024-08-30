@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import useEquipment from '@/hooks/useEquipment';
+import { useEquipment } from '@/hooks/useEquipment';
 import { useRouter } from '@/hooks/useRouter';
 import { SearchIcon } from 'lucide-react';
 

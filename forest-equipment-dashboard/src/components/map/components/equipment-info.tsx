@@ -6,10 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import useEquipment from '@/hooks/useEquipment';
+import { useEquipment } from '@/hooks/useEquipment';
 import { Popup } from 'react-leaflet';
-import { EquipmentInfoBadge } from './equipment-info-badge';
-import { EquipmentHistorySheet } from './equipment-history-sheet';
+import { StateBadge } from './state-badge';
+import { StateHistorySheet } from './state-history-sheet';
 import { GaugeIcon, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
@@ -20,7 +20,7 @@ interface EquipmentInfoProps {
 }
 
 function EquipmentInfo({ equipmentId }: EquipmentInfoProps) {
-  const { getEquipmentInfo } = useEquipment();
+  const { getInfo: getEquipmentInfo } = useEquipment();
 
   const infos = getEquipmentInfo(equipmentId);
 
@@ -45,16 +45,19 @@ function EquipmentInfo({ equipmentId }: EquipmentInfoProps) {
               <GaugeIcon className="h-5 w-5 text-muted-foreground" />
               <span className="font-medium">Estado:</span>
             </div>
-            <EquipmentInfoBadge
+            <StateBadge
               stateColor={infos?.state?.color ?? '#000'}
               stateName={infos?.state?.name ?? 'Não definido'}
             />
           </div>
           <CardFooter className="flex w-full flex-col gap-2">
-            <EquipmentHistorySheet equipmentId={equipmentId} />
+            <StateHistorySheet equipmentId={equipmentId} />
             <Link
               href={`/position-history/${equipmentId}`}
-              className={cn(buttonVariants({ variant: 'default' }), 'w-full')}
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'w-full !text-primary-foreground',
+              )}
             >
               <MapPin className="mr-2 h-4 w-4" />
               Ver histórico de posições

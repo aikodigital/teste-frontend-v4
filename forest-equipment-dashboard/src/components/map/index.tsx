@@ -7,12 +7,15 @@ import { IPositions } from '../../../@types/equipment';
 import 'leaflet/dist/leaflet.css';
 import { useCallback, useMemo } from 'react';
 
+type MapData = Array<{
+  position: IPositions;
+  equipmentId: string;
+  modelName?: string;
+}>;
+
 interface MapProps {
   zoom?: number;
-  data: Array<{
-    position: IPositions;
-    equipmentId: string;
-  }>;
+  data: MapData;
   disablePopup?: boolean;
 }
 
@@ -61,6 +64,7 @@ function Map(Map: MapProps) {
     [positions, calculateGeographicCenter],
   );
 
+  console.log(data);
   return (
     <LMapContainer
       center={center}
@@ -80,6 +84,7 @@ function Map(Map: MapProps) {
             lng: marker.position?.lon ?? 0,
           }}
           disablePopup={disablePopup}
+          modelName={marker.modelName}
         />
       ))}
     </LMapContainer>

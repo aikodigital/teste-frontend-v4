@@ -13,94 +13,96 @@ import {
 } from '@/utils/equipment/equipmentModel';
 import {
   getEquipmentPositionHistory,
-  getLatestLocations,
+  getLatestLocations as getEquipmentLatestLocations,
 } from '@/utils/equipment/equipmentPositionUtils';
+import { IPositions } from '../../@types/equipment';
 
 function useEquipment() {
-  const getEquipmentInfo = useCallback(
-    (equipmentId: string) => {
-      const equipmentData = getEquipmentById(equipmentId);
-      const equipmentStateData = getEquipmentLatestState(equipmentId);
-      const equipmentModelData = getModelById(
-        equipmentData?.equipmentModelId ?? '',
-      );
-      const productivityPercentage = getProductivityPercentage(equipmentId);
-      const gain = getGainPerEquipment(equipmentId);
+  const getInfo = useCallback((equipmentId: string) => {
+    const equipmentData = getEquipmentById(equipmentId);
+    const equipmentStateData = getEquipmentLatestState(equipmentId);
+    const equipmentModelData = getModelById(
+      equipmentData?.equipmentModelId ?? '',
+    );
+    const productivityPercentage = getProductivityPercentage(equipmentId);
+    const gain = getGainPerEquipment(equipmentId);
 
-      return {
-        name: equipmentData?.name,
-        modelName: equipmentModelData?.name,
-        state: {
-          name: equipmentStateData?.name,
-          color: equipmentStateData?.color,
-        },
-        productivityPercentage,
-        gain,
-      };
-    },
-    [
-      getEquipmentById,
-      getEquipmentLatestState,
-      getModelById,
-      getProductivityPercentage,
-      getGainPerEquipment,
-    ],
-  );
+    return {
+      name: equipmentData?.name,
+      modelName: equipmentModelData?.name,
+      state: {
+        name: equipmentStateData?.name,
+        color: equipmentStateData?.color,
+      },
+      productivityPercentage,
+      gain,
+    };
+  }, []);
 
-  const getEquipmentLastPosition = useCallback(
+  const getLatestLocations = useCallback(
     (model = 'all', state = 'all', equipment = '') => {
-      const positions = getLatestLocations();
+      const positions = getEquipmentLatestLocations();
 
-      const filteredPositions = positions.filter(({ equipmentId }) => {
-        const equipmentInfo = getEquipmentInfo(equipmentId);
-        if (!equipmentInfo) return false;
+      const filteredPositions = positions
+        .map((position) => {
+          const equipmentInfo = getInfo(position.equipmentId);
+          if (!equipmentInfo) return false;
 
-        const matchesModel =
-          model === 'all' || equipmentInfo.modelName === model;
+          const matchesModel =
+            model === 'all' || equipmentInfo.modelName === model;
 
-        const matchesState =
-          state === 'all' || equipmentInfo.state.name === state;
+          const matchesState =
+            state === 'all' || equipmentInfo.state.name === state;
 
-        const matchesEquipment =
-          equipment === '' || equipment === equipmentInfo.name;
+          const matchesEquipment =
+            equipment === '' || equipment === equipmentInfo.name;
 
-        return matchesModel && matchesState && matchesEquipment;
-      });
+          if (matchesModel && matchesState && matchesEquipment) {
+            return {
+              ...position,
+              modelName: equipmentInfo.modelName,
+            };
+          }
+          return null;
+        })
+        .filter(
+          (
+            item,
+          ): item is {
+            modelName: string;
+            position: IPositions;
+            equipmentId: string;
+          } => item !== null,
+        );
 
       return filteredPositions;
     },
-    [getLatestLocations, getEquipmentInfo],
+    [getInfo],
   );
 
-  const getStateHistory = useCallback(
-    (equipmentId: string) => {
-      const stateHistory = getEquipmentStateHistory(equipmentId);
-      return stateHistory;
-    },
-    [getEquipmentStateHistory],
-  );
+  const getStateHistory = useCallback((equipmentId: string) => {
+    const stateHistory = getEquipmentStateHistory(equipmentId);
+    return stateHistory;
+  }, []);
 
-  const getPositionHistory = useCallback(
-    (equipmentId: string) => {
-      const positionHistory = getEquipmentPositionHistory(equipmentId);
-      return positionHistory;
-    },
-    [getEquipmentPositionHistory],
-  );
+  const getPositionHistory = useCallback((equipmentId: string) => {
+    const positionHistory = getEquipmentPositionHistory(equipmentId);
+    return positionHistory;
+  }, []);
 
   const getModels = useCallback(() => {
     const modelsList = getEquipmentModels();
     return modelsList;
-  }, [getEquipmentModels]);
+  }, []);
 
   const getStates = useCallback(() => {
     const statesList = getEquipmentStates();
     return statesList;
-  }, [getEquipmentStates]);
+  }, []);
 
   return {
-    getEquipmentLastPosition,
-    getEquipmentInfo,
+    getLatestLocations,
+    getInfo,
     getStateHistory,
     getPositionHistory,
     getModels,
@@ -108,4 +110,4 @@ function useEquipment() {
   };
 }
 
-export default useEquipment;
+export { useEquipment };

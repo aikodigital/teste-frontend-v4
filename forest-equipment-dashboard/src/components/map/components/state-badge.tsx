@@ -1,14 +1,11 @@
 import { Badge } from '@/components/ui/badge';
 
-interface EquipmentInfoBadgeProps {
+interface StateBadgeProps {
   stateName: string;
   stateColor: string;
 }
 
-function EquipmentInfoBadge({
-  stateColor,
-  stateName,
-}: EquipmentInfoBadgeProps) {
+function StateBadge({ stateColor, stateName }: StateBadgeProps) {
   return (
     <Badge className="text-opacity-40" style={{ backgroundColor: stateColor }}>
       <span>{stateName}</span>
@@ -16,4 +13,4 @@ function EquipmentInfoBadge({
   );
 }
 
-export { EquipmentInfoBadge };
+export { StateBadge };
