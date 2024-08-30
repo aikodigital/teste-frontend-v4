@@ -1,6 +1,6 @@
 import { useToast } from 'vue-toastification'
 
-type NotifyType = 'success' | 'error'
+type NotifyType = 'success' | 'error' | 'warning' | 'info'
 
 const toast = useToast()
 
