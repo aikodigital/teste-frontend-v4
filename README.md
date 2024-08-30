@@ -2,24 +2,26 @@
 
 ## 1 - Para esse projeto, foram utilizadas as seguintes versões:
 
-	Node.js - 18.17.0
-	React - 18
-	Next.js - 14.0.4
-
+    Node.js - 18.17.0
+    React - 18
+    Next.js - 14.0.4
 
 ## 2 - Instalação e execução do projeto;
 
 Instalação de dependências:
 
     npm install
-	
+
 Executar projeto no modo de desenvolvimento:
-	
-    npm run dev
-	
+npm run dev
+
 ## 3 - Demonstração:
 
+### Listagem de Equipamentos
+
 <img src="/public/img/listagem.png">
+
+### Histórico de Posições
 
 <img src="/public/img/posicoes_01.png">
 
@@ -28,6 +30,8 @@ Executar projeto no modo de desenvolvimento:
 <img src="/public/img/posicoes_03.png">
 
 <img src="/public/img/posicoes_04.png">
+
+### Histórico de Estados
 
 <img src="/public/img/estados_01.png">
 
