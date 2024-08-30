@@ -7,6 +7,7 @@
     Next.js - 14.0.4
 	TypeScript - 5.3.3
 	Google Maps API - 2.19.3
+	AWS Amplify 
 
 ## 2 - Instalação e execução do projeto:
 
