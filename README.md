@@ -80,3 +80,17 @@ Arquivos utilitários que facilitam a lógica usada nas páginas e componentes. 
 * **assets**: Possui a imagem do logo e a estilização global das páginas. Um detalhe para a padronização de cores por meio das variáveis globais.
 
 * **data**: Arquivo com as informações que irão servir de base para popular a página. Mantive a posição da pasta na estrutura geral do projeto para garantir que o projeto pudesse recolher essas informações do mesmo meio, podendo inclusive modificar a quantidade de equipamentos, estados, modelos, etc. O projeto irá continuar funcionando do mesmo jeito.
+
+## Considerações finais
+
+A descrição do desafio foi bem feita ao mesmo tempo que deu muita liberdade na criação da interface e das funcionalidade. Por isso acredito que o projeto também me ajudou pessoalmente como desenvolvedor. Só gostaria de destacar os pontos a melhorar no projeto, que notei e gostaria de ter implementado:
+
+* Responsividade completa: embora a página tenha certa responsividade, acredito que possa ter melhorado ainda mais os detalhes para diferentes dispositivos.
+
+* Uma página inicial que fosse uma introdução da aplicação, em vez de ir diretamente para a listagem de equipamentos.
+
+* Bug nos filtros de datas: infelizmente a opção de "limpar" no datepicker dos campos de data gera um bug na aplicação. A solução é relativamente simples (não emitir evento quando o valor do campo for vazio ou inválido), mas deixei dessa forma.
+
+* API de localização: mostrar informações do local em vez apenas do lat/lon. Por exemplo usar o https://nominatim.openstreetmap.org/ para retornar essas informações
+
+* Melhorias no mapa: Seria interessante ter uma rota entre os pontos do mapa em vez de linhas retas. Embora não tenha pensado diretamente em uma solução para o caso, acredito que seja uma feature bem interessante de implementar.
