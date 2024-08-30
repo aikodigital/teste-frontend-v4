@@ -1,7 +1,5 @@
 # Aiko Front-end V4 - Desafio Técnico
 
-![Aiko](img/aiko.png)
-
 <br/>
 
 ## Requisitos
@@ -34,11 +32,15 @@ Clone este repositório para o seu ambiente de desenvolvimento local usando o se
 
 ## ⚙️ Tecnologias
 
-✅ - Vue 3
-✅ - TailwindCSS 
-✅ - Leatflet
-✅ - Pinia (store)
-✅ - DateFns
+✅ Vue 3
+
+✅ TailwindCSS 
+
+✅ Leatflet
+
+✅ Pinia (store)
+
+✅ DateFns
 
 <br />
 
