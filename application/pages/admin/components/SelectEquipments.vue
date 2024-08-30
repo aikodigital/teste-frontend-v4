@@ -52,7 +52,7 @@
             :class="{
               'bg-slate-200': index%2 === 0,
               'bg-slate-300': index%2 !== 0,
-              'bg-indigo-500 !text-white': equipment.id === selecetedId
+              '!bg-indigo-500 !text-white': equipment.id === selecetedId
             }"
             @click="setSelectedEquipment(equipment.id, equipment.equipmentModelId, equipment.name)"
           >
