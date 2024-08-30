@@ -5,10 +5,6 @@
   max-height: 90vh;
   overflow-y: auto;
   box-sizing: border-box;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 @media (max-width: 1080px) {
   .container {
