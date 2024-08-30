@@ -6,7 +6,9 @@ import { useMap } from "react-leaflet";
 
 const PositionMarker = ({ trajectoryMarkers, reset }) => {
   const map = useMap();
-  const [lol, setLol] = useState(trajectoryMarkers.positions ? trajectoryMarkers.positions : []);
+  const [markersAddedToGroup, setMarkersAddedToGroup] = useState(
+    trajectoryMarkers.positions ? trajectoryMarkers.positions : []
+  );
   const markerGroup = L.layerGroup().addTo(map);
 
   const renderComponentToHtml = (component) => {
@@ -52,7 +54,7 @@ const PositionMarker = ({ trajectoryMarkers, reset }) => {
 
         const marker = L.marker([position.lat, position.lon], { icon: positionIcon(index + 1) }).addTo(markerGroup);
         marker.bindPopup(content).openPopup();
-        setLol((prevLol) => [...prevLol, marker]);
+        setMarkersAddedToGroup((prevLol) => [...prevLol, marker]);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,9 +62,9 @@ const PositionMarker = ({ trajectoryMarkers, reset }) => {
 
   useEffect(() => {
     if (reset) {
-      lol?.forEach((marker) => marker.remove());
+      markersAddedToGroup?.forEach((marker) => marker.remove());
     }
-  }, [lol, reset]);
+  }, [markersAddedToGroup, reset]);
 };
 
 export default PositionMarker;
