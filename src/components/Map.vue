@@ -86,7 +86,7 @@ function displayEquipmentHistory(equipmentId: string, stateId?: string) {
             `
           Estado atual: <strong>${equipmentState?.name}</strong> <br>
           Data: <strong>${date}</strong> <br>
-          Saved Marker at (<strong>${equipmentHistory.positions[i].lat.toFixed(2)},${equipmentHistory.positions[i].lon.toFixed(
+          Localização: (<strong>${equipmentHistory.positions[i].lat.toFixed(2)},${equipmentHistory.positions[i].lon.toFixed(
   2,
 )}</strong>)
           `,
@@ -130,7 +130,7 @@ function displayTheLastPositionOfAllEquipments() {
           Equipamento: <strong>${returnEquipmentBasedOnId(equipmentsHistory.value[i].equipmentId)}</strong> <br>
           Estado atual: <strong>${equipmentState?.name}</strong> <br>
           Data: <strong>${date}</strong> <br>
-          Saved Marker at (<strong>${equipmentsHistory.value[i].positions[0].lat.toFixed(2)},${equipmentsHistory.value[i].positions[0].lon.toFixed(
+          Localização: (<strong>${equipmentsHistory.value[i].positions[0].lat.toFixed(2)},${equipmentsHistory.value[i].positions[0].lon.toFixed(
   2,
 )}</strong>)
         `,

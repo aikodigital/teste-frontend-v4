@@ -4,6 +4,14 @@ import equipmentModels from '../../data/equipmentModel.json'
 import statesHistory from '../../data/equipmentStateHistory.json'
 import type { EquipmentStatus } from '~/models/Equipment'
 
+export function formatCurrency(value: number, currency = 'BRL') {
+  if (!value) {
+    return
+  }
+
+  return value.toLocaleString('pt-BR', { style: 'currency', currency })
+}
+
 export function formatDate(date: string) {
   const isValidDate = !Number.isNaN(Date.parse(date))
   if (!isValidDate) {
@@ -91,7 +99,7 @@ function getEquipmentByModelId(equipmentModelId: string) {
   return model
 }
 
-export function calculateEquipmentGain(equipmentId: string): number | null {
+export function calculateEquipmentGain(equipmentId: string) {
   const equipmentHistory = statesHistory.find(e => e.equipmentId === equipmentId)
 
   if (!equipmentHistory) {
@@ -122,5 +130,5 @@ export function calculateEquipmentGain(equipmentId: string): number | null {
     totalGain += duration * rate
   }
 
-  return Number.parseFloat(totalGain.toFixed(2))
+  return formatCurrency(Number.parseFloat(totalGain.toFixed(2)))
 }

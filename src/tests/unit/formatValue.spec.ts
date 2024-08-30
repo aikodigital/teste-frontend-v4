@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { formatDate } from '~/utils/formatValue'
+import { formatCurrency, formatDate } from '~/utils/formatValue'
 
 describe('formatDate utils', () => {
   it('should format a valid date string to DD/MM/YYYY format', () => {
@@ -41,5 +41,58 @@ describe('formatDate utils', () => {
     const expected = 'Invalid Date'
 
     expect(result).toBe(expected)
+  })
+})
+
+describe('formatCurrency utils', () => {
+  it('formatCurrency should format value to Brazilian currency', () => {
+    const currency = 'BRL'
+    const value = 120
+
+    const result = formatCurrency(value, currency)
+
+    const formattedString = new Intl.NumberFormat('pt-BR', { style: 'currency', currency }).format(value)
+
+    expect(result).toBe(formattedString)
+  })
+
+  it('formatCurrency should format decimal values to Brazilian currency', () => {
+    const currency = 'BRL'
+    const value = 1234.56
+
+    const result = formatCurrency(value, currency)
+
+    const formattedString = new Intl.NumberFormat('pt-BR', { style: 'currency', currency }).format(value)
+
+    expect(result).toBe(formattedString)
+  })
+
+  it('formatCurrency should format negative value to Brazilian currency', () => {
+    const currency = 'BRL'
+    const value = -120
+
+    const result = formatCurrency(value, currency)
+
+    const formattedString = new Intl.NumberFormat('pt-BR', { style: 'currency', currency }).format(value)
+
+    expect(result).toBe(formattedString)
+  })
+
+  it('formatCurrency should format large value to Brazilian currency', () => {
+    const currency = 'BRL'
+    const value = 1000000000
+
+    const result = formatCurrency(value, currency)
+
+    const formattedString = new Intl.NumberFormat('pt-BR', { style: 'currency', currency }).format(value)
+
+    expect(result).toBe(formattedString)
+  })
+
+  it('formatCurrency should handle invalid currency code', () => {
+    const currency = 'INVALID'
+    const value = 120
+
+    expect(() => formatCurrency(value, currency)).toThrowError()
   })
 })
