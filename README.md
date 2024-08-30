@@ -52,6 +52,8 @@ No histórico de posições, é possível selecionar o equipamento desejado e as
 
 <img src="/public/img/posicoes_03.png">
 
+Passando o mouse sobre outra posição, é possível verificar sua data.
+
 <img src="/public/img/posicoes_04.png">
 
 ### Histórico de Estados
@@ -75,7 +77,10 @@ Selecionando o equipamento, é possível verificar todo seu histórico de estado
 
 ## 4 - Estrutura do Projeto
 
+Seguindo a estrutura do Next.js, na raiz do projeto, diretório src/app, contém os módulos da aplicação.
 <img src="/public/img/project_01.png">
+
+Cada módulo, contém um arquivo <strong>page.tsx</strong>
 <img src="/public/img/project_02.png">
 <img src="/public/img/project_03.png">
 <img src="/public/img/project_04.png">
