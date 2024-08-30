@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { IEquipment } from '../../models/Equipment';
+import EquipmentTable from '../../components/equipments/EquipmentsTable';
+
 
 
 const InitialPage = () => {
+
+  const [equipments, setEquipments] = useState<IEquipment[]>([]);
+
+
+  useEffect(() => {
+    getEquipments();
+  }, [])
+
+
+
+
+  const getEquipments = async () => {
+    try {
+      const resp = await fetch('data/equipment.json');
+      const data: IEquipment[] = await resp.json();
+      setEquipments(data);
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Meus Equipamentos</h2>
+
+      <EquipmentTable
+        equipments={equipments}
+      />
+
     </div>
   );
 }

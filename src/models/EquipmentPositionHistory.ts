@@ -1,9 +1,9 @@
-export interface EquipmentPositionHistory {
+export interface IEquipmentPositionHistory {
     equipmentId: string,
-    positions: Position[],
+    positions: IPosition[],
 }
 
-export interface Position {
+export interface IPosition {
     date: string,
     lat: number,
     lon: number
