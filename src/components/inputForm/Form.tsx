@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useContextData } from '../../context/context';
+import { FormBody } from './styles/styles';
 
 export default function Form() {
     const { selectedState, setSelectedState, selectedModel, setSelectedModel } = useContextData();
 
     return (
-        <>
+        <FormBody>
             <select onChange={(e) => setSelectedState(e.target.value)} value={selectedState || ''}>
                 <option value=''>Todos os Estados</option>
                 <option value="Operando">Operando</option>
@@ -17,6 +18,6 @@ export default function Form() {
                 <option value="Modelo A">Modelo A</option>
                 <option value="Modelo B">Modelo B</option>
             </select>
-        </>
+        </FormBody>
     )
 }

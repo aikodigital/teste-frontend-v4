@@ -6,9 +6,7 @@ import InputForm from './components/inputForm/Form';
 function App() {
     return (
       <>
-        <Title>
-          Projeto Aiko de Mapas
-        </Title>
+        <Title>Mapa de monitoração de operação</Title>
         <InputForm />
         <Map />
       </>

@@ -1,4 +1,5 @@
 import equipmentData from '../data/equipment.json';
+import equipmentModel from '../data/equipmentModel.json';
 import equipmentStateData from '../data/equipmentState.json';
 import equipmentPositionHistoryData from '../data/equipmentPositionHistory.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
@@ -50,14 +51,18 @@ export const mapEquipmentData = () => {
             (history) => history.equipmentId === equipment.id
         );
 
+        const equipmentName = equipmentModel.find((e) => e.id === equipment.equipmentModelId);
+
         if (!positionHistory) return null;
+        if (!equipmentName) return null;
+
 
         const latestPosition = getLatestPosition(positionHistory.positions);
         const latestState = getLatestState(equipment.id);
 
         return {
             id: equipment.id,
-            name: equipment.name,
+            name: equipmentName?.name,
             lat: latestPosition.lat,
             lon: latestPosition.lon,
             state: latestState ? latestState.name : 'Unknown',

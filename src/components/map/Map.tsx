@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Title, Body } from './styles/styles';
+import { Body } from './styles/styles';
 import { mapEquipmentData } from '../../services/mapEquipmentData';
 import { mapEquipmentDataInterface } from '../../services/interfaces/equipmentInterfaces';
 
@@ -12,12 +12,11 @@ export default function Map() {
     const { selectedState, selectedModel } = useContextData();
 
     const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
-    
+
     const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
 
     return (
         <>
-            <Title>Mapa de monitoração de operação</Title>
             <Body>
                 <MapContainer center={position} zoom={13} style={{ height: "500px", width: "50%" }}>
                     <TileLayer
