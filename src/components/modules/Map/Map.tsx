@@ -21,6 +21,7 @@ import stoped from "../../../assets/icons/Bus_12.png";
 import { Button, Modal } from "react-bootstrap";
 
 import "./Map.scss";
+import Loader from "./components/Loader";
 
 const MAP_STYLE: React.CSSProperties = {
   width: "80%",
@@ -64,11 +65,6 @@ const Map: FC<MapProps> = ({ model, state }) => {
     color: string;
     statesHistory: StateHistory[];
   }
-  interface StateAttributes {
-    name: string;
-    id: string;
-    color: string;
-  }
 
   type EquipmentModelEntry = {
     id: string;
@@ -104,6 +100,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
     { lat: number; lng: number } | undefined
   >(undefined);
   const [isHovered, setIsHovered] = useState<string>("");
+  const [isLoading, setIsloading] = useState<boolean>(false)
   const [equipmentMapPositions, setEquipmentMapPositions] = useState<
     EquipmentPositionsHistoryEntry[]
   >([]);
@@ -131,8 +128,12 @@ const Map: FC<MapProps> = ({ model, state }) => {
   ): (() => void) | void {
     if (!mapRef.current) return;
 
+    setIsloading(false)
+
     const equipmentDatails = getEquipmentDetails(markerId);
     const equipmentStates = getEquipmentStatesHistory(markerId);
+
+    setModalContent(equipmentStates);
 
     if (markerRef.current) {
       markerRef.current.setMap(null);
@@ -173,16 +174,16 @@ const Map: FC<MapProps> = ({ model, state }) => {
       infoWindow.open(marker.getMap(), marker);
     });
 
+    setIsloading(false)
+
     google.maps.event.addListenerOnce(infoWindow, "domready", () => {
       const button = document.getElementById(`open-modal-button-${markerId}`);
       if (button) {
         button.addEventListener("click", () => {
-          setModalContent(equipmentStates);
           setHistoryModal(true);
         });
       }
     });
-
 
     return () => {
       marker.setMap(null);
@@ -240,7 +241,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
   }
 
   useEffect(() => {
-    if (equipmentMapPositions && isLoaded) {
+    if (isLoaded) {
       const center = averageGeolocation();
       if (mapRef.current) {
         mapRef.current.setCenter({
@@ -249,13 +250,14 @@ const Map: FC<MapProps> = ({ model, state }) => {
         });
       }
     }
-  }, [equipmentMapPositions, isLoaded]);
+  }, [isLoaded]);
 
   useEffect(() => {
+    setIsloading(true)
     if (markerRef.current) {
       markerRef.current.setMap(null);
     }
-  
+
     let filteredEquipmentModel = equipmentPositionHistoryData;
   
     if (model !== "all") {
@@ -283,11 +285,14 @@ const Map: FC<MapProps> = ({ model, state }) => {
   
       if (filteredByState.length > 0) {
         setEquipmentMapPositions(filteredByState);
+        setIsloading(false)
       } else {
         setEquipmentMapPositions([]);
+        setIsloading(false)
       }
     } else {
       setEquipmentMapPositions(filteredEquipmentModel);
+      setIsloading(false)
     }
   }, [model, state]);
   
@@ -517,7 +522,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
 
   return (
     <div className="map-container">
-      {isLoaded ? (
+      {(isLoaded && !isLoading) ? (
         <GoogleMap
           mapContainerStyle={MAP_STYLE}
           center={centerCoords}
@@ -571,7 +576,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        zIndex: 999, // Certifique-se de que o backdrop esteja acima de outros elementos
+                        zIndex: 999,
                       }}
                     ></div>
 
@@ -624,7 +629,7 @@ const Map: FC<MapProps> = ({ model, state }) => {
           </div>
         </GoogleMap>
       ) : (
-        <></>
+        <Loader />
       )}
     </div>
   );
