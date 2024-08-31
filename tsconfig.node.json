@@ -18,7 +18,10 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": ["vite.config.ts"]
 }
