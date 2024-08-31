@@ -44,6 +44,50 @@ const getStateById = (id: string) => {
     return equipmentStates.find(state => state.id === id)?.name || 'Desconhecido';
 };
 
+const calculateProductivity = (equipmentId: string) => {
+    const history = equipmentStateHistory.find(h => h.equipmentId === equipmentId)?.states || [];
+    
+    const sortedHistory = history
+        .map(state => ({
+            date: new Date(state.date),
+            stateId: state.equipmentStateId
+        }))
+        .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    
+    const totalHours = getTotalHours(sortedHistory);
+
+    const productiveHours = getProductiveHours(sortedHistory);
+
+    const productivity = totalHours > 0 ? (productiveHours / totalHours) * 100 : 0;
+    return `${productivity.toFixed(2)}%`;
+};
+
+
+const getTotalHours = (sortedHistory: { date: Date, stateId: string }[] ): number => {
+    return sortedHistory
+        .reduce((acc, curr, index, array) => {
+            if (index === 0) return acc;
+            const prevDate = array[index - 1].date;
+            const currDate = curr.date;
+            const hours = (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60);
+            return acc + hours;
+        }, 0);
+}
+
+const getProductiveHours = (sortedHistory: { date: Date, stateId: string }[]): number => {
+    return sortedHistory
+        .reduce((acc, curr, index, array) => {
+            if (index === 0) return acc;
+            const prevDate = array[index - 1].date;
+            const currDate = curr.date;
+            const hours = (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60);
+            
+            const isProductive = getStateById(curr.stateId) === 'Operando';
+            return acc + (isProductive ? hours : 0);
+        }, 0);
+}
+
 
 export const mapEquipmentData = () => {
     return equipmentData.map((equipment) => {
@@ -63,6 +107,7 @@ export const mapEquipmentData = () => {
         return {
             id: equipment.id,
             tag: equipment.name,
+            productivity: calculateProductivity(equipment.id),
             name: equipmentName?.name,
             lat: latestPosition.lat,
             lon: latestPosition.lon,

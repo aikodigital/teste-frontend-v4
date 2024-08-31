@@ -14,7 +14,7 @@ export default function Map() {
     const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
 
     const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
-    
+
     return (
         <>
             <Body>
@@ -46,6 +46,8 @@ export default function Map() {
                                 Nome: <strong>{equipment.name}</strong>
                                 <br />
                                 Estado: {equipment.state}
+                                <br />
+                                Produtividade: {equipment.productivity}
                                 <h4>Histórico de Estados</h4>
                                 <ul>
                                     {equipment.stateHistory.map((history, index) => (

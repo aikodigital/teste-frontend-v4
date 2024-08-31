@@ -15,6 +15,7 @@ export interface EquipmentState {
 export interface mapEquipmentDataInterface {
     id: string;
     tag: string;
+    productivity: string;
     name: string;
     lat: any;
     lon: any;
