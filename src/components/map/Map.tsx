@@ -5,12 +5,14 @@ import { Title, Body } from './styles/styles';
 import { mapEquipmentData } from '../../services/mapEquipmentData';
 import { mapEquipmentDataInterface } from '../../services/interfaces/equipmentInterfaces';
 
-const markerIcon = require('./img/aiko.png');
-
+import markerIcon from '../../assets/aiko.png';
+import { useContextData } from '../../context/context';
 
 export default function Map() {
-    const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
+    const { selectedState, selectedModel } = useContextData();
 
+    const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
+    
     const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
 
     return (
@@ -22,7 +24,11 @@ export default function Map() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
-                    {equipmentPositions.map((equipment) => (
+                    {equipmentPositions
+                        .filter(equipment => 
+                            (!selectedState || equipment.state === selectedState) &&
+                            (!selectedModel || equipment.name === selectedModel)
+                        ).map((equipment) => (
                         equipment &&  (
                         <Marker 
                             key={equipment.id} 
