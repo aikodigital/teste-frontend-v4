@@ -1,21 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'; 
-import { EquipmentStateHistory } from '../../equipment-state-history/entities/equipment-state-history.entity';
-import { HourlyEarning } from '../../hourly-earning/entities/hourly-earning.entity';
+import { HourlyEarnings } from 'src/hourly-earning/entities/hourly-earning.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'; 
 
 @Entity()
 export class EquipmentState {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    color: string;
+  @Column()
+  color: string;
 
-    @OneToMany(() => HourlyEarning, (hourlyEarning) => hourlyEarning.equipmentState)
-    hourlyEarnings: HourlyEarning[];
-
-    @OneToMany(() => EquipmentStateHistory, (stateHistory) => stateHistory.equipmentState)
-    stateHistories: EquipmentStateHistory[];
+  @OneToMany(() => HourlyEarnings, (hourlyEarnings) => hourlyEarnings.equipmentState)
+  hourlyEarnings: HourlyEarnings[];
 }

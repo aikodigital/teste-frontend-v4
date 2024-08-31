@@ -8,6 +8,7 @@ import { EquipmentStateHistoryModule } from './equipment-state-history/equipment
 import { EquipmentStateModule } from './equipment-state/equipment-state.module';  
 import { EquipmentPositionHistoryModule } from './equipment-position-history/equipment-position-history.module';
 import { HourlyEarningModule } from './hourly-earning/hourly-earning.module'; 
+import { EquipmentModelModule } from './equipment-model/equipment-model.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { HourlyEarningModule } from './hourly-earning/hourly-earning.module';
     }),  
     HourlyEarningModule,
     EquipmentModule,
+    EquipmentModelModule,
     EquipmentStateHistoryModule,
     EquipmentStateModule,
     EquipmentPositionHistoryModule,  

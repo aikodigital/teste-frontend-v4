@@ -12,5 +12,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [EquipmentStateHistoryController],
   providers: [EquipmentStateHistoryService],
+  exports: [EquipmentStateHistoryModule, EquipmentStateHistoryService],
 })
 export class EquipmentStateHistoryModule {}

@@ -1,20 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'; 
-import { Equipment } from '../../equipment/entities/equipment.entity';
+import { Equipment } from 'src/equipment/entities/equipment.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'; 
 
 @Entity()
 export class EquipmentPositionHistory {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column('timestamp')
-    date: Date;
+  @ManyToOne(() => Equipment)
+  equipment: Equipment;
 
-    @Column('decimal', { precision: 10, scale: 6 })
-    lat: number;
-
-    @Column('decimal', { precision: 10, scale: 6 })
-    lon: number;
-
-    @ManyToOne(() => Equipment, (equipment) => equipment.positionHistories)
-    equipment: Equipment;
+  @Column('json')
+  positions: { date: Date; lat: number; lon: number }[];
 }

@@ -12,5 +12,6 @@ import { EquipmentPositionHistory } from './entities/equipment-position-history.
   ],  
   controllers: [EquipmentPositionHistoryController],
   providers: [EquipmentPositionHistoryService],
+  exports: [EquipmentPositionHistoryModule, EquipmentPositionHistoryService],
 })
 export class EquipmentPositionHistoryModule {}

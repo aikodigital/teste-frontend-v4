@@ -12,5 +12,6 @@ import { EquipmentState } from './entities/equipment-state.entity';
   ],
   controllers: [EquipmentStateController],
   providers: [EquipmentStateService],
+  exports: [EquipmentStateModule, EquipmentStateService],
 })
 export class EquipmentStateModule {}

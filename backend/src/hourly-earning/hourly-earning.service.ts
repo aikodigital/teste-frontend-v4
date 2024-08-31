@@ -1,18 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { CreateHourlyEarningDto } from './dto/create-hourly-earning.dto';
-import { UpdateHourlyEarningDto } from './dto/update-hourly-earning.dto';
-import { HourlyEarning } from './entities/hourly-earning.entity';
+import { Injectable } from '@nestjs/common'; 
+import { UpdateHourlyEarningDto } from './dto/update-hourly-earning.dto'; 
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HourlyEarnings } from './entities/hourly-earning.entity';
+import { CreateHourlyEarningsDto } from './dto/create-hourly-earning.dto';
 
 @Injectable()
 export class HourlyEarningService {
   constructor(
-    @InjectRepository(HourlyEarning)
-    private hourlyEarningRepository: Repository<HourlyEarning>,
+    @InjectRepository(HourlyEarnings)
+    private hourlyEarningRepository: Repository<HourlyEarnings>,
   ) {}
 
-  async create(createHourlyEarningDto: CreateHourlyEarningDto) {
+  async create(createHourlyEarningDto: CreateHourlyEarningsDto) {
     const hourlyEarning = await this.hourlyEarningRepository.create(createHourlyEarningDto);
     return await this.hourlyEarningRepository.save(hourlyEarning);
   }

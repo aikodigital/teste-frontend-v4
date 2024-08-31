@@ -1,18 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'; 
-import { EquipmentState } from '../../equipment-state/entities/equipment-state.entity';
-import { EquipmentModel } from '../../equipment-model/entities/equipment-model.entity';
+import { EquipmentState } from 'src/equipment-state/entities/equipment-state.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'; 
 
 @Entity()
-export class HourlyEarning {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+export class HourlyEarnings {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column('decimal')
-    value: number;
+  @ManyToOne(() => EquipmentState, (state) => state.hourlyEarnings)
+  equipmentState: EquipmentState;
 
-    @ManyToOne(() => EquipmentState, (equipmentState) => equipmentState.hourlyEarnings)
-    equipmentState: EquipmentState;
-
-    @ManyToOne(() => EquipmentModel, (equipmentModel) => equipmentModel.hourlyEarnings)
-    equipmentModel: EquipmentModel;
+  @Column()
+  value: number;
 }

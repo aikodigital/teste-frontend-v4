@@ -3,17 +3,17 @@ import { HourlyEarningService } from './hourly-earning.service';
 import { HourlyEarningController } from './hourly-earning.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HourlyEarning } from './entities/hourly-earning.entity';
+import { HourlyEarnings } from './entities/hourly-earning.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([
-      HourlyEarning,
+      HourlyEarnings,
     ]),
   ],  
   controllers: [HourlyEarningController],
   providers: [HourlyEarningService],
-  exports: [HourlyEarningService],
+  exports: [HourlyEarningModule, HourlyEarningService],
 })
 export class HourlyEarningModule {}

@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EquipmentPositionHistoryService } from './equipment-position-history.service';
 import { CreateEquipmentPositionHistoryDto } from './dto/create-equipment-position-history.dto';
 import { UpdateEquipmentPositionHistoryDto } from './dto/update-equipment-position-history.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('equipment-position-history')
 @Controller('equipment-position-history')
 export class EquipmentPositionHistoryController {
   constructor(private readonly equipmentPositionHistoryService: EquipmentPositionHistoryService) {}
