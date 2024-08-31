@@ -62,6 +62,7 @@ export const mapEquipmentData = () => {
 
         return {
             id: equipment.id,
+            tag: equipment.name,
             name: equipmentName?.name,
             lat: latestPosition.lat,
             lon: latestPosition.lon,

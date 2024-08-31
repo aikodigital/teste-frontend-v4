@@ -9,12 +9,12 @@ import markerIcon from '../../assets/aiko.png';
 import { useContextData } from '../../context/context';
 
 export default function Map() {
-    const { selectedState, selectedModel } = useContextData();
+    const { selectedState, selectedModel, searchTag } = useContextData();
 
     const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
 
     const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
-
+    
     return (
         <>
             <Body>
@@ -26,7 +26,8 @@ export default function Map() {
                     {equipmentPositions
                         .filter(equipment => 
                             (!selectedState || equipment.state === selectedState) &&
-                            (!selectedModel || equipment.name === selectedModel)
+                            (!selectedModel || equipment.name === selectedModel) &&
+                            (!searchTag || equipment.tag.includes(searchTag))
                         ).map((equipment) => (
                         equipment &&  (
                         <Marker 

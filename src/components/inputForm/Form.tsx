@@ -3,7 +3,7 @@ import { FormBody } from './styles/styles';
 import equipmentModel from '../../data/equipmentModel.json';
 
 export default function Form() {
-    const { selectedState, setSelectedState, selectedModel, setSelectedModel } = useContextData();
+    const { selectedState, setSelectedState, selectedModel, setSelectedModel, setSearchTag, searchTag } = useContextData();
 
     return (
         <FormBody>
@@ -21,6 +21,14 @@ export default function Form() {
                     </option>
                 ))}
             </select>
+
+            <input 
+                type="text" 
+                placeholder="CA-0001" 
+                value={searchTag ?? ''} 
+                onChange={(e) => setSearchTag(e.target.value)} 
+            />
+
         </FormBody>
     )
 }
