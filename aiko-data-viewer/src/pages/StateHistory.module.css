@@ -1,0 +1,15 @@
+.stateHistory {
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  padding: var(--container-padding);
+}
+
+.title {
+  margin: 10px 0;
+}

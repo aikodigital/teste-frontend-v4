@@ -6,7 +6,9 @@ import { updateCities } from '../utils/updateCities'
 import equipmentStateHistory from '../data/equipmentStateHistory.json'
 import { Filters } from '../components/Filters'
 import { EquipmentTable } from '../components/EquipmentTable'
-import { Pagination } from '../components/Paginations'
+import { Pagination } from '../components/Pagination'
+
+import s from './Details.module.css'
 
 export function Details() {
   const [allStateHistory, setAllStateHistory] = useState([])
@@ -20,7 +22,7 @@ export function Details() {
     model: '',
     status: '',
   })
-  const itemsPerPage = 15
+  const itemsPerPage = 10
 
   const previousCitiesRef = useRef(cities)
 
@@ -82,18 +84,20 @@ export function Details() {
   }
 
   return (
-    <div>
-      <Filters filters={filters} handleFilterChange={handleFilterChange} />
-      <EquipmentTable
-        currentItems={currentItems}
-        stateDictionary={stateDictionary}
-        cities={cities}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
-      />
+    <div className={s.details}>
+      <div className={s.container}>
+        <Filters filters={filters} handleFilterChange={handleFilterChange} />
+        <EquipmentTable
+          currentItems={currentItems}
+          stateDictionary={stateDictionary}
+          cities={cities}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
+      </div>
     </div>
   )
 }

@@ -1,0 +1,10 @@
+.equipmentInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button {
+  margin-top: 8px;
+}

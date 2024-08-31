@@ -1,0 +1,12 @@
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  padding: var(--container-padding);
+}

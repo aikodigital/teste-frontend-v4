@@ -2,9 +2,11 @@ import React from 'react'
 import equipmentModel from '../data/equipmentModel.json'
 import equipmentState from '../data/equipmentState.json'
 
+import s from './Filters.module.css'
+
 export function Filters({ filters, handleFilterChange }) {
   return (
-    <div className='filters'>
+    <div className={s.filters}>
       <input
         type='text'
         name='name'

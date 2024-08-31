@@ -5,7 +5,9 @@ import equipment from '../data/equipment.json'
 import equipmentModel from '../data/equipmentModel.json'
 import { useEffect, useState, useMemo } from 'react'
 import { fetchCities } from '../utils/fetchCities'
-import './StateHistory.css'
+
+import s from './StateHistory.module.css'
+import { Pagination } from '../components/Pagination'
 
 function createStateDictionary() {
   return equipmentState.reduce((acc, state) => {
@@ -31,7 +33,7 @@ export function StateHistory() {
   const [equipmentModelName, setEquipmentModelName] = useState('')
   const [cities, setCities] = useState({})
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 15
+  const itemsPerPage = 10
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -79,45 +81,45 @@ export function StateHistory() {
   }, [currentItems, id])
 
   return (
-    <div>
-      <h1>Histórico de Status da Máquina: {equipmentName}</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Nome do Modelo</th>
-            <th>Data/Hora</th>
-            <th>Status</th>
-            <th>Cidade</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((state) => {
-            const status = stateDictionary[state.equipmentStateId] || {
-              name: 'Desconhecido',
-              color: '#ffffff',
-            }
-            return (
-              <tr key={state.date} style={{ backgroundColor: status.color }}>
-                <td>{equipmentModelName}</td>
-                <td>{new Date(state.date).toLocaleString()}</td>
-                <td>{status.name}</td>
-                <td>{cities[state.date] || 'Cidade Desconhecida'}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+    <div className={s.stateHistory}>
+      <div className={s.container}>
+        <h2 className={s.title}>Histórico de Status da Máquina: {equipmentName}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome do Modelo</th>
+              <th>Data/Hora</th>
+              <th>Status</th>
+              <th>Cidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((state) => {
+              const status = stateDictionary[state.equipmentStateId] || {
+                name: 'Desconhecido',
+                color: 'var(--white)',
+              }
+              return (
+                <tr key={state.date}>
+                  <td>{equipmentModelName}</td>
+                  <td>{new Date(state.date).toLocaleString()}</td>
+                  <td>
+                    <span style={{ backgroundColor: status.color }}>
+                      {status.name.toUpperCase()}
+                    </span>
+                  </td>
+                  <td>{cities[state.date] || 'Cidade Desconhecida'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
 
-      <div>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            disabled={currentPage === index + 1}
-          >
-            {index + 1}
-          </button>
-        ))}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </div>
     </div>
   )

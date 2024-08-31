@@ -1,9 +1,14 @@
-import { APIProvider, Map } from '@vis.gl/react-google-maps'
-import { useState, useRef } from 'react'
+import { APIProvider, ControlPosition, Map, MapControl } from '@vis.gl/react-google-maps'
+import { useState, useRef, useCallback } from 'react'
 import { MarkerWithInfoWindow } from './MarkerWithInfoWindow'
+import { useEquipmentInfo } from '../hooks/useEquipmentInfo'
+import { MapFilters } from './MapFilters'
 
-export function MapContainer({ equipmentInfo }) {
+import s from './MapContainer.module.css'
+
+export function MapContainer() {
   const [openInfoWindowId, setOpenInfoWindowId] = useState(null)
+  const { info, setDateFilter, setStatusFilter, setModelFilter } = useEquipmentInfo()
   const markerRefs = useRef({})
 
   const handleMarkerRef = (equipmentId, ref) => {
@@ -12,8 +17,14 @@ export function MapContainer({ equipmentInfo }) {
     }
   }
 
+  const removeFilters = useCallback(() => {
+    setDateFilter('')
+    setStatusFilter('')
+    setModelFilter('')
+  }, [setDateFilter, setStatusFilter, setModelFilter])
+
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div className={s.mapContainer}>
       <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <Map
           mapId={'bf51a910020fa25a'}
@@ -22,22 +33,28 @@ export function MapContainer({ equipmentInfo }) {
           gestureHandling={'greedy'}
           disableDefaultUI
         >
-          {equipmentInfo.map(
-            ({ equipmentId, lastPosition, equipmentName, equipmentModel, state }) => (
-              <MarkerWithInfoWindow
-                key={equipmentId}
-                equipmentId={equipmentId}
-                position={{ lat: lastPosition?.lat, lng: lastPosition?.lon }}
-                equipmentName={equipmentName}
-                equipmentModel={equipmentModel}
-                state={state}
-                markerRefs={markerRefs}
-                openInfoWindowId={openInfoWindowId}
-                setOpenInfoWindowId={setOpenInfoWindowId}
-                handleMarkerRef={handleMarkerRef}
-              />
-            ),
-          )}
+          {info.map(({ equipmentId, lastPosition, equipmentName, equipmentModel, state }) => (
+            <MarkerWithInfoWindow
+              key={equipmentId}
+              equipmentId={equipmentId}
+              position={{ lat: lastPosition?.lat, lng: lastPosition?.lon }}
+              equipmentName={equipmentName}
+              equipmentModel={equipmentModel}
+              state={state}
+              markerRefs={markerRefs}
+              openInfoWindowId={openInfoWindowId}
+              setOpenInfoWindowId={setOpenInfoWindowId}
+              handleMarkerRef={handleMarkerRef}
+            />
+          ))}
+          <MapControl position={ControlPosition.TOP_RIGHT}>
+            <MapFilters
+              setStatusFilter={setStatusFilter}
+              setModelFilter={setModelFilter}
+              setDateFilter={setDateFilter}
+              removeFilters={removeFilters}
+            />
+          </MapControl>
         </Map>
       </APIProvider>
     </div>

@@ -2,6 +2,8 @@ import { AdvancedMarker, InfoWindow, Pin } from '@vis.gl/react-google-maps'
 import { useNavigate } from 'react-router-dom'
 import { useEquipmentIcon } from '../hooks/useEquipmentIcon'
 
+import s from './MarkerWithInfoWindow.module.css'
+
 export function MarkerWithInfoWindow({
   equipmentId,
   position,
@@ -34,15 +36,15 @@ export function MarkerWithInfoWindow({
 
       {openInfoWindowId === equipmentId && (
         <InfoWindow
+          className={s.infoWindow}
           anchor={markerRefs.current[equipmentId]}
-          maxWidth={200}
           onCloseClick={() => setOpenInfoWindowId(null)}
         >
-          <div>
+          <div className={s.equipmentInfo}>
             <p>Nome: {equipmentName}</p>
             <p>Modelo: {equipmentModel.name}</p>
             <p>Status: {state.name}</p>
-            <button onClick={() => navigate(`/state/details/${equipmentId}`)}>
+            <button className={s.button} onClick={() => navigate(`/state/details/${equipmentId}`)}>
               Histórico de status
             </button>
           </div>

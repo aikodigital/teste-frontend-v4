@@ -1,0 +1,15 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transform: translate(-30px, 30px);
+  background-color: var(--white);
+  padding: 20px 30px;
+  border-radius: 15px;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

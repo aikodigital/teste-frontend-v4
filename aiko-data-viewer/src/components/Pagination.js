@@ -1,8 +1,10 @@
 import React from 'react'
 
+import s from './Pagination.module.css'
+
 export function Pagination({ currentPage, totalPages, handlePageChange }) {
   return (
-    <div>
+    <div className={s.pagination}>
       <button disabled={currentPage <= 1} onClick={() => handlePageChange(currentPage - 1)}>
         Anterior
       </button>
