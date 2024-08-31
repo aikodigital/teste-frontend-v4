@@ -1,4 +1,6 @@
 # Case técnico | Desenvolvedor Frontend - Aiko
+## Antes de começar
+Certificar-se de estar na pasta `./test-aiko` para rodar os comandos
 
 ## Instalação
 O projeto foi desenvolvido com o node na versão lts mais recente (20.17.0).

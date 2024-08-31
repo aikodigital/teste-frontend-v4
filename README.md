@@ -1,5 +1,9 @@
 # Teste Frontend V4
 
+## ⚠️ Implementação
+> A implementação está na pasta `./teste-aiko` assim como todas as informações de como rodar o teste técnico (vericiar `./teste-aiko/README.md` para mais informações)
+
+
 ![Aiko](img/aiko.png)
 
 Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
