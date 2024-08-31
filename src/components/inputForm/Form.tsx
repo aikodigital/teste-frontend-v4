@@ -1,6 +1,6 @@
-import React from 'react'
 import { useContextData } from '../../context/context';
 import { FormBody } from './styles/styles';
+import equipmentModel from '../../data/equipmentModel.json';
 
 export default function Form() {
     const { selectedState, setSelectedState, selectedModel, setSelectedModel } = useContextData();
@@ -15,8 +15,11 @@ export default function Form() {
 
             <select onChange={(e) => setSelectedModel(e.target.value)} value={selectedModel || ''}>
                 <option value=''>Todos os Modelos</option>
-                <option value="Modelo A">Modelo A</option>
-                <option value="Modelo B">Modelo B</option>
+                {equipmentModel.map((model) => (
+                    <option key={model.id} value={model.name}>
+                        {model.name}
+                    </option>
+                ))}
             </select>
         </FormBody>
     )
