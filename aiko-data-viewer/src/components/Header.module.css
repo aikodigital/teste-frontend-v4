@@ -2,8 +2,38 @@
   background-color: var(--white);
   color: var(--resolution-blue);
   height: var(--header-height);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  padding: 0 var(--container-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.menuButton {
+  position: absolute;
+  right: 20px;
+  background-color: var(--resolution-blue);
+  color: var(--white);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 1001;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease 0.3s;
+}
+
+.menuButton.open {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }

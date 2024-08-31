@@ -47,7 +47,7 @@ export function MapContainer() {
               handleMarkerRef={handleMarkerRef}
             />
           ))}
-          <MapControl position={ControlPosition.TOP_RIGHT}>
+          <MapControl position={ControlPosition.TOP_LEFT}>
             <MapFilters
               setStatusFilter={setStatusFilter}
               setModelFilter={setModelFilter}

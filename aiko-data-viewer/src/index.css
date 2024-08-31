@@ -1,3 +1,18 @@
+:root {
+  --header-height: 70px;
+  --container-width: 1248px;
+  --container-padding: 20px;
+
+  --white: #ffffff;
+  --black: #000000;
+  --green-primary: #00c100;
+  --green-secondary: #00d900;
+  --tudora: #444444;
+  --silver: #cccccc;
+  --resolution-blue: #003380;
+  --alto: #dddddd;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -87,13 +102,21 @@ label {
   color: var(--tudora);
 }
 
+a {
+  text-decoration: none;
+  color: unset;
+}
+
 p {
   font-size: 16px;
   color: var(--tudora);
 }
 
+li {
+  list-style-type: none;
+}
+
 button {
-  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   background-color: var(--green-primary);
@@ -114,20 +137,5 @@ button:disabled {
 
 button:disabled:hover {
   cursor: not-allowed;
-}
-
-:root {
-  --header-height: 70px;
-  --container-width: 1248px;
-  --container-padding: 20px;
-
-  --white: #ffffff;
-  --black: #000000;
-  --green-primary: #00c100;
-  --green-secondary: #00d900;
-  --tudora: #444444;
-  --silver: #cccccc;
-  --resolution-blue: #003380;
-  --alto: #dddddd;
 }
 
