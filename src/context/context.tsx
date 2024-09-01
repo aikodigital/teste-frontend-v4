@@ -1,13 +1,6 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
+import { MyContextType } from '../interfaces/interfaces';
 
-interface MyContextType {
-    selectedState: string | null;
-    selectedModel: string | null;
-    searchTag: string | null;
-    setSelectedState: React.Dispatch<React.SetStateAction<string | null>>;
-    setSelectedModel: React.Dispatch<React.SetStateAction<string | null>>;
-    setSearchTag: React.Dispatch<React.SetStateAction<string | null>>;
-}
 
 const DEFAULT_VALUE: MyContextType = {
     selectedState: '',

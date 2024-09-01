@@ -3,20 +3,20 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Body } from './styles/styles';
 import { mapEquipmentData } from '../../services/mapEquipmentData';
-import { mapEquipmentDataInterface } from '../../services/interfaces/equipmentInterfaces';
+import { MapEquipmentData } from '../../interfaces/interfaces';
 import { useContextData } from '../../context/context';
 
 export default function Map() {
     const { selectedState, selectedModel, searchTag } = useContextData();
 
-    const equipmentPositions = mapEquipmentData() as mapEquipmentDataInterface[];
+    const equipmentPositions = mapEquipmentData() as MapEquipmentData[];
 
-    const position: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
+    const initialPosition: [number, number] = [equipmentPositions[0]?.lat, equipmentPositions[0]?.lon];
 
     return (
         <>
             <Body>
-                <MapContainer center={position} zoom={13} style={{ height: "500px", width: "50%" }}>
+                <MapContainer center={initialPosition} zoom={13} style={{ height: "500px", width: "50%" }}>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -26,11 +26,11 @@ export default function Map() {
                             (!selectedState || equipment.state === selectedState) &&
                             (!selectedModel || equipment.name === selectedModel) &&
                             (!searchTag || equipment.tag.includes(searchTag))
-                        ).map((equipment) => (
+                        ).map((equipment: MapEquipmentData) => (
                         equipment &&  (
-                        <Marker 
-                            key={equipment.id} 
-                            position={[equipment.lat, equipment.lon]} 
+                        <Marker
+                            key={equipment.id}
+                            position={[equipment.lat, equipment.lon]}
                             icon={new L.Icon({
                                 iconUrl: equipment.icon,
                                 iconSize: [25, 41],
