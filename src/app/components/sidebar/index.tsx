@@ -15,7 +15,6 @@ interface SidebarInterface {
 
 export function Sidebar({ currentEquipment }: SidebarInterface) {
   const context = useContext(EquipmentContext);
-  console.log(currentEquipment, 'currentEquipment?.stateHistory >>>>')
 
   const timelineItems = currentEquipment?.stateHistory.toReversed().slice(1).map((state, i) => ({
     color: state.color,
