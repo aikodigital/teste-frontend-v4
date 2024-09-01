@@ -48,6 +48,8 @@ export default function Map() {
                                 Estado: {equipment.state}
                                 <br />
                                 Produtividade: {equipment.productivity}
+                                <br />
+                                Ganhos: R${equipment.earnings}
                                 <h4>Histórico de Estados</h4>
                                 <ul>
                                     {equipment.stateHistory.map((history, index) => (

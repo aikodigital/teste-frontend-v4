@@ -4,7 +4,7 @@ import equipmentStateData from '../data/equipmentState.json';
 import equipmentPositionHistoryData from '../data/equipmentPositionHistory.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
 import { EquipmentState, EquipmentStateHistory } from './interfaces/equipmentInterfaces';
-import { formatDate } from '../utils/utils';
+import { calculateTotalEarnings, formatDate } from '../utils/utils';
 
 
 const equipmentStateHistory = equipmentStateHistoryData as EquipmentStateHistory[];
@@ -54,7 +54,7 @@ const calculateProductivity = (equipmentId: string) => {
         }))
         .sort((a, b) => a.date.getTime() - b.date.getTime());
 
-    
+
     const totalHours = getTotalHours(sortedHistory);
 
     const productiveHours = getProductiveHours(sortedHistory);
@@ -82,7 +82,7 @@ const getProductiveHours = (sortedHistory: { date: Date, stateId: string }[]): n
             const prevDate = array[index - 1].date;
             const currDate = curr.date;
             const hours = (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60);
-            
+
             const isProductive = getStateById(curr.stateId) === 'Operando';
             return acc + (isProductive ? hours : 0);
         }, 0);
@@ -100,14 +100,14 @@ export const mapEquipmentData = () => {
         if (!positionHistory) return null;
         if (!equipmentName) return null;
 
-
         const latestPosition = getLatestPosition(positionHistory.positions);
         const latestState = getLatestState(equipment.id);
-
+        
         return {
             id: equipment.id,
             tag: equipment.name,
             productivity: calculateProductivity(equipment.id),
+            earnings: calculateTotalEarnings(equipment.equipmentModelId, equipment.id),
             name: equipmentName?.name,
             lat: latestPosition.lat,
             lon: latestPosition.lon,

@@ -16,6 +16,7 @@ export interface mapEquipmentDataInterface {
     id: string;
     tag: string;
     productivity: string;
+    earnings: number;
     name: string;
     lat: any;
     lon: any;
