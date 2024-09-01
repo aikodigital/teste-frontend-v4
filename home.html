@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Projeto Padrão</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.1.0/ol.css">
+        <script src="https://cdn.jsdelivr.net/npm/ol@v10.1.0/dist/ol.js"></script>
+    </head>
+<body>
+    <header>
+        <div><img src="img/home-icon.png" alt=""><h1>Dashboard - Teste Lucas Camargo | Aiko</h1></div>        
+    </header>
+
+    <main>
+        
+        <div id="map" class="mapa-geolocalizacao">
+            <h2>Geolocalização de Equipamentos</h2>
+        </div>
+        <div id="historico-equipamento" class="tabela-historico-geolocalizacao">
+            <h2>Histórico dos Equipamentos</h2>
+            <table id="equipment-table">
+                <thead class="table-head">
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Localização</th>
+                        <th>Informação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- As linhas serão adicionadas aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <img src="img/aiko.png" alt="Logo da Empresa">
+    </footer>
+
+    <!-- Inclua a biblioteca OpenLayers primeiro -->
+    <script src="https://cdn.jsdelivr.net/npm/ol/ol.js"></script>
+    <!-- Agora inclua o seu script -->
+    <script src="scripts/script.js"></script>
+</body>
+</html>
