@@ -1,0 +1,50 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: var(--white);
+  padding: 60px 50px 40px;
+  border-radius: 15px;
+  transition: left 0.3s ease;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 30px;
+  padding: 0 10px;
+}
+
+.filters.hidden {
+  left: -263px;
+}
+
+.open {
+  position: absolute;
+  top: 50%;
+  display: none;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: right 0.3s ease opacity 0.3s ease;
+}
+
+.open.show {
+  display: block;
+  right: -50px;
+  opacity: 1;
+}
+
+.filter {
+  width: 30px;
+  height: 30px;
+}

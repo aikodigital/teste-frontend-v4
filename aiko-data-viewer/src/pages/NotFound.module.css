@@ -1,0 +1,70 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - var(--header-height));
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  padding: 0 var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.errorCode {
+  font-size: 108px;
+  margin-bottom: 35px;
+}
+
+.errorRobot {
+  width: 250px;
+}
+
+.errorText {
+  max-width: 490px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.ops {
+  font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-bottom: 100px;
+  }
+
+  .imageWrapper {
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+
+  .errorCode {
+    font-size: 72px;
+  }
+
+  .errorRobot {
+    transform: translateY(35px);
+    width: 200px;
+  }
+
+  .errorText {
+    max-width: 400px;
+  }
+
+  .ops {
+    font-size: 20px;
+  }
+}

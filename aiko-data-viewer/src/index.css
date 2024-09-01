@@ -1,0 +1,142 @@
+:root {
+  --header-height: 70px;
+  --container-width: 1248px;
+  --container-padding: 20px;
+
+  --white: #ffffff;
+  --black: #000000;
+  --green-primary: #00c100;
+  --green-secondary: #00d900;
+  --tudora: #444444;
+  --silver: #cccccc;
+  --resolution-blue: #003380;
+  --alto: #dddddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--silver);
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  height: 60px;
+  min-width: 120px;
+}
+
+th {
+  background-color: var(--resolution-blue);
+  color: var(--white);
+}
+
+tr {
+  border-bottom: 1px solid var(--alto);
+}
+
+td > span {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--resolution-blue);
+  border-radius: 10px;
+  color: var(--white);
+  font-weight: 700;
+  width: 108px;
+  font-size: 12px;
+}
+
+select {
+  border: 1px solid var(--silver);
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  color: var(--tudora);
+}
+
+input[type='text'],
+input[type='number'],
+input[type='date'] {
+  border: 1px solid var(--silver);
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  color: var(--tudora);
+}
+
+input[type='number'] {
+  border: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  text-align: center;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+label {
+  font-size: 14px;
+  color: var(--tudora);
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+p {
+  font-size: 16px;
+  color: var(--tudora);
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--green-primary);
+  color: var(--white);
+  font-size: 16px;
+  padding: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--green-secondary);
+}
+
+button:disabled {
+  background-color: var(--silver);
+  color: var(--tudora);
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
+}
+
