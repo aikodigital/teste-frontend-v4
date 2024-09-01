@@ -1,0 +1,1 @@
+import equipment from './equipment.json';

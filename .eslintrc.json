@@ -1,0 +1,23 @@
+{
+  "extends": "next/core-web-vitals",
+  "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "global-require": [
+            "error"
+        ]
+    }
+}
