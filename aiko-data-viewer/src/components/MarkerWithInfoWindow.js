@@ -1,6 +1,7 @@
 import { AdvancedMarker, InfoWindow, Pin } from '@vis.gl/react-google-maps'
-import { useNavigate } from 'react-router-dom'
+import { generatePath, useNavigate } from 'react-router-dom'
 import { useEquipmentIcon } from '../hooks/useEquipmentIcon'
+import { ROUTES } from '../constants/routes'
 
 import s from './MarkerWithInfoWindow.module.css'
 
@@ -44,7 +45,10 @@ export function MarkerWithInfoWindow({
             <p>Nome: {equipmentName}</p>
             <p>Modelo: {equipmentModel.name}</p>
             <p>Status: {state.name}</p>
-            <button className={s.button} onClick={() => navigate(`/state/history/${equipmentId}`)}>
+            <button
+              className={s.button}
+              onClick={() => navigate(generatePath(ROUTES.STATE_HISTORY, { id: equipmentId }))}
+            >
               Histórico de status
             </button>
           </div>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { GOOGLE_MAPS } from '../constants/googleMaps'
 import equipmentPositionHistory from '../data/equipmentPositionHistory.json'
 
 function findClosestPosition(positions, statusDate) {
@@ -31,7 +32,7 @@ function extractCityAndState(addressComponents) {
 export async function fetchCityFromCoordinates(lat, lng) {
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`,
+      `${GOOGLE_MAPS.API_URL}?latlng=${lat},${lng}&key=${GOOGLE_MAPS.API_KEY}`,
     )
 
     const addressComponents = response.data.results[0]?.address_components || []

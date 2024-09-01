@@ -1,13 +1,15 @@
 import React from 'react'
 import cn from 'classnames'
-import s from './Header.module.css'
 import { NavLink } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
+
+import s from './Header.module.css'
 
 export function Header({ isOpen, toggleMenu }) {
   return (
     <header className={s.header}>
       <div className={s.container}>
-        <NavLink to={'/'}>
+        <NavLink to={ROUTES.HOME}>
           <h1 className={s.title}>Aiko Equipment Viewer</h1>
           <img className={s.icon} src='/aiko.png' alt='Aiko' />
         </NavLink>

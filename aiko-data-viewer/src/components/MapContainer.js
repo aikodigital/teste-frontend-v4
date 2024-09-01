@@ -1,7 +1,8 @@
 import { APIProvider, ControlPosition, Map, MapControl } from '@vis.gl/react-google-maps'
 import { useState, useRef, useCallback } from 'react'
-import { MarkerWithInfoWindow } from './MarkerWithInfoWindow'
 import { useEquipmentInfo } from '../hooks/useEquipmentInfo'
+import { GOOGLE_MAPS } from '../constants/googleMaps'
+import { MarkerWithInfoWindow } from './MarkerWithInfoWindow'
 import { MapFilters } from './MapFilters'
 
 import s from './MapContainer.module.css'
@@ -25,9 +26,9 @@ export function MapContainer() {
 
   return (
     <div className={s.mapContainer}>
-      <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+      <APIProvider apiKey={GOOGLE_MAPS.API_KEY}>
         <Map
-          mapId={'bf51a910020fa25a'}
+          mapId={GOOGLE_MAPS.MAP_ID}
           defaultZoom={11}
           defaultCenter={{ lat: -19.134644, lng: -46.087206 }}
           gestureHandling={'greedy'}

@@ -1,12 +1,16 @@
 import React from 'react'
+import { generatePath, useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
+
 import s from './EquipmentTable.module.css'
-import { useNavigate } from 'react-router-dom'
 
 export function EquipmentTable({ currentItems, stateDictionary, cities }) {
   const navigate = useNavigate()
+
   function handleClick(id) {
-    navigate(`/details/${id}`)
+    navigate(generatePath(ROUTES.DETAILS, { id }))
   }
+
   return (
     <div className={s.container}>
       <table className={s.table}>

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Bar, Pie } from 'react-chartjs-2'
 import {
   Chart as ChartJs,
@@ -17,12 +19,10 @@ import {
 } from '../utils/findEquipmentDetails'
 import { filterStatesByDate, mapStatesToNames } from '../utils/utils'
 import { calculateHoursDifference } from '../utils/dateUtils'
-import { useState } from 'react'
+import useEffectOnce from '../hooks/useEffectOnce'
+import cn from 'classnames'
 
 import s from './Details.module.css'
-import cn from 'classnames'
-import { useParams } from 'react-router-dom'
-import useEffectOnce from '../hooks/useEffectOnce'
 
 ChartJs.register(Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement)
 function filterStatesByDateRange(states, startDate, endDate) {

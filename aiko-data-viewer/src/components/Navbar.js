@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import cn from 'classnames'
-import s from './Navbar.module.css'
 import { ROUTES } from '../constants/routes'
+import cn from 'classnames'
+
+import s from './Navbar.module.css'
 
 export function Navbar({ isOpen, toggleMenu }) {
   const menuRef = useRef(null)
@@ -43,7 +44,6 @@ export function Navbar({ isOpen, toggleMenu }) {
             {renderNavLink(ROUTES.HOME, 'Página Inicial')}
             {renderNavLink(ROUTES.HISTORY, 'Histórico')}
             {renderNavLink(ROUTES.DETAILS, 'Detalhes')}
-            {renderNavLink(ROUTES.PROFIT, 'Ganhos')}
           </ul>
         </nav>
       </div>

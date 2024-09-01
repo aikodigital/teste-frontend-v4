@@ -1,13 +1,13 @@
+import { useEffect, useState, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { fetchCities } from '../utils/fetchCities'
+import { Pagination } from '../components/Pagination'
 import equipmentState from '../data/equipmentState.json'
 import equipmentStateHistory from '../data/equipmentStateHistory.json'
 import equipment from '../data/equipment.json'
 import equipmentModel from '../data/equipmentModel.json'
-import { useEffect, useState, useMemo } from 'react'
-import { fetchCities } from '../utils/fetchCities'
 
 import s from './StateHistory.module.css'
-import { Pagination } from '../components/Pagination'
 
 function createStateDictionary() {
   return equipmentState.reduce((acc, state) => {

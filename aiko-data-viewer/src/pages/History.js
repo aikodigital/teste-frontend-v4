@@ -3,10 +3,10 @@ import { createStateDictionary } from '../utils/createStateDictionary'
 import { filterEquipmentHistory } from '../utils/filterEquipmentHistory'
 import { findEquipment, findEquipmentModel } from '../utils/findEquipmentDetails'
 import { updateCities } from '../utils/updateCities'
-import equipmentStateHistory from '../data/equipmentStateHistory.json'
 import { Filters } from '../components/Filters'
 import { EquipmentTable } from '../components/EquipmentTable'
 import { Pagination } from '../components/Pagination'
+import equipmentStateHistory from '../data/equipmentStateHistory.json'
 
 import s from './History.module.css'
 
@@ -83,10 +83,24 @@ export function History() {
     })
   }
 
+  const handleResetFilters = () => {
+    setFilters({
+      dateStart: '',
+      dateEnd: '',
+      name: '',
+      model: '',
+      status: '',
+    })
+  }
+
   return (
     <div className={s.history}>
       <div className={s.container}>
-        <Filters filters={filters} handleFilterChange={handleFilterChange} />
+        <Filters
+          filters={filters}
+          handleFilterChange={handleFilterChange}
+          handleResetFilters={handleResetFilters}
+        />
         <EquipmentTable
           currentItems={currentItems}
           stateDictionary={stateDictionary}

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
+import { createStateDictionary } from '../utils/createStateDictionary'
+import { filterEquipmentHistory } from '../utils/filterEquipmentHistory'
+import { updateLocation } from '../utils/updateLocation'
 import equipment from '../data/equipment.json'
 import equipmentModel from '../data/equipmentModel.json'
 import equipmentState from '../data/equipmentState.json'
 import equipmentStateHistory from '../data/equipmentStateHistory.json'
-import { createStateDictionary } from '../utils/createStateDictionary'
-import { filterEquipmentHistory } from '../utils/filterEquipmentHistory'
-import { updateLocation } from '../utils/updateLocation'
 
 function findClosestState(states, referenceDate) {
   return states.reduce((closest, state) => {
@@ -53,7 +53,7 @@ export function useEquipmentInfo() {
   const [allStateHistory, setAllStateHistory] = useState([])
   const [stateDictionary, setStateDictionary] = useState({})
   const [locations, setLocations] = useState([])
-  const [filters, setFilters] = useState({
+  const [filters] = useState({
     dateStart: '',
     dateEnd: '',
     name: '',
