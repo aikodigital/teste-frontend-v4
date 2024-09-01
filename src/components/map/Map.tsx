@@ -4,8 +4,6 @@ import 'leaflet/dist/leaflet.css';
 import { Body } from './styles/styles';
 import { mapEquipmentData } from '../../services/mapEquipmentData';
 import { mapEquipmentDataInterface } from '../../services/interfaces/equipmentInterfaces';
-
-import markerIcon from '../../assets/aiko.png';
 import { useContextData } from '../../context/context';
 
 export default function Map() {
@@ -34,7 +32,7 @@ export default function Map() {
                             key={equipment.id} 
                             position={[equipment.lat, equipment.lon]} 
                             icon={new L.Icon({
-                                iconUrl: markerIcon,
+                                iconUrl: equipment.icon,
                                 iconSize: [25, 41],
                                 iconAnchor: [12, 41],
                                 popupAnchor: [1, -34],
@@ -43,7 +41,7 @@ export default function Map() {
                             })}
                         >
                             <Popup>
-                                Nome: <strong>{equipment.name}</strong>
+                                Modelo: <strong>{equipment.name}</strong>
                                 <br />
                                 Estado: {equipment.state}
                                 <br />

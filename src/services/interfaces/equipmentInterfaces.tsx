@@ -18,8 +18,9 @@ export interface mapEquipmentDataInterface {
     productivity: string;
     earnings: number;
     name: string;
-    lat: any;
-    lon: any;
+    icon: string;
+    lat: number;
+    lon: number;
     state: string;
     color: string;
     stateHistory: {

@@ -29,8 +29,6 @@ export const calculateTotalEarnings = (modelEquipmentId: string,  equipmentId: s
         return map;
     }, {} as Record<string, number>);
 
-    console.log(history)
-    console.log(model)
     const stateDurations = history.reduce((acc, entry, index) => {
         if (index === 0) return acc;
 
@@ -44,7 +42,6 @@ export const calculateTotalEarnings = (modelEquipmentId: string,  equipmentId: s
 
         return acc;
     }, {} as Record<string, number>);
-
 
     return Object.entries(stateDurations).reduce((total, [stateId, duration]) => {
         const hourlyEarning = earningsMap[stateId] || 0;

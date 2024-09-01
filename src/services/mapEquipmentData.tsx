@@ -6,12 +6,15 @@ import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
 import { EquipmentState, EquipmentStateHistory } from './interfaces/equipmentInterfaces';
 import { calculateTotalEarnings, formatDate } from '../utils/utils';
 
+import truckIcon from '../assets/caminhao.png';
+import clawIcon from '../assets/garra.png';
+import harvesterIcon from '../assets/harvester.png';
+import aikoIcon from '../assets/aiko.png';
 
 const equipmentStateHistory = equipmentStateHistoryData as EquipmentStateHistory[];
 const equipmentStates = equipmentStateData as EquipmentState[];
 
-
-const getLatestPosition = (positions: any[]) => {
+const getLatestPosition = (positions: {date: string, lat: number, lon:number }[]) => {
     return positions.reduce((latest, current) => {
         return new Date(latest.date) > new Date(current.date) ? latest : current;
     });
@@ -88,6 +91,19 @@ const getProductiveHours = (sortedHistory: { date: Date, stateId: string }[]): n
         }, 0);
 }
 
+const getIcon = (name: string | undefined) => {
+    switch (name) {
+        case 'Caminhão de carga':
+            return truckIcon
+        case 'Harvester':
+            return harvesterIcon
+        case 'Garra traçadora':
+            return clawIcon;
+        default:
+            return aikoIcon;
+    }
+}
+
 
 export const mapEquipmentData = () => {
     return equipmentData.map((equipment) => {
@@ -95,22 +111,24 @@ export const mapEquipmentData = () => {
             (history) => history.equipmentId === equipment.id
         );
 
-        const equipmentName = equipmentModel.find((e) => e.id === equipment.equipmentModelId);
+        const model = equipmentModel.find((e) => e.id === equipment.equipmentModelId);
 
-        if (!positionHistory) return null;
-        if (!equipmentName) return null;
+        if (!positionHistory) {
+            throw new Error(`Equipamento não encontrado para o ID: ${equipment.id}`);
+        };
 
-        const latestPosition = getLatestPosition(positionHistory.positions);
+        const latestPosition = getLatestPosition(positionHistory?.positions);
         const latestState = getLatestState(equipment.id);
-        
+
         return {
             id: equipment.id,
             tag: equipment.name,
             productivity: calculateProductivity(equipment.id),
             earnings: calculateTotalEarnings(equipment.equipmentModelId, equipment.id),
-            name: equipmentName?.name,
-            lat: latestPosition.lat,
-            lon: latestPosition.lon,
+            icon: getIcon(model?.name),
+            name: model?.name,
+            lat: latestPosition?.lat,
+            lon: latestPosition?.lon,
             state: latestState ? latestState.name : 'Unknown',
             color: latestState ? latestState.color : '#000000',
             stateHistory: getHistory(equipment.id),
