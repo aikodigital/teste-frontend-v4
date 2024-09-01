@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import cn from 'classnames'
+import filterIcon from '../assets/icons/filter.svg'
 
 import s from './MapFilters.module.css'
 
@@ -6,6 +8,7 @@ export function MapFilters({ setDateFilter, setStatusFilter, setModelFilter, rem
   const [localStatusFilter, setLocalStatusFilter] = useState('')
   const [localModelFilter, setLocalModelFilter] = useState('')
   const [localDateFilter, setLocalDateFilter] = useState('')
+  const [open, setOpen] = useState(true)
 
   useEffect(() => {
     setLocalStatusFilter('')
@@ -23,7 +26,7 @@ export function MapFilters({ setDateFilter, setStatusFilter, setModelFilter, rem
   }
 
   return (
-    <div className={s.filters}>
+    <div className={cn(s.filters, { [s.hidden]: !open })}>
       <div className={s.filterWrapper}>
         <label className={s.label} htmlFor='statusFilter'>
           Status:
@@ -82,6 +85,14 @@ export function MapFilters({ setDateFilter, setStatusFilter, setModelFilter, rem
 
       <button className={s.resetFilters} onClick={handleClearFilters}>
         Limpar filtros
+      </button>
+
+      <button className={s.close} onClick={() => setOpen(false)}>
+        &times;
+      </button>
+
+      <button className={cn(s.open, { [s.show]: !open })} onClick={() => setOpen(true)}>
+        <img src={filterIcon} alt='Filtro do Mapa' className={s.filter} />
       </button>
     </div>
   )
