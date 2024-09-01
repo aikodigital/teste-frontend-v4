@@ -1,14 +1,19 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+import { Equipment } from 'src/equipment/entities/equipment.entity';
 import { HourlyEarnings } from 'src/hourly-earning/entities/hourly-earning.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'; 
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+ 
 
-@Entity()
-export class EquipmentModel {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+@Schema()
+export class EquipmentModel extends Document{ 
 
-  @Column()
+  @Prop()
   name: string;
 
-  @OneToMany(() => HourlyEarnings, (hourlyEarnings) => hourlyEarnings.equipmentState)
+  @Prop()  
   hourlyEarnings: HourlyEarnings[];
 }
+
+export const EquipmentModelSchema = SchemaFactory.createForClass(EquipmentModel);
+

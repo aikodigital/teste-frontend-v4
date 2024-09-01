@@ -4,36 +4,40 @@ import { UpdateEquipmentStateDto } from './dto/update-equipment-state.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EquipmentState } from './entities/equipment-state.entity';
 import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class EquipmentStateService {
 
   constructor(
-    @InjectRepository(EquipmentState)
-    private equipmentStateRepository: Repository<EquipmentState>,
+    @InjectModel(EquipmentState.name)
+    private readonly equipmentStateModel: Model<EquipmentState>,
   ) { }
   
   async create(createEquipmentStateDto: CreateEquipmentStateDto) {
-    const equipmentState = await this.equipmentStateRepository.create(createEquipmentStateDto);
-    return await this.equipmentStateRepository.save(equipmentState);
+    return await new this.equipmentStateModel(createEquipmentStateDto).save();
   }
   
   async findAll() {
-    return await this.equipmentStateRepository.find();
+    const data = await this.equipmentStateModel.find().exec();  
+    return data;
   }
 
   async findOne(id: string) {
-    return await this.equipmentStateRepository.findOne({ where: { id } });
+    const data = await this.equipmentStateModel.findById(id) .exec();  
+    return data;
   }
 
   async update(id: string, updateEquipmentStateDto: UpdateEquipmentStateDto) {
-    const equipmentState = await this.equipmentStateRepository.update(id, updateEquipmentStateDto);
+    await this.equipmentStateModel.findByIdAndUpdate(id, updateEquipmentStateDto, { new: true }).exec();
     return await this.findOne(id);
   } 
 
   async remove(id: string) {
-    const equipmentState = await this.equipmentStateRepository.findOne({ where: { id } });
-    await this.equipmentStateRepository.delete(equipmentState);
+    const equipmentState = await this.findOne(id);
+    await this.equipmentStateModel.findByIdAndDelete(id).exec();
+
     return `Equipment State ${id} deleted`;
   }
 

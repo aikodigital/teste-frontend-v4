@@ -3,12 +3,16 @@ import { EquipmentPositionHistoryService } from './equipment-position-history.se
 import { EquipmentPositionHistoryController } from './equipment-position-history.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EquipmentPositionHistory } from './entities/equipment-position-history.entity';
+import { EquipmentPositionHistory, EquipmentPositionHistorySchema } from './entities/equipment-position-history.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([EquipmentPositionHistory]),
+    MongooseModule.forFeature([{
+      name: EquipmentPositionHistory.name,
+      schema: EquipmentPositionHistorySchema,
+    }]),
   ],  
   controllers: [EquipmentPositionHistoryController],
   providers: [EquipmentPositionHistoryService],

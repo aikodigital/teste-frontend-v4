@@ -1,14 +1,17 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Types, Document } from 'mongoose'; 
+import { EquipmentState } from 'src/equipment-state/entities/equipment-state.entity';
 import { Equipment } from 'src/equipment/entities/equipment.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'; 
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+ 
 
-@Entity()
-export class EquipmentStateHistory {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+@Schema()
+export class EquipmentStateHistory extends Document {
+    @Prop({ type: Types.ObjectId, ref: Equipment.name })
+    equipment: Equipment;
 
-  @ManyToOne(() => Equipment)
-  equipment: Equipment;
-
-  @Column('json')
-  states: { date: Date; equipmentStateId: string }[];
+    @Prop({ type: [{ date: Date, equipmentState: Object }] })
+    states: { date: Date; equipmentState: EquipmentState }[];
 }
+
+export const EquipmentStateHistorySchema = SchemaFactory.createForClass(EquipmentStateHistory);

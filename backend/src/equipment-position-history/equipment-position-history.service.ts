@@ -4,36 +4,44 @@ import { UpdateEquipmentPositionHistoryDto } from './dto/update-equipment-positi
 import { InjectRepository } from '@nestjs/typeorm';
 import { EquipmentPositionHistory } from './entities/equipment-position-history.entity';
 import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class EquipmentPositionHistoryService {
  constructor(
-    @InjectRepository(EquipmentPositionHistory)
-    private equipmentPositionHistoryRepository: Repository<EquipmentPositionHistory>,
+    @InjectModel( EquipmentPositionHistory.name)
+    private readonly equipmentPositionHistoryModel: Model<EquipmentPositionHistory>,
     
   ) {}
 
   async create(createEquipmentPositionHistoryDto: CreateEquipmentPositionHistoryDto) {  
-    const equipmentPositionHistory = await this.equipmentPositionHistoryRepository.create(createEquipmentPositionHistoryDto);  
-    return await this.equipmentPositionHistoryRepository.save(equipmentPositionHistory);
+    return await new this.equipmentPositionHistoryModel(createEquipmentPositionHistoryDto).save();
   }
 
   async findAll() { 
-    return await this.equipmentPositionHistoryRepository.find();
+     const data = await this.equipmentPositionHistoryModel.find().populate({ 
+      path: 'equipment',
+    }).exec();
+    return data;
   }
 
   async findOne(id: string) { 
-    return await this.equipmentPositionHistoryRepository.findOne({ where: { id } });
+     const data = await this.equipmentPositionHistoryModel.findById(id).populate({ 
+      path: 'equipment',
+      populate: { path: 'equipmentModel' },
+    })    .exec();  
+    return data;
   }
 
   async update(id: string, updateEquipmentPositionHistoryDto: UpdateEquipmentPositionHistoryDto) {
-    const equipmentPositionHistory = await this.equipmentPositionHistoryRepository.update(id, updateEquipmentPositionHistoryDto);
+    const  data = await this.equipmentPositionHistoryModel.findByIdAndUpdate(id, updateEquipmentPositionHistoryDto, { new: true }).exec();
     return await this.findOne(id);
   }
 
   async remove(id: string) { 
-    const equipmentPositionHistory = await this.equipmentPositionHistoryRepository.findOne({ where: { id } });
-    await this.equipmentPositionHistoryRepository.delete(equipmentPositionHistory);
-    return `EquipmentPositionHistory ${equipmentPositionHistory.equipment.name} deleted!`;
+    const equipmentPositionHistory = await this.findOne(id);
+    await this.equipmentPositionHistoryModel.findByIdAndDelete(id).exec();    
+    return `EquipmentPositionHistory ${id} deleted!`;
   }
 }

@@ -3,14 +3,17 @@ import { HourlyEarningService } from './hourly-earning.service';
 import { HourlyEarningController } from './hourly-earning.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HourlyEarnings } from './entities/hourly-earning.entity';
+import { HourlyEarnings, HourlyEarningsSchema } from './entities/hourly-earning.entity';
+import { Mongoose } from 'mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([
-      HourlyEarnings,
-    ]),
+    MongooseModule.forFeature([{
+      name: HourlyEarnings.name,
+      schema: HourlyEarningsSchema,
+    }]),
   ],  
   controllers: [HourlyEarningController],
   providers: [HourlyEarningService],

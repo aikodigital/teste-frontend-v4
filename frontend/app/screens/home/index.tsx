@@ -3,7 +3,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { useState } from 'react';
-import CustomMarker from '@/app/components/custom-marker';
+import CustomMarker from '@/components/custom-marker'; 
+import { useEquipmentStateHistory } from '@/hooks/useEquipmentStateHistory';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -20,6 +21,10 @@ export default function HomePage() {
         height: '800px',
         width: '100%',
     });
+
+    const { data ,  isLoading } = useEquipmentStateHistory();
+
+    console.log(data);
 
     return (
         <MapContainer

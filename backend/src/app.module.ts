@@ -9,6 +9,8 @@ import { EquipmentStateModule } from './equipment-state/equipment-state.module';
 import { EquipmentPositionHistoryModule } from './equipment-position-history/equipment-position-history.module';
 import { HourlyEarningModule } from './hourly-earning/hourly-earning.module'; 
 import { EquipmentModelModule } from './equipment-model/equipment-model.module';
+import { Mongoose } from 'mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -16,20 +18,13 @@ import { EquipmentModelModule } from './equipment-model/equipment-model.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    TypeOrmModule.forRootAsync({
+    MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
-        username: configService.get('DB_USER'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        uri: configService.get('DB_URI'), 
       }),
       inject: [ConfigService],
-    }),  
+    }),   
     HourlyEarningModule,
     EquipmentModule,
     EquipmentModelModule,

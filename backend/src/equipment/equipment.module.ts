@@ -3,12 +3,16 @@ import { EquipmentService } from './equipment.service';
 import { EquipmentController } from './equipment.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Equipment } from './entities/equipment.entity';
+import { Equipment, EquipmentSchema } from './entities/equipment.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Equipment]),
+    MongooseModule.forFeature([{
+     name: Equipment.name,
+     schema: EquipmentSchema,      
+    }]),
   ],
   controllers: [EquipmentController],
   providers: [EquipmentService],
