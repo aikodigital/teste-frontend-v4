@@ -43,7 +43,7 @@ export function Navbar({ isOpen, toggleMenu }) {
           <ul className={s.links}>
             {renderNavLink(ROUTES.HOME, 'Página Inicial')}
             {renderNavLink(ROUTES.HISTORY, 'Histórico')}
-            {renderNavLink(ROUTES.DETAILS, 'Detalhes')}
+            {renderNavLink(ROUTES.OFICIAL_SITE, 'Visite o Site Oficial')}
           </ul>
         </nav>
       </div>

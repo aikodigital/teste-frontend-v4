@@ -6,6 +6,7 @@ import { Details } from '../pages/Details'
 import { History } from '../pages/History'
 import { MapContainer } from '../components/MapContainer'
 import { ROUTES } from '../constants/routes'
+import { NotFound } from '../pages/NotFound'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.DETAILS,
         element: <Details />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },
