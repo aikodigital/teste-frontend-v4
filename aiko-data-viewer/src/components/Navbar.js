@@ -41,8 +41,8 @@ export function Navbar({ isOpen, toggleMenu }) {
         <nav className={s.navbar}>
           <ul className={s.links}>
             {renderNavLink(ROUTES.HOME, 'Página Inicial')}
-            {renderNavLink(ROUTES.DETAILS, 'Histórico')}
-            {renderNavLink(ROUTES.PRODUCTIVITY, 'Produtividade')}
+            {renderNavLink(ROUTES.HISTORY, 'Histórico')}
+            {renderNavLink(ROUTES.DETAILS, 'Detalhes')}
             {renderNavLink(ROUTES.PROFIT, 'Ganhos')}
           </ul>
         </nav>

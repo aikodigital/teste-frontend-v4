@@ -63,7 +63,8 @@ td > span {
   border-radius: 10px;
   color: var(--white);
   font-weight: 700;
-  width: 135px;
+  width: 108px;
+  font-size: 12px;
 }
 
 select {

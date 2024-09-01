@@ -5,17 +5,19 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { PositionHistory } from './pages/PositionHistory'
 import { StateHistory } from './pages/StateHistory'
 import { Home } from './pages/Home'
-import { Details } from './pages/Details'
 import { MapContainer } from './components/MapContainer'
+import { Details } from './pages/Details'
+import { ROUTES } from './constants/routes'
+import { History } from './pages/History'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <Home />,
     children: [
       {
-        path: '/',
+        path: ROUTES.HOME,
         element: <MapContainer />,
       },
       {
@@ -23,11 +25,15 @@ const router = createBrowserRouter([
         element: <PositionHistory />,
       },
       {
-        path: 'state/details/:id',
+        path: ROUTES.STATE_HISTORY,
         element: <StateHistory />,
       },
       {
-        path: '/details',
+        path: ROUTES.HISTORY,
+        element: <History />,
+      },
+      {
+        path: ROUTES.DETAILS,
         element: <Details />,
       },
     ],

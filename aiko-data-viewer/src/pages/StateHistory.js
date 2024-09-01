@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import equipmentState from '../data/equipmentState.json'
 import equipmentStateHistory from '../data/equipmentStateHistory.json'
 import equipment from '../data/equipment.json'
@@ -34,6 +34,7 @@ export function StateHistory() {
   const [cities, setCities] = useState({})
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
+  const navigate = useNavigate()
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -80,10 +81,17 @@ export function StateHistory() {
     updateCities()
   }, [currentItems, id])
 
+  function handleClick() {
+    navigate(`/details/${id}`)
+  }
+
   return (
     <div className={s.stateHistory}>
       <div className={s.container}>
-        <h2 className={s.title}>Histórico de Status da Máquina: {equipmentName}</h2>
+        <div className={s.titleWrapper}>
+          <h2 className={s.title}>Histórico de Status da Máquina: {equipmentName}</h2>
+          <button onClick={handleClick}>Ver Detalhes</button>
+        </div>
         <table>
           <thead>
             <tr>

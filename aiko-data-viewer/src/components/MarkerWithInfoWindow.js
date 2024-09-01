@@ -44,7 +44,7 @@ export function MarkerWithInfoWindow({
             <p>Nome: {equipmentName}</p>
             <p>Modelo: {equipmentModel.name}</p>
             <p>Status: {state.name}</p>
-            <button className={s.button} onClick={() => navigate(`/state/details/${equipmentId}`)}>
+            <button className={s.button} onClick={() => navigate(`/state/history/${equipmentId}`)}>
               Histórico de status
             </button>
           </div>

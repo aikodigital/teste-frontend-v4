@@ -1,7 +1,12 @@
 import React from 'react'
 import s from './EquipmentTable.module.css'
+import { useNavigate } from 'react-router-dom'
 
 export function EquipmentTable({ currentItems, stateDictionary, cities }) {
+  const navigate = useNavigate()
+  function handleClick(id) {
+    navigate(`/details/${id}`)
+  }
   return (
     <div className={s.container}>
       <table className={s.table}>
@@ -21,7 +26,11 @@ export function EquipmentTable({ currentItems, stateDictionary, cities }) {
               color: 'var(--white)',
             }
             return (
-              <tr key={`${state.equipmentId}-${state.date}`}>
+              <tr
+                key={`${state.equipmentId}-${state.date}`}
+                className={s.row}
+                onClick={() => handleClick(state.equipmentId)}
+              >
                 <td>{state.equipmentName}</td>
                 <td>{state.equipmentModelName}</td>
                 <td>{new Date(state.date).toLocaleString()}</td>

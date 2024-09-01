@@ -1,8 +1,8 @@
 export const ROUTES = {
   HOME: '/',
-  DETAILS: '/details',
-  STATE_HISTORY: '/state/details/:id',
+  HISTORY: '/history',
+  STATE_HISTORY: '/state/history/:id',
   POSITION_HISTORY: '/position/details/:id',
-  PRODUCTIVITY: '/productivity/:id',
+  DETAILS: '/details/:id',
   PROFIT: '/profit',
 }
