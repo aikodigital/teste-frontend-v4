@@ -8,10 +8,15 @@ export function Header({ isOpen, toggleMenu }) {
     <header className={s.header}>
       <div className={s.container}>
         <NavLink to={'/'}>
-          <h1>Aiko Equipment Viewer</h1>
+          <h1 className={s.title}>Aiko Equipment Viewer</h1>
+          <img className={s.icon} src='/aiko.png' alt='Aiko' />
         </NavLink>
         <button className={cn(s.menuButton, { [s.open]: isOpen })} onClick={toggleMenu}>
-          Open Menu
+          <div className={s.burgerIcon}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </button>
       </div>
     </header>
