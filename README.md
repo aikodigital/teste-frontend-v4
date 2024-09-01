@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Teste Front-end Aiko - Pedro Woyames
 
-## Getting Started
+Teste realizado para a vaga de desenvolvedor front-end na Aiko.
 
-First, run the development server:
+### Visão Geral
 
-```bash
+Esse projeto foi construído em [Next](https://nextjs.org/), um framework React. Além disso, foram utilizados os seguintes pacotes:
+- [Sass](https://sass-lang.com/) para pré-processamento CSS
+- [React Google Maps](https://visgl.github.io/react-google-maps/) para exibição do mapa
+- [Ant Design](https://ant.design/) para biblioteca de componentes e ícones
+
+### Rodando o projeto
+
+Para executar o projeto localmente, é necessário ter instalado o NPM. Após isso, basta executar os seguintes comandos:
+```
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O projeto estará disponível na URL http://localhost:3000 ou http://localhost:3001.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Componentes e Comportamento
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+A home do projeto consiste em uma visão geral de todos os equipamentos em suas últimas posições e estado informados. 
 
-## Learn More
+![Homepage](./src/documentation/homepage.png)
 
-To learn more about Next.js, take a look at the following resources:
+Ao passar o mouse em algum dos equipamentos no mapa, é exibida uma janela contendo informações sobre o último estado reportado e a data.
+Também é possível clicar nos equipamentos listados na barra lateral à esquerda para visualizar detalhes sobre o equipamento.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Detalhes](./src/documentation/details.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Na visualização de detalhes, é exibido em destaque a posição mais recente do equipamento, junto com seu estado e modelo. Também é exibido, em formato de linha do tempo, um histórico dos estados reportados ordenados a partir da data mais recente.
