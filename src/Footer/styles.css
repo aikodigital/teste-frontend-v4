@@ -1,0 +1,24 @@
+.footer-wrapper {
+  align-self: end;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #222222;
+  color: #ffffff;
+  line-height: 1rem;
+  font-size: 0.75rem;
+  padding: 0.5rem 0rem 0.75rem 0rem;
+  gap: 1rem;
+}
+
+.information {
+  font-size: 0.75rem;
+}
+
+.information > span > a {
+  all: unset;
+  color: #8bc0f7;
+  cursor: pointer;
+}
