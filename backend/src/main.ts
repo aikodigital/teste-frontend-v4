@@ -16,6 +16,7 @@ async function bootstrap() {
     .addTag('equipment-position-history')
     .addTag('hourly-earning')
     .addTag('user')
+    .addTag('auth')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
