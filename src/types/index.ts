@@ -1,5 +1,3 @@
-import { ModelTypesMapping } from "../constants";
-
 export type EquipmentData = {
   equipmentId: string;
   states: Array<{
@@ -12,7 +10,7 @@ export type EquipmentData = {
     lon: number;
   }>;
   id: string;
-  equipmentName: ModelTypesMapping;
+  equipmentName: string;
   name: string;
   hourlyEarnings: Array<{
     equipmentStateId: string;
