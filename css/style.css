@@ -1,0 +1,290 @@
+:root {
+    --amarelo: #FFBE0A;
+    --cinzaescuro: #22292F;
+    --cinzaclaro: #30373D;
+    --letraprimaria: #fff;
+    --letrasecundaria: #8E949A;
+    --font-size-large: 20px;
+    --padding-default: 15px;
+}
+
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos globais */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: var(--cinzaescuro);
+    color: #333;
+    padding: 0;
+    font-weight: bold;
+}
+
+/* Estilos de cabeçalho */
+header {
+    background-color: var(--amarelo);
+    color: var(--cinzaescuro);
+    padding: 10px 0;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+header div{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 850px;
+    width: 100%;
+    align-items: center;
+}
+
+header div img{
+    width: 5%;
+}
+
+h1{
+    font-size: 16px;
+    max-width: 850px;
+    width: 95%;
+}
+
+h2{
+    font-size: 16px;
+    color: #000;
+    margin: 30px 0 15px 60px;
+    background: none;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Estilos principais */
+main {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mapa-geolocalizacao{
+    background: none;
+    width: 100%;
+    height: 500px;
+    max-width: 850px;
+    margin: 30px 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    /* filter: invert(100%) hue-rotate(180deg) brightness(70%) contrast(90%);  */
+    
+}
+
+.tabela-historico-geolocalizacao{
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    padding: 15px 10px;
+    width: 100%;
+    max-width: 850px;
+    background: var(--cinzaclaro);
+    color: var(--letrasecundaria);
+}
+
+.tabela-historico-geolocalizacao h2{
+    color: var(--letrasecundaria);
+    position: relative;
+    margin: 0;
+    width: 100%;
+    padding: 0 30px 15px 30px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.tabela-historico-geolocalizacao button{
+    border-radius: 5px;
+    border: 1px solid var(--letrasecundaria);
+    color: var(--letrasecundaria);
+    background: none;
+    font-size: 16px;
+    padding: 3px 5px; 
+    font-weight: bold;
+}
+
+.tabela-historico-geolocalizacao button:hover{
+    cursor: pointer;
+    background: var(--amarelo);
+    color: var(--cinzaescuro);
+    border-color: var(--cinzaclaro);
+}
+
+.tabela-historico-geolocalizacao table{
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 330px;
+    overflow-y: scroll;
+}
+
+.tabela-historico-geolocalizacao table .table-head{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.tabela-historico-geolocalizacao table .table-head tr{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 30px 15px 30px;
+    border-bottom: 1px solid #464D53;
+    color: #fff;
+}
+
+.tabela-historico-geolocalizacao table tbody{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.tabela-historico-geolocalizacao table tbody tr{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 30px;
+    border-bottom: 1px solid #464D53;
+}
+
+.tabela-historico-geolocalizacao table tbody tr:hover{
+    color: var(--amarelo);
+    cursor: pointer;
+}
+
+.tabela-historico-geolocalizacao table tbody tr td:first-child {
+    min-width: 140px;
+}
+
+.tabela-historico-geolocalizacao table .table-head tr th:first-child {
+    min-width: 140px;
+    text-align: left;
+}
+
+
+/* Barra de rolagem para navegadores Webkit */
+.tabela-historico-geolocalizacao table::-webkit-scrollbar {
+    width: 10px;              /* Largura da barra de rolagem */
+    margin: 15px 0;
+
+}
+
+.tabela-historico-geolocalizacao table::-webkit-scrollbar-track {
+    background: var(--cinzaescuro);      /* Cor de fundo da trilha */
+    border-radius: 10px;
+    margin: 15px 0;   
+}
+
+.tabela-historico-geolocalizacao table::-webkit-scrollbar-thumb {
+    background-color: var(--letrasecundaria); /* Cor da barra de rolagem */
+    border-radius: 10px;       /* Arredondamento dos cantos */
+    margin: 15px 0;
+}
+
+.tabela-historico-geolocalizacao table::-webkit-scrollbar-thumb:hover {
+    background-color: var(--amarelo); /* Cor da barra de rolagem ao passar o mouse */
+    margin: 15px 0;
+}
+
+/* Estilos de rodapé */
+footer {
+    /* background-color: #333; */
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer img{
+    max-width: 100px;
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 200px;
+}
+
+/* Estilo comum para todas as três imagens de ícones */
+img[src*="truck-icon.png"],
+img[src*="harvester-icon.png"],
+img[src*="claw-icon.png"] {
+    filter: brightness(1.2); /* Exemplo de filtro, ajusta o brilho */
+    width: 400px;             /* Define a largura como 40px */
+    height: 400px;            /* Define a altura como 40px */
+    border-radius: 50%;      /* Aplica bordas arredondadas */
+    border: 2px solid #333;  /* Adiciona uma borda sólida */
+}
+
+/* Estilo aplicado a todas as imagens que possuem a classe 'custom-icon' */
+.custom-icon {
+    filter: brightness(1.2);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+
+.mapa-geolocalizacao{
+    width: 95%;
+    margin: 20px 0;
+}
+
+.tabela-historico-geolocalizacao{
+    width: 95%;
+}
+
+.tabela-historico-geolocalizacao table .table-head tr{
+    display: none;
+}
+
+.tabela-historico-geolocalizacao table tbody tr{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.tabela-historico-geolocalizacao table tbody tr td:first-child{
+    color: var(--amarelo);
+}
+
+header{
+    padding: 10px;
+}
+
+header div img{
+    width: 10%;
+}
+
+h1{
+    width: 90%;
+}
+
+}
