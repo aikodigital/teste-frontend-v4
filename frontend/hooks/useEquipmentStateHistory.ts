@@ -1,14 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from './api';
 
-const fetchEquipmentStateHistory = async () => {
-  const { data } = await api.get('/equipment-state-history');
-  return data;
-};
+export const fetchEquipmentStateHistory: any = async (equipmentId: string) => {
+  const params = new URLSearchParams();
+  if (!!equipmentId) params.append('equipment', equipmentId);
 
-export const useEquipmentStateHistory = () => {
-  return useQuery({
-    queryKey: ['equipment-state-history'],
-    queryFn: fetchEquipmentStateHistory,
-  });
+  const { data } = await api.get(`/equipment-state-history`, { params });
+  return data;
 };

@@ -9,35 +9,47 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class EquipmentStateHistoryService {
-
   constructor(
     @InjectModel(EquipmentStateHistory.name)
     private readonly equipmentStateHistoryModel: Model<EquipmentStateHistory>,
   ) {}
 
   async create(createEquipmentStateHistoryDto: CreateEquipmentStateHistoryDto) {
-    return await new this.equipmentStateHistoryModel(createEquipmentStateHistoryDto).save();
+    return await new this.equipmentStateHistoryModel(
+      createEquipmentStateHistoryDto,
+    ).save();
   }
 
- async findAll() {  
-   const data = await this.equipmentStateHistoryModel.find()  .exec();
-   return data;
- }
+  async findAll(queries) {
+    const { equipment } = queries;
+    if (!!equipment) {
+      const data = await this.equipmentStateHistoryModel
+        .findOne({ 'equipment._id': equipment })
+        .exec();
+      return data;
+    }
+    const data = await this.equipmentStateHistoryModel.find().exec();
+    return data;
+  }
 
- async findOne(id: string) {  
-   const data = await this.equipmentStateHistoryModel.findById(id) .exec();
-   return data;
- }
+  async findOne(id: string) {
+    const data = await this.equipmentStateHistoryModel.findById(id).exec();
+    return data;
+  }
 
- async update(id: string, updateEquipmentStateHistoryDto: UpdateEquipmentStateHistoryDto) {
-   const equipmentStateHistory = await this.equipmentStateHistoryModel.findByIdAndUpdate(id, updateEquipmentStateHistoryDto, { new: true }).exec();  
-   return await this.findOne(id);
- }
+  async update(
+    id: string,
+    updateEquipmentStateHistoryDto: UpdateEquipmentStateHistoryDto,
+  ) {
+    const equipmentStateHistory = await this.equipmentStateHistoryModel
+      .findByIdAndUpdate(id, updateEquipmentStateHistoryDto, { new: true })
+      .exec();
+    return await this.findOne(id);
+  }
 
- async remove(id: string) { 
-  const equipmentStateHistory = await this.findOne(id);
-  await this.equipmentStateHistoryModel.findByIdAndDelete(id).exec();
-  return `Equipment State History ${id} deleted`;
-}
-
+  async remove(id: string) {
+    const equipmentStateHistory = await this.findOne(id);
+    await this.equipmentStateHistoryModel.findByIdAndDelete(id).exec();
+    return `Equipment State History ${id} deleted`;
+  }
 }

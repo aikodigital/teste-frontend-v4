@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { EquipmentStateHistoryService } from './equipment-state-history.service';
 import { CreateEquipmentStateHistoryDto } from './dto/create-equipment-state-history.dto';
 import { UpdateEquipmentStateHistoryDto } from './dto/update-equipment-state-history.dto';
@@ -7,16 +16,22 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('equipment-state-history')
 @Controller('equipment-state-history')
 export class EquipmentStateHistoryController {
-  constructor(private readonly equipmentStateHistoryService: EquipmentStateHistoryService) {}
+  constructor(
+    private readonly equipmentStateHistoryService: EquipmentStateHistoryService,
+  ) {}
 
   @Post()
-  async create(@Body() createEquipmentStateHistoryDto: CreateEquipmentStateHistoryDto) {
-    return await this.equipmentStateHistoryService.create(createEquipmentStateHistoryDto);
+  async create(
+    @Body() createEquipmentStateHistoryDto: CreateEquipmentStateHistoryDto,
+  ) {
+    return await this.equipmentStateHistoryService.create(
+      createEquipmentStateHistoryDto,
+    );
   }
 
   @Get()
-  async findAll() {
-    return await this.equipmentStateHistoryService.findAll();
+  async findAll(@Query() queries: { equipment: string }) {
+    return await this.equipmentStateHistoryService.findAll(queries);
   }
 
   @Get(':id')
@@ -25,8 +40,14 @@ export class EquipmentStateHistoryController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateEquipmentStateHistoryDto: UpdateEquipmentStateHistoryDto) {
-    return await this.equipmentStateHistoryService.update(id, updateEquipmentStateHistoryDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateEquipmentStateHistoryDto: UpdateEquipmentStateHistoryDto,
+  ) {
+    return await this.equipmentStateHistoryService.update(
+      id,
+      updateEquipmentStateHistoryDto,
+    );
   }
 
   @Delete(':id')

@@ -11,6 +11,7 @@ import { HourlyEarningModule } from './hourly-earning/hourly-earning.module';
 import { EquipmentModelModule } from './equipment-model/equipment-model.module';
 import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     EquipmentModelModule,
     EquipmentStateHistoryModule,
     EquipmentStateModule,
-    EquipmentPositionHistoryModule,  
+    EquipmentPositionHistoryModule,
+    DashboardModule,  
   ],
   controllers: [AppController],
   providers: [AppService],

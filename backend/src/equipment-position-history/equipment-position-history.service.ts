@@ -9,39 +9,61 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class EquipmentPositionHistoryService {
- constructor(
-    @InjectModel( EquipmentPositionHistory.name)
+  constructor(
+    @InjectModel(EquipmentPositionHistory.name)
     private readonly equipmentPositionHistoryModel: Model<EquipmentPositionHistory>,
-    
   ) {}
 
-  async create(createEquipmentPositionHistoryDto: CreateEquipmentPositionHistoryDto) {  
-    return await new this.equipmentPositionHistoryModel(createEquipmentPositionHistoryDto).save();
+  async create(
+    createEquipmentPositionHistoryDto: CreateEquipmentPositionHistoryDto,
+  ) {
+    return await new this.equipmentPositionHistoryModel(
+      createEquipmentPositionHistoryDto,
+    ).save();
   }
 
-  async findAll() { 
-     const data = await this.equipmentPositionHistoryModel.find().populate({ 
-      path: 'equipment',
-    }).exec();
+  async findAll(queries) {
+    const { equipment } = queries;
+    if (!!equipment) {
+      const data = await this.equipmentPositionHistoryModel
+        .findOne({ 'equipment._id': equipment })
+        .populate({ path: 'equipment' })
+        .exec();
+      return data;
+    }
+    const data = await this.equipmentPositionHistoryModel
+      .find()
+      .populate({
+        path: 'equipment',
+      })
+      .exec();
     return data;
   }
 
-  async findOne(id: string) { 
-     const data = await this.equipmentPositionHistoryModel.findById(id).populate({ 
-      path: 'equipment',
-      populate: { path: 'equipmentModel' },
-    })    .exec();  
+  async findOne(id: string) {
+    const data = await this.equipmentPositionHistoryModel
+      .findById(id)
+      .populate({
+        path: 'equipment',
+        populate: { path: 'equipmentModel' },
+      })
+      .exec();
     return data;
   }
 
-  async update(id: string, updateEquipmentPositionHistoryDto: UpdateEquipmentPositionHistoryDto) {
-    const  data = await this.equipmentPositionHistoryModel.findByIdAndUpdate(id, updateEquipmentPositionHistoryDto, { new: true }).exec();
+  async update(
+    id: string,
+    updateEquipmentPositionHistoryDto: UpdateEquipmentPositionHistoryDto,
+  ) {
+    const data = await this.equipmentPositionHistoryModel
+      .findByIdAndUpdate(id, updateEquipmentPositionHistoryDto, { new: true })
+      .exec();
     return await this.findOne(id);
   }
 
-  async remove(id: string) { 
+  async remove(id: string) {
     const equipmentPositionHistory = await this.findOne(id);
-    await this.equipmentPositionHistoryModel.findByIdAndDelete(id).exec();    
+    await this.equipmentPositionHistoryModel.findByIdAndDelete(id).exec();
     return `EquipmentPositionHistory ${id} deleted!`;
   }
 }
