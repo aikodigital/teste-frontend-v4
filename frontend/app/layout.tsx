@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <MantineProvider forceColorScheme="dark"> 
+        <MantineProvider forceColorScheme="dark">
           <Navbar />
           {children}
         </MantineProvider>

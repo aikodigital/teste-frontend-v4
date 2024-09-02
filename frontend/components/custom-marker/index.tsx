@@ -24,7 +24,7 @@ export default function CustomMarker({
   state,
   color,
   model,
-  productivity,  
+  productivity,
   onShowHistory,
 }: {
   position: Position;
@@ -32,7 +32,7 @@ export default function CustomMarker({
   state: string;
   color: string;
   model: string;
-  productivity?: string;  
+  productivity?: string;
   onShowHistory?: () => void;
 }) {
   const icon = createCustomIcon(color);
