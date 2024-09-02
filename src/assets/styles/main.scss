@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dashboard {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .equipment-list {
+    width: 30%;
+    padding: 10px;
+    background-color: white;
+    overflow-y: auto;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
