@@ -1,6 +1,6 @@
 # 🌎 Projeto Teste Frontend v4
 
-Este é um projeto que visa o acompanhamento e localização da operação de máquinas.
+Este é um projeto que visa o acompanhamento do estado e a localização de equipamentos em uma operação florestal.
 
 ## ⚙️ Tecnologias utilizadas
 
