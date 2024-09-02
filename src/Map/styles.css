@@ -1,0 +1,22 @@
+#map {
+  height: 100%;
+} /* Never remove. */
+
+.popup-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#state-history-button {
+  all: unset;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.state-history-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

@@ -1,0 +1,10 @@
+.map-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.aiko-logo {
+  background-color: transparent;
+}
