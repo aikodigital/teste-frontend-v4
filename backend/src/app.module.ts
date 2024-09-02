@@ -12,6 +12,8 @@ import { EquipmentModelModule } from './equipment-model/equipment-model.module';
 import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,7 +34,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
     EquipmentStateHistoryModule,
     EquipmentStateModule,
     EquipmentPositionHistoryModule,
-    DashboardModule,  
+    DashboardModule,
+    UsersModule,
+    AuthModule,  
   ],
   controllers: [AppController],
   providers: [AppService],

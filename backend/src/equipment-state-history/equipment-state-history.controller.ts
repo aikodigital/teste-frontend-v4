@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { EquipmentStateHistoryService } from './equipment-state-history.service';
 import { CreateEquipmentStateHistoryDto } from './dto/create-equipment-state-history.dto';
 import { UpdateEquipmentStateHistoryDto } from './dto/update-equipment-state-history.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('equipment-state-history')
 @Controller('equipment-state-history')
@@ -21,6 +23,7 @@ export class EquipmentStateHistoryController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   async create(
     @Body() createEquipmentStateHistoryDto: CreateEquipmentStateHistoryDto,
   ) {
@@ -40,6 +43,7 @@ export class EquipmentStateHistoryController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   async update(
     @Param('id') id: string,
     @Body() updateEquipmentStateHistoryDto: UpdateEquipmentStateHistoryDto,
@@ -51,6 +55,7 @@ export class EquipmentStateHistoryController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: string) {
     return await this.equipmentStateHistoryService.remove(id);
   }

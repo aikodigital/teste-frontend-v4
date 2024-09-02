@@ -15,6 +15,8 @@ async function bootstrap() {
     .addTag('equipment-state-history')
     .addTag('equipment-position-history')
     .addTag('hourly-earning')
+    .addTag('user')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

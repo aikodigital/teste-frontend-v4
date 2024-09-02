@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { EquipmentStateService } from './equipment-state.service';
 import { CreateEquipmentStateDto } from './dto/create-equipment-state.dto';
 import { UpdateEquipmentStateDto } from './dto/update-equipment-state.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('equipment-state')
 @Controller('equipment-state')
@@ -10,8 +20,9 @@ export class EquipmentStateController {
   constructor(private readonly equipmentStateService: EquipmentStateService) {}
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   async create(@Body() createEquipmentStateDto: CreateEquipmentStateDto) {
-    return  await this.equipmentStateService.create(createEquipmentStateDto);
+    return await this.equipmentStateService.create(createEquipmentStateDto);
   }
 
   @Get()
@@ -25,11 +36,16 @@ export class EquipmentStateController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateEquipmentStateDto: UpdateEquipmentStateDto) {
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Param('id') id: string,
+    @Body() updateEquipmentStateDto: UpdateEquipmentStateDto,
+  ) {
     return await this.equipmentStateService.update(id, updateEquipmentStateDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: string) {
     return await this.equipmentStateService.remove(id);
   }
