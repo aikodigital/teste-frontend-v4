@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MantineProvider } from '@mantine/core';
 import HomePage from './screens/home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

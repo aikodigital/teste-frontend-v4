@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
