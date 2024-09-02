@@ -1,5 +1,3 @@
-//@ts-nocheck
-'use client';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { Button, Text } from '@mantine/core';
@@ -26,7 +24,7 @@ export default function CustomMarker({
   state,
   color,
   model,
-  productivity, // Adicione o campo de produtividade
+  productivity,  
   onShowHistory,
 }: {
   position: Position;
@@ -34,24 +32,24 @@ export default function CustomMarker({
   state: string;
   color: string;
   model: string;
-  productivity: string; // Adicione o campo de produtividade
-  onShowHistory: () => void;
+  productivity?: string;  
+  onShowHistory?: () => void;
 }) {
   const icon = createCustomIcon(color);
 
   return (
     <Marker position={position} icon={icon}>
       <Popup>
-        <Text size="sm" weight={500}>
+        <Text size="sm" style={{ fontWeight: 500 }}>
           <strong>Equipamento:</strong> {popupText}
         </Text>
-        <Text size="xs" weight={500}>
+        <Text size="xs" style={{ fontWeight: 500 }}>
           <strong>Modelo:</strong> {model}
         </Text>
-        <Text size="xs" weight={500}>
+        <Text size="xs" style={{ fontWeight: 500 }}>
           <strong>Status:</strong> <span style={{ color }}>{state}</span>
         </Text>
-        <Text size="xs" weight={500}>
+        <Text size="xs" style={{ fontWeight: 500 }}>
           <strong>Produtividade:</strong> {productivity}%
         </Text>
         <Button onClick={onShowHistory}>Ver/Esconder Histórico</Button>

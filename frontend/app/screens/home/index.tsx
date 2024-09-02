@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -11,7 +10,7 @@ import { fetchStates } from '@/hooks/useStates';
 import { fetchModels } from '@/hooks/useModels';
 import { fetchEquipment } from '@/hooks/useEquipment';
 
-delete L.Icon.Default.prototype._getIconUrl;
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -54,7 +53,7 @@ export default function HomePage() {
           equipment.add(item?.name);
         }
       });
-      setEquipmentQueryList([...equipment]);
+      setEquipmentQueryList(Array.from(equipment));
     };
 
     const loadStates = async () => {
@@ -65,7 +64,7 @@ export default function HomePage() {
           states.add(item?.name);
         }
       });
-      setStateOptions([...states]);
+      setStateOptions(Array.from(states));
     };
     const loadModels = async () => {
       const models = new Set<string>();
@@ -75,7 +74,7 @@ export default function HomePage() {
           models.add(item?.name);
         }
       });
-      setModelOptions([...models]);
+      setModelOptions(Array.from(models));
     };
     const loadDashboard = async () => {
       const data = await fetchDashboard();
@@ -235,14 +234,14 @@ export default function HomePage() {
 
       {/* Filtros à direita */}
       <Box
-        sx={{
+        style={{
           width: '30%',
           padding: '20px',
           overflowY: 'auto',
           boxSizing: 'border-box', 
         }}
       >
-        <Stack spacing="md">
+        <Stack gap="md">
           <TextInput
             label="Pesquisar Equipamento"
             placeholder="Digite o nome do equipamento"
@@ -256,8 +255,7 @@ export default function HomePage() {
             value={selectedEquipmentQuery}
             onChange={setSelectedEquipmentQuery}
             width={300}
-            maxDropdownHeight={300}
-            withinPortal={true}
+            maxDropdownHeight={300} 
             styles={{
               input: {
                 maxWidth: '400px',
@@ -277,8 +275,7 @@ export default function HomePage() {
                 maxWidth: '400px',
               },
             }}
-            maxDropdownHeight={300}
-            withinPortal={true}
+            maxDropdownHeight={300} 
             clearable={true}
           />
           <MultiSelect
@@ -293,8 +290,7 @@ export default function HomePage() {
                 maxWidth: '400px',
               },
             }}
-            maxDropdownHeight={300}
-            withinPortal={true}
+            maxDropdownHeight={300} 
             clearable={true}
           />
           <Button

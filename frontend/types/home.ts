@@ -14,4 +14,5 @@ interface Equipment {
   equipmentType: string;
   state: string;
   history: EquipmentHistory[];
+  productivity: number;
 }
