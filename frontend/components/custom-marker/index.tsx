@@ -40,16 +40,16 @@ export default function CustomMarker({
   return (
     <Marker position={position} icon={icon}>
       <Popup>
-        <Text size="sm" style={{ fontWeight: 500 }}>
+        <Text size="sm" fw={500}>
           <strong>Equipamento:</strong> {popupText}
         </Text>
-        <Text size="xs" style={{ fontWeight: 500 }}>
+        <Text size="xs" fw={500}>
           <strong>Modelo:</strong> {model}
         </Text>
-        <Text size="xs" style={{ fontWeight: 500 }}>
+        <Text size="xs" fw={500}>
           <strong>Status:</strong> <span style={{ color }}>{state}</span>
         </Text>
-        <Text size="xs" style={{ fontWeight: 500 }}>
+        <Text size="xs" fw={500}>
           <strong>Produtividade:</strong> {productivity}%
         </Text>
         <Button onClick={onShowHistory}>Ver/Esconder Histórico</Button>
