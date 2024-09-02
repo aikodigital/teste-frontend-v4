@@ -2,15 +2,13 @@
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import React, { useEffect, useState } from 'react';
-import {
-  MapContainer,
-  Marker,
-  Polyline,
-  TileLayer,
-} from 'react-leaflet';
+import { MapContainer, Marker, Polyline, TileLayer } from 'react-leaflet';
 import CustomMarker from '@/components/custom-marker';
 import { fetchDashboard } from '@/hooks/useDashboard';
 import { Button, MultiSelect, Box, Stack, TextInput } from '@mantine/core';
+import { fetchStates } from '@/hooks/useStates';
+import { fetchModels } from '@/hooks/useModels';
+import { fetchEquipment } from '@/hooks/useEquipment';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -27,9 +25,8 @@ export default function HomePage() {
   const [zoom] = useState<number>(10);
   const [center] = useState<Position>([-19.163956, -46.087835]);
   const [style] = useState<React.CSSProperties>({
-    height: '500px',
-    width: '800px', // Ajuste para encaixar filtros ao lado
-    margin: 'auto',
+    height: '100vh', // Ajustando para ocupar toda a altura da tela
+    width: '100%',
   });
 
   const [dashboardList, setDashboardList] = useState<any[]>([]);
@@ -37,6 +34,10 @@ export default function HomePage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
+  const [selectedEquipmentQuery, setSelectedEquipmentQuery] = useState<
+    string[]
+  >([]);
+  const [equipmentQueryList, setEquipmentQueryList] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -44,27 +45,45 @@ export default function HomePage() {
   const [modelOptions, setModelOptions] = useState<string[]>([]);
 
   useEffect(() => {
+    const loadEquipment = async () => {
+      const equipment = new Set<string>();
+      const data = await fetchEquipment();
+      data.forEach((item: any) => {
+        if (item?.name) {
+          equipment.add(item?.name);
+        }
+      });
+      setEquipmentQueryList([...equipment]);
+    };
+
+    const loadStates = async () => {
+      const states = new Set<string>();
+      const data = await fetchStates();
+      data.forEach((item: any) => {
+        if (item?.name) {
+          states.add(item?.name);
+        }
+      });
+      setStateOptions([...states]);
+    };
+    const loadModels = async () => {
+      const models = new Set<string>();
+      const data = await fetchModels();
+      data.forEach((item: any) => {
+        if (item?.name) {
+          models.add(item?.name);
+        }
+      });
+      setModelOptions([...models]);
+    };
     const loadDashboard = async () => {
       const data = await fetchDashboard();
       setDashboardList(data);
-
-      // Set distinct state and model options for filters
-      const states = new Set<string>();
-      const models = new Set<string>();
-
-      data.forEach((item: any) => {
-        if (item?.states[0]?.states[0]?.equipmentState?.name) {
-          states.add(item.states[0].states[0].equipmentState.name);
-        }
-        if (item?.equipmentModel?.name) {
-          models.add(item.equipmentModel.name);
-        }
-      });
-
-      setStateOptions([...states]);
-      setModelOptions([...models]);
     };
 
+    loadStates();
+    loadModels();
+    loadEquipment();
     loadDashboard();
   }, []);
 
@@ -74,7 +93,8 @@ export default function HomePage() {
         .map((item: any): Equipment | undefined => {
           const positionData = item?.positions[0]?.positions[0];
           if (positionData?.lat && positionData?.lon) {
-            const { name: state, color } = item?.states[0]?.states[0]?.equipmentState || {};
+            const { name: state, color } =
+              item?.states[0]?.states[0]?.equipmentState || {};
 
             const history: EquipmentHistory[] = item?.states.reduce(
               (acc: EquipmentHistory[], stateGroup: any, i: number) => [
@@ -99,6 +119,7 @@ export default function HomePage() {
               equipmentType: item?.equipmentModel?.name,
               state,
               history,
+              productivity: item.productivityPercentage.toFixed(2), // Adicionando o percentual de produtividade
             };
           }
         })
@@ -109,10 +130,19 @@ export default function HomePage() {
   }, [dashboardList]);
 
   const filteredEquipmentList = equipmentList.filter((equipment) => {
-    const matchesState = selectedStates.length === 0 || selectedStates.includes(equipment.state);
-    const matchesModel = selectedModels.length === 0 || selectedModels.includes(equipment.equipmentType);
-    const matchesSearch = searchQuery.length === 0 || equipment.popupText.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesState && matchesModel && matchesSearch;
+    const matchesState =
+      selectedStates.length === 0 || selectedStates.includes(equipment.state);
+    const matchesModel =
+      selectedModels.length === 0 ||
+      selectedModels.includes(equipment.equipmentType);
+    const matchesSearch =
+      searchQuery.length === 0 ||
+      equipment.popupText.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesEquipment =
+      selectedEquipmentQuery.length === 0 ||
+      selectedEquipmentQuery.includes(equipment.popupText);
+
+    return matchesState && matchesModel && matchesSearch && matchesEquipment;
   });
 
   const renderHistory = (id: string | null) => {
@@ -123,8 +153,11 @@ export default function HomePage() {
 
     // Aplicar os mesmos filtros ao histórico do equipamento
     const filteredHistory = marker.history.filter((item) => {
-      const matchesState = selectedStates.length === 0 || selectedStates.includes(item.state);
-      const matchesModel = selectedModels.length === 0 || selectedModels.includes(marker.equipmentType);
+      const matchesState =
+        selectedStates.length === 0 || selectedStates.includes(item.state);
+      const matchesModel =
+        selectedModels.length === 0 ||
+        selectedModels.includes(marker.equipmentType);
       return matchesState && matchesModel;
     });
 
@@ -132,7 +165,10 @@ export default function HomePage() {
       .map((item) => item.positions)
       .filter(
         (pos): pos is Position =>
-          Array.isArray(pos) && pos.length === 2 && typeof pos[0] === 'number' && typeof pos[1] === 'number'
+          Array.isArray(pos) &&
+          pos.length === 2 &&
+          typeof pos[0] === 'number' &&
+          typeof pos[1] === 'number'
       );
 
     if (validPositions.length === 0) return null;
@@ -144,7 +180,10 @@ export default function HomePage() {
           const { positions, state, color } = item;
 
           return (
-            positions && positions.length === 2 && typeof positions[0] === 'number' && typeof positions[1] === 'number' && (
+            positions &&
+            positions.length === 2 &&
+            typeof positions[0] === 'number' &&
+            typeof positions[1] === 'number' && (
               <CustomMarker
                 key={index}
                 position={positions}
@@ -165,10 +204,44 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
-      {/* Filtros à esquerda */}
-      <Box sx={{ width: '250px', marginRight: '20px' }}>
-        <Stack>
+    <div
+      style={{
+        display: 'flex',
+        height: '100vh',
+      }}
+    >
+      {/* Mapa à esquerda */}
+      <div style={{ width: '70%', height: '100%' }}>
+        <MapContainer center={center} zoom={zoom} style={style}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {filteredEquipmentList.map((equipment) => (
+            <CustomMarker
+              key={equipment._id}
+              position={equipment.position}
+              popupText={equipment.popupText}
+              color={equipment.color}
+              model={equipment.equipmentType}
+              state={equipment.state}
+              onShowHistory={() => handleShowHistory(equipment._id)}
+            />
+          ))}
+          {renderHistory(selectedId)}
+        </MapContainer>
+      </div>
+
+      {/* Filtros à direita */}
+      <Box
+        sx={{
+          width: '30%',
+          padding: '20px',
+          overflowY: 'auto',
+          boxSizing: 'border-box', 
+        }}
+      >
+        <Stack spacing="md">
           <TextInput
             label="Pesquisar Equipamento"
             placeholder="Digite o nome do equipamento"
@@ -176,11 +249,36 @@ export default function HomePage() {
             onChange={(event) => setSearchQuery(event.currentTarget.value)}
           />
           <MultiSelect
+            data={equipmentQueryList}
+            label="Filtrar por Equipamento"
+            placeholder="Selecione equipamentos"
+            value={selectedEquipmentQuery}
+            onChange={setSelectedEquipmentQuery}
+            width={300}
+            maxDropdownHeight={300}
+            withinPortal={true}
+            styles={{
+              input: {
+                maxWidth: '400px',
+              },
+            }}
+            clearable={true}
+          />
+          <MultiSelect
             data={stateOptions}
             label="Filtrar por Estado"
             placeholder="Selecione estados"
             value={selectedStates}
             onChange={setSelectedStates}
+            width={300}
+            styles={{
+              input: {
+                maxWidth: '400px',
+              },
+            }}
+            maxDropdownHeight={300}
+            withinPortal={true}
+            clearable={true}
           />
           <MultiSelect
             data={modelOptions}
@@ -188,35 +286,26 @@ export default function HomePage() {
             placeholder="Selecione modelos"
             value={selectedModels}
             onChange={setSelectedModels}
+            width={300}
+            styles={{
+              input: {
+                maxWidth: '400px',
+              },
+            }}
+            maxDropdownHeight={300}
+            withinPortal={true}
+            clearable={true}
           />
-          <Button onClick={() => { setSelectedStates([]); setSelectedModels([]); setSearchQuery(''); }}>Limpar Filtros</Button>
-        </Stack>
-      </Box>
-
-      {/* Mapa no centro */}
-      <MapContainer center={center} zoom={zoom} style={style}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {filteredEquipmentList.map((equipment) => (
-          <CustomMarker
-            key={equipment._id}
-            position={equipment.position}
-            popupText={equipment.popupText}
-            color={equipment.color}
-            model={equipment.equipmentType}
-            state={equipment.state}
-            onShowHistory={() => handleShowHistory(equipment._id)}
-          />
-        ))}
-        {renderHistory(selectedId)}
-      </MapContainer>
-
-      {/* Filtros à direita - pode adicionar mais opções aqui no futuro */}
-      <Box sx={{ width: '250px', marginLeft: '20px' }}>
-        <Stack>
-          {/* Placeholder para futuros filtros */}
+          <Button
+            onClick={() => {
+              setSelectedStates([]);
+              setSelectedModels([]);
+              setSearchQuery('');
+              setSelectedEquipmentQuery([]);
+            }}
+          >
+            Limpar Filtros
+          </Button>
         </Stack>
       </Box>
     </div>

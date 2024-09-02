@@ -5,8 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 export default function Home() {
   const queryClient = new QueryClient();
   return (
-      <MantineProvider forceColorScheme="dark" withNormalizeCSS>
-        
+      <MantineProvider forceColorScheme="dark" withNormalizeCSS> 
         <HomePage />
       </MantineProvider> 
   );

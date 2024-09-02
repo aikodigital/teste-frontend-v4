@@ -25,6 +25,7 @@ export default function CustomMarker({
   state,
   color,
   model,
+  productivity, // Adicione o campo de produtividade
   onShowHistory,
 }: {
   position: Position;
@@ -32,6 +33,7 @@ export default function CustomMarker({
   state: string;
   color: string;
   model: string;
+  productivity: string; // Adicione o campo de produtividade
   onShowHistory: () => void;
 }) {
   const icon = createCustomIcon(color);
@@ -46,9 +48,10 @@ export default function CustomMarker({
           <strong>Modelo:</strong> {model}
         </Text>
         <Text size="xs" weight={500}>
-          <strong>
-            Status: <span style={{ color }}>{state}</span>
-          </strong>
+          <strong>Status:</strong> <span style={{ color }}>{state}</span>
+        </Text>
+        <Text size="xs" weight={500}>
+          <strong>Produtividade:</strong> {productivity}%
         </Text>
         <Button onClick={onShowHistory}>Ver/Esconder Histórico</Button>
       </Popup>
