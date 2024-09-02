@@ -6,8 +6,8 @@
 Este projeto foi desenvolvido como parte de um teste técnico para uma vaga de desenvolvedor frontend. A proposta consistia em criar uma aplicação que exibisse e permitisse a interação com dados de equipamentos utilizados em uma operação florestal. A aplicação deve exibir a posição atual dos equipamentos em um mapa, mostrar seus estados em tempo real, e permitir a visualização de históricos de estados e posições.
 
 ## Links Importantes
-* **API:** https://gregarious-art-production.up.railway.app/
-* **Frontend:** https://teste-frontend-v4-production.up.railway.app/
+* **Frontend:** https://gregarious-art-production.up.railway.app/
+* **API:** https://teste-frontend-v4-production.up.railway.app/
 * **Documentação da API:** https://teste-frontend-v4-production.up.railway.app/api
 
 ## Estrutura do Projeto
