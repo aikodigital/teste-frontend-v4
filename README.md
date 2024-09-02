@@ -4,9 +4,9 @@ Este é um projeto que visa o acompanhamento e localização da operação de m�
 
 ## ⚙️ Tecnologias utilizadas
 
-- (Vite + ReactJS + TypeScript)[https://vitejs.dev/guide/#scaffolding-your-first-vite-project]
-- (MUI)[https://mui.com/material-ui/getting-started/installation/] como biblioteca de Componentes
-- (React Leaflet)[https://react-leaflet.js.org/docs/start-installation/] como biblioteca de mapas
+- [Vite + ReactJS + TypeScript](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)
+- [MUI](https://mui.com/material-ui/getting-started/installation/) como biblioteca de Componentes
+- [React Leaflet](https://react-leaflet.js.org/docs/start-installation/) como biblioteca de mapas
 
 ## Rodando o projeto
 
