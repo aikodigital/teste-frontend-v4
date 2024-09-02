@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title style="display: flex">
         <span>{{ title }} - Histórico de estados</span>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-icon class="close-icon" @click="closeDialog"> mdi-close </v-icon>
       </v-card-title>
 

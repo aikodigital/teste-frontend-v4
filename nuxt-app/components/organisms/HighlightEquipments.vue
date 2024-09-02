@@ -11,8 +11,6 @@ import { storeToRefs } from 'pinia';
 
 const store = useNormalizedData();
 const { equipmentsFiltered } = storeToRefs(store);
-
-console.log('mintoihroih', equipmentsFiltered);
 </script>
 
 <style>

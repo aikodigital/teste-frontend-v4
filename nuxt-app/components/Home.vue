@@ -31,7 +31,7 @@ const cols = computed<number[]>(() => {
 
 <style>
 .main-content-section {
-  margin-top: 90px;
+  padding-top: 110px;
   height: 100%;
 }
 

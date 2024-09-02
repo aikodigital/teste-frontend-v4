@@ -17,21 +17,21 @@
       auto-select-first
       return-object
     >
-      <template v-slot:chip="{ props, item }">
+      <template #chip="{ props, item }">
         <v-chip
           v-bind="props"
           :color="item.raw.color"
           :text="`${item.raw.name} - ${item.raw.model?.name}`"
           @click:close="handleCloseChip(item.raw.equipmentModelId)"
-        ></v-chip>
+        />
       </template>
 
-      <template v-slot:item="{ props, item }">
+      <template #item="{ props, item }">
         <v-list-item
           v-bind="props"
           :subtitle="item.raw.model.name"
           :title="item.raw.name"
-        ></v-list-item>
+        />
       </template>
     </v-autocomplete>
   </div>

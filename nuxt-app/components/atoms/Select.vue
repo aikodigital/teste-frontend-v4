@@ -7,15 +7,14 @@
     :items="equipmentsStates.default"
     :item-props="itemProps"
     variant="solo"
-  ></v-select>
+  />
 </template>
 
 <script setup lang="ts">
 import * as equipmentsStates from '@/assets/data/equipmentState.json';
 import type { IStates } from '~/interfaces/equipments.interface';
 import { useEventBus } from '@/utils/eventBus.ts';
-import { ref } from 'vue';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const { emit } = useEventBus();
 const selectedState = ref<IStates | null>(null);

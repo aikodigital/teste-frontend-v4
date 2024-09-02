@@ -1,6 +1,6 @@
 <template>
   <v-chip class="ma-0" size="x-small" :color="color" label variant="elevated">
-    <b style="color: #fff;">{{ textContent }}</b>
+    <b style="color: #fff">{{ textContent }}</b>
   </v-chip>
 </template>
 

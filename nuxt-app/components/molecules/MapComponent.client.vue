@@ -6,39 +6,57 @@
       layer-type="base"
       name="OpenStreetMap"
     />
-    <LMarker
-      v-for="equipment in equipments"
-      :lat-lng="[
-        equipment.mostRecentlyPosition.lat,
-        equipment.mostRecentlyPosition.lon,
-      ]"
-      :radius="8"
-      :icon="getIcon(equipment)"
-      @click="() => openDialog(equipment)"
-      ><LTooltip>
-        <div class="content-tooltip">
-          <span class="title-tooltip"
-            >{{ equipment.name }} - {{ equipment.model.name }}</span
-          >
-          <span class="current-state">
-            Status:
-            <Chip
-              :textContent="equipment.mostRecentlyState.stateReference?.name"
-              :color="equipment.mostRecentlyState.stateReference?.color"
-            />
-          </span>
-        </div> </LTooltip
-    ></LMarker>
+    <div v-for="(equipment, key) in equipments">
+      <LMarker
+        :lat-lng="[
+          equipment.mostRecentlyPosition.lat,
+          equipment.mostRecentlyPosition.lon,
+        ]"
+        :radius="8"
+        :icon="getIcon(equipment)"
+        @click="() => openDialog(equipment)"
+        ><LTooltip>
+          <div class="content-tooltip">
+            <span class="title-tooltip"
+              >{{ equipment.name }} - {{ equipment.model.name }}</span
+            >
+            <span class="current-state">
+              Status:
+              {{ showTrajectory }}
+              <Chip
+                :text-content="equipment.mostRecentlyState.stateReference?.name"
+                :color="equipment.mostRecentlyState.stateReference?.color"
+              />
+            </span>
+          </div> </LTooltip
+      ></LMarker>
+
+      <LPolyline
+        v-if="showTrajectory"
+        :lat-lngs="getPosition(equipment.positionHistory.positions)"
+        :color="equipment.color"
+      />
+    </div>
   </LMap>
 </template>
 
 <script setup lang="ts">
-import type { IEquipmentNormalized } from '~/interfaces/equipments.interface';
+import type {
+  IEquipmentNormalized,
+  IPositions,
+} from '~/interfaces/equipments.interface';
 import L from 'leaflet';
 const { emit } = useEventBus();
+const { on } = useEventBus();
 
 const store = useNormalizedData();
 const { equipmentsFiltered: equipments } = storeToRefs(store);
+
+const showTrajectory = ref(false);
+
+on('switchTrajectory', (value: boolean) => {
+  showTrajectory.value = value;
+});
 
 function getIcon(equipment: IEquipmentNormalized): L.Icon<L.IconOptions> {
   const adjustColor = (hex: string, amount: number = 90) => {
@@ -48,9 +66,9 @@ function getIcon(equipment: IEquipmentNormalized): L.Icon<L.IconOptions> {
     let g = parseInt(hex.substring(2, 4), 16);
     let b = parseInt(hex.substring(4, 6), 16);
 
-    let luminosity = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+    const luminosity = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 
-    let adjustment = amount * (luminosity < 0.5 ? 1 : -1);
+    const adjustment = amount * (luminosity < 0.5 ? 1 : -1);
 
     r = Math.min(255, Math.max(0, r + adjustment));
     g = Math.min(255, Math.max(0, g + adjustment));
@@ -75,6 +93,14 @@ function getIcon(equipment: IEquipmentNormalized): L.Icon<L.IconOptions> {
 function openDialog(equipment: IEquipmentNormalized) {
   emit('openDialog', equipment);
 }
+
+function getPosition(positions: IPositions[]): [number, number][] {
+  const total = positions.map((position) => {
+    return [position.lat, position.lon] as [number, number];
+  });
+
+  return total;
+}
 </script>
 
 <style>
@@ -85,7 +111,7 @@ function openDialog(equipment: IEquipmentNormalized) {
 
 .map-content-component {
   border-radius: 3px;
-  height: 710px !important;
+  height: 735px !important;
   box-shadow:
     rgba(9, 30, 66, 0.25) 0px 1px 1px,
     rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;

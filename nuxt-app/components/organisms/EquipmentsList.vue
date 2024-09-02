@@ -2,7 +2,17 @@
   <div class="main-content-equipment-list">
     <div>
       <div>
-        <h3>PESQUISA</h3>
+        <div class="title-switch">
+          <h3>PESQUISA</h3>
+          <v-switch
+            v-model="switchTrajectory"
+            color="primary"
+            label="Exibir linhas trajetórias"
+            density="compact"
+            class="custom-switch"
+          />
+        </div>
+
         <div class="filters-content">
           <Autocomplete
             :equipments="equipments"
@@ -28,6 +38,12 @@ const props = defineProps<{
 }>();
 
 const { equipments } = props;
+const { emit } = useEventBus();
+const switchTrajectory = ref(false);
+
+watch(switchTrajectory, (newValue) => {
+  emit('switchTrajectory', newValue);
+});
 </script>
 
 <style>
@@ -54,5 +70,16 @@ const { equipments } = props;
   .filters-content {
     grid-template-columns: 100%;
   }
+}
+
+.custom-switch {
+  transform: scale(0.8);
+  padding-top: 10px;
+}
+
+.title-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 </style>

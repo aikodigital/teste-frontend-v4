@@ -160,8 +160,6 @@ export const useNormalizedData = defineStore('normalized-data', {
     },
 
     withState(equipments: IEquipmentNormalized[]) {
-      console.log(equipments);
-      console.log(this.stateSelected);
       if (this.stateSelected) {
         this.$patch({
           equipmentsSelectedNoState: equipments,
@@ -176,7 +174,6 @@ export const useNormalizedData = defineStore('normalized-data', {
     },
 
     patchFilteredStates(data: IStates | null) {
-      console.log('here -> ', data);
       this.$patch({
         stateSelected: data,
       });

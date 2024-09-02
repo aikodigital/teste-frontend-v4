@@ -5,14 +5,14 @@
         <div
           class="info-color"
           :style="`background-color: ${equipment.color}`"
-        ></div>
+        />
         <span class="span-title"
           >{{ equipment.name }} - {{ equipment.model.name }}</span
         >
       </div>
       <div>
         <Chip
-          :textContent="equipment.mostRecentlyState.stateReference?.name"
+          :text-content="equipment.mostRecentlyState.stateReference?.name"
           :color="equipment.mostRecentlyState.stateReference?.color"
         />
       </div>
@@ -53,14 +53,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
 import { useEventBus } from '@/utils/eventBus.ts';
 import type {
   IEquipmentNormalized,
   IHourEarnings,
   IStatesHistory,
 } from '~/interfaces/equipments.interface';
-import { defineProps } from 'vue';
 import { formatDateTime } from '@/utils/date-formatter.ts';
 
 const { emit } = useEventBus();
@@ -95,7 +94,7 @@ const calculatedValues = computed(() => {
       const startTime = new Date(lastState.date);
       const endTime = new Date(currentState.date);
       const timeDifference =
-        (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60); // Convert milliseconds to hours
+        (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
 
       if (lastState.equipmentStateId === OPERATING_STATE_ID) {
         operatingTime += timeDifference;

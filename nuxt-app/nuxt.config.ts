@@ -14,11 +14,11 @@ export default defineNuxtConfig({
   ],
 
   pinia: {
-    storesDirs: ['./stores/**']
+    storesDirs: ['./stores/**'],
   },
 
   devServer: {
-    port: Number(process.env.PORT),
+    port: Number(process.env.PORT) || 3000,
   },
 
   typescript: {

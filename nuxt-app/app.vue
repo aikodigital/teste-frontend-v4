@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { useNormalizedData } from '@/stores/normalizedData.store.ts';
 import { storeToRefs } from 'pinia';
-import { onBeforeMount, watch } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useEventBus } from '@/utils/eventBus.ts';
 import type {
   IEquipmentNormalized,
