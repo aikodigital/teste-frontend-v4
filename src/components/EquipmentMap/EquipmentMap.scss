@@ -77,3 +77,10 @@
     }
   }
 }
+
+.leaflet-control-attribution {
+  display: none !important;
+}
+.leaflet-control-zoom {
+  display: none;
+}

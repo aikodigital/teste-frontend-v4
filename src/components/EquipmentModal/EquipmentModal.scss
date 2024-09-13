@@ -9,10 +9,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 90%;
   width: 600px;
-  height: 80vh; /* Definindo uma altura máxima para garantir visibilidade */
-  overflow: auto; /* Adicionando rolagem se o conteúdo for muito longo */
-  z-index: 1000;
-  box-sizing: border-box; /* Incluindo padding e border no tamanho total */
+  height: 80vh; 
+  overflow: auto; 
+  z-index: 1050;
+  box-sizing: border-box; 
   
   @media (max-width: 768px) {
     width: 95%;
