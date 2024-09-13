@@ -9,14 +9,19 @@ import Point from "ol/geom/Point";
 import LineString from "ol/geom/LineString";
 import { Icon, Style, Stroke, Text } from "ol/style";
 import { fromLonLat } from "ol/proj";
-import { MainContainer } from "@/styles/views/homeMap";
+import {
+  MainContainer,
+  MapContainer,
+  Tooltip,
+  ResetButton,
+} from "@/styles/views/homeMap";
 import "ol/ol.css";
 
-import equipment from "../../../data/equipment.json";
-import equipmentPositionHistory from "../../../data/equipmentPositionHistory.json";
-import equipmentModel from "../../../data/equipmentModel.json";
-import equipmentState from "../../../data/equipmentState.json";
-import equipmentStateHistory from "../../../data/equipmentStateHistory.json";
+import equipment from "../../../public/data/equipment.json";
+import equipmentPositionHistory from "../../../public/data/equipmentPositionHistory.json";
+import equipmentModel from "../../../public/data/equipmentModel.json";
+import equipmentState from "../../../public/data/equipmentState.json";
+import equipmentStateHistory from "../../../public/data/equipmentStateHistory.json";
 
 interface Equipment {
   id: string;
@@ -49,7 +54,9 @@ export default function HomeMap() {
   const mapElement = useRef<HTMLDivElement | null>(null);
   const tooltipElement = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(
+    null
+  );
   const vectorSource = useRef(new VectorSource()).current;
   const historyVectorSource = useRef(new VectorSource()).current;
   const routeVectorSource = useRef(new VectorSource()).current;
@@ -73,7 +80,8 @@ export default function HomeMap() {
         (pos: EquipmentPositionHistory) => pos.equipmentId === equip.id
       )?.positions;
       const equipStateHistories = equipmentStateHistory.find(
-        (stateHistory: EquipmentStateHistory) => stateHistory.equipmentId === equip.id
+        (stateHistory: EquipmentStateHistory) =>
+          stateHistory.equipmentId === equip.id
       )?.states;
 
       if (equipPositions && equipStateHistories) {
@@ -125,12 +133,15 @@ export default function HomeMap() {
         geometry: new Point(fromLonLat([pos.lon, pos.lat])),
         isHistory: true,
         equipmentName: selectedEquipmentId
-          ? equipment.find((e) => e.id === selectedEquipmentId)?.name || "Unknown"
+          ? equipment.find((e) => e.id === selectedEquipmentId)?.name ||
+            "Unknown"
           : "Unknown",
         modelName: selectedEquipmentId
           ? equipmentModel.find(
               (model) =>
-                model.id === equipment.find((e) => e.id === selectedEquipmentId)?.equipmentModelId
+                model.id ===
+                equipment.find((e) => e.id === selectedEquipmentId)
+                  ?.equipmentModelId
             )?.name || "Unknown Model"
           : "Unknown Model",
         stateName: selectedEquipmentId
@@ -138,8 +149,9 @@ export default function HomeMap() {
               (state) =>
                 state.id ===
                 getLastState(
-                  equipmentStateHistory.find((e) => e.equipmentId === selectedEquipmentId)
-                    ?.states || []
+                  equipmentStateHistory.find(
+                    (e) => e.equipmentId === selectedEquipmentId
+                  )?.states || []
                 )?.equipmentStateId
             )?.name || "Unknown State"
           : "Unknown State",
@@ -222,9 +234,14 @@ export default function HomeMap() {
         mapRef.current.addOverlay(tooltip);
 
         mapRef.current.on("pointermove", (event) => {
-          const feature = mapRef.current?.forEachFeatureAtPixel(event.pixel, (feat) => feat);
+          const feature = mapRef.current?.forEachFeatureAtPixel(
+            event.pixel,
+            (feat) => feat
+          );
           if (feature) {
-            const coordinates = (feature.getGeometry() as Point).getCoordinates();
+            const coordinates = (
+              feature.getGeometry() as Point
+            ).getCoordinates();
             tooltip.setPosition(coordinates);
             tooltipElement.current!.innerHTML = `
               Equipamento: ${feature.get("equipmentName")}<br>
@@ -238,7 +255,10 @@ export default function HomeMap() {
         });
 
         mapRef.current.on("click", (event) => {
-          const feature = mapRef.current?.forEachFeatureAtPixel(event.pixel, (feat) => feat);
+          const feature = mapRef.current?.forEachFeatureAtPixel(
+            event.pixel,
+            (feat) => feat
+          );
           if (feature) {
             const equipmentId = feature.get("id");
             const equipPositions = equipmentPositionHistory.find(
@@ -253,7 +273,12 @@ export default function HomeMap() {
         });
       }
     }
-  }, [selectedEquipmentId, vectorSource, historyVectorSource, routeVectorSource]);
+  }, [
+    selectedEquipmentId,
+    vectorSource,
+    historyVectorSource,
+    routeVectorSource,
+  ]);
 
   const handleReset = () => {
     setSelectedEquipmentId(null);
@@ -264,35 +289,11 @@ export default function HomeMap() {
 
   return (
     <MainContainer>
-      <div ref={mapElement} style={{ height: "100%", width: "100%" }}></div>
-      <div
-        ref={tooltipElement}
-        style={{
-          position: "absolute",
-          background: "#fff",
-          padding: "5px",
-          borderRadius: "5px",
-          border: "1px solid black",
-          display: "none",
-          pointerEvents: "none",
-          color: "black",
-          width: "15rem",
-        }}
-      ></div>
-      <button
-        onClick={handleReset}
-        style={{
-          position: "absolute",
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Voltar
-      </button>
+      <MapContainer ref={mapElement}></MapContainer>
+      <Tooltip ref={tooltipElement}></Tooltip>
+      <ResetButton onClick={handleReset} disabled={!selectedEquipmentId}>
+        Redefinir
+      </ResetButton>
     </MainContainer>
   );
 }

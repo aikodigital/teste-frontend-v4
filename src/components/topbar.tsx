@@ -7,14 +7,12 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useRouter, usePathname } from "next/navigation";
 import { montserrat } from "@/app/fonts/fonts";
 import { useEffect } from "react";
+import Image from "next/image";
 
 const pages = ["Principal", "Equipamentos"] as const;
 
@@ -22,7 +20,7 @@ type Page = (typeof pages)[number];
 
 const routeMap: Record<Page, string> = {
   Principal: "/",
-  Equipamentos: "/equipamentos"
+  Equipamentos: "/equipamentos",
 };
 
 export default function ResponsiveAppBar() {
@@ -53,40 +51,28 @@ export default function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
-
   const handlePageChange = (page: Page) => {
     setSelectedPage(page);
     router.push(routeMap[page]);
   };
 
-
   return (
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: montserrat.style.fontFamily,
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
-            }}
-          >
-            MAPAS
-          </Typography>
+          <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
+            <Image
+              src="/img/aiko.png"
+              alt="Logo da Empresa"
+              width={70}
+              height={40}
+            />
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -125,41 +111,37 @@ export default function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+          <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <Image
+              src="/img/aiko.png"
+              alt="Logo da Empresa"
+              width={60}
+              height={30}
+            />
+          </Box>
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: montserrat.style.fontFamily,
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
             }}
           >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handlePageChange(page)}
                 sx={{
                   my: 2,
-                  color: selectedPage === page ? "white" : "black",
+                  mx: 1,
+                  color: selectedPage === page ? "white" : "#1D4692",
                   backgroundColor:
-                    selectedPage === page ? "black" : "transparent",
+                    selectedPage === page ? "#1D4692" : "transparent",
                   display: "block",
                   fontFamily: montserrat.style.fontFamily,
                   transition: "0.3s",
                   "&:hover": {
-                    backgroundColor:"black",
-                    color: "white",
+                    backgroundColor: "#11D524",
+                    color: "#1D4692",
                   },
                 }}
               >
@@ -167,7 +149,6 @@ export default function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          
         </Toolbar>
       </Container>
     </AppBar>
