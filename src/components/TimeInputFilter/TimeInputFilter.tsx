@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './TimeInputFilter.module.scss';
+import React from "react";
+import styles from "./TimeInputFilter.module.scss";
 
 interface TimeInputFilterProps {
   selectedHour: string;
@@ -15,7 +15,7 @@ const TimeInputFilter: React.FC<TimeInputFilterProps> = ({
   setSelectedAmPm,
 }) => {
   const handleTimeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/[^0-9]/g, ""); 
+    let value = e.target.value.replace(/[^0-9]/g, "");
 
     if (value.length > 2 && value.length <= 4) {
       value = value.slice(0, 2) + ":" + value.slice(2);
@@ -30,22 +30,22 @@ const TimeInputFilter: React.FC<TimeInputFilterProps> = ({
 
   return (
     <div className={styles.timeFilterContainer}>
-        <input
-          type="text"
-          value={selectedHour}
-          onChange={handleTimeInputChange}
-          className={styles.hourFilter}
-          placeholder="Hora (HH:MM)"
-          maxLength={5}
-        />
-        <select
-          value={selectedAmPm}
-          onChange={(e) => setSelectedAmPm(e.target.value)}
-          className={styles.ampmFilter}
-        >
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+      <input
+        type="text"
+        value={selectedHour}
+        onChange={handleTimeInputChange}
+        className={styles.hourFilter}
+        placeholder="Hora (HH:MM)"
+        maxLength={5}
+      />
+      <select
+        value={selectedAmPm}
+        onChange={(e) => setSelectedAmPm(e.target.value)}
+        className={styles.ampmFilter}
+      >
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
     </div>
   );
 };

@@ -1,0 +1,26 @@
+// src/components/DateFilter/DateFilter.scss
+.date-filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .date-filter-input {
+    height: 30px;
+    width: 150px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    padding: 0.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .date-filter-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+    outline: none;
+  }
+  

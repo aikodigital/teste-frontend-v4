@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Modal from "react-modal";
 import "./EquipmentModal.scss";
 import { Equipment, State } from "../../types/Equipment";
 import TimeInputFilter from "../TimeInputFilter/TimeInputFilter";
+import DateFilter from "../DateFilter/DateFilter";
 
 Modal.setAppElement("#root");
 
@@ -43,48 +44,51 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
     ? stateHistory[selectedEquipmentId] || []
     : [];
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+  const parseDateString = (dateString: string) => {
+    const [day, month, year] = dateString.split("/").map((part) => parseInt(part, 10));
+    return { day, month, year };
   };
 
   const matchesHour = (stateDate: Date) => {
-    let hour = stateDate.getHours();
-    const minutes = stateDate.getMinutes();
-    const amPm = hour >= 12 ? "PM" : "AM";
+    if (!selectedHour) return true;
 
-    if (hour > 12) hour -= 12;
-    if (hour === 0) hour = 12;
+    let stateHour = stateDate.getHours();
+    let selectedHourNumber = parseInt(selectedHour, 10);
 
-    const hourMatches =
-      !selectedHour || hour === parseInt(selectedHour.split(":")[0], 10);
-    const amPmMatches = !selectedAmPm || amPm === selectedAmPm;
+    if (isNaN(selectedHourNumber)) return true;
 
-    const minuteMatches = selectedHour.includes(":")
-      ? minutes === parseInt(selectedHour.split(":")[1], 10)
-      : true;
+    if (selectedAmPm === "PM" && selectedHourNumber !== 12) {
+      selectedHourNumber += 12;
+    } else if (selectedAmPm === "AM" && selectedHourNumber === 12) {
+      selectedHourNumber = 0; 
+    }
 
-    return hourMatches && amPmMatches && minuteMatches;
+    return stateHour === selectedHourNumber;
   };
 
-  const filteredStateHistory = selectedStateHistory.filter((state) => {
-    const stateDate = new Date(state.date);
+  const filterData = useCallback((date: string) => {
+    const { day, month, year } = parseDateString(date);
 
-    const filterByState = selectedStateId
-      ? state.equipmentStateId === selectedStateId
-      : true;
+    return selectedStateHistory.filter((state) => {
+      const stateDate = new Date(state.date);
+      const stateDay = stateDate.getDate();
+      const stateMonth = stateDate.getMonth() + 1;
+      const stateYear = stateDate.getFullYear();
 
-    const filterByDate = selectedDate
-      ? formatDate(state.date) === selectedDate
-      : true;
+      const dayMatches = isNaN(day) || stateDay === day;
+      const monthMatches = isNaN(month) || stateMonth === month;
+      const yearMatches = isNaN(year) || stateYear === year;
 
-    const filterByHour = matchesHour(stateDate);
+      const filterByState = selectedStateId
+        ? state.equipmentStateId === selectedStateId
+        : true;
 
-    return filterByState && filterByDate && filterByHour;
-  });
+      const filterByDate = dayMatches && monthMatches && yearMatches;
+      const filterByHour = matchesHour(stateDate);
+
+      return filterByState && filterByDate && filterByHour;
+    });
+  }, [selectedStateHistory, selectedStateId, selectedHour, selectedAmPm]);
 
   const uniqueStates = Array.from(
     new Set(selectedStateHistory.map((state) => state.equipmentStateId))
@@ -108,7 +112,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
             {getCurrentState(selectedEquipment.id)?.name || "Desconhecido"}
           </p>
 
-          <h4>Filtro de Estado:</h4>
+          <h4>Filtrar Estado:</h4>
 
           <select
             value={selectedStateId}
@@ -124,18 +128,13 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
           </select>
 
           <div className="timeAndDateInputs">
-            <div className="dateInputContainer">
-              <h4>Filtro de Data:</h4>
-              <input
-                type="text"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="date-filter"
-                placeholder="Data (dd/mm/yyyy)"
-              />
-            </div>
+            <DateFilter
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              filterData={filterData}
+            />
             <div className="timeInputContainer">
-              <h4>Filtro de Tempo:</h4>
+              <h4>Filtrar Tempo:</h4>
               <TimeInputFilter
                 selectedHour={selectedHour}
                 setSelectedHour={setSelectedHour}
@@ -148,7 +147,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
           <h4 className="mt-5">Histórico de Estados:</h4>
 
           <div className="state-history">
-            {filteredStateHistory.length > 0 ? (
+            {filterData(selectedDate).length > 0 ? (
               <table>
                 <thead>
                   <tr>
@@ -157,7 +156,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredStateHistory.map((state, index) => (
+                  {filterData(selectedDate).map((state, index) => (
                     <tr key={index}>
                       <td>{new Date(state.date).toLocaleString()}</td>
                       <td>
