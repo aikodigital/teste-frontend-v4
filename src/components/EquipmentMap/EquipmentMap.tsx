@@ -18,6 +18,10 @@ const EquipmentMap: React.FC = () => {
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
+  // New state for filters
+  const [selectedStateFilter, setSelectedStateFilter] = useState<string | null>(null);
+  const [selectedModelFilter, setSelectedModelFilter] = useState<string | null>(null);
+
   useEffect(() => {
     const latestPositions = equipmentPositionHistory.map((item: any) => {
       const lastPosition = item.positions[item.positions.length - 1];
@@ -52,6 +56,23 @@ const EquipmentMap: React.FC = () => {
     setModels(modelsMap);
   }, []);
 
+  // Define getCurrentState function here
+  const getCurrentState = (equipmentId: string) => {
+    const history = stateHistory[equipmentId];
+    if (!history || history.length === 0) return null;
+    const latestStateId = history[history.length - 1].equipmentStateId;
+    return equipmentStates[latestStateId];
+  };
+
+  // Filter logic
+  const filteredPositions = positions.filter((pos) => {
+    const equipment = equipmentData.find((eq) => eq.id === pos.id);
+    const currentState = getCurrentState(pos.id);
+    const stateFilterMatch = !selectedStateFilter || currentState?.id === selectedStateFilter;
+    const modelFilterMatch = !selectedModelFilter || equipment?.equipmentModelId === selectedModelFilter;
+    return stateFilterMatch && modelFilterMatch;
+  });
+
   const openModal = (equipmentId: string) => {
     setSelectedEquipmentId(equipmentId);
     setModalIsOpen(true);
@@ -64,8 +85,38 @@ const EquipmentMap: React.FC = () => {
 
   return (
     <div>
+      <div className="filters">
+        <label>
+          Filtrar por Estado:
+          <select
+            value={selectedStateFilter || ""}
+            onChange={(e) => setSelectedStateFilter(e.target.value || null)}
+          >
+            <option value="">Todos</option>
+            {Object.values(equipmentStates).map((state) => (
+              <option key={state.id} value={state.id}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Filtrar por Modelo:
+          <select
+            value={selectedModelFilter || ""}
+            onChange={(e) => setSelectedModelFilter(e.target.value || null)}
+          >
+            <option value="">Todos</option>
+            {Object.values(models).map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <MapComponent
-        positions={positions}
+        positions={filteredPositions}
         equipmentData={equipmentData}
         equipmentStates={equipmentStates}
         stateHistory={stateHistory}
