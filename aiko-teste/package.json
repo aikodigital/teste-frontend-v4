@@ -1,0 +1,37 @@
+{
+  "name": "aiko-teste",
+  "version": "0.0.1",
+  "description": "teste frontend dda aiko",
+  "productName": "aiko-teste-larissa-souza",
+  "author": "Larissa Souza",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.vue ./",
+    "format": "prettier --write \"**/*.{js,vue,css,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
+    "build": "quasar build"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.4",
+    "leaflet": "^1.9.4",
+    "quasar": "^2.16.0",
+    "vue": "^3.4.18",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.9.0",
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "postcss": "^8.4.14",
+    "prettier": "^2.5.1",
+    "vite-plugin-checker": "^0.7.1"
+  },
+  "engines": {
+    "node": "^20 || ^18 || ^16",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
