@@ -123,24 +123,27 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
             ))}
           </select>
 
-          <h4>Filtro de Data:</h4>
-
-          <input
-            type="text"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="date-filter"
-            placeholder="Data (dd/mm/yyyy)"
-          />
-
-          <h4>Filtro de Tempo:</h4>
-
-          <TimeInputFilter
-            selectedHour={selectedHour}
-            setSelectedHour={setSelectedHour}
-            selectedAmPm={selectedAmPm}
-            setSelectedAmPm={setSelectedAmPm}
-          />
+          <div className="timeAndDateInputs">
+            <div className="dateInputContainer">
+              <h4>Filtro de Data:</h4>
+              <input
+                type="text"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="date-filter"
+                placeholder="Data (dd/mm/yyyy)"
+              />
+            </div>
+            <div className="timeInputContainer">
+              <h4>Filtro de Tempo:</h4>
+              <TimeInputFilter
+                selectedHour={selectedHour}
+                setSelectedHour={setSelectedHour}
+                selectedAmPm={selectedAmPm}
+                setSelectedAmPm={setSelectedAmPm}
+              />
+            </div>
+          </div>
 
           <h4 className="mt-5">Histórico de Estados:</h4>
 

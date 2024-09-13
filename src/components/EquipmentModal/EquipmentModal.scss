@@ -104,6 +104,20 @@ p {
   background-color: #fff;
 }
 
+.timeAndDateInputs{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.timeInputContainer
+.dateInputContainer
+{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
 .time-input {
   display: flex;
   justify-content: space-between;
