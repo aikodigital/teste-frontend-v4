@@ -12,12 +12,14 @@ header {
     justify-content: center;
     padding: 1rem 0 1rem 3rem;
   }
+
   nav {
     display: flex;
     justify-content: center;
     font-family: 'roboto', 'sans-serif';
     font-weight: 600;
     padding-bottom: 2rem;
+
     ul {
       display: flex;
       flex-direction: row;
@@ -25,8 +27,10 @@ header {
       align-items: flex-end;
       list-style: none;
       gap: 4rem;
+
       li {
         padding-bottom: 0.5rem;
+
         a {
           text-decoration: none;
         }
@@ -38,21 +42,39 @@ header {
 
 
 section {
-  display: flex;
-  justify-content: center;
+  .container {
+    background-color: rgb(34, 17, 22);
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
 
-  h1 {
-    font-size: 32px;
-  }
+    .text-box {
+      width: 50%;
+      padding: 1rem;
+      h1 {
+        font-size: 32px;
+      }
 
-  p {
-    font-size: 18px;
+      p {
+        font-size: 18px;
+      }
+    }
+    #map {
+      width: 50%;
+      height: 500px;
+      padding: 1rem;
+    }
   }
 }
+
 
 
 footer {
   display: flex;
   justify-content: center;
   background-color: rgb(66, 66, 66);
+  margin-top: 2rem;
 }
