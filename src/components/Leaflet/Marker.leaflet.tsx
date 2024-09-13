@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'leaflet';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import PopupLeaflet from './Popup.leaflet';
 
 function MarkerLeaflet() {
