@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.leaflet-container {
+  height: 50vh;
+  width: 80vw;
+}
