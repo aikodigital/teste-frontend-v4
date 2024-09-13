@@ -1,5 +1,5 @@
 import React from 'react';
-import EquipmentMap from './components/EquipmentMap';
+import EquipmentMap from './components/EquipmentMap/EquipmentMap';
 import './styles/globals.scss';
 
 const App: React.FC = () => {
