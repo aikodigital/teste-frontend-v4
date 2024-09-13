@@ -16,39 +16,19 @@ import {
   ResetButton,
 } from "@/styles/views/homeMap";
 import "ol/ol.css";
+import {
+  Equipment,
+  EquipmentPositionHistory,
+  EquipmentStateHistory,
+  Position,
+  StateHistory,
+} from "@/app/interfaces";
 
 import equipment from "../../../public/data/equipment.json";
 import equipmentPositionHistory from "../../../public/data/equipmentPositionHistory.json";
 import equipmentModel from "../../../public/data/equipmentModel.json";
 import equipmentState from "../../../public/data/equipmentState.json";
 import equipmentStateHistory from "../../../public/data/equipmentStateHistory.json";
-
-interface Equipment {
-  id: string;
-  name: string;
-  equipmentModelId: string;
-}
-
-interface Position {
-  lon: number;
-  lat: number;
-  date: string;
-}
-
-interface EquipmentPositionHistory {
-  equipmentId: string;
-  positions: Position[];
-}
-
-interface StateHistory {
-  date: string;
-  equipmentStateId: string;
-}
-
-interface EquipmentStateHistory {
-  equipmentId: string;
-  states: StateHistory[];
-}
 
 export default function HomeMap() {
   const mapElement = useRef<HTMLDivElement | null>(null);
@@ -60,6 +40,28 @@ export default function HomeMap() {
   const vectorSource = useRef(new VectorSource()).current;
   const historyVectorSource = useRef(new VectorSource()).current;
   const routeVectorSource = useRef(new VectorSource()).current;
+
+  const uniqueModels = Array.from(
+    new Set(equipmentModel.map((model) => model.id))
+  );
+
+  const modelColorMap: { [key: string]: string } = {};
+  const colors = [
+    "#FF0000",
+    "#00FF00",
+    "#0000FF",
+    "#FFFF00",
+    "#FF00FF",
+    "#00FFFF",
+    "#800080",
+    "#FFA500",
+    "#008000",
+    "#000080",
+  ];
+
+  uniqueModels.forEach((modelId, index) => {
+    modelColorMap[modelId] = colors[index % colors.length];
+  });
 
   const getLastPosition = (positions: Position[]) => {
     return positions.reduce((last, current) =>
@@ -75,6 +77,7 @@ export default function HomeMap() {
 
   const renderInitialPins = () => {
     vectorSource.clear();
+
     equipment.forEach((equip: Equipment) => {
       const equipPositions = equipmentPositionHistory.find(
         (pos: EquipmentPositionHistory) => pos.equipmentId === equip.id
@@ -95,20 +98,31 @@ export default function HomeMap() {
           (state) => state.id === lastState.equipmentStateId
         );
 
+        const equipColor =
+          equipModel && modelColorMap[equipModel.id]
+            ? modelColorMap[equipModel.id]
+            : "#1d4692";
+
         const feature = new Feature({
           geometry: new Point(fromLonLat([lastPosition.lon, lastPosition.lat])),
           equipmentName: equip.name,
-          modelName: equipModel ? equipModel.name : "Unknown Model",
-          stateName: equipState ? equipState.name : "Unknown State",
+          modelName: equipModel ? equipModel.name : "Modelo Desconhecido",
+          stateName: equipState ? equipState.name : "Estado Desconhecido",
           id: equip.id,
+          type: "equipment",
         });
+
+        const svgIcon = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="${equipColor}">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        `;
 
         feature.setStyle(
           new Style({
             image: new Icon({
-              src: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-              scale: 0.05,
-              color: "#000000",
+              src: "data:image/svg+xml;utf8," + encodeURIComponent(svgIcon),
+              scale: 1,
             }),
           })
         );
@@ -129,39 +143,53 @@ export default function HomeMap() {
     routeVectorSource.clear();
 
     positions.forEach((pos, index) => {
+      const relatedEquipment = equipment.find(
+        (e) => e.id === selectedEquipmentId
+      );
+      const relatedModel = equipmentModel.find(
+        (model) => model.id === relatedEquipment?.equipmentModelId
+      );
+
+      const stateHistory = equipmentStateHistory.find(
+        (history) => history.equipmentId === selectedEquipmentId
+      )?.states;
+
+      const nearestState = stateHistory
+        ?.filter((st) => new Date(st.date) <= new Date(pos.date))
+        .sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0];
+
+      const relatedState = equipmentState.find(
+        (state) => state.id === nearestState?.equipmentStateId
+      );
+
+      const equipColor =
+        relatedModel && modelColorMap[relatedModel.id]
+          ? modelColorMap[relatedModel.id]
+          : "#1d4692";
+
+      const svgIcon = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="${equipColor}">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+    `;
+
       const feature = new Feature({
         geometry: new Point(fromLonLat([pos.lon, pos.lat])),
         isHistory: true,
-        equipmentName: selectedEquipmentId
-          ? equipment.find((e) => e.id === selectedEquipmentId)?.name ||
-            "Unknown"
-          : "Unknown",
-        modelName: selectedEquipmentId
-          ? equipmentModel.find(
-              (model) =>
-                model.id ===
-                equipment.find((e) => e.id === selectedEquipmentId)
-                  ?.equipmentModelId
-            )?.name || "Unknown Model"
-          : "Unknown Model",
-        stateName: selectedEquipmentId
-          ? equipmentState.find(
-              (state) =>
-                state.id ===
-                getLastState(
-                  equipmentStateHistory.find(
-                    (e) => e.equipmentId === selectedEquipmentId
-                  )?.states || []
-                )?.equipmentStateId
-            )?.name || "Unknown State"
-          : "Unknown State",
+        equipmentName: relatedEquipment?.name || "Equipamento Desconhecido",
+        modelName: relatedModel ? relatedModel.name : "Modelo Desconhecido",
+        stateName: relatedState ? relatedState.name : "Estado Desconhecido",
+        date: pos.date,
+        type: "history",
       });
 
       feature.setStyle(
         new Style({
           image: new Icon({
-            src: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-            scale: 0.05,
+            src: "data:image/svg+xml;utf8," + encodeURIComponent(svgIcon),
+            scale: 1,
           }),
           text: new Text({
             text: `${index + 1}`,
@@ -178,12 +206,13 @@ export default function HomeMap() {
     const coordinates = positions.map((pos) => fromLonLat([pos.lon, pos.lat]));
     const routeFeature = new Feature({
       geometry: new LineString(coordinates),
+      type: "route",
     });
     routeFeature.setStyle(
       new Style({
         stroke: new Stroke({
-          color: "#FF0000",
-          width: 2,
+          color: "#1D4692",
+          width: 1,
         }),
       })
     );
@@ -208,8 +237,7 @@ export default function HomeMap() {
   };
 
   useEffect(() => {
-    if (mapElement.current && !mapRef.current) {
-      // Inicializa o mapa
+    if (!mapRef.current && mapElement.current) {
       mapRef.current = new Map({
         target: mapElement.current,
         layers: [
@@ -225,10 +253,10 @@ export default function HomeMap() {
 
       renderInitialPins();
 
-      if (tooltipElement.current) {
+      if (mapRef.current) {
         const tooltip = new Overlay({
-          element: tooltipElement.current,
-          offset: [10, 0],
+          element: tooltipElement.current!,
+          offset: [15, 0],
           positioning: "center-left",
         });
         mapRef.current.addOverlay(tooltip);
@@ -238,14 +266,15 @@ export default function HomeMap() {
             event.pixel,
             (feat) => feat
           );
-          if (feature) {
+
+          if (feature && feature.get("type") === "equipment") {
             const coordinates = (
               feature.getGeometry() as Point
             ).getCoordinates();
             tooltip.setPosition(coordinates);
             tooltipElement.current!.innerHTML = `
               Equipamento: ${feature.get("equipmentName")}<br>
-              Nome: ${feature.get("modelName")}<br>
+              Modelo: ${feature.get("modelName")}<br>
               Estado: ${feature.get("stateName")}
             `;
             tooltipElement.current!.style.display = "block";
@@ -259,7 +288,8 @@ export default function HomeMap() {
             event.pixel,
             (feat) => feat
           );
-          if (feature) {
+
+          if (feature && feature.get("type") === "equipment") {
             const equipmentId = feature.get("id");
             const equipPositions = equipmentPositionHistory.find(
               (pos: EquipmentPositionHistory) => pos.equipmentId === equipmentId

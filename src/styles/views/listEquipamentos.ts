@@ -20,6 +20,55 @@ export const Title = styled.h1`
   font-family: ${montserrat.style.fontFamily};
 `;
 
+export const SelectContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 1rem;
+  flex: 1;
+
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+    background-color: #1d4692;
+    font-family: ${montserrat.style.fontFamily};
+    flex: 1;
+  }
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 1rem;
+  flex: 1;
+
+  input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+    font-family: ${montserrat.style.fontFamily};
+    color: white;
+    background-color: #1d4692;
+
+    &::placeholder {
+      color: white;
+    }
+  }
+`;
+
+export const FiltersContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 1rem;
+`;
+
 export const EquipList = styled.ul`
   list-style: none;
   padding: 0;

@@ -12,21 +12,32 @@ import {
   EquipDetails,
   HistorySection,
   HistoryItem,
+  SelectContainer,
+  SearchContainer,
+  FiltersContainer,
 } from "@/styles/views/listEquipamentos";
-
-interface Equipment {
-  id: string;
-  name: string;
-  equipmentModelId: string;
-}
 
 export default function ListEquipamentos() {
   const [activeEquipmentId, setActiveEquipmentId] = useState<string | null>(
     null
   );
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(
+    null
+  );
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleClick = (id: string) => {
     setActiveEquipmentId(activeEquipmentId === id ? null : id);
+  };
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedEquipmentId(event.target.value || null);
+    setActiveEquipmentId(null);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    setSelectedEquipmentId(null);
   };
 
   const getHistory = (equipmentId: string) => {
@@ -68,11 +79,44 @@ export default function ListEquipamentos() {
     return history;
   };
 
+  const filteredEquipment = equipment
+    .filter((equip) =>
+      equip.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((equip) =>
+      selectedEquipmentId ? equip.id === selectedEquipmentId : true
+    );
+
   return (
     <MainContainer>
       <Title>Lista de Equipamentos</Title>
+      <FiltersContainer>
+        <SearchContainer>
+          <input
+            type="text"
+            placeholder="Pesquisar por nome do equipamento"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </SearchContainer>
+
+        <SelectContainer>
+          <select
+            onChange={handleSelectChange}
+            value={selectedEquipmentId || ""}
+          >
+            <option value="">Todos os Equipamentos</option>
+            {equipment.map((equip) => (
+              <option key={equip.id} value={equip.id}>
+                {equip.name}
+              </option>
+            ))}
+          </select>
+        </SelectContainer>
+      </FiltersContainer>
+
       <EquipList>
-        {equipment.map((equip) => (
+        {filteredEquipment.map((equip) => (
           <EquipItem key={equip.id} onClick={() => handleClick(equip.id)}>
             <EquipName>{equip.name}</EquipName>
             <EquipDetails>
