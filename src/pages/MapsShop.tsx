@@ -173,7 +173,7 @@ export const MapsShop: React.FC = () => {
                 icon={createIcon(location.stateColor)}
               >
                 <Popup>
-                  <div className="tw-w-80 tw-max-h-80 tw-overflow-auto tw-p-2 tw-bg-white tw-rounded-lg ">
+                  <div className="tw-w-80 tw-max-h-80 tw-overflow-auto tw-p-2 tw-bg-white tw-rounded-lg tw-flex tw-flex-col">
                     <span className="tw-font-semibold tw-text-lg tw-text-operacao-gray-color-100">
                       {location.nameEquipamento}
                     </span>
