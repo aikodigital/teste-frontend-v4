@@ -56,16 +56,17 @@ p {
 
 .state-history {
   margin-top: 20px;
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-
+    
     th, td {
       padding: 12px;
       text-align: left;
       border-bottom: 1px solid #ddd;
+      font-size: 14px; // Menor fonte para dados da tabela
     }
 
     th {
@@ -80,6 +81,49 @@ p {
     tr:hover {
       background-color: #eaeaea;
     }
+  }
+}
+
+.select-filter,
+.date-filter,
+.time-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.select-filter {
+  background-color: #f9f9f9;
+}
+
+.date-filter {
+  background-color: #fff;
+}
+
+.time-input {
+  display: flex;
+  justify-content: space-between;
+  
+  .time-hour,
+  .time-minute {
+    width: calc(50% - 5px); // Espaçamento entre os inputs
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .time-am-pm {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 5px;
   }
 }
 

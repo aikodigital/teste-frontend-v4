@@ -1,6 +1,7 @@
 import React from 'react';
 import EquipmentMap from './components/EquipmentMap/EquipmentMap';
 import './styles/globals.scss';
+import './styles/tailwind.css'
 
 const App: React.FC = () => {
   return (
