@@ -54,23 +54,6 @@ export const DrawerProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <Box mb={4}>
-                            <Text fontWeight="bold">Última atualização:</Text>
-                            <Text>
-                                {selectedEquipment?.date
-                                    ? format(new Date(selectedEquipment.date), 'dd/MM/yyy hh:mm')
-                                    : 'Data não disponível'
-                                }
-                            </Text>
-                        </Box>
-                        <Box mb={4}>
-                            <Text fontWeight="bold">Estado:</Text>
-                            <Text>{selectedEquipment?.stateName}</Text>
-                        </Box>
-                        <Box mb={4}>
-                            <Text fontWeight="bold">Modelo:</Text>
-                            <Text>{selectedEquipment?.modelName}</Text>
-                        </Box>
                         <Box>
                             <Text fontSize="lg" fontWeight="bold" mb={2}>Histórico de Estados:</Text>
                             {stateHistory.length > 0 ? (

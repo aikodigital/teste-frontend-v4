@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getEquipmentPositions, getImageByModel } from '../utils/equipmentData';
 import { EquipmentPosition } from '../types/equipmentTypes';
@@ -55,10 +55,10 @@ export const Map = () => {
                         icon={createCustomIcon(equipment.modelName, equipment.stateColor)}
                     >
                         <Popup>
-                            <strong>Equipamento:</strong> {equipment.equipmentName}<br />
-                            <strong>Modelo:</strong> {equipment.modelName}<br />
-                            <strong>Estado:</strong> {equipment.stateName}<br />
-                            <strong>Última atualização:</strong> {format(new Date(equipment.date), 'dd/MM/yyyy hh:mm')}
+                            <Text fontSize='2xl' as='b'>{equipment.equipmentName}</Text><br /><br />
+                            <Text fontSize='lg' as='b'>{equipment.modelName}</Text><br /><br />
+                            <Text fontSize='md' as='b'>{equipment.stateName}</Text><br /><br />
+                            <Text fontSize='md' as='b'>{format(new Date(equipment.date), 'dd/MM/yyyy hh:mm')}</Text><br />
                             <Button mt={2} colorScheme='teal' onClick={() => handleOpenDrawer(equipment)}>
                                 Ver Histórico
                             </Button>
