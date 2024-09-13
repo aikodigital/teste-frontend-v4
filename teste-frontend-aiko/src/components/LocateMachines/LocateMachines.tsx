@@ -117,7 +117,7 @@ export const LocateMachines = () => {
   }, []);
 
   return (
-    <div style={{ height: "80vh", width: "50%" }}>
+    <div style={{ height: "80vh", width: "100%" }}>
       <MapContainer
         center={defaultCenter}
         zoom={defaultZoom}
@@ -129,8 +129,6 @@ export const LocateMachines = () => {
             <Popup>
               <br />
               Nome da maquina: {machine.modelName}
-              <br />
-              Máquina ID: {machine.id}
               <br />
               Estado:{" "}
               <span style={{ color: machine.stateColor }}>
