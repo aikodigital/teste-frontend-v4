@@ -1,0 +1,24 @@
+.custom-icon {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: #000; /* Default color, will be overridden by inline style */
+}
+
+.leaflet-popup-content-wrapper {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content {
+  padding: 10px;
+}
