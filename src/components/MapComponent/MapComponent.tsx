@@ -1,4 +1,3 @@
-// MapComponent.tsx
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -37,7 +36,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
     <MapContainer
       center={[-19.126536, -45.947756]}
       zoom={10}
-      style={{ height: "500px", width: "100%" }}
+      style={{ height: "500px", width: "50vw" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -67,7 +66,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                   </p>
                 )}
                 <button onClick={(e) => {
-                  e.stopPropagation(); // Prevents the marker click event
+                  e.stopPropagation();
                   onMarkerClick(pos.id);
                 }}>
                   Ver Detalhes

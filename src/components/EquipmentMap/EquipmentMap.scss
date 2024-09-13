@@ -23,6 +23,13 @@
   padding: 10px;
 }
 
+.mapContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .filters {
   display: flex;
   width: fit-content;

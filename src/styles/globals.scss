@@ -5,6 +5,10 @@ body {
   
   .app-container {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
   .leaflet-container {

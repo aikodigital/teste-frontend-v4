@@ -1,4 +1,3 @@
-// EquipmentMap.tsx
 import React, { useState, useEffect } from "react";
 import MapComponent from "../MapComponent/MapComponent";
 import EquipmentModal from "../EquipmentModal/EquipmentModal";
@@ -18,7 +17,6 @@ const EquipmentMap: React.FC = () => {
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-  // New state for filters
   const [selectedStateFilter, setSelectedStateFilter] = useState<string | null>(null);
   const [selectedModelFilter, setSelectedModelFilter] = useState<string | null>(null);
 
@@ -56,7 +54,6 @@ const EquipmentMap: React.FC = () => {
     setModels(modelsMap);
   }, []);
 
-  // Define getCurrentState function here
   const getCurrentState = (equipmentId: string) => {
     const history = stateHistory[equipmentId];
     if (!history || history.length === 0) return null;
@@ -64,7 +61,6 @@ const EquipmentMap: React.FC = () => {
     return equipmentStates[latestStateId];
   };
 
-  // Filter logic
   const filteredPositions = positions.filter((pos) => {
     const equipment = equipmentData.find((eq) => eq.id === pos.id);
     const currentState = getCurrentState(pos.id);
@@ -84,7 +80,7 @@ const EquipmentMap: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="mapContainer">
       <div className="filters">
         <label>
           Filtrar por Estado:
