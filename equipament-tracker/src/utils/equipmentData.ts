@@ -1,7 +1,7 @@
 import equipmentData from '../data/equipment.json';
 import positionData from '../data/equipmentPositionHistory.json';
-import equipmentStates from '../data/equipmentState.json'; // Corrigido para o arquivo correto
-import equipmentModels from '../data/equipmentModel.json'; // Correto
+import equipmentStates from '../data/equipmentState.json';
+import equipmentModels from '../data/equipmentModel.json';
 import stateData from '../data/equipmentStateHistory.json'
 import { EquipmentPosition } from '../types/equipmentTypes';
 
@@ -43,7 +43,7 @@ export const getEquipmentPositions = async (): Promise<EquipmentPosition[]> => {
 
 interface StateInfo {
     date: string;
-    state: string; // Nome do estado
+    state: string;
 }
 
 // Função para obter o histórico de estados para um equipamento específico
@@ -52,7 +52,7 @@ export const getEquipmentStateHistory = (equipmentId: string): StateInfo[] => {
     const stateHistory = stateData.find((item: any) => item.equipmentId === equipmentId);
 
     if (!stateHistory) {
-        return []; // Retorna um array vazio se o histórico não for encontrado
+        return [];
     }
 
     // Mapeia os estados no histórico para incluir o nome do estado
@@ -61,7 +61,7 @@ export const getEquipmentStateHistory = (equipmentId: string): StateInfo[] => {
 
         return {
             date: stateEntry.date,
-            state: stateInfo ? stateInfo.name : 'Desconhecido', // Obtém o nome do estado ou 'Desconhecido'
+            state: stateInfo ? stateInfo.name : 'Desconhecido', 
         };
     });
 };
@@ -69,12 +69,12 @@ export const getEquipmentStateHistory = (equipmentId: string): StateInfo[] => {
 export const getImageByModel = (modelName: string): string => {
     switch (modelName) {
         case 'Caminhão de carga':
-            return '../assets/images/caminhao.jpg'; // Caminho para a imagem do caminhão
-        case 'Garra ':
-            return '../assets/images/garra.png'; // Caminho para a imagem da garra
+            return 'img/caminhao.jpg';
+        case 'Garra traçadora':
+            return 'img/garra.png';
         case 'Harvester':
-            return '../assets/images/harvester.png'; // Caminho para a imagem do harvester
+            return 'img/harvester.png'; 
         default:
-            return '../assets/images/default.png'; // Imagem padrão, se o modelo não corresponder
+            return 'img/default.png'; 
     }
 };

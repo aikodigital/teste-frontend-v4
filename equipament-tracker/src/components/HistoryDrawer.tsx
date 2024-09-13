@@ -1,10 +1,8 @@
-// context/DrawerContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { EquipmentPosition } from '../types/equipmentTypes';
 import { Button, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody, DrawerFooter, Box, Text, List, ListItem } from '@chakra-ui/react';
 import { getEquipmentStateHistory } from '../utils/equipmentData';
 import { format } from 'date-fns';
-
 
 interface DrawerContextType {
     isOpen: boolean;

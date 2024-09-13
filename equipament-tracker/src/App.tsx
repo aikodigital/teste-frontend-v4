@@ -3,7 +3,6 @@ import { Map } from "./components/Map"
 import { DrawerProvider } from "./components/HistoryDrawer"
 
 function App() {
-
     return (
         <ChakraProvider>
             <DrawerProvider>

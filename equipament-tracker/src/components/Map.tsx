@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getEquipmentPositions, getImageByModel } from '../utils/equipmentData'; // Função que busca os dados de posição
+import { getEquipmentPositions, getImageByModel } from '../utils/equipmentData';
 import { EquipmentPosition } from '../types/equipmentTypes';
 import L from 'leaflet';
 import { useDrawer } from './HistoryDrawer';
@@ -30,7 +30,7 @@ const createCustomIcon = (modelName: string, stateColor: string) => {
 
 export const Map = () => {
     const [equipmentPositions, setEquipmentPositions] = useState<EquipmentPosition[]>([]);
-    const { onOpen } = useDrawer(); // Desestruture onOpen do contexto
+    const { onOpen } = useDrawer(); 
 
     useEffect(() => {
         const fetchPositions = async () => {
@@ -46,8 +46,6 @@ export const Map = () => {
 
     return (
         <Box h="100vh" w="100%">
-
-
             <MapContainer center={[-19.126536, -45.947756]} zoom={8} style={{ height: '100%', width: '100%' }}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {equipmentPositions.map((equipment) => (
@@ -57,7 +55,7 @@ export const Map = () => {
                         icon={createCustomIcon(equipment.modelName, equipment.stateColor)}
                     >
                         <Popup>
-                            <strong>Nome do Equipamento:</strong> {equipment.equipmentName}<br />
+                            <strong>Equipamento:</strong> {equipment.equipmentName}<br />
                             <strong>Modelo:</strong> {equipment.modelName}<br />
                             <strong>Estado:</strong> {equipment.stateName}<br />
                             <strong>Última atualização:</strong> {format(new Date(equipment.date), 'dd/MM/yyyy hh:mm')}
