@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import LeafletMap from './components/leaflet.map';
+import LeafletMap from './components/Leaflet/Leaflet.map';
 
 function App() {
   return (
