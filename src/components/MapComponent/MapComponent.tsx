@@ -1,3 +1,4 @@
+// MapComponent.tsx
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -50,9 +51,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
           <Marker
             key={pos.id}
             position={[pos.lat, pos.lon]}
-            eventHandlers={{
-              click: () => onMarkerClick(pos.id),
-            }}
             icon={L.divIcon({
               className: "custom-icon",
               html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
@@ -68,6 +66,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
                     Estado atual: {currentState.name}
                   </p>
                 )}
+                <button onClick={(e) => {
+                  e.stopPropagation(); // Prevents the marker click event
+                  onMarkerClick(pos.id);
+                }}>
+                  Ver Detalhes
+                </button>
               </div>
             </Popup>
           </Marker>

@@ -1,3 +1,4 @@
+// EquipmentMap.tsx
 import React, { useState, useEffect } from "react";
 import MapComponent from "../MapComponent/MapComponent";
 import EquipmentModal from "../EquipmentModal/EquipmentModal";
