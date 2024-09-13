@@ -17,7 +17,10 @@ const DateFilter: React.FC<DateFilterProps> = ({
     if (date) {
       const formattedDate = formatDateToMMDDYYYY(date);
       setSelectedDate(formattedDate);
-      filterData(formattedDate); 
+      filterData(formattedDate);
+    } else {
+      setSelectedDate("");
+      filterData("");
     }
   };
 
@@ -28,21 +31,26 @@ const DateFilter: React.FC<DateFilterProps> = ({
     return `${month}/${day}/${year}`;
   };
 
+  const formatDateForPicker = (date: Date | null): Date | null => {
+    return date
+      ? new Date(`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`)
+      : null;
+  };
+
   return (
     <div className="dateInputContainer">
       <h4>Filtrar Data:</h4>
       <DatePicker
-        selected={
-          selectedDate ? new Date(`${selectedDate.split("/").reverse().join("-")}T00:00:00`) : null
-        }
+        selected={formatDateForPicker(selectedDate ? new Date(selectedDate) : null)}
         onChange={handleDateChange}
-        dateFormat="MM/dd/yyyy"
+        dateFormat="MM/dd/yyyy" 
         placeholderText="mm/dd/yyyy"
         className="date-filter"
         showYearDropdown 
         scrollableYearDropdown 
         yearDropdownItemNumber={15} 
         showMonthDropdown
+        isClearable
       />
     </div>
   );

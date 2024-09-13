@@ -45,47 +45,50 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
     : [];
 
   const parseDateString = (dateString: string) => {
-    const [day, month, year] = dateString.split("/").map((part) => parseInt(part, 10));
+    const [month, day, year] = dateString.split("/").map((part) => parseInt(part, 10));
     return { day, month, year };
   };
 
   const matchesHour = (stateDate: Date) => {
-    if (!selectedHour) return true;
+    if (!selectedHour) return true; // Ignora filtro de hora se não houver uma hora selecionada
 
-    let stateHour = stateDate.getHours();
-    let selectedHourNumber = parseInt(selectedHour, 10);
+    const stateHour = stateDate.getHours();
+    const selectedHourNumber = parseInt(selectedHour, 10);
 
-    if (isNaN(selectedHourNumber)) return true;
+    if (isNaN(selectedHourNumber)) return true; // Se a hora selecionada não for válida, ignora o filtro
 
-    if (selectedAmPm === "PM" && selectedHourNumber !== 12) {
-      selectedHourNumber += 12;
+    let adjustedHour = selectedHourNumber;
+    if (selectedAmPm === "PM" && selectedHourNumber < 12) {
+      adjustedHour += 12;
     } else if (selectedAmPm === "AM" && selectedHourNumber === 12) {
-      selectedHourNumber = 0; 
+      adjustedHour = 0;
+    } else if (selectedAmPm === "PM" && selectedHourNumber === 12) {
+      adjustedHour = 12;
     }
 
-    return stateHour === selectedHourNumber;
+    return stateHour === adjustedHour;
   };
 
   const filterData = useCallback((date: string) => {
     const { day, month, year } = parseDateString(date);
-
+  
     return selectedStateHistory.filter((state) => {
       const stateDate = new Date(state.date);
       const stateDay = stateDate.getDate();
-      const stateMonth = stateDate.getMonth() + 1;
+      const stateMonth = stateDate.getMonth() + 1; // getMonth() retorna índice baseado em 0
       const stateYear = stateDate.getFullYear();
-
+  
       const dayMatches = isNaN(day) || stateDay === day;
       const monthMatches = isNaN(month) || stateMonth === month;
       const yearMatches = isNaN(year) || stateYear === year;
-
+  
       const filterByState = selectedStateId
         ? state.equipmentStateId === selectedStateId
         : true;
-
+  
       const filterByDate = dayMatches && monthMatches && yearMatches;
       const filterByHour = matchesHour(stateDate);
-
+  
       return filterByState && filterByDate && filterByHour;
     });
   }, [selectedStateHistory, selectedStateId, selectedHour, selectedAmPm]);
@@ -131,7 +134,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
             <DateFilter
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
-              filterData={filterData}
+              filterData={(date: string) => filterData(date)}
             />
             <div className="timeInputContainer">
               <h4>Filtrar Tempo:</h4>
@@ -152,19 +155,27 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
                 <thead>
                   <tr>
                     <th>Data</th>
+                    <th>Hora</th>
                     <th>Estado</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filterData(selectedDate).map((state, index) => (
-                    <tr key={index}>
-                      <td>{new Date(state.date).toLocaleString()}</td>
-                      <td>
-                        {equipmentStates[state.equipmentStateId]?.name ||
-                          "Desconhecido"}
-                      </td>
-                    </tr>
-                  ))}
+                  {filterData(selectedDate).map((state, index) => {
+                    const stateDate = new Date(state.date);
+                    const formattedDate = stateDate.toLocaleDateString("en-US");
+                    const formattedTime = stateDate.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit', hour12: true });
+                    
+                    return (
+                      <tr key={index}>
+                        <td>{formattedDate}</td>
+                        <td>{formattedTime}</td>
+                        <td>
+                          {equipmentStates[state.equipmentStateId]?.name ||
+                            "Desconhecido"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             ) : (
