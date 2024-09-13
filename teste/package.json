@@ -1,0 +1,33 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint-watch": "onchange \"**/*.ts\" \"**/*.js\" \"**/*.vue\" -- eslint --fix {{changed}}"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^0.5.6",
+    "@nuxtjs/leaflet": "^1.2.2",
+    "@unocss/reset": "^0.62.3",
+    "nuxt": "^3.13.0",
+    "onchange": "^7.1.0",
+    "primevue": "^4.0.5",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@nuxt/eslint-config": "^0.5.6",
+    "@primevue/nuxt-module": "^4.0.5",
+    "@unocss/postcss": "^0.62.3",
+    "eslint": "^9.10.0",
+    "eslint-webpack-plugin": "^4.2.0",
+    "typescript": "^5.5.4",
+    "unocss": "^0.62.3",
+    "vite-plugin-eslint2": "^4.4.0"
+  }
+}
