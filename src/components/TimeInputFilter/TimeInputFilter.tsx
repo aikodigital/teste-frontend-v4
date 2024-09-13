@@ -30,10 +30,6 @@ const TimeInputFilter: React.FC<TimeInputFilterProps> = ({
 
   return (
     <div className={styles.timeFilterContainer}>
-      <div className={styles.title}>
-        <p className='m-0'>Tempo</p>
-      </div>
-      <div className={styles.InputAndSelect}>
         <input
           type="text"
           value={selectedHour}
@@ -50,7 +46,6 @@ const TimeInputFilter: React.FC<TimeInputFilterProps> = ({
           <option value="AM">AM</option>
           <option value="PM">PM</option>
         </select>
-      </div>
     </div>
   );
 };

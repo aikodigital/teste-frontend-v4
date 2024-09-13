@@ -98,12 +98,12 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
       className="modal"
       overlayClassName="overlay"
     >
-      <h2>Detalhes do Equipamento</h2>
+      <h2 className="font-bold text-center mb-5">Detalhes do Equipamento</h2>
       {selectedEquipment && (
         <div>
           <h3>{selectedEquipment.name || "Equipamento Desconhecido"}</h3>
           <p>Modelo: {selectedEquipment.equipmentModelId}</p>
-          <p>
+          <p className="mb-5">
             Estado atual:{" "}
             {getCurrentState(selectedEquipment.id)?.name || "Desconhecido"}
           </p>
