@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,6 +21,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
   models,
   onMarkerClick,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const getCurrentState = (equipmentId: string) => {
     const history = stateHistory[equipmentId];
     if (!history || history.length === 0) return null;
@@ -32,51 +34,67 @@ const MapComponent: React.FC<MapComponentProps> = ({
     return models[modelId]?.name || "Desconhecido";
   };
 
-  return (
-    <MapContainer
-      center={[-19.126536, -45.947756]}
-      zoom={10}
-      style={{ height: "500px", width: "50vw" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
-      {positions.map((pos: Position) => {
-        const currentState = getCurrentState(pos.id);
-        const equipment = equipmentData.find((eq) => eq.id === pos.id);
+  const filteredPositions = positions.filter((pos) => {
+    const equipment = equipmentData.find((eq) => eq.id === pos.id);
+    return equipment?.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
-        return (
-          <Marker
-            key={pos.id}
-            position={[pos.lat, pos.lon]}
-            icon={L.divIcon({
-              className: "custom-icon",
-              html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
-              iconSize: [25, 25],
-            })}
-          >
-            <Popup>
-              <div>
-                <h3>{equipment?.name || "Equipamento Desconhecido"}</h3>
-                <p>Modelo: {getModelName(equipment?.equipmentModelId || "")}</p>
-                {currentState && (
-                  <p style={{ color: currentState.color }}>
-                    Estado atual: {currentState.name}
-                  </p>
-                )}
-                <button onClick={(e) => {
-                  e.stopPropagation();
-                  onMarkerClick(pos.id);
-                }}>
-                  Ver Detalhes
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        );
-      })}
-    </MapContainer>
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Pesquisar Equipamento"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="p-2 border rounded w-full max-w-sm mx-auto mb-4"
+      />
+      <MapContainer
+        center={[-19.126536, -45.947756]}
+        zoom={10}
+        style={{ height: "500px", width: "50vw" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        {filteredPositions.map((pos: Position) => {
+          const currentState = getCurrentState(pos.id);
+          const equipment = equipmentData.find((eq) => eq.id === pos.id);
+
+          return (
+            <Marker
+              key={pos.id}
+              position={[pos.lat, pos.lon]}
+              icon={L.divIcon({
+                className: "custom-icon",
+                html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
+                iconSize: [25, 25],
+              })}
+            >
+              <Popup>
+                <div>
+                  <h3>{equipment?.name || "Equipamento Desconhecido"}</h3>
+                  <p>Modelo: {getModelName(equipment?.equipmentModelId || "")}</p>
+                  {currentState && (
+                    <p style={{ color: currentState.color }}>
+                      Estado atual: {currentState.name}
+                    </p>
+                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onMarkerClick(pos.id);
+                    }}
+                  >
+                    Ver Detalhes
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
+      </MapContainer>
+    </div>
   );
 };
 
