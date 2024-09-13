@@ -67,14 +67,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
               position={[pos.lat, pos.lon]}
               icon={L.divIcon({
                 className: "custom-icon",
-                html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
+                html: `<div style="background-color: ${
+                  currentState?.color || "#000"
+                };" class="icon"></div>`,
                 iconSize: [25, 25],
               })}
             >
               <Popup>
                 <div>
                   <h3>{equipment?.name || "Equipamento Desconhecido"}</h3>
-                  <p>Modelo: {getModelName(equipment?.equipmentModelId || "")}</p>
+                  <p>
+                    Modelo: {getModelName(equipment?.equipmentModelId || "")}
+                  </p>
                   {currentState && (
                     <p style={{ color: currentState.color }}>
                       Estado atual: {currentState.name}
@@ -85,6 +89,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                       e.stopPropagation();
                       onMarkerClick(pos.id);
                     }}
+                    className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300"
                   >
                     Ver Detalhes
                   </button>
