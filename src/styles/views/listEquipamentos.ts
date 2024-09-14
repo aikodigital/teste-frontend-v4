@@ -163,6 +163,7 @@ export const HistoryItem = styled.div`
   font-family: ${montserrat.style.fontFamily};
 
   span {
+    display: flex;
     display: block;
     margin-bottom: 0.25rem;
   }
@@ -176,4 +177,8 @@ export const HistoryDivider = styled.div`
   height: 1px;
   background-color: #ddd;
   margin: 1rem 0;
+`;
+
+export const BoldLabel = styled.span`
+  font-weight: bold;
 `;
