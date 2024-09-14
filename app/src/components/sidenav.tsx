@@ -1,5 +1,4 @@
-import aikoLogo from "../../../img/aiko.png";
-import clsx from "clsx";
+import aikoLogo from "../../img/aiko.png";
 import ThemeSwitch from "./themeSwitcher";
 
 export function SideNav() {

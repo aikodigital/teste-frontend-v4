@@ -1,5 +1,5 @@
 import { useState } from "react";
-import equipamentsJson from "../../data/equipment.json";
+import equipamentsJson from "../data/equipment.json";
 
 function App() {
   const [equipaments, setEquipaments] = useState(equipamentsJson);
