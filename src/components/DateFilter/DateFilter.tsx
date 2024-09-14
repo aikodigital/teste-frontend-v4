@@ -45,7 +45,7 @@ const DateFilter: React.FC<DateFilterProps> = ({
         onChange={handleDateChange}
         dateFormat="MM/dd/yyyy" // Usa o formato correto
         placeholderText="mm/dd/yyyy"
-        className="date-filter"
+        className='date-filter mb-0'
         showYearDropdown
         scrollableYearDropdown
         yearDropdownItemNumber={15}
