@@ -1,28 +1,44 @@
-import { useState } from "react";
-import equipamentsJson from "../data/equipment.json";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { useEffect, useState } from "react";
+
+import { MapComponent } from "./components/map";
+import { fetchEquipments } from "./api/simulatedApi";
+
+interface Equipment {
+  id: string;
+  equipmentModelId: string;
+  name: string;
+}
 
 function App() {
-  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  const [equipaments, setEquipaments] = useState(equipamentsJson);
+  // Here I would use something like TenStack Query if it was an actual api call
+  const [equipments] = useState(() => fetchEquipments());
 
-  console.log(API_KEY);
+  const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
+    null
+  );
+
+  useEffect(() => {
+    console.log(selectedEquipment);
+  }, [selectedEquipment]);
 
   return (
-    <>
-      <APIProvider apiKey={API_KEY}>
-        <Map
-          style={{ width: "100vw", height: "100vh" }}
-          defaultCenter={{ lat: 22.54992, lng: 0 }}
-          defaultZoom={3}
-          gestureHandling={"greedy"}
-          disableDefaultUI={true}
+    <div className="flex flex-col md:flex-row p-2 md:p-8 gap-4 min-h-[60vh]">
+      <div className="md:w-1/2 border-4 border-neutral rounded-md shadow-xl dark:shadow-white/10">
+        <MapComponent
+          selectEquipment={setSelectedEquipment}
+          equipments={equipments}
         />
-      </APIProvider>
-      {equipaments.map((equipament) => (
-        <div key={equipament.id}>{equipament.name}</div>
-      ))}
-    </>
+      </div>
+      <div className="md:w-1/2">
+        <h1 className="text-2xl font-bold">Equipment Info:</h1>
+
+        {!selectedEquipment ? (
+          <p>Por favor selecione um equipamento!</p>
+        ) : (
+          <p>Selecionado: {selectedEquipment.name}</p>
+        )}
+      </div>
+    </div>
   );
 }
 
