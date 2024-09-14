@@ -9,7 +9,7 @@ import { useDrawer } from './HistoryDrawer';
 import { format } from 'date-fns';
 import { getEquipmentTrajectory } from '../utils/filtersData';
 
-// Função para criar um ícone personalizado para o marcador
+// Função para criar um ícone personalizado para a localização atual
 const createCustomIcon = (modelName: string, stateColor: string) => {
     const iconUrl = getImageByModel(modelName);
 

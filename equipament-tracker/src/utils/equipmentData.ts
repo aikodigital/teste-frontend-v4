@@ -48,14 +48,12 @@ interface StateInfo {
 
 // Função para obter o histórico de estados para um equipamento específico
 export const getEquipmentStateHistory = (equipmentId: string): StateInfo[] => {
-    // Encontra o histórico de estados para o equipamento
     const stateHistory = stateData.find((item: any) => item.equipmentId === equipmentId);
 
     if (!stateHistory) {
         return [];
     }
 
-    // Mapeia os estados no histórico para incluir o nome do estado
     return stateHistory.states.map((stateEntry: any) => {
         const stateInfo = equipmentStates.find((state: any) => state.id === stateEntry.equipmentStateId);
 

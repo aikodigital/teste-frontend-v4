@@ -4,7 +4,7 @@ export interface EquipmentPosition {
     lon: number;
     date: string;
     equipmentName: string;
-    stateName: string; // Nome do estado
-    stateColor: string; // Cor do estado
-    modelName: string; // Nome do modelo
+    stateName: string;
+    stateColor: string;
+    modelName: string;
 }
