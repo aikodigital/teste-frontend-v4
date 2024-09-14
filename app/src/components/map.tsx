@@ -6,7 +6,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import { Equipment } from "../interfaces";
 import { fetchOrderedPositions } from "../api/simulatedApi";
-import { useState } from "react";
+import { useThemeStore } from "../store/themeStore";
 
 export const MapComponent = ({
   equipments,
@@ -16,9 +16,7 @@ export const MapComponent = ({
   selectEquipment: (equipment: Equipment) => void;
 }) => {
   const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(
-    document.documentElement.classList.contains("dark")
-  );
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   const getLastPosition = (id: string) => {
     const lastPosition = fetchOrderedPositions(id)[0];
@@ -29,14 +27,11 @@ export const MapComponent = ({
     };
   };
 
-  console.log(equipments);
-
   return (
     <APIProvider apiKey={API_KEY}>
       <Map
         colorScheme={isDarkMode ? "DARK" : "LIGHT"}
         className="w-full h-full"
-        // style={{ width: "full", height: "full" }}
         defaultCenter={getLastPosition(equipments[0].id)}
         defaultZoom={10}
         gestureHandling={"greedy"}
@@ -47,6 +42,7 @@ export const MapComponent = ({
           ? equipments.map((equipment) => {
               return (
                 <AdvancedMarker
+                  key={equipment.id}
                   clickable
                   onClick={() => selectEquipment(equipment)}
                   position={getLastPosition(equipment.id)}
