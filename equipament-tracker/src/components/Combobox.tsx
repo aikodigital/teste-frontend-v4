@@ -1,5 +1,6 @@
-import { Box, Input, List, ListItem, InputGroup } from "@chakra-ui/react";
+import { Box, Input, List, ListItem, InputGroup, IconButton } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { ChevronDownIcon, CloseIcon } from '@chakra-ui/icons';
 
 export const Combobox = ({ placeholder, options, value, onChange }: { placeholder: string; options: string[]; value: string; onChange: (value: string) => void }) => {
     const [inputValue, setInputValue] = useState(value || "");
@@ -23,6 +24,12 @@ export const Combobox = ({ placeholder, options, value, onChange }: { placeholde
         setShowOptions(false);
     };
 
+    const handleClear = () => {
+        setInputValue("");
+        onChange("");
+        setShowOptions(false);
+    };
+
     return (
         <Box position="relative" w="100%" zIndex={1000}>
             <InputGroup>
@@ -33,6 +40,29 @@ export const Combobox = ({ placeholder, options, value, onChange }: { placeholde
                     onClick={() => setShowOptions(true)}
                     onFocus={() => setShowOptions(true)}
                     onBlur={() => setTimeout(() => setShowOptions(false), 100)}
+                />
+                {/* Exibe botão de limpar sempre que expandir */}
+                {inputValue && (
+                    <IconButton
+                        aria-label="Clear"
+                        icon={<CloseIcon />}
+                        onClick={handleClear}
+                        position="absolute"
+                        right="50px"
+                        top="50%"
+                        transform="translateY(-50%)"
+                        size="sm"
+                    />
+                )}
+                <IconButton
+                    aria-label="Expand"
+                    icon={<ChevronDownIcon />}
+                    onClick={() => setShowOptions(prev => !prev)}
+                    position="absolute"
+                    right="10px"
+                    top="50%"
+                    transform="translateY(-50%)"
+                    size="sm"
                 />
             </InputGroup>
             {showOptions && filteredOptions.length > 0 && (

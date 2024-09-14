@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Switch, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Combobox } from "./Combobox"; // Importar o componente Combobox, se estiver em um arquivo separado
 import { getStates, getModels, getEquipment } from '../utils/filtersData';
@@ -7,6 +7,7 @@ export const Filters = ({ onFilterChange }: { onFilterChange: (filters: any) => 
     const [equipmentName, setEquipmentName] = useState("");
     const [state, setState] = useState("");
     const [model, setModel] = useState("");
+    const [showTrajectory, setShowTrajectory] = useState(false)
 
     const [stateOptions, setStateOptions] = useState<string[]>([]);
     const [modelOptions, setModelOptions] = useState<string[]>([]);
@@ -27,31 +28,42 @@ export const Filters = ({ onFilterChange }: { onFilterChange: (filters: any) => 
     }, []);
 
     useEffect(() => {
-        onFilterChange({ equipmentName, state, model });
-    }, [equipmentName, state, model]);
+        onFilterChange({ equipmentName, state, model, showTrajectory });
+    }, [equipmentName, state, model, showTrajectory])
 
     return (
-        <Box display="flex" p={4} gap={4} zIndex={1000}>
-            <Combobox
-                placeholder="Pesquisar por nome"
-                options={equipmentNameOptions}
-                value={equipmentName}
-                onChange={setEquipmentName}
-            />
+        <Box p={4} zIndex={1000} width="100%">
+            <Box display="flex" flexDirection="row" gap={4}>
+                <Combobox
+                    placeholder="Pesquisar por nome"
+                    options={equipmentNameOptions}
+                    value={equipmentName}
+                    onChange={setEquipmentName}
+                />
 
-            <Combobox
-                placeholder="Selecione um Estado"
-                options={stateOptions}
-                value={state}
-                onChange={setState}
-            />
+                <Combobox
+                    placeholder="Selecione um Estado"
+                    options={stateOptions}
+                    value={state}
+                    onChange={setState}
+                />
 
-            <Combobox
-                placeholder="Selecione um Modelo"
-                options={modelOptions}
-                value={model}
-                onChange={setModel}
-            />
+                <Combobox
+                    placeholder="Selecione um Modelo"
+                    options={modelOptions}
+                    value={model}
+                    onChange={setModel}
+                />
+            </Box>
+
+            <Box display="flex" flexDirection='row' alignItems="center" gap={2} mt={4}>
+                <Text>Mostrar Trajeto:</Text>
+                <Switch
+                    isChecked={showTrajectory}
+                    onChange={(e) => setShowTrajectory(e.target.checked)}
+                    isDisabled={!equipmentName} // Disable switch if no equipment name is selected
+                />
+            </Box>
         </Box>
     );
 };
