@@ -1,5 +1,5 @@
 export async function getJsonEntry(json: string, id: string | undefined) {
-  const data: withId<object>[] | null = await useStorage('assets:server').getItem(json)
+  const data: WithId<object>[] | null = await useStorage('assets:server').getItem(json)
 
   if (!data) {
     return { error: 'JSON data not found!' }
