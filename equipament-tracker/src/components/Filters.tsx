@@ -61,7 +61,7 @@ export const Filters = ({ onFilterChange }: { onFilterChange: (filters: any) => 
                 <Switch
                     isChecked={showTrajectory}
                     onChange={(e) => setShowTrajectory(e.target.checked)}
-                    isDisabled={!equipmentName} // Disable switch if no equipment name is selected
+                    isDisabled={!equipmentName}
                 />
             </Box>
         </Box>
