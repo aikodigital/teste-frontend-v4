@@ -36,6 +36,22 @@ const MapComponent: React.FC<MapComponentProps> = ({
     return models[modelId]?.name || "Desconhecido";
   };
 
+  const getIconForModel = (modelId: string) => {
+    const modelColors: Record<string, string> = {
+      "a3540227-2f0e-4362-9517-92f41dabbfdf": "#ff5722",
+      "9c3d009e-0d42-4a6e-9036-193e9bca3199": "#4caf50",
+      "a4b0c114-acd8-4151-9449-7d12ab9bf40f": "#2196f3"
+    };
+
+    const color = modelColors[modelId] || "#000";
+
+    return L.divIcon({
+      className: "custom-icon",
+      html: `<div style="background-color: ${color};" class="icon"></div>`,
+      iconSize: [25, 25],
+    });
+  };
+
   const filteredPositions = positions.filter((pos) => {
     const equipment = equipmentData.find((eq) => eq.id === pos.id);
     return equipment?.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -64,11 +80,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
             <Marker
               key={pos.id}
               position={[pos.lat, pos.lon]}
-              icon={L.divIcon({
-                className: "custom-icon",
-                html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
-                iconSize: [25, 25],
-              })}
+              icon={getIconForModel(equipment?.equipmentModelId || "")}
             >
               <Popup>
                 <div>
@@ -79,7 +91,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                       Estado atual: {currentState.name}
                     </p>
                   )}
-                  <p>Produtividade: {productivity as any  }%</p>
+                  <p>Produtividade: {productivity as any}%</p>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
