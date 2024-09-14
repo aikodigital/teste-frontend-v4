@@ -9,6 +9,9 @@
 
 ## Visão Geral
 
+[![Acessar aplicação](https://github.com/user-attachments/assets/d03abecb-952e-45ed-b820-a50957c8d50e)(https://equipment-tracker.netlify.app/)
+
+
 A aplicação desenvolvida é uma plataforma para um desafio frontend. Ela permite:
 - Exibir no mapa os equipamentos nas suas posições mais recentes.
 - Visualizar o estado mais recente dos equipamentos.
