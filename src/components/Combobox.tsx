@@ -74,7 +74,7 @@ export const Combobox = ({ placeholder, options, value, onChange }: { placeholde
                     border="1px solid"
                     borderColor="gray.300"
                     borderRadius="md"
-                    bg="#1A202C"
+                    bg="white"
                     zIndex={10}
                     maxHeight="200px"
                     overflowY="auto"
@@ -84,7 +84,7 @@ export const Combobox = ({ placeholder, options, value, onChange }: { placeholde
                         <ListItem
                             key={option}
                             p={2}
-                            _hover={{ bg: "#2d3544", cursor: "pointer" }}
+                            _hover={{ bg: "gray.300", cursor: "pointer" }}
                             onClick={() => handleOptionSelect(option)}
                         >
                             {option}
