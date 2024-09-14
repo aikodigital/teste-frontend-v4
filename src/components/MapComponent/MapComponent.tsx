@@ -11,6 +11,7 @@ interface MapComponentProps {
   stateHistory: Record<string, { date: string; equipmentStateId: string }[]>;
   models: Record<string, Model>;
   onMarkerClick: (equipmentId: string) => void;
+  calculateProductivity: (equipmentId: string) => void;
 }
 
 const MapComponent: React.FC<MapComponentProps> = ({
@@ -20,6 +21,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   stateHistory,
   models,
   onMarkerClick,
+  calculateProductivity,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -48,11 +50,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         onChange={(e) => setSearchTerm(e.target.value)}
         className="p-2 border rounded w-full max-w-sm mx-auto mb-4"
       />
-      <MapContainer
-        center={[-19.126536, -45.947756]}
-        zoom={10}
-        style={{ height: "500px", width: "50vw" }}
-      >
+      <MapContainer center={[-19.126536, -45.947756]} zoom={10} style={{ height: "500px", width: "50vw" }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
@@ -60,6 +58,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         {filteredPositions.map((pos: Position) => {
           const currentState = getCurrentState(pos.id);
           const equipment = equipmentData.find((eq) => eq.id === pos.id);
+          const productivity = calculateProductivity(pos.id); // Calcula a produtividade
 
           return (
             <Marker
@@ -67,23 +66,20 @@ const MapComponent: React.FC<MapComponentProps> = ({
               position={[pos.lat, pos.lon]}
               icon={L.divIcon({
                 className: "custom-icon",
-                html: `<div style="background-color: ${
-                  currentState?.color || "#000"
-                };" class="icon"></div>`,
+                html: `<div style="background-color: ${currentState?.color || "#000"};" class="icon"></div>`,
                 iconSize: [25, 25],
               })}
             >
               <Popup>
                 <div>
                   <h3>{equipment?.name || "Equipamento Desconhecido"}</h3>
-                  <p>
-                    Modelo: {getModelName(equipment?.equipmentModelId || "")}
-                  </p>
+                  <p>Modelo: {getModelName(equipment?.equipmentModelId || "")}</p>
                   {currentState && (
                     <p style={{ color: currentState.color }}>
                       Estado atual: {currentState.name}
                     </p>
                   )}
+                  <p>Produtividade: {productivity as any}%</p>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

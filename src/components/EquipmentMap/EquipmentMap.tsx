@@ -69,6 +69,24 @@ const EquipmentMap: React.FC = () => {
     return stateFilterMatch && modelFilterMatch;
   });
 
+  const calculateProductivity = (equipmentId: string) => {
+    const history = stateHistory[equipmentId];
+    if (!history || history.length === 0) return 0;
+  
+    let productiveHours = 0;
+    const totalHours = 24; 
+  
+    history.forEach((stateRecord) => {
+      const state = equipmentStates[stateRecord.equipmentStateId];
+      if (state && state.name === "Operando") {
+        productiveHours += 1;
+      }
+    });
+  
+    const productivity = (productiveHours / totalHours) * 100;
+    return productivity.toFixed(2);
+  };
+
   const openModal = (equipmentId: string) => {
     setSelectedEquipmentId(equipmentId);
     setModalIsOpen(true);
@@ -118,6 +136,7 @@ const EquipmentMap: React.FC = () => {
         stateHistory={stateHistory}
         models={models}
         onMarkerClick={openModal}
+        calculateProductivity={calculateProductivity}
       />
       <EquipmentModal
         isOpen={modalIsOpen}
