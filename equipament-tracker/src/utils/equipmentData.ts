@@ -66,6 +66,7 @@ export const getEquipmentStateHistory = (equipmentId: string): StateInfo[] => {
     });
 };
 
+//Função para obter imagem do modelo
 export const getImageByModel = (modelName: string): string => {
     switch (modelName) {
         case 'Caminhão de carga':
