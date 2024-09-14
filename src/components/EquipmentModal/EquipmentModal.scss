@@ -13,7 +13,7 @@
   overflow: auto; 
   z-index: 1050;
   box-sizing: border-box; 
-  
+
   @media (max-width: 768px) {
     width: 95%;
     height: 90vh;
@@ -111,8 +111,7 @@ p {
 }
 
 .timeInputContainer,
-.dateInputContainer
-{
+.dateInputContainer {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -142,7 +141,9 @@ p {
 }
 
 .close-button {
-  margin-top: 20px;
+  position: absolute;   /* Adiciona o posicionamento absoluto */
+  top: 10px;            /* Posiciona 10px do topo */
+  right: 10px;          /* Posiciona 10px da direita */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
