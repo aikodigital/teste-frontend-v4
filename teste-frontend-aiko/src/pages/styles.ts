@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
 `;
 
 export const Content = styled.div`
@@ -25,6 +25,10 @@ export const SmallerHistory = styled.div`
 `;
 
 export const Title = styled.h1`
-  margin-top: 100px;
-  color: #333;
+  margin: 100px 0 20px 0;
+  color: #003184;
+`;
+
+export const SearchMachine = styled.div`
+  width: 300px;
 `;

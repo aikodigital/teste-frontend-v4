@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: flex-end;
   padding: 20px;
   width: 100%;  
-  position: fixed; 
+  position: absolute;
   top: 0;
   left: 0;
 `;

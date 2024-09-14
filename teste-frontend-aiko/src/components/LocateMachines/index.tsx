@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import {LocalShippingIcon} from '@mui/icons-material/LocalShipping';
+import AgricultureIcon from '@mui/icons-material/Agriculture';
+import L from "leaflet";
 
 interface Position {
   lat: number;
@@ -8,7 +11,7 @@ interface Position {
 }
 
 interface MachineData {
-  equipmentId: number;
+  equipmentId: string;
   positions: Position[];
 }
 
@@ -26,20 +29,46 @@ interface StateInfo {
 interface ModelInfo {
   id: string;
   name: string;
-  hourlyEarnings: { equipmentStateId: string; value: number }[];
 }
 
 interface ProcessedMachine {
-  id: number;
+  id: string;
   lat: number;
   lng: number;
-  name: string;
   stateName: string;
   stateColor: string;
   modelName: string;
 }
 
-export const LocateMachines = () => {
+interface LocateMachinesProps {
+  machineId: string | null;
+}
+
+interface LocateMachinesProps {
+  machineId: string | null; 
+}
+
+const icons = {
+  "tipo1": L.icon({
+    iconUrl: "LocalShippingIcon", 
+    iconSize: [25, 41], 
+    iconAnchor: [12, 41], 
+  }),
+  "tipo2": L.icon({
+    iconUrl: "/path/to/icon2.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+  }),
+  "tipo3": L.icon({
+    iconUrl: "/path/to/icon2.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+  }),
+};
+
+export const LocateMachines = ({ machineId }: LocateMachinesProps) => {
   const [machines, setMachines] = useState<ProcessedMachine[]>([]);
   const defaultCenter = [-19.126536, -45.947756];
   const defaultZoom = 8;
@@ -116,27 +145,30 @@ export const LocateMachines = () => {
     );
   }, []);
 
+
+  const selectedMachine = machines.find(machine => machine.id === machineId);
+
   return (
     <div style={{ height: "80vh", width: "100%" }}>
       <MapContainer
-        center={defaultCenter}
+        center={selectedMachine ? [selectedMachine.lat, selectedMachine.lng] : defaultCenter}
         zoom={defaultZoom}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {machines.map((machine) => (
-          <Marker key={machine.id} position={[machine.lat, machine.lng]}>
+        {selectedMachine && (
+          <Marker key={selectedMachine.id} position={[selectedMachine.lat, selectedMachine.lng]}>
             <Popup>
               <br />
-              Nome da maquina: {machine.modelName}
+              Nome da máquina: {selectedMachine.modelName}
               <br />
-              Estado:{" "}
-              <span style={{ color: machine.stateColor }}>
-                {machine.stateName}
+              Estado atual:{" "}
+              <span style={{ color: selectedMachine.stateColor }}>
+                {selectedMachine.stateName}
               </span>
             </Popup>
           </Marker>
-        ))}
+        )}
       </MapContainer>
     </div>
   );
