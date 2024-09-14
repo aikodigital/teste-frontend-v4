@@ -107,7 +107,7 @@ type FiltersProps = {
 };
 
 const Filters = ({ onStateChange, onModelChange }: FiltersProps) => (
-  <div className="flex-1 gap-4 mb-8">
+  <div className="flex gap-14 mb-20">
     <Select onValueChange={onStateChange}>
       <SelectTrigger className="p-2 border rounded">
         <SelectValue placeholder="Todos os Estados" />
@@ -123,7 +123,7 @@ const Filters = ({ onStateChange, onModelChange }: FiltersProps) => (
       <SelectTrigger className="p-2 border rounded">
         <SelectValue placeholder="Todos os Modelos" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-slate-600">
         <SelectItem value="all">Todos os Modelos</SelectItem>
         {modelsData.map((model: EquipmentModel) => (
           <SelectItem key={model.id} value={model.id}>
