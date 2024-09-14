@@ -27,15 +27,11 @@ const calculateEarnings = (
     return "R$0,00"; 
   }
 
-  console.log("Modelo encontrado:", model);
-
   const history = stateHistory[equipmentId] || [];
   if (history.length === 0) {
     console.warn(`Nenhum histórico de estado encontrado para o equipamento com ID ${equipmentId}.`);
     return "R$0,00";
   }
-
-  console.log("Histórico de estados:", history);
 
   let totalEarnings = 0;
 
@@ -67,7 +63,6 @@ const calculateEarnings = (
 
   const formattedEarnings = formatter.format(totalEarnings);
 
-  console.log(`Ganho total para o equipamento ${equipmentId}:`, formattedEarnings);
   return formattedEarnings;
 };
 
