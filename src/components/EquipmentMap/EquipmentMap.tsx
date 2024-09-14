@@ -9,10 +9,73 @@ import equipmentModel from "../../../data/equipmentModel.json";
 import "./EquipmentMap.scss";
 import { Model, Position, State } from "../../types/Equipment";
 
+const calculateEarnings = (
+  equipmentId: string,
+  stateHistory: Record<string, { date: string; equipmentStateId: string }[]>,
+  models: Record<string, { hourlyEarnings: { equipmentStateId: string; value: number }[] }>
+) => {
+  const equipment = equipmentData.find(equip => equip.id === equipmentId);
+  
+  if (!equipment) {
+    console.error(`Equipamento com ID ${equipmentId} não encontrado.`);
+    return "R$0,00"; 
+  }
+
+  const model = models[equipment.equipmentModelId];
+  if (!model) {
+    console.error(`Modelo de equipamento com ID ${equipment.equipmentModelId} não encontrado.`);
+    return "R$0,00"; 
+  }
+
+  console.log("Modelo encontrado:", model);
+
+  const history = stateHistory[equipmentId] || [];
+  if (history.length === 0) {
+    console.warn(`Nenhum histórico de estado encontrado para o equipamento com ID ${equipmentId}.`);
+    return "R$0,00";
+  }
+
+  console.log("Histórico de estados:", history);
+
+  let totalEarnings = 0;
+
+  for (let i = 0; i < history.length - 1; i++) {
+    const currentState = history[i];
+    const nextState = history[i + 1];
+
+    const startDate = new Date(currentState.date);
+    const endDate = new Date(nextState.date);
+    const hours = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
+
+    const hourlyRate = model.hourlyEarnings.find(earning => earning.equipmentStateId === currentState.equipmentStateId)?.value;
+
+    if (hourlyRate === undefined) {
+      console.error(`Valor por hora para o estado ${currentState.equipmentStateId} não encontrado no modelo.`);
+      continue; 
+    }
+
+    const stateEarnings = hourlyRate * hours;
+    totalEarnings += stateEarnings;
+  }
+
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const formattedEarnings = formatter.format(totalEarnings);
+
+  console.log(`Ganho total para o equipamento ${equipmentId}:`, formattedEarnings);
+  return formattedEarnings;
+};
+
+
 const EquipmentMap: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
   const [equipmentStates, setEquipmentStates] = useState<Record<string, State>>({});
-  const [stateHistory, setStateHistory] = useState<Record<string, { date: string; equipmentStateId: string }[]>>({});
+  const [stateHistory, setStateHistory] = useState<Record<string, { date: string; equipmentStateId: string; hours: number }[]>>({});
   const [models, setModels] = useState<Record<string, Model>>({});
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -39,7 +102,7 @@ const EquipmentMap: React.FC = () => {
     setEquipmentStates(statesMap);
 
     const stateHistoryMap = equipmentStateHistory.reduce(
-      (acc: Record<string, { date: string; equipmentStateId: string }[]>, history: any) => {
+      (acc: Record<string, { date: string; equipmentStateId: string; hours: number }[]>, history: any) => {
         acc[history.equipmentId] = history.states;
         return acc;
       },
@@ -72,17 +135,17 @@ const EquipmentMap: React.FC = () => {
   const calculateProductivity = (equipmentId: string) => {
     const history = stateHistory[equipmentId];
     if (!history || history.length === 0) return 0;
-  
+
     let productiveHours = 0;
     const totalHours = 24; 
-  
+
     history.forEach((stateRecord) => {
       const state = equipmentStates[stateRecord.equipmentStateId];
       if (state && state.name === "Operando") {
         productiveHours += 1;
       }
     });
-  
+
     const productivity = (productiveHours / totalHours) * 100;
     return productivity.toFixed(2);
   };
@@ -96,6 +159,8 @@ const EquipmentMap: React.FC = () => {
     setModalIsOpen(false);
     setSelectedEquipmentId(null);
   };
+
+  const earnings = selectedEquipmentId ? calculateEarnings(selectedEquipmentId, stateHistory, models) : 0;
 
   return (
     <div className="mapContainer">
@@ -145,6 +210,7 @@ const EquipmentMap: React.FC = () => {
         equipmentData={equipmentData}
         equipmentStates={equipmentStates}
         stateHistory={stateHistory}
+        earnings={earnings}
       />
     </div>
   );

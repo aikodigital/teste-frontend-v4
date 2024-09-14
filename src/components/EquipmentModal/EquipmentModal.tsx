@@ -14,6 +14,7 @@ interface EquipmentModalProps {
   equipmentData: Equipment[];
   equipmentStates: Record<string, State>;
   stateHistory: Record<string, { date: string; equipmentStateId: string }[]>;
+  earnings: string | number;
 }
 
 const EquipmentModal: React.FC<EquipmentModalProps> = ({
@@ -23,6 +24,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
   equipmentData,
   equipmentStates,
   stateHistory,
+  earnings
 }) => {
   const [selectedStateId, setSelectedStateId] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -50,12 +52,12 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
   };
 
   const matchesHour = (stateDate: Date) => {
-    if (!selectedHour) return true; // Ignora filtro de hora se não houver uma hora selecionada
+    if (!selectedHour) return true; 
 
     const stateHour = stateDate.getHours();
     const selectedHourNumber = parseInt(selectedHour, 10);
 
-    if (isNaN(selectedHourNumber)) return true; // Se a hora selecionada não for válida, ignora o filtro
+    if (isNaN(selectedHourNumber)) return true; 
 
     let adjustedHour = selectedHourNumber;
     if (selectedAmPm === "PM" && selectedHourNumber < 12) {
@@ -75,7 +77,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
     return selectedStateHistory.filter((state) => {
       const stateDate = new Date(state.date);
       const stateDay = stateDate.getDate();
-      const stateMonth = stateDate.getMonth() + 1; // getMonth() retorna índice baseado em 0
+      const stateMonth = stateDate.getMonth() + 1;
       const stateYear = stateDate.getFullYear();
   
       const dayMatches = isNaN(day) || stateDay === day;
@@ -110,12 +112,12 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
         <div>
           <h3>{selectedEquipment.name || "Equipamento Desconhecido"}</h3>
           <p>Modelo: {selectedEquipment.equipmentModelId}</p>
-          <p className="mb-5">
+          <p>
             Estado atual:{" "}
             {getCurrentState(selectedEquipment.id)?.name || "Desconhecido"}
           </p>
-
-          <h4>Filtrar Estado:</h4>
+          <p>Ganho Total: {earnings}</p>
+          <h4 className="mt-5">Filtrar Estado:</h4>
 
           <select
             value={selectedStateId}

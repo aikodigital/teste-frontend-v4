@@ -43,7 +43,7 @@ const DateFilter: React.FC<DateFilterProps> = ({
       <DatePicker
         selected={formatDateForPicker(selectedDate ? new Date(selectedDate) : null)}
         onChange={handleDateChange}
-        dateFormat="MM/dd/yyyy" // Usa o formato correto
+        dateFormat="MM/dd/yyyy"
         placeholderText="mm/dd/yyyy"
         className='date-filter mb-0'
         showYearDropdown

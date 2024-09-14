@@ -58,7 +58,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         {filteredPositions.map((pos: Position) => {
           const currentState = getCurrentState(pos.id);
           const equipment = equipmentData.find((eq) => eq.id === pos.id);
-          const productivity = calculateProductivity(pos.id); // Calcula a produtividade
+          const productivity = calculateProductivity(pos.id);
 
           return (
             <Marker
@@ -79,7 +79,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
                       Estado atual: {currentState.name}
                     </p>
                   )}
-                  <p>Produtividade: {productivity as any}%</p>
+                  <p>Produtividade: {productivity as any  }%</p>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
