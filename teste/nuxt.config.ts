@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     '@nuxt/eslint',
     '@nuxtjs/leaflet',
+    '@pinia/nuxt',
   ],
   css: [
     '@/assets/styles.css',

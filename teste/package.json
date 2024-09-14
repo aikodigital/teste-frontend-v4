@@ -13,15 +13,18 @@
   "dependencies": {
     "@nuxt/eslint": "^0.5.6",
     "@nuxtjs/leaflet": "^1.2.2",
+    "@pinia/nuxt": "^0.5.4",
     "@unocss/reset": "^0.62.3",
     "nuxt": "^3.13.0",
     "onchange": "^7.1.0",
+    "pinia": "^2.2.2",
     "primevue": "^4.0.5",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.5.6",
+    "@nuxtjs/apollo": "5.0.0-alpha.14",
     "@primevue/nuxt-module": "^4.0.5",
     "@unocss/postcss": "^0.62.3",
     "eslint": "^9.10.0",
