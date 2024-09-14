@@ -25,3 +25,8 @@
 - React
 - Leaflet
 - Jest
+
+## Acesso ao Aplicativo
+
+- email: teste@email.com
+- senha: teste123
