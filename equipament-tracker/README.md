@@ -1,50 +1,79 @@
-# React + TypeScript + Vite
+# Documentação da Aplicação
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Índice
+1. [Visão Geral](#visão-geral)
+2. [Decisões Arquiteturais](#decisões-arquiteturais)
+3. [Especificação dos Componentes](#especificação-dos-componentes)
+4. [Instruções de Uso](#instruções-de-uso)
+5. [Configuração e Instalação](#configuração-e-instalação)
 
-Currently, two official plugins are available:
+## Visão Geral
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A aplicação desenvolvida é uma plataforma para um desafio frontend. Ela permite:
+- Exibir no mapa os equipamentos nas suas posições mais recentes.
+- Visualizar o estado mais recente dos equipamentos.
+- Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+- Exibir a trajetória de um equipamento selecionado
 
-## Expanding the ESLint configuration
+A arquitetura da aplicação é baseada em React, ChakraUI, Leaftlet-React, date-fns. O sistema é projetado para ser escalável e responsivo.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Decisões Arquiteturais
 
-- Configure the top-level `parserOptions` property like this:
+1. **Escolha do Framework Frontend:**
+   - **React:** Optei pelo React devido à sua popularidade, grande comunidade e capacidade de criar interfaces de usuário dinâmicas e reativas.
+   - **Chakra UI:** Utilizei para criar uma interface de usuário moderna e consistente com componentes pré-estilizados e fácil customização.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+4. **Arquitetura do Projeto:**
+   - **Componentização:** Utilização de componentes React reutilizáveis para manter o código organizado e modular.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+6. **Responsividade:**
+   - **Design Responsivo:** Implementado usando Chakra UI e utilitários CSS para garantir uma boa experiência em dispositivos móveis e desktops.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Especificação dos Componentes
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### 1. **Componente `Map`**
+   - **Responsabilidade:** Exibir um mapa com marcadores e trajetórias.
+   - **Dependências:** `react-leaflet`, `leaflet`, `@chakra-ui/react`
+   - **Funcionalidades:**
+     - Mostrar marcadores para posições de equipamentos.
+     - Trajetória de equipamentos com destaque para pontos de partida e chegada.
+   - **Props:**
+     - `filters`: Filtros aplicados na visualização.
+     - `showTrajectory`: Flag para mostrar ou ocultar a trajetória.
+
+### 2. **Componente `Filters`**
+   - **Responsabilidade:** Fornecer filtros para pesquisa de equipamentos.
+   - **Dependências:** `@chakra-ui/react`, `Combobox`
+   - **Funcionalidades:**
+     - Filtros por nome, estado e modelo.
+     - Controle para mostrar ou ocultar trajetórias.
+   - **Props:**
+     - `onFilterChange`: Função chamada quando os filtros são alterados.
+
+### 3. **Componente `Combobox`**
+   - **Responsabilidade:** Exibir uma caixa de seleção com opções.
+   - **Dependências:** `@chakra-ui/react`
+   - **Funcionalidades:**
+     - Permitir a seleção de opções a partir de uma lista.
+   - **Props:**
+     - `placeholder`: Texto a ser exibido quando vazio.
+     - `options`: Lista de opções para seleção.
+     - `value`: Valor selecionado.
+     - `onChange`: Função chamada quando o valor é alterado.
+
+## Configuração e Instalação
+
+### Iniciando a Aplicação
+
+1. **Clone o Repositório:**
+   ```bash
+   git clone <URL_DO_REPOSITÓRIO>
+   cd <DIRETÓRIO_DO_PROJETO>
+
+2. **Instale as dependências  :**
+   ```bash
+   npm install
+
+3. **Execute a aplicação:**
+   ```bash
+   npm run dev
