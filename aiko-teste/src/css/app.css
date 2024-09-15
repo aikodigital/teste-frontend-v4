@@ -1,6 +1,7 @@
 /* app global css */
-body{
-  font-family: "Sarala", sans-serif;
-  font-weight: 700;
+body {
+  font-family: "New Amsterdam", sans-serif;
+  font-weight: 400;
   font-style: normal;
+  background-image: url('../assets/aikotestebackground.png');
 }

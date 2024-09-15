@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MapaComponent from '../pages/EquipamentPosition.vue';
 const routes = [
   {
     path: '/',
@@ -14,7 +13,7 @@ const routes = [
   },
   {
     path: '/produtos',
-    component: () => import('src/pages/EquipamenteState.vue'),
+    component: () => import('src/pages/EquipmentModel.vue'),
   },
   {
     path: '/equipamentos',

@@ -1,0 +1,55 @@
+.bg-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+.equipment-list {
+  width: 100%;
+}
+
+.equipment-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  margin: 12px 0;
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #c5c5c5;
+}
+
+.equipment-item:hover {
+  transform: translateY(-5px);
+}
+
+.state-item {
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.show-more-btn {
+  background-color: #3882d1;
+  color: white;
+  border-radius: 18px;
+  padding: 8px 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  min-width: 120px;
+  align-self: center;
+}
+
+.show-more-btn:hover {
+  background-color: #d8d8d8;
+  transform: scale(1.05);
+}
+
+.show-more-btn:focus {
+  outline: none;
+}

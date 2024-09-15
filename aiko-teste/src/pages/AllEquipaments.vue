@@ -2,7 +2,13 @@
   <q-layout>
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat dense round icon="arrow_back" @click="$router.push('/')"/>
+        <q-btn
+          flat
+          dense
+          color="white"
+          icon="arrow_back"
+          @click="$router.push('/')"
+        />
         <q-toolbar-title>Equipamentos Gerais</q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -10,21 +16,54 @@
       <q-page class="q-pa-md bg-page">
         <div class="list-container">
           <div class="equipment-list">
-            <q-item v-for="equipamentoGerais in equipamentosGerais" :key="equipamentoGerais.id" class="equipment-item">
-              <q-item-section>
-                <q-item-label class="equipment-name">{{ equipamentoGerais.name }}</q-item-label>
-                <q-item-label class="text-subtitle2">Detalhes do equipamento:</q-item-label>
-
+            <q-expansion-item
+              v-for="equipamentoGerais in equipamentosGerais"
+              :key="equipamentoGerais.id"
+              class="equipment-item"
+              :label="equipamentoGerais.name"
+              :caption="'ID do equipamento: ' + equipamentoGerais.id"
+              expand-separator
+            >
+              <br />
+              <!-- Exibe o histórico de estados do equipamento -->
+              <div v-if="positionHistory.length">
+                <q-item-label class="text-subtitle1"
+                  >Histórico de situações do equipamento:</q-item-label
+                >
+                <br />
                 <q-list>
-                  <q-item v-for="state in equipmentStates" :key="state.id">
+                  <q-item
+                    v-for="(state, index) in getVisibleStates(
+                      equipamentoGerais.id
+                    )"
+                    :key="index"
+                    class="state-item"
+                  >
                     <q-item-section>
-                      <strong>Estado:</strong> 
-                      <span :style="{ color: state.color }">{{ state.name }}</span>
+                      <q-item-label class="text-subtitle2">
+                        <span style="font-weight: 700">Data: </span
+                        >{{ state.date }}
+                      </q-item-label>
+                      <span style="font-weight: 700">Situação: </span
+                        >
+                      <q-item-label
+                        :style="{
+                          color: getStateColor(state.equipmentStateId),
+                        }"
+                      >
+                        {{ getStateName(state.equipmentStateId) }}
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
-              </q-item-section>
-            </q-item>
+                <q-btn
+                  v-if="isShowMoreButtonVisible(equipamentoGerais.id)"
+                  @click="showMoreStates(equipamentoGerais.id)"
+                  label="Mostrar mais"
+                  class="q-mt-md show-more-btn"
+                />
+              </div>
+            </q-expansion-item>
           </div>
         </div>
       </q-page>
@@ -33,86 +72,64 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
-// Referência para os equipamentos gerais e estados dos equipamentos
+const router = useRouter();
 const equipamentosGerais = ref([]);
-const equipmentStates = ref([]);
+const positionHistory = ref([]);
+const equipmentStates = ref({});
+const itemsToShow = ref(8);
 
-// Função para buscar os dados dos equipamentos gerais
-const fetchEquipamentosGerais = async () => {
+const fetchData = async () => {
   try {
-    const response = await fetch('/data/equipment.json'); // Atualize o caminho se necessário
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    equipamentosGerais.value = data;
+    const [equipmentsResponse, positionHistoryResponse, statesResponse] =
+      await Promise.all([
+        fetch("/data/equipment.json").then((res) => res.json()),
+        fetch("/data/equipmentStateHistory.json").then((res) => res.json()),
+        fetch("/data/equipmentState.json").then((res) => res.json()),
+      ]);
+
+    equipamentosGerais.value = equipmentsResponse;
+    positionHistory.value = positionHistoryResponse;
+    equipmentStates.value = statesResponse.reduce((acc, state) => {
+      acc[state.id] = state;
+      return acc;
+    }, {});
   } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
+    console.error("Error fetching data:", error);
   }
 };
 
-// Função para buscar os dados dos estados dos equipamentos
-const fetchEquipmentStates = async () => {
-  try {
-    const response = await fetch('/data/equipmentState.json'); // Atualize o caminho se necessário
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    equipmentStates.value = data;
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-  }
+const getStateName = (stateId) => {
+  return equipmentStates.value[stateId]?.name || "Desconhecido";
 };
 
-// Carregar os dados quando o componente for montado
+const getStateColor = (stateId) => {
+  return equipmentStates.value[stateId]?.color || "#000000";
+};
+
+const getVisibleStates = (equipmentId) => {
+  const equipmentHistory =
+    positionHistory.value.find((p) => p.equipmentId === equipmentId)?.states ||
+    [];
+  return equipmentHistory.slice(0, itemsToShow.value);
+};
+
+const isShowMoreButtonVisible = (equipmentId) => {
+  const equipmentHistory =
+    positionHistory.value.find((p) => p.equipmentId === equipmentId)?.states ||
+    [];
+  return equipmentHistory.length > itemsToShow.value;
+};
+
+const showMoreStates = (equipmentId) => {
+  itemsToShow.value += 8;
+};
+
 onMounted(() => {
-  fetchEquipamentosGerais();
-  fetchEquipmentStates();
+  fetchData();
 });
 </script>
 
-<style scoped>
-.bg-page {
-  background-color: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.list-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 700px;
-}
-
-.equipment-list {
-  width: 100%;
-}
-
-.equipment-item {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.037);
-  margin: 8px 0;
-  padding: 16px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.equipment-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.equipment-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #001f3f;
-}
-</style>
+<style src="../css/allequipments.css"></style>
