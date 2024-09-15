@@ -6,7 +6,7 @@ export function RecenterAutomatically(coords: Coords) {
   const map = useMap();
   useEffect(() => {
     if (!coords?.lat) {
-      map.setView({ lat: -22.637081990512296, lng: -54.823245482408126 })
+      map.setView({ lat: -19.126536, lng: -45.947756 })
       return;
     }
     map.setView({ lat: coords.lat, lng: coords.lng })
