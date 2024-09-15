@@ -61,6 +61,9 @@ Abaixo da resolução de 1024px o layout automaticamente alterna a versão compa
 
 #### OBS: É necessário uma chave da [API GOOGLE](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=pt-br) para poder renderizar o Maps.
 
+- Após adiquirir sua chave, basta ir no arquivo maps.tsx dentro da pasta /Components e inserir a chave
+onde contem "apiKey="SUA API KEY" (linha 144).
+
 
 
 ## Rodando localmente
