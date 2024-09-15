@@ -67,6 +67,34 @@ export const fetchOrderedEquipmentState = (
   return filteredStates;
 };
 
+export const fetchOrderedEquipmentPositions = (
+  id: string,
+  startDate?: string,
+  endDate?: string
+) => {
+  const filteredEquipmentPositions = equipmentsPositions.filter(
+    (equipment) => id === equipment.equipmentId
+  )[0].positions;
+
+  const filteredPositions = filteredEquipmentPositions.filter((position) => {
+    const positionDate = new Date(position.date);
+
+    if (startDate && endDate) {
+      return (
+        positionDate >= new Date(startDate) && positionDate <= new Date(endDate)
+      );
+    } else if (startDate) {
+      return positionDate >= new Date(startDate);
+    } else if (endDate) {
+      return positionDate <= new Date(endDate);
+    }
+
+    return true;
+  });
+
+  return filteredPositions;
+};
+
 export const getCurrentStateData = (stateId: string) => {
   const state = equipmentsStates.filter((state) => stateId === state.id);
 

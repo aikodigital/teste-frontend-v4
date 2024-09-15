@@ -9,19 +9,17 @@ import {
 } from "../api/simulatedApi";
 import { Equipment } from "../interfaces";
 import { StateHistoryTable } from "./stateHistoryTable";
-import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { cn } from "@/utils/cn";
 
-export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
+export const EquipmentInfo = ({
+  equipment,
+  formattedFromDate,
+  formattedToDate,
+}: {
+  equipment: Equipment;
+  formattedFromDate?: string;
+  formattedToDate?: string;
+}) => {
   const [equipmentStateHistory, setEquipmentStateHistory] = useState(
     fetchOrderedEquipmentState(equipment.id)
   );
@@ -31,19 +29,6 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
     name: string;
     color: string;
   }>();
-
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2021, 1, 20),
-    to: addDays(new Date(2021, 1, 20), 5),
-  });
-
-  const formattedFromDate = date?.from
-    ? format(date.from, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
-    : undefined;
-
-  const formattedToDate = date?.to
-    ? format(date.to, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
-    : undefined;
 
   useEffect(() => {
     setEquipmentStateHistory(
@@ -102,47 +87,6 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
       <div className="flex flex-col gap-2">
         <p className="text-xl font-bold mt-4">Histórico de operação: </p>
 
-        <div className="z-20 flex  gap-4 items-center">
-          <p>Selecione o período: </p>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                  "w-[300px] justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date?.from ? (
-                  date.to ? (
-                    <>
-                      {format(date.from, "LLL dd, y")} -{" "}
-                      {format(date.to, "LLL dd, y")}
-                    </>
-                  ) : (
-                    format(date.from, "LLL dd, y")
-                  )
-                ) : (
-                  <span>Pick a date</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                className="z-30"
-                initialFocus
-                mode="range"
-                defaultMonth={date?.from}
-                selected={date}
-                onSelect={setDate}
-                numberOfMonths={2}
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
-
         <div className="flex gap-2">
           <p>Produtividade: </p>
 
@@ -160,7 +104,7 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
           <p>Rentabilidade: </p>
 
           <p>
-            R$
+            R${" "}
             {calculateProfit({
               maintanenceHours: hoursByState.maintenance,
               operatingHours: hoursByState.operating,
