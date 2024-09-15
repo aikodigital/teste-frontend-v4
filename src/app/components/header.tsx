@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link
+ from 'next/link';
 export default function Header() {
   return (
     <header>
@@ -18,9 +20,9 @@ export default function Header() {
       </div>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><Link href="/">Home </Link></li>
+          <li><Link href="/sobre">Sobre </Link></li>
+          <li><Link href="/contato">Contato </Link></li>
         </ul>
       </nav>
     </header>

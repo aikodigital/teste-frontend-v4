@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     
-    <html lang="en">
+    <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
       < Header/>
         {children}

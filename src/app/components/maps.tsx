@@ -7,6 +7,7 @@ import equipmentModelData from '../data/equipmentModel.json';
 import equipmentPositionHistoryData from '../data/equipmentPositionHistory.json';
 import equipmentStateData from '../data/equipmentState.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
+import Image from 'next/image';
 
 interface EquipmentState {
     id: string;
@@ -165,15 +166,21 @@ const Maps = () => {
                                     lat: hoverPosition?.lat || selectedEquipment?.position?.lat || 0,
                                     lng: hoverPosition?.lon || selectedEquipment?.position?.lon || 0
                                 }}
-                                onCloseClick={handleInfoWindowClose} // Close InfoWindow
+                                onCloseClick={handleInfoWindowClose}
                             >
                                 <div className='item-hover'>
                                     {selectedEquipment ? (
                                         <>
+                                            <Image
+                                                src="/img/equipment.png"
+                                                alt={selectedEquipment.equipment.name}
+                                                width={50}
+                                                height={50}
+                                            />
                                             <h3>{selectedEquipment.equipment.name}</h3>
-                                            <p>Model: {selectedEquipment.model.name}</p>
-                                            <p>State: {selectedEquipment.state.name}</p>
-                                            <p>Date: {new Date(hoverPosition?.date || selectedEquipment?.position?.date || new Date()).toLocaleDateString()}</p>
+                                            <p>Modelo: {selectedEquipment.model.name}</p>
+                                            <p>Estado: {selectedEquipment.state.name}</p>
+                                            <p>Data: {new Date(hoverPosition?.date || selectedEquipment?.position?.date || new Date()).toLocaleDateString()}</p>
                                         </>
                                     ) : (
                                         <div>
@@ -191,7 +198,7 @@ const Maps = () => {
             <div id="sidebar">
                 <div className="sidebar-item">
                     <div className={`filters ${selectedEquipment ? 'hidden-item' : ''}`}>
-                        <label htmlFor="model-filter">Filtrar por Modelo:</label>
+                        <label htmlFor="model-filter">Modelo:</label>
                         <select id="model-filter" onChange={handleModelFilterChange} value={selectedModel}>
                             <option value="">Todos</option>
                             {equipmentModelData.map(model => (
@@ -199,7 +206,7 @@ const Maps = () => {
                             ))}
                         </select>
 
-                        <label htmlFor="state-filter">Filtrar por Estado:</label>
+                        <label htmlFor="state-filter">Estado:</label>
                         <select id="state-filter" onChange={handleStateFilterChange} value={selectedState}>
                             <option value="">Todos</option>
                             {equipmentStateData.map(state => (
