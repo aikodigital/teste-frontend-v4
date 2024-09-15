@@ -1,8 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import positions from '../../../assets/data/equipmentPositionHistory.json'
-import states from '../../../assets/data/equipmentStateHistory.json'
-import stateInfo from '../../../assets/data/equipmentState.json'
+import equipments from '../../../assets/data/equipment.json'
+import models from '../../../assets/data/equipmentModel.json'
+import state from '../../../assets/data/equipmentState.json'
+import positionHistory from '../../../assets/data/equipmentPositionHistory.json'
+import stateHistory from '../../../assets/data/equipmentStateHistory.json'
+
+import { EquipmentHistoryComponent } from '../../components/equipment-history/equipment-history.component';
+import { CommonModule } from '@angular/common';
+import { MapService } from '../../services/map/map.service';
+import { EquipmentService } from '../../services/equipment/equipment.service';
+
+interface PositionHistory {
+  equipmentId: string,
+  positions: Position[]
+}
 
 interface Position {
   date: string;
@@ -10,20 +22,7 @@ interface Position {
   lon: number;
 }
 
-interface Equipment {
-  equipmentId: string;
-  positions: Position[];
-}
-
-interface EquipmentState {
-  equipmentId: string;
-  states: {
-    date: string;
-    equipmentStateId: string;
-  }[];
-}
-
-interface StateInfo {
+interface State {
   id: string;
   name: string;
   color: string;
@@ -32,23 +31,35 @@ interface StateInfo {
 @Component({
   selector: 'app-map-view',
   standalone: true,
-  imports: [],
+  imports: [EquipmentHistoryComponent, CommonModule],
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.css']
 })
 export class MapViewComponent implements OnInit {
+  private positionHistory: any = positionHistory;
+  private stateHistory: any = stateHistory;
+  private models: any = models;
+  private state: any = state;
+  private equipments: any = equipments;
 
-  private equipamentPositions: any = positions;
-  private equipmentStates: any = states;
-  private stateInfo: any = stateInfo;
+  public sidebarVisible: boolean = false;
+  public selectedEquipment: any;
+
+  constructor(
+    private mapService: MapService,
+    private equipmentService: EquipmentService
+  ) { }
 
   ngOnInit(): void {
+    this.mapService.isSidebarOpen$.subscribe(status => {
+      this.sidebarVisible = status;
+    });
     this.initMap();
   }
 
   private initMap(): void {
     let config = {
-      minZoom: 10,
+      minZoom: 6,
       maxZoom: 17,
     };
     const zoom = 9;
@@ -67,9 +78,11 @@ export class MapViewComponent implements OnInit {
   }
 
   private displayEquipmentMarkers(map: L.Map): void {
-    this.equipamentPositions.forEach((equipment: Equipment) => {
-      const latestPosition = this.getLatestPosition(equipment.positions);
-      const latestState = this.getLatestStateInfo(equipment.equipmentId);
+    this.positionHistory.forEach((positions: PositionHistory) => {
+      const latestPosition = this.equipmentService.getLatestPosition(positions.positions);
+      const latestState = this.equipmentService.getLatestStateInfo(positions.equipmentId, this.stateHistory, this.state);
+      const model = this.equipmentService.getModelInfo(positions.equipmentId, this.equipments, this.models);
+      const equipment = this.equipmentService.getEquipmentInfo(positions.equipmentId, this.equipments);
 
       if (latestPosition && latestState) {
         const customIcon = L.divIcon({
@@ -78,31 +91,32 @@ export class MapViewComponent implements OnInit {
         });
 
         const marker = L.marker([latestPosition.lat, latestPosition.lon], { icon: customIcon }).addTo(map);
-        marker.bindPopup(
-          `<b>Equipamento:</b> ${equipment.equipmentId}<br>
-          <b>Data:</b> ${latestPosition.date}<br>
-          <b>Estado:</b> ${latestState.name}`
-        );
+
+        marker.on('mouseover', () => {
+          marker.bindPopup(
+            `<b>Nome:</b> ${equipment!.name}<br>
+            <b>Modelo:</b> ${model!.name}<br>
+            <b>Data:</b> ${latestPosition.date}<br>
+            <b>Estado:</b> ${latestState.name}<br>`
+          ).openPopup();
+        });
+        marker.on('mouseout', () => {
+          marker.closePopup();
+        });
+
+        marker.on('click', () => {
+          this.showSidebar(positions.equipmentId, latestPosition, latestState);
+        });
       }
     });
   }
 
-  private getLatestPosition(positions: Position[]): Position | undefined {
-    if (!positions || positions.length === 0) {
-      return undefined;
-    }
-
-    return positions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
-  }
-
-  private getLatestStateInfo(equipmentId: string): StateInfo | undefined {
-    const equipmentState = this.equipmentStates.find((state: EquipmentState) => state.equipmentId === equipmentId);
-
-    if (!equipmentState || equipmentState.states.length === 0) {
-      return undefined;
-    }
-
-    const latestState = equipmentState.states.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
-    return this.stateInfo.find((info: StateInfo) => info.id === latestState.equipmentStateId);
+  private showSidebar(equipmentId: string, latestPosition: Position, latestState: State): void {
+    this.selectedEquipment = {
+      equipmentId,
+      latestPosition,
+      latestState
+    };
+    this.sidebarVisible = true;
   }
 }
