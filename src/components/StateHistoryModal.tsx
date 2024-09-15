@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -7,7 +7,17 @@ import {
   ListItem,
   ListItemText,
   Typography,
-} from "@mui/material";
+  IconButton,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+
+const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: theme.spacing(1, 2),
+}));
 
 interface StateHistoryModalProps {
   open: boolean;
@@ -27,8 +37,13 @@ const StateHistoryModal: React.FC<StateHistoryModalProps> = ({
   stateHistory,
 }) => {
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{`Histórico de Estados - ${equipmentName}`}</DialogTitle>
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth sx={{ borderRadius: 5 }}>
+      <StyledDialogTitle>
+        {`Histórico de Dados - ${equipmentName}`}
+        <IconButton aria-label="close" onClick={onClose} size="small">
+          <CloseIcon />
+        </IconButton>
+      </StyledDialogTitle>
       <DialogContent>
         <List>
           {stateHistory.map((state, index) => (
@@ -36,9 +51,7 @@ const StateHistoryModal: React.FC<StateHistoryModalProps> = ({
               <ListItemText
                 primary={
                   <Typography>
-                    <span style={{ color: state.stateColor }}>
-                      {state.stateName}
-                    </span>
+                    <span style={{ color: state.stateColor }}>{state.stateName}</span>
                   </Typography>
                 }
                 secondary={new Date(state.date).toLocaleString()}

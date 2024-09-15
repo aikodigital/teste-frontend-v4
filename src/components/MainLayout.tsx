@@ -1,28 +1,28 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import CustomAppBar from "./CustomAppBar";
-import EquipmentMap from "./EquipmentMap";
-import SideMenu from "./SideMenu";
-import { Equipment, EquipmentState } from "../types/sharedTypes";
+import React, { useState, useMemo, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import CustomAppBar from './CustomAppBar';
+import EquipmentMap from './EquipmentMap';
+import SideMenu from './SideMenu';
+import { Equipment, EquipmentState } from '../types/sharedTypes';
 
-const LayoutContainer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  height: "100vh",
-  width: "100vw",
-  overflow: "hidden",
+const LayoutContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  width: '100vw',
+  overflow: 'hidden',
 });
 
-const ContentContainer = styled("div")({
-  display: "flex",
+const ContentContainer = styled('div')({
+  display: 'flex',
   flexGrow: 1,
-  overflow: "hidden",
+  overflow: 'hidden',
 });
 
-const MapContainer = styled("div")({
+const MapContainer = styled('div')({
   flexGrow: 1,
-  position: "relative",
-  overflow: "hidden",
+  position: 'relative',
+  overflow: 'hidden',
 });
 
 interface MainLayoutProps {
@@ -31,12 +31,8 @@ interface MainLayoutProps {
   equipmentStates: EquipmentState[];
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({
-  equipments,
-  userName,
-  equipmentStates,
-}) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const MainLayout: React.FC<MainLayoutProps> = ({ equipments, userName, equipmentStates }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<{ [key: string]: boolean }>({
     active: true,
     inactive: true,
@@ -62,8 +58,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         eq.model.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter = filters[eq.model] !== false;
       const matchesStatus =
-        (filters.active && eq.latestState?.name !== "Manutenção") ||
-        (filters.inactive && eq.latestState?.name === "Manutenção");
+        (filters.active && eq.latestState?.name !== 'Manutenção') ||
+        (filters.inactive && eq.latestState?.name === 'Manutenção');
       return matchesSearch && matchesFilter && matchesStatus;
     });
   }, [equipments, searchTerm, filters]);
@@ -76,6 +72,31 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     setFilters(newFilters);
   };
 
+  const handleExportCSV = () => {
+    const headers = ['Código', 'Modelo', 'Estado', 'Produtividade', 'Ganhos'];
+    const csvContent = filteredEquipments.map((eq) => [
+      eq.name,
+      eq.model,
+      eq.latestState?.name || 'Desconhecido',
+      eq.productivity.toFixed(2),
+      eq.earnings.toFixed(2),
+    ]);
+
+    const csvString = [headers.join(','), ...csvContent.map((row) => row.join(','))].join('\n');
+
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'equipamentos.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <LayoutContainer>
       <CustomAppBar userName={userName} />
@@ -85,12 +106,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           initialFilters={filters}
+          onExportCSV={handleExportCSV}
         />
         <MapContainer>
-          <EquipmentMap
-            equipments={filteredEquipments}
-            equipmentStates={equipmentStates}
-          />
+          <EquipmentMap equipments={filteredEquipments} equipmentStates={equipmentStates} />
         </MapContainer>
       </ContentContainer>
     </LayoutContainer>

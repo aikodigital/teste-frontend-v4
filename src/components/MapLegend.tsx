@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Paper,
   Typography,
@@ -9,42 +9,42 @@ import {
   IconButton,
   Collapse,
   Divider,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { EquipmentState } from "../types/sharedTypes";
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { EquipmentState } from '../types/sharedTypes';
 
 const LegendContainer = styled(Paper)(({ theme }) => ({
-  position: "absolute",
+  position: 'absolute',
   top: theme.spacing(1),
   right: theme.spacing(2),
   zIndex: 1000,
-  maxWidth: "300px",
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
+  maxWidth: '18.75rem',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
 }));
 
-const LegendHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
+const LegendHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   padding: theme.spacing(1, 2),
-  cursor: "pointer",
+  cursor: 'pointer',
 }));
 
-const ColorIcon = styled("span")<{ color: string }>(({ color }) => ({
-  display: "inline-block",
-  width: "20px",
-  height: "20px",
-  borderRadius: "50%",
+const ColorIcon = styled('span')<{ color: string }>(({ color }) => ({
+  display: 'inline-block',
+  width: '1.25rem',
+  height: '1.25rem',
+  borderRadius: '50%',
   backgroundColor: color,
-  marginRight: "10px",
+  marginRight: '0.625rem',
 }));
 
-const EquipmentIcon = styled("img")({
-  width: "24px",
-  height: "24px",
-  marginRight: "10px",
+const EquipmentIcon = styled('img')({
+  width: '1.5rem',
+  height: '1.5rem',
+  marginRight: '0.625rem',
 });
 
 interface MapLegendProps {
@@ -55,10 +55,7 @@ interface MapLegendProps {
   }>;
 }
 
-const MapLegend: React.FC<MapLegendProps> = ({
-  equipmentStates,
-  equipmentTypes,
-}) => {
+const MapLegend: React.FC<MapLegendProps> = ({ equipmentStates, equipmentTypes }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
@@ -69,16 +66,12 @@ const MapLegend: React.FC<MapLegendProps> = ({
     <LegendContainer sx={{ borderRadius: 5 }}>
       <LegendHeader onClick={toggleExpanded}>
         <Typography variant="subtitle1">Legenda</Typography>
-        <IconButton size="small">
-          {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </IconButton>
+        <IconButton size="small">{expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}</IconButton>
       </LegendHeader>
       <Collapse in={expanded}>
         <List dense>
           <ListItem>
-            <Typography variant="subtitle2">
-              Estados dos Equipamentos
-            </Typography>
+            <Typography variant="subtitle2">Estados dos Equipamentos</Typography>
           </ListItem>
           {equipmentStates.map((state) => (
             <ListItem key={state.id}>
