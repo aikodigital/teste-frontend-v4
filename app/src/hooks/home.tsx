@@ -11,6 +11,7 @@ import {
 export function useHomeHooks() {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<AggregatedEquipment[]>([])
+  const [selectedEquipment, setSelectedEquipment] = useState<AggregatedEquipment | null>(null)
 
   const centralPosition = useMemo(() => {
     const positions = data.map(item => item.currentPosition)
@@ -88,9 +89,9 @@ export function useHomeHooks() {
 
       const stateHistory = equipmentStateHistories.find(
         stateHist => stateHist.equipmentId === equipment.id
-      )?.states || [];
+      )?.states?.reverse() || [];
       const currentStateId = stateHistory.length > 0
-        ? stateHistory[stateHistory.length - 1].equipmentStateId
+        ? stateHistory[0].equipmentStateId
         : null;
       const currentState = currentStateId ? stateMap.get(currentStateId) : null;
 
@@ -155,5 +156,5 @@ export function useHomeHooks() {
     return () => { controller.abort() }
   }, [])
 
-  return { loading, centralPosition, data }
+  return { loading, centralPosition, data, selectedEquipment, setSelectedEquipment }
 }

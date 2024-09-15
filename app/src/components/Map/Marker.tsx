@@ -12,14 +12,17 @@ const icon = new L.Icon({
 
 interface Props extends React.PropsWithChildren {
   coords: Coords
+  handleClick: () => void
 }
 
-export function Marker({ coords, children }: Props) {
+export function Marker({ coords, handleClick, children }: Props) {
   return (
     <MarkerRL
+      title="Clique para ver o histórico de estados"
       position={coords}
       icon={icon}
       eventHandlers={{
+        click: handleClick,
         mouseover: (event) => event?.target?.openPopup(),
       }}
     >
