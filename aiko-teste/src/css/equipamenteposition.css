@@ -1,0 +1,92 @@
+
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.map-container {
+  height: 400px;
+  width: 900px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-popup {
+  text-align: center;
+  padding: 15px;
+}
+
+
+.close-button {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50px;
+  padding: 8px 16px;
+}
+
+.position-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+}
+
+.position-item:last-child {
+  border-bottom: none;
+}
+
+.q-item-section > div {
+  margin-bottom: 4px;
+  font-size: 0.875rem;
+}
+
+.dialog-card {
+  max-width: 800px;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  padding: 16px;
+}
+
+.dialog-header {
+  background-color: #1d80eb;
+  padding: 12px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+}
+
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dialog-content {
+  padding: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.position-list {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.position-item {
+  padding: 12px;
+  border-bottom: 1px solid #ebebeb; 
+}
+
+.position-item:last-child {
+  border-bottom: none;
+}
+
+.close-button {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+.dialog-actions {
+  padding: 12px;
+  border-top: 1px solid #e0e0e0;
+}

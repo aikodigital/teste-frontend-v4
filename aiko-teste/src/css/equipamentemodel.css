@@ -1,0 +1,159 @@
+.bg-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+/* Card container styling */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Card styling */
+.q-card {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Expansion item rounded borders */
+.rounded-borders {
+  border-radius: 12px;
+}
+
+/* Filter fields styling */
+.q-input,
+.q-select {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 16px;
+}
+
+.q-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px 16px;
+}
+
+.q-item:last-child {
+  border-bottom: none;
+}
+
+.q-mb-md {
+  margin-bottom: 1rem;
+}
+
+.q-pa-md {
+  padding: 1rem;
+}
+
+.text-h6 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.equipment-item:hover {
+  background-color: #e0f7fa;
+  border-radius: 8px;
+}
+
+.q-mb-md {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 16px;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.margin-bottom-md {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .q-card {
+    width: 90%;
+  }
+
+  .q-input,
+  .q-select {
+    width: 90%;
+  }
+
+  .filter-container {
+    width: 90%;
+  }
+}
+
+.q-item-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-select {
+  width: 300px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.rounded-borders {
+  border-radius: 8px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
+.filter-select {
+  width: 100%;
+  max-width: 400px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.q-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.rounded-borders {
+  border-radius: 8px;
+}
