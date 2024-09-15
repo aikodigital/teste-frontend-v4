@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: 8px !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}

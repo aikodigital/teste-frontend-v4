@@ -1,3 +1,4 @@
+import React from "react"
 import { Marker as MarkerRL } from "react-leaflet"
 import L from 'leaflet'
 import { Coords } from "@/helpers/types"
@@ -9,8 +10,20 @@ const icon = new L.Icon({
   popupAnchor: [0, -32],
 })
 
-export function Marker(coords: Coords) {
+interface Props extends React.PropsWithChildren {
+  coords: Coords
+}
+
+export function Marker({ coords, children }: Props) {
   return (
-    <MarkerRL position={coords} icon={icon} />
+    <MarkerRL
+      position={coords}
+      icon={icon}
+      eventHandlers={{
+        mouseover: (event) => event?.target?.openPopup(),
+      }}
+    >
+      {children}
+    </MarkerRL>
   )
 }

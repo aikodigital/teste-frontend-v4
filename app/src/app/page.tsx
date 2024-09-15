@@ -5,6 +5,7 @@ import {
   Header,
   Map,
   Marker,
+  MarkerPopup,
   RecenterAutomatically,
   LoadingWrapper,
 } from "@/components";
@@ -26,10 +27,16 @@ export default function Home() {
               {data.map(equipment => (
                 <React.Fragment key={equipment.id}>
                   {equipment.currentPosition?.lat && (
-                    <Marker
-                      lat={equipment.currentPosition?.lat}
-                      lng={equipment.currentPosition?.lon}
-                    />
+                    <Marker coords={{
+                      lat: equipment.currentPosition?.lat,
+                      lng: equipment.currentPosition?.lon,
+                    }}>
+                      <MarkerPopup
+                        name={equipment.name}
+                        stateName={equipment.currentState?.name}
+                        stateColor={equipment.currentState?.color}
+                      />
+                    </Marker>
                   )}
                 </React.Fragment>
               ))}
