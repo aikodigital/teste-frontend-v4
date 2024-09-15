@@ -24,6 +24,20 @@
             <div :class="`w-6 h-6 ${marker.icon}`" />
             <div class="i-ph-caret-down-fill" />
           </LIcon>
+          <LTooltip>
+            <Card>
+              <template #title>
+                {{ marker.name }}: {{ marker.model }}
+              </template>
+              <template #content>
+                Lat: {{ marker.lat }}, Lon: {{ marker.lon }} | <Tag
+                  :style="`background-color: ${marker.stateColor}; color: white`"
+                  :value="marker.state"
+                  rounded
+                />
+              </template>
+            </Card>
+          </LTooltip>
       </LMarker>
     </LMap>
   </div>
