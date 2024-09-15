@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import {
   calculateProductivity,
+  calculateProfit,
+  calculateStateHours,
   fetchEquipmentModel,
   fetchOrderedEquipmentState,
   getCurrentStateData,
 } from "../api/simulatedApi";
 import { Equipment } from "../interfaces";
 import { StateHistoryTable } from "./stateHistoryTable";
-
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -20,7 +20,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ProductivityCalculator } from "./productivityCalculator";
 
 export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
   const [equipmentStateHistory, setEquipmentStateHistory] = useState(
@@ -34,8 +33,8 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
   }>();
 
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2020, 0, 20),
-    to: addDays(new Date(2020, 0, 20), 1000),
+    from: new Date(2021, 1, 20),
+    to: addDays(new Date(2021, 1, 20), 5),
   });
 
   const formattedFromDate = date?.from
@@ -63,6 +62,12 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
       setCurrentState(getCurrentStateData(allStates[0].equipmentStateId));
     }
   }, [equipment]);
+
+  const hoursByState: {
+    operating: number;
+    stopped: number;
+    maintenance: number;
+  } = calculateStateHours(equipmentStateHistory);
 
   return (
     <div>
@@ -155,12 +160,13 @@ export const EquipmentInfo = ({ equipment }: { equipment: Equipment }) => {
           <p>Rentabilidade: </p>
 
           <p>
-            {calculateProductivity(
-              equipment.id,
-              formattedFromDate,
-              formattedToDate
-            ).toFixed(2)}
-            %
+            R$
+            {calculateProfit({
+              maintanenceHours: hoursByState.maintenance,
+              operatingHours: hoursByState.operating,
+              stoppedHours: hoursByState.stopped,
+              modelId: equipment.equipmentModelId,
+            })}
           </p>
         </div>
 

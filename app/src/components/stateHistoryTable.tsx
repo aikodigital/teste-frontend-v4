@@ -17,6 +17,10 @@ export const StateHistoryTable = ({
     equipmentStateId: string;
   }[];
 }) => {
+  const sortedHistory = equipmentStateHistory.sort((a, b) => {
+    return b.date.localeCompare(a.date);
+  });
+
   return (
     <Table>
       <TableHeader className="sticky top-0 bg-secondary z-10">
@@ -26,7 +30,7 @@ export const StateHistoryTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {equipmentStateHistory.map((state, i) => (
+        {sortedHistory.map((state, i) => (
           <TableRow key={i}>
             <TableCell>
               {new Date(state.date).toLocaleString("pt-BR", {

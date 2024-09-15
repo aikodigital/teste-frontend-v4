@@ -159,3 +159,91 @@ export const calculateProductivity = (
 
   return productivity;
 };
+
+export const calculateStateHours = (
+  equipmentStateHistory: { date: string; equipmentStateId: string }[]
+) => {
+  type EquipmentStateHours = {
+    operating: number;
+    stopped: number;
+    maintenance: number;
+  };
+
+  type EquipmentStateId = keyof EquipmentStateHours;
+
+  const stateMap: Record<string, EquipmentStateId> = {
+    "0808344c-454b-4c36-89e8-d7687e692d57": "operating",
+    "baff9783-84e8-4e01-874b-6fd743b875ad": "stopped",
+    "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f": "maintenance",
+  };
+
+  equipmentStateHistory.sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+
+  const result: {
+    operating: number;
+    stopped: number;
+    maintenance: number;
+  } = {
+    operating: 0,
+    stopped: 0,
+    maintenance: 0,
+  };
+
+  for (let i = 1; i < equipmentStateHistory.length; i++) {
+    const currentRecord = equipmentStateHistory[i];
+    const previousRecord = equipmentStateHistory[i - 1];
+
+    const currentStateId = currentRecord.equipmentStateId;
+
+    const currentTime = new Date(currentRecord.date).getTime();
+    const previousTime = new Date(previousRecord.date).getTime();
+    const duration = (currentTime - previousTime) / (1000 * 60 * 60);
+
+    const stateKey = stateMap[currentStateId];
+
+    if (stateKey) {
+      result[stateKey] += duration;
+    }
+  }
+
+  return result;
+};
+
+export const calculateProfit = ({
+  operatingHours,
+  stoppedHours,
+  maintanenceHours,
+  modelId,
+}: {
+  operatingHours: number;
+  maintanenceHours: number;
+  stoppedHours: number;
+  modelId: string;
+}) => {
+  const modelData = fetchEquipmentModel(modelId);
+
+  const operatingProfit =
+    operatingHours *
+    modelData.hourlyEarnings.filter(
+      (model) =>
+        model.equipmentStateId === "0808344c-454b-4c36-89e8-d7687e692d57"
+    )[0].value;
+
+  const maintanceLoss =
+    maintanenceHours *
+    modelData.hourlyEarnings.filter(
+      (model) =>
+        model.equipmentStateId === "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
+    )[0].value;
+
+  const stoppedLoss =
+    stoppedHours *
+    modelData.hourlyEarnings.filter(
+      (model) =>
+        model.equipmentStateId === "baff9783-84e8-4e01-874b-6fd743b875ad"
+    )[0].value;
+
+  return operatingProfit + maintanceLoss + stoppedLoss;
+};
