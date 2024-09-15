@@ -16,8 +16,14 @@
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="[marker.lat, marker.lon]"
-        draggable
-      >
+        >
+          <LIcon
+            :tooltip-anchor="[20, -25]"
+            :icon-anchor="[9, 39]"
+          >
+            <div :class="`w-6 h-6 ${marker.icon}`" />
+            <div class="i-ph-caret-down-fill" />
+          </LIcon>
       </LMarker>
     </LMap>
   </div>
@@ -32,12 +38,23 @@ const store = useMyEquipmentStore()
 const { equipment, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory } = storeToRefs(store)
 const { getAllData } = store
 
-await useAsyncData(getAllData)
+await useAsyncData(() => getAllData().then(() => true))
 
 function getLatestItem(item) {
   return item.reduce((latest, current) => {
     return new Date(current.date) > new Date(latest.date) ? current : latest
   })
+}
+
+function getIcon(model) {
+  switch (model) {
+    case 'Caminhão de carga':
+      return 'i-ph-truck-trailer-fill'
+    case 'Harvester':
+      return 'i-ph-tractor-fill'
+    case 'Garra traçadora':
+      return 'i-ph-crane-fill'
+  }
 }
 
 const markers = computed(() => {
@@ -48,6 +65,7 @@ const markers = computed(() => {
     const stateHistory = equipmentStateHistory.value.find(state => state.equipmentId == equipment.id)
     const latestState = getLatestItem(stateHistory.states)
     const state = equipmentState.value.find(state => state.id == latestState.equipmentStateId)
+    const icon = getIcon(model.name)
     return {
       id: equipment.id,
       name: equipment.name,
@@ -56,7 +74,19 @@ const markers = computed(() => {
       lon: latestPosition.lon,
       state: state.name,
       stateColor: state.color,
+      icon: icon,
     }
   })
 })
 </script>
+
+<style>
+.leaflet-div-icon {
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+  text-align: center;
+  line-height: 21px;
+}
+</style>
