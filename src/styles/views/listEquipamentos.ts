@@ -11,6 +11,11 @@ export const MainContainer = styled.div`
   margin-top: 3rem;
   border-radius: 1rem;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+    padding: 1rem;
+  }
 `;
 
 export const Title = styled.h1`
@@ -35,6 +40,10 @@ export const SelectContainer = styled.div`
     background-color: #1d4692;
     font-family: ${montserrat.style.fontFamily};
     flex: 1;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 `;
 
@@ -49,14 +58,18 @@ export const SearchContainer = styled.div`
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
-    max-width: 400px;
+    width: 20rem;
+    max-width: 100%;
     font-family: ${montserrat.style.fontFamily};
     color: white;
     background-color: #1d4692;
 
     &::placeholder {
       color: white;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
     }
   }
 `;
@@ -67,6 +80,11 @@ export const FiltersContainer = styled.div`
   width: 100%;
   max-width: 800px;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const EquipList = styled.ul`
@@ -108,6 +126,10 @@ export const EquipItem = styled.li`
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const EquipName = styled.span`
@@ -121,6 +143,11 @@ export const EquipDetails = styled.div`
   margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const HistorySection = styled.div`
