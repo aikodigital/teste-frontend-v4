@@ -59,6 +59,9 @@ Abaixo da resolução de 1024px o layout automaticamente alterna a versão compa
 - Histórico clicável com exibição da posição no mapa
 - Mobile e desktop responsivo
 
+#### OBS: É necessário uma chave da [API GOOGLE](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=pt-br) para poder renderizar o Maps.
+
+
 
 ## Rodando localmente
 

@@ -141,7 +141,7 @@ const Maps = () => {
     return (
         <>
             <div className="map-container">
-                <APIProvider apiKey="AIzaSyDdoiLfJCIf4y7lLiXmgWNPXuycNQd75Zk">
+                <APIProvider apiKey="SUA API KEY">
                     <Map
                         id="map"
                         defaultCenter={{
