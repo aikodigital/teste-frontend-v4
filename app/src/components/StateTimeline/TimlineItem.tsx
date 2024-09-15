@@ -9,7 +9,7 @@ interface Props {
 export function TimlineItem({ time, text, color }: Props) {
   return (
     <li className="relative mb-2 mr-0">
-      <i className="absolute w-3 h-3 rounded-full bg-gray-200 border-2 border-blue-900 left-[27px] top-2.5 z-20" />
+      <i className="absolute w-3 h-3 rounded-full bg-white border-2 border-blue-900 left-[27px] top-2.5 z-20" />
       <div className="relative ml-12 mr-4 bg-white shadow rounded overflow-hidden flex items-center">
         <span className="h-9 w-4 shrink-0" style={{ backgroundColor: color }} />
         <p className="text-sm font-medium w-full p-2 text-gray-600 border-gray-200">

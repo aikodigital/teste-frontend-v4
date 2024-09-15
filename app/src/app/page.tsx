@@ -19,7 +19,7 @@ export default function Home() {
     <div className="w-full h-full min-h-screen">
       <Header />
       <LoadingWrapper isLoading={loading} className="!h-[calc(100vh-65px)]">
-        <main className="w-full h-full grid grid-cols-[1fr_auto]">
+        <main className={`w-full h-full grid ${!!selectedEquipment ? 'grid-cols-[1fr_auto]' : ''}`}>
           <Map>
             <>
               {centralPosition && (
