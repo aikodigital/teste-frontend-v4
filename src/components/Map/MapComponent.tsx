@@ -1,28 +1,15 @@
-import { useEquipmentPositionHistory, useEquipmentState, useEquipmentStateHistory } from '@/hooks';
+import { useEquipmentPositionHistory } from '@/hooks';
 import { useMap } from '@/hooks/useMap';
+
+import { EquipmentDetails } from '../Equipment/EquipmentDetails';
 
 export const MapComponent = () => {
   const { data: positions } = useEquipmentPositionHistory();
-  const { data: stateHistory } = useEquipmentStateHistory();
-  const { data: states } = useEquipmentState();
-  const stateNames = states?.reduce(
-    (acc, state) => {
-      acc[state.id] = state.name;
-      return acc;
-    },
-    {} as Record<string, string>
-  );
+
   const markers = positions
     ? Object.keys(positions)
         .map((equipmentId) => {
           const equipmentPositionHistory = positions[equipmentId];
-          const equipmentStateHistory = stateHistory?.[equipmentId];
-          const equipmentCurrentStateId =
-            equipmentStateHistory?.states?.[equipmentStateHistory.states.length - 1]
-              ?.equipmentStateId;
-          const equipmentCurrentState = equipmentCurrentStateId
-            ? (stateNames?.[equipmentCurrentStateId] ?? 'Desconhecido')
-            : 'Desconhecido';
 
           if (
             equipmentPositionHistory &&
@@ -34,14 +21,9 @@ export const MapComponent = () => {
             if (firstPosition) {
               return {
                 coordinates: [firstPosition.lat, firstPosition.lon] as [number, number],
-                popupValue: `Equipamento: ${equipmentId}\n
-                  Estado Atual: ${equipmentCurrentState}\n
-                  Histórico de Estados: ${
-                    equipmentStateHistory?.states
-                      ?.map((state) => stateNames?.[state.equipmentStateId] ?? 'Desconhecido')
-                      ?.join(', ') ?? 'Nenhum histórico disponível'
-                  }`,
-                tooltipValue: `Posição atual: ${String(firstPosition.lat)}, ${String(firstPosition.lon)}`
+                popupValue: `<div><strong>Equipamento: ${equipmentId}</strong></div>`,
+                tooltipValue: `Posição atual: ${String(firstPosition.lat)}, ${String(firstPosition.lon)}`,
+                equipmentId
               };
             }
           }
@@ -52,5 +34,13 @@ export const MapComponent = () => {
     : [];
 
   useMap({ zoom: 10, center: [-19.1673, -46.0034], markers });
-  return <div id="map" style={{ height: '700px', width: '100vw' }} />;
+
+  return (
+    <div>
+      <div id="map" style={{ height: '700px', width: '100vw' }} />
+      {markers.length > 0 && markers[0]?.equipmentId && (
+        <EquipmentDetails equipmentId={markers[0].equipmentId} />
+      )}
+    </div>
+  );
 };
