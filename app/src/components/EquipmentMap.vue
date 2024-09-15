@@ -1,23 +1,24 @@
 <template>
-    <div id="map" class="w-full h-screen"></div>
+    <div id="map" class="w-full h-96 rounded-md"></div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineComponent } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
+import { Position } from '../stores/equipmentStore';
 
-export default {
+export default defineComponent({
     name: 'EquipmentMap',
     props: {
         initialPosition: {
-            type: Object as () => { lat: number, lng: number } | null,
+            type: Object as () => Position | null,
             default: null
         }
     },
     setup(props, { expose }) {
         const map = ref<google.maps.Map | null>(null);
         const marker = ref<google.maps.Marker | null>(null);
-        const defaultPosition = ref<{ lat: number, lng: number } | null>(props.initialPosition);
+        const defaultPosition = ref<Position | null>(props.initialPosition);
 
         onMounted(async () => {
             const loader = new Loader({
@@ -43,10 +44,14 @@ export default {
             }
         });
 
-        function updatePosition(position: { lat: number, lng: number }) {
+        function updatePosition(position: Position) {
+            if (isNaN(position.lat) || isNaN(position.lng)) {
+                console.error('Invalid position', position);
+                return;
+            }
+
             if (map.value && marker.value) {
                 map.value.setCenter(position);
-
                 marker.value.setPosition(position);
             } else if (map.value) {
                 marker.value = new google.maps.Marker({
@@ -61,5 +66,5 @@ export default {
 
         return {};
     },
-};
+});
 </script>
