@@ -78,7 +78,6 @@ const EquipmentMap: React.FC = () => {
 
   const [selectedStateFilter, setSelectedStateFilter] = useState<string | null>(null);
   const [selectedModelFilter, setSelectedModelFilter] = useState<string | null>(null);
-  const [showHistory, setShowHistory] = useState<boolean>(false);
 
   useEffect(() => {
     const latestPositions = equipmentPositionHistory.map((item: any) => {
@@ -166,11 +165,6 @@ const EquipmentMap: React.FC = () => {
     setSelectedEquipmentId(null);
   };
 
-  const showPositionHistory = (id: string) => {
-    setSelectedEquipmentId(id);
-    setShowHistory(true);
-  };
-
   const earnings = selectedEquipmentId ? calculateEarnings(selectedEquipmentId, stateHistory, models) : 0;
 
   return (
@@ -214,7 +208,6 @@ const EquipmentMap: React.FC = () => {
         models={models}
         onMarkerClick={openModal}
         calculateProductivity={calculateProductivity}
-        showPositionHistory={showHistory ? positionsHistory[selectedEquipmentId || ""] : []}
       />
       <EquipmentModal
         isOpen={modalIsOpen}
@@ -224,7 +217,6 @@ const EquipmentMap: React.FC = () => {
         equipmentStates={equipmentStates}
         stateHistory={stateHistory}
         earnings={earnings}
-        showPositionHistory={showPositionHistory}
       />
     </div>
   );
