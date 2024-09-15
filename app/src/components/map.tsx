@@ -7,6 +7,7 @@ import {
 import { Equipment } from "../interfaces";
 import { fetchOrderedPositions } from "../api/simulatedApi";
 import { useThemeStore } from "../store/themeStore";
+import { EquipmentPin } from "./equipmentPin";
 
 export const MapComponent = ({
   equipments,
@@ -47,12 +48,7 @@ export const MapComponent = ({
                   onClick={() => selectEquipment(equipment)}
                   position={getLastPosition(equipment.id)}
                 >
-                  {/* This can be replaced with equipament type component */}
-                  <Pin
-                    background={"#0f9d58"}
-                    borderColor={"#006425"}
-                    glyphColor={"#60d98f"}
-                  />
+                  <EquipmentPin equipment={equipment} />
                 </AdvancedMarker>
               );
             })

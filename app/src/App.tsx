@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { MapComponent } from "./components/map";
 import { fetchEquipments } from "./api/simulatedApi";
+import { EquipmentInfo } from "./components/equipmentInfo";
 
 interface Equipment {
   id: string;
@@ -23,19 +24,19 @@ function App() {
 
   return (
     <div className="flex flex-col md:flex-row p-2 md:p-8 gap-4 min-h-[60vh]">
-      <div className="md:w-1/2 border-4 border-neutral rounded-md shadow-xl dark:shadow-white/10">
+      <div className="md:w-1/2 p-1 border-2 border-neutral dark:border-white/80 rounded-md shadow-xl dark:shadow-white/10">
         <MapComponent
           selectEquipment={setSelectedEquipment}
           equipments={equipments}
         />
       </div>
-      <div className="md:w-1/2">
-        <h1 className="text-2xl font-bold">Equipment Info:</h1>
+      <div className="md:w-1/2 flex flex-col gap-4">
+        <h1 className="text-2xl font-bold">Informações do Equipamento:</h1>
 
         {!selectedEquipment ? (
           <p>Por favor selecione um equipamento!</p>
         ) : (
-          <p>Selecionado: {selectedEquipment.name}</p>
+          <EquipmentInfo equipment={selectedEquipment} />
         )}
       </div>
     </div>
