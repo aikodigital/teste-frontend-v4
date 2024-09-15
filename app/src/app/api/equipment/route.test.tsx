@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { GET } from "./route";
 
-describe("GET /equipments/model", () => {
+describe("GET /equipment", () => {
   it("Deve retornar os dados com status 200", async () => {
     const response = await GET();
 
