@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh; width:100vw">
+    <div class="h-[100vh] w-[100vw]">
     <LMap
       ref="map"
       :zoom="zoom"
