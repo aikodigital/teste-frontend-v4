@@ -124,13 +124,13 @@ export const filterEquipments = ({
 
 export const calculateProductivity = (
   id: string,
-  startDate: string,
-  endDate: string
+  startDate?: string,
+  endDate?: string
 ) => {
   const equipmentStates = fetchOrderedEquipmentState(id, startDate, endDate);
 
   if (equipmentStates.length === 0) {
-    return 0; // No data, productivity is 0
+    return 0;
   }
 
   let productiveHours = 0;
@@ -143,14 +143,11 @@ export const calculateProductivity = (
     const currentStateDate = new Date(currentState.date);
     const nextStateDate = new Date(nextState.date);
 
-    // Calculate the difference in hours between two states
     const hoursInState =
       (nextStateDate.getTime() - currentStateDate.getTime()) / (1000 * 60 * 60);
 
-    // Add to total hours
     totalHours += hoursInState;
 
-    // Add to productive hours if the state is "Operando"
     if (
       currentState.equipmentStateId === "0808344c-454b-4c36-89e8-d7687e692d57"
     ) {
@@ -158,7 +155,6 @@ export const calculateProductivity = (
     }
   }
 
-  // Calculate productivity as a ratio of productive hours to total hours
   const productivity = (productiveHours / totalHours) * 100;
 
   return productivity;

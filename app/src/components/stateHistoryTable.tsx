@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/utils/cn";
 
 export const StateHistoryTable = ({
   equipmentStateHistory,
@@ -18,7 +19,7 @@ export const StateHistoryTable = ({
 }) => {
   return (
     <Table>
-      <TableHeader className="sticky top-0 bg-secondary z-[100]">
+      <TableHeader className="sticky top-0 bg-secondary z-10">
         <TableRow>
           <TableHead>Data</TableHead>
           <TableHead>Status</TableHead>
@@ -33,7 +34,22 @@ export const StateHistoryTable = ({
                 timeStyle: "short",
               })}
             </TableCell>
-            <TableCell>
+            <TableCell
+              className={cn(
+                {
+                  "text-[#e74c3c]":
+                    getCurrentStateData(state.equipmentStateId).name ===
+                    "Manutenção",
+                  "text-[#f1c40f]":
+                    getCurrentStateData(state.equipmentStateId).name ===
+                    "Parado",
+                  "text-[#2ecc71]":
+                    getCurrentStateData(state.equipmentStateId).name ===
+                    "Operando",
+                },
+                "font-bold"
+              )}
+            >
               {getCurrentStateData(state.equipmentStateId).name}
             </TableCell>
           </TableRow>
