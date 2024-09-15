@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'react-leaflet';
+import MyContext from '../../context/MyContext';
+import { FilterState } from '../../interfaces/FilterState.interface';
 
-function PopupLeaflet() {
+function PopupLeaflet(props: { currentState: string }) {
+  const { currentState } = props;
+  const { stateOptions } = useContext(MyContext) as FilterState;
+  const [itemStateName, setItemStateName] = useState<string>('');
+
+  useEffect(() => {
+    const dataError = 'Erro ao buscar os dados.';
+    const getStateInfo = stateOptions.find((item) => item.id === currentState);
+    const info = getStateInfo?.name || dataError;
+
+    setItemStateName(info);
+  }, [stateOptions]);
+
   return (
     <Popup>
-      {/* <img
-              src={
-                'https://br.web.img3.acsta.net/medias/nmedia/18/96/03/40/20440821.jpg'
-              }
-              width={'20px'}
-              height={'20px'}
-              alt="Popup Image"
-            /> */}
-      Sou interativo!!
+      <p>{`Este equipamento está: ${itemStateName}`}</p>
+      <p>Visualizar todo o histórico do equipamento</p>
     </Popup>
   );
 }

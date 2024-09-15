@@ -2,11 +2,15 @@ import React from 'react';
 import { Icon } from 'leaflet';
 import { Marker } from 'react-leaflet';
 import PopupLeaflet from './Popup.leaflet';
+import { EquipmentPropsToMarker } from '../../interfaces/EquipmentProps.interface';
 
-function MarkerLeaflet() {
+function MarkerLeaflet(props: { item: EquipmentPropsToMarker; key: string }) {
+  const {
+    item: { currentPosition, currentState /* , equipmentModelId, id, name */ },
+  } = props;
   return (
     <Marker
-      position={[51.505, -0.09]}
+      position={[currentPosition.lat, currentPosition.lon]}
       icon={
         new Icon({
           iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -15,7 +19,7 @@ function MarkerLeaflet() {
         })
       }
     >
-      <PopupLeaflet />
+      <PopupLeaflet currentState={currentState} />
     </Marker>
   );
 }
