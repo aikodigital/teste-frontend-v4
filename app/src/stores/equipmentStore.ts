@@ -7,12 +7,13 @@ import equipmentStateHistoryData from '../../../data/equipmentStateHistory.json'
 
 export interface Position {
    lat: number;
-   lon: number;
+   lng: number;
 }
 
 export interface Equipment {
    id: string;
    name: string;
+   equipmentModelId: string;
 }
 
 export interface EquipmentModel {
@@ -47,19 +48,20 @@ export const useEquipmentStore = defineStore('equipment', {
    }),
    actions: {
       getEquipment(id: string) {
-         return this.equipments.find(equip => equip.id === id);
+         return this.equipments.find((equip) => equip.id === id);
       },
       getState(id: string) {
-         return this.states.find(state => state.id === id);
+         return this.states.find((equip) => equip.id === id);
       },
       getModel(id: string) {
-         return this.models.find(model => model.id === id);
+         return this.models.find((model) => model.id === id);
       },
       getPositionHistory(id: string) {
-         return this.positionsHistories.find(history => history.equipmentId === id);
+         return this.positionsHistories.find((history) => history.equipmentId === id);
       },
       getStateHistory(id: string) {
-         return this.stateHistories.find(history => history.equipmentId === id);
+         const history = this.stateHistories.find((history) => history.equipmentId === id);
+         return history || { states: [] };
       },
    },
 });
