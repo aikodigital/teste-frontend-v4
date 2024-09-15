@@ -3,7 +3,7 @@
     <LMap
       ref="map"
       :zoom="zoom"
-      :center="[47.21322, -1.559482]"
+        :center="[-19.151801, -46.007759]"
       :use-global-leaflet="false"
     >
       <LTileLayer
@@ -44,9 +44,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const zoom = ref(6)
+const zoom = ref(11)
 
 const store = useMyEquipmentStore()
 const { equipment, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory } = storeToRefs(store)
