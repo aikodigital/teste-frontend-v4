@@ -19,4 +19,8 @@ export const Wrapper = styled.div`
         overflow: hidden;
     }
 
+    .sidebar-container{
+        overflow-y: scroll;
+    }
+
 `

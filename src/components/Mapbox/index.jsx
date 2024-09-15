@@ -10,7 +10,6 @@ const Mapbox = () => {
     
     
     const equipmentMarkers = useSelector((state) => state.equipments)
-    console.log(equipmentMarkers)
 
 
     const [view, setView] = useState({
@@ -35,12 +34,12 @@ const Mapbox = () => {
         {equipmentMarkers.map( ({lastPos, lastState, name, model}) => (
 
             <>
-                <Marker latitude={lastPos.lat} longitude={lastPos.lon} color={lastState.color} value={name} onClick={e => (console.log('hi'))}/>
+                <Marker latitude={lastPos.lat} longitude={lastPos.lon} color={lastState.color}/>
                 <Popup latitude={lastPos.lat} longitude={lastPos.lon} closeOnClick={false} anchor="top" >
                     <div>
                         <h3>{name}</h3>
                         <h3>{model}</h3>
-                        <h4>{lastState.name}</h4>
+                        <h4 style={{color: lastState.color}}>{lastState.name}</h4>
                     </div>
                 </Popup>
             </>
