@@ -67,7 +67,15 @@
    - **Responsabilidade**: Permite ao usuário filtrar dados com base na hora e no período do dia (AM/PM).
    - **Dependências**: Nenhuma dependência externa específica.
 
-3. **EquipmentModal**:
+3. **EquipmentMap**:
+   - **Responsabilidade**: Gerencia a visualização de equipamentos em um mapa, permitindo filtrar equipamentos por estado e modelo. Calcula e exibe a produtividade e o ganho de um equipamento selecionado. Também exibe um histórico de posições e fornece um modal com detalhes do equipamento.
+   - **Dependências**: react, leaflet, react-leaflet para a visualização do mapa e interação com os dados dos equipamentos.
+
+4. **MapComponent**:
+   - **Responsabilidade**: Exibe a visualização de um mapa com marcadores para os equipamentos. Mostra o histórico de posições dos equipamentos e permite a interação com os marcadores para visualizar detalhes adicionais em um modal.
+   - **Dependências**: `leaflet` e `react-leaflet` para a visualização e manipulação do mapa.
+
+5. **EquipmentModal**:
    - **Responsabilidade**: Exibe detalhes sobre um equipamento selecionado em um modal. Permite filtrar o histórico de estados e visualizar dados como produtividade e ganho.
    - **Dependências**: `react-modal` para a criação do modal e `leaflet`/`react-leaflet` para a visualização de mapas.
 
