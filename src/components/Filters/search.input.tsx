@@ -1,10 +1,6 @@
 import React, { useContext } from 'react';
 import MyContext from '../../context/MyContext';
-
-interface FilterState {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
+import { FilterState } from '../../interfaces/FilterState.interface';
 
 function SearchInput() {
   const { setSearch } = useContext(MyContext) as FilterState;

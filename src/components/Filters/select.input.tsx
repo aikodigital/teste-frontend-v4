@@ -1,17 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import EquipmentStateData from '../../challenge-info/data/equipmentState.json';
 import MyContext from '../../context/MyContext';
-
-interface EquipmentState {
-  id: string;
-  name: string;
-  color: string;
-}
-
-interface FilterState {
-  filterByCurrentState: string;
-  setFilterByCurrentState: React.Dispatch<React.SetStateAction<string>>;
-}
+import React, { useState, useEffect, useContext } from 'react';
+import { FilterState } from '../../interfaces/FilterState.interface';
+import { EquipmentState } from '../../interfaces/EquipmentState.interface';
+import EquipmentStateData from '../../challenge-info/data/equipmentState.json';
 
 const SelectInput: React.FC = () => {
   const [currentChoice, setCurrentChoice] = useState<string>('');
