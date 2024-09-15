@@ -1,20 +1,21 @@
 import "./index.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
+import { Icon, LatLngExpression, DivIcon, divIcon } from "leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import { v4 as uuidv4 } from 'uuid';
 
+type markerType = {
+  equipmentId: String,
+  geocode: LatLngExpression,
+}
 
 const App = () => {
-
-  type markerType = {
-    equipmentId: String,
-    geocode: LatLngExpression,
-  }
 
   const markers: markerType[] = [
     {
       equipmentId: "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-      geocode: [-19.151801, -46.007759]
+      geocode: [-19.151801, -46.007759],
     },
     {
       equipmentId: "1c7e9615-cc1c-4d72-8496-190fe5791c8b",
@@ -50,18 +51,32 @@ const App = () => {
     }
   ];
 
+  const customIcon = new Icon({
+    iconUrl: "../img/box-truck.png",
+    iconSize: [38, 38]
+  })
+
+  const createCustomClusterIcon = (cluster: any) => {
+    return new (divIcon as any)({                                                  //ARRUMAR O TIPO
+      html: `<div class="cluster-icon">${cluster.getChildCount()}</div>`,
+    });
+  };
+
   return (
     <MapContainer center={[-19.151801, -46.007759]} zoom={13} scrollWheelZoom={false}>
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
-  {markers.map(marker => (
-    <Marker position={marker.geocode}>
 
+  <MarkerClusterGroup chunkedLoading >
+  {markers.map(marker => (
+    <Marker position={marker.geocode} icon={customIcon} key={uuidv4()}>
+      <Popup>{marker.equipmentId}</Popup>
     </Marker>
   ))
   }
+  </MarkerClusterGroup>
   
   </MapContainer>
   )
