@@ -26,6 +26,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   calculateProductivity,
 }) => {
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Novo estado para o termo de pesquisa
 
   const getCurrentState = (equipmentId: string) => {
     const history = stateHistory[equipmentId];
@@ -55,21 +56,37 @@ const MapComponent: React.FC<MapComponentProps> = ({
   };
 
   const getPolylinePositions = (equipmentId: string): LatLngTuple[] => {
-    return positionsHistory[equipmentId]?.map(pos => [pos.lat, pos.lon] as LatLngTuple) || [];
+    return positionsHistory[equipmentId]?.map((pos) => [pos.lat, pos.lon] as LatLngTuple) || [];
   };
 
+  const filteredPositions = positions.filter((pos) => {
+    const equipment = equipmentData.find((eq) => eq.id === pos.id);
+    return (
+      equipment?.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      pos.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      equipment?.equipmentModelId.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });  
+
   return (
-    <div>
+    <div className="flex flex-col">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Pesquisar equipamento por nome, modelo ou ID"
+        className="mb-4 p-2 border w-[100%] self-center border-gray-300 rounded-md"
+      />
       <MapContainer
         center={[-19.126536, -45.947756]}
         zoom={10}
-        style={{ height: "500px", width: "50vw" }}
+        style={{ height: "50vh", width: "80vw" }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-        {positions.map((pos) => {
+        {filteredPositions.map((pos) => {
           const currentState = getCurrentState(pos.id);
           const equipment = equipmentData.find((eq) => eq.id === pos.id);
           const productivity = calculateProductivity(pos.id);
@@ -103,9 +120,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       if (selectedEquipmentId === pos.id) {
-                        setSelectedEquipmentId(null); 
+                        setSelectedEquipmentId(null);
                       } else {
-                        setSelectedEquipmentId(pos.id); 
+                        setSelectedEquipmentId(pos.id);
                       }
                     }}
                     className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition ease-in-out duration-300"

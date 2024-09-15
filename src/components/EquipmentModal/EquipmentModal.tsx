@@ -15,7 +15,6 @@ interface EquipmentModalProps {
   equipmentStates: Record<string, State>;
   stateHistory: Record<string, { date: string; equipmentStateId: string }[]>;
   earnings: string | number;
-  showPositionHistory: (id: any) => void;
 }
 
 const EquipmentModal: React.FC<EquipmentModalProps> = ({
@@ -26,7 +25,6 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
   equipmentStates,
   stateHistory,
   earnings,
-  showPositionHistory,
 }) => {
   const [selectedStateId, setSelectedStateId] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -114,7 +112,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
       className="modal"
       overlayClassName="overlay"
     >
-      <h2 className="font-bold text-center mb-5">Detalhes do Equipamento</h2>
+      <h2 className="font-bold text-center mb-5 mt-11">Detalhes do Equipamento</h2>
       {selectedEquipment && (
         <div>
           <h3>{selectedEquipment.name || "Equipamento Desconhecido"}</h3>
@@ -124,7 +122,6 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({
             {getCurrentState(selectedEquipment.id)?.name || "Desconhecido"}
           </p>
           <p>Ganho Total: {earnings}</p>
-          <button onClick={() => showPositionHistory(selectedEquipmentId)}>Show Position History</button>
           <h4 className="mt-5">Filtrar Estado:</h4>
 
           <select
