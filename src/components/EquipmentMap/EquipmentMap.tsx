@@ -69,14 +69,16 @@ const calculateEarnings = (
 
 const EquipmentMap: React.FC = () => {
   const [positions, setPositions] = useState<Position[]>([]);
+  const [positionsHistory, setPositionsHistory] = useState<Record<string, Position[]>>({});
   const [equipmentStates, setEquipmentStates] = useState<Record<string, State>>({});
-  const [stateHistory, setStateHistory] = useState<Record<string, { date: string; equipmentStateId: string; hours: number }[]>>({});
+  const [stateHistory, setStateHistory] = useState<Record<string, { date: string; equipmentStateId: string }[]>>({});
   const [models, setModels] = useState<Record<string, Model>>({});
   const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const [selectedStateFilter, setSelectedStateFilter] = useState<string | null>(null);
   const [selectedModelFilter, setSelectedModelFilter] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState<boolean>(false);
 
   useEffect(() => {
     const latestPositions = equipmentPositionHistory.map((item: any) => {
@@ -90,6 +92,15 @@ const EquipmentMap: React.FC = () => {
     });
     setPositions(latestPositions);
 
+    const positionsHistoryMap = equipmentPositionHistory.reduce(
+      (acc: Record<string, Position[]>, item: any) => {
+        acc[item.equipmentId] = item.positions;
+        return acc;
+      },
+      {}
+    );
+    setPositionsHistory(positionsHistoryMap);
+
     const statesMap = equipmentState.reduce((acc: Record<string, State>, state: State) => {
       acc[state.id] = state;
       return acc;
@@ -97,7 +108,7 @@ const EquipmentMap: React.FC = () => {
     setEquipmentStates(statesMap);
 
     const stateHistoryMap = equipmentStateHistory.reduce(
-      (acc: Record<string, { date: string; equipmentStateId: string; hours: number }[]>, history: any) => {
+      (acc: Record<string, { date: string; equipmentStateId: string }[]>, history: any) => {
         acc[history.equipmentId] = history.states;
         return acc;
       },
@@ -155,6 +166,11 @@ const EquipmentMap: React.FC = () => {
     setSelectedEquipmentId(null);
   };
 
+  const showPositionHistory = (id: string) => {
+    setSelectedEquipmentId(id);
+    setShowHistory(true);
+  };
+
   const earnings = selectedEquipmentId ? calculateEarnings(selectedEquipmentId, stateHistory, models) : 0;
 
   return (
@@ -191,12 +207,14 @@ const EquipmentMap: React.FC = () => {
       </div>
       <MapComponent
         positions={filteredPositions}
+        positionsHistory={positionsHistory}
         equipmentData={equipmentData}
         equipmentStates={equipmentStates}
         stateHistory={stateHistory}
         models={models}
         onMarkerClick={openModal}
         calculateProductivity={calculateProductivity}
+        showPositionHistory={showHistory ? positionsHistory[selectedEquipmentId || ""] : []}
       />
       <EquipmentModal
         isOpen={modalIsOpen}
@@ -206,6 +224,7 @@ const EquipmentMap: React.FC = () => {
         equipmentStates={equipmentStates}
         stateHistory={stateHistory}
         earnings={earnings}
+        showPositionHistory={showPositionHistory}
       />
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import L, { LatLngTuple } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Position, State, Model } from "../../types/Equipment";
 
 interface MapComponentProps {
   positions: Position[];
+  positionsHistory: Record<string, Position[]>;
   equipmentData: any[];
   equipmentStates: Record<string, State>;
   stateHistory: Record<string, { date: string; equipmentStateId: string }[]>;
@@ -16,6 +17,7 @@ interface MapComponentProps {
 
 const MapComponent: React.FC<MapComponentProps> = ({
   positions,
+  positionsHistory,
   equipmentData,
   equipmentStates,
   stateHistory,
@@ -23,7 +25,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   onMarkerClick,
   calculateProductivity,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string | null>(null);
 
   const getCurrentState = (equipmentId: string) => {
     const history = stateHistory[equipmentId];
@@ -40,7 +42,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
     const modelColors: Record<string, string> = {
       "a3540227-2f0e-4362-9517-92f41dabbfdf": "#ff5722",
       "9c3d009e-0d42-4a6e-9036-193e9bca3199": "#4caf50",
-      "a4b0c114-acd8-4151-9449-7d12ab9bf40f": "#2196f3"
+      "a4b0c114-acd8-4151-9449-7d12ab9bf40f": "#2196f3",
     };
 
     const color = modelColors[modelId] || "#000";
@@ -52,26 +54,22 @@ const MapComponent: React.FC<MapComponentProps> = ({
     });
   };
 
-  const filteredPositions = positions.filter((pos) => {
-    const equipment = equipmentData.find((eq) => eq.id === pos.id);
-    return equipment?.name.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  const getPolylinePositions = (equipmentId: string): LatLngTuple[] => {
+    return positionsHistory[equipmentId]?.map(pos => [pos.lat, pos.lon] as LatLngTuple) || [];
+  };
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Pesquisar Equipamento"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="p-2 border rounded w-full max-w-sm mx-auto mb-4"
-      />
-      <MapContainer center={[-19.126536, -45.947756]} zoom={10} style={{ height: "500px", width: "50vw" }}>
+      <MapContainer
+        center={[-19.126536, -45.947756]}
+        zoom={10}
+        style={{ height: "500px", width: "50vw" }}
+      >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-        {filteredPositions.map((pos: Position) => {
+        {positions.map((pos) => {
           const currentState = getCurrentState(pos.id);
           const equipment = equipmentData.find((eq) => eq.id === pos.id);
           const productivity = calculateProductivity(pos.id);
@@ -101,6 +99,31 @@ const MapComponent: React.FC<MapComponentProps> = ({
                   >
                     Ver Detalhes
                   </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (selectedEquipmentId === pos.id) {
+                        setSelectedEquipmentId(null); 
+                      } else {
+                        setSelectedEquipmentId(pos.id); 
+                      }
+                    }}
+                    className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition ease-in-out duration-300"
+                  >
+                    {selectedEquipmentId === pos.id ? "Ocultar Histórico" : "Mostrar Histórico"}
+                  </button>
+
+                  {selectedEquipmentId === pos.id && (
+                    <div className="popup">
+                      <Polyline
+                        positions={getPolylinePositions(pos.id)}
+                        color="blue"
+                        weight={4}
+                        opacity={0.7}
+                        dashArray="10, 10"
+                      />
+                    </div>
+                  )}
                 </div>
               </Popup>
             </Marker>
