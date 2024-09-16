@@ -3,24 +3,55 @@ import { test } from "../../store/reducers/test"
 import { SidebarWrapper } from "./style"
 import EquipmentItem from "../EquipmentItem"
 
+import equipmentState from '../../data/equipmentState.json'
+import { filterStatus } from "../../store/reducers/equipments"
+import { useState } from "react"
+
 
 const Sidebar = () => {
 
     const dispatch= useDispatch()
-    const placeholder = useSelector((state)=> state.test)
 
-    const equipments = useSelector((state) => state.equipments)
-    console.log(equipments)
+    const equipments = useSelector((state) => state.equipments.filtered)
 
-    
+    const [filter, setFilter] = useState('')
+
+
+    //separa de forma dinamica os diferentes nomes de estados em um array para mapeamento das options do filtro
+    const statusOptions = ['Todos']
+    equipmentState.forEach(item => {
+        const name = item.name
+        statusOptions.push(name)
+    })
+
+
+    const handleFilterChange = (x) => {
+        dispatch(filterStatus(x))
+    }
+
+
+
 
     return(
         <SidebarWrapper>
 
             {/* <div className="search">
                 <input type="text" onChange={(e) => dispatch(test(e.target.value))}></input>
+            </div> */}
+
+            <div className="filters">
+                <div className="status-filter">
+                    <label htmlFor="status">Filtrar por Status: </label>
+                    <select name="status" onChange={e => handleFilterChange(e.target.value)}>
+
+                        {statusOptions.map(x => (
+                            <option value={x} key={x}>{x}</option>
+                        ))}
+
+                    </select>
+
+                </div>
             </div>
-            <div className="filters"></div> */}
             
             <ul className="equipment-list">
 

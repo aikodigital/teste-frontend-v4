@@ -6,8 +6,19 @@ export const SidebarWrapper = styled.div`
     padding: 16px;
     
     
-    ul{
-
+    .filters{
+        background-color: aliceblue;
+        align-self: flex-end;
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 20px;
+        
+        select{
+            padding: 4px;
+            border-radius: 4px;
+            border:solid 1px grey;
+            margin-left: 8px;
+        }
 
     }
 

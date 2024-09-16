@@ -25,9 +25,10 @@ const formatDate = (dateString) => {
 }
 
 // agrega as infos de cada equipamento em um array so 
-// nome, modelo, ultima localizacao, ultimo estado
-
-const equipments = []
+const equipments = {
+    filtered:[],
+    unfiltered:[],
+}
 
 equipment.forEach(item => {
 
@@ -62,11 +63,11 @@ equipment.forEach(item => {
     // armazena na variavel equipmentMarkers o array de objetos compilados dos arquivos json
     const compiledEquipments = {...tempItem, model:modelo, posHistory, lastPos, lastState, newStateHistory}
 
-    equipments.push(compiledEquipments)
+    equipments.unfiltered.push(compiledEquipments)
 
-    
 });
 
+equipments.filtered = equipments.unfiltered
 
 const initialState = equipments;
 
@@ -74,17 +75,14 @@ const equipmentSlice = createSlice({
     name: 'equipments',
     initialState,
     reducers: {
-        // focus: (state, action) => {
-        //     state.filter(action.payload)
-        // }
-
-        stateHistory: (state, action) => {
-
-            //separa o equipamento do estado com base no id
-            const currentEquipment = state.filter( (eq) => action.payload === eq.id )
 
 
-            return currentEquipment.stateHistory
+        filterStatus: (state, action) => {
+            if (action.payload === 'Todos') {
+                state.filtered = state.unfiltered // reseta o array filtered para os valores nao filtrados
+            } else {
+                state.filtered = state.unfiltered.filter(x => x.lastState.name === action.payload)
+            }
         }
 
     }
@@ -92,5 +90,5 @@ const equipmentSlice = createSlice({
 
 // retorna o hisotrico de estados a partir de um id da payload
 
-export const { stateHistory } = equipmentSlice.actions
+export const { filterStatus } = equipmentSlice.actions
 export default equipmentSlice.reducer;
