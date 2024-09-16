@@ -139,20 +139,28 @@ export function useHomeHooks() {
 
     if (!states || states.length === 0) return { productivityPercentage: '', equipmentGain };
 
-    for (let i = states.length - 1;i > 0;i--) {
+    for (let i = 1;i < states.length;i++) {
       const prevState = states[i - 1];
       const currentState = states[i];
 
-      const startTime = new Date(String(prevState?.date)).getTime();
-      const endTime = new Date(String(currentState?.date)).getTime();
+      if (!prevState?.date || !currentState?.date || !prevState?.state?.id) continue;
 
-      const hoursInState = (endTime - startTime) / (1000 * 60 * 60);
+      const startTime = new Date(prevState.date);
+      const endTime = new Date(currentState.date);
+
+      const previousDay = startTime.toISOString().split('T')[0];
+      const currentDay = endTime.toISOString().split('T')[0];
+
+      if (previousDay !== currentDay) continue
+
+      const hoursInState = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
       totalHours += hoursInState;
 
       const hourlyEarning = equipmentModel?.hourlyEarnings?.find(
         item => item.equipmentStateId === prevState?.state?.id
       )?.value ?? 0;
-      equipmentGain += Math.abs(hoursInState) * hourlyEarning;
+
+      equipmentGain += hoursInState * hourlyEarning;
 
       if (prevState?.state?.name === "Operando") {
         totalOperatingHours += hoursInState;
