@@ -28,11 +28,11 @@ export default function Home() {
         <div>
           {!!equipmentOptions.length && (
             <select
-              value={selectedEquipment?.id}
+              value={selectedEquipment?.id ?? ''}
               onChange={e => setSelectedEquipment(data.find(item => item.id === e.target.value) ?? null)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
             >
-              <option defaultChecked>Escolha um equipamento</option>
+              <option value="">Escolha um equipamento</option>
               {equipmentOptions.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
               ))}
