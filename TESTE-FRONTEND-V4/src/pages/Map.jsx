@@ -5,9 +5,10 @@ import Equipment from '../data/equipment.json';
 import equipmentStateHistory from '../data/equipmentStateHistory.json';
 import equipmentState from '../data/equipmentState.json';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './Map.css';
 
-export default function Map() {
+export default function Map({ searchTerm }) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyD9-vWJSREKOUMMvHjzalbmsHYJrr64WTY',
@@ -17,14 +18,29 @@ export default function Map() {
   const [markers, setMarkers] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [equipmentHistory, setEquipmentHistory] = useState([]);
+  const [filteredEquipments, setFilteredEquipments] = useState([]);
 
   useEffect(() => {
     if (isLoaded) {
       const latestPosiotions = EquipmentsLocation();
       setEquipmentsLocal(latestPosiotions);
+      setFilteredEquipments(latestPosiotions);
       setMarkers(true);
     }
   }, [isLoaded]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      // Filtra os equipamentos que correspondem ao termo de busca
+      const filtered = equipmentsLocal.filter((equip) => {
+        const equipmentData = Equipment.find((e) => e.id === equip.equipmentId);
+        return equipmentData && equipmentData.model.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+      setFilteredEquipments(filtered);
+    } else {
+      setFilteredEquipments(equipmentsLocal); // Se não houver termo, mostra todos
+    }
+  }, [searchTerm, equipmentsLocal]);
 
   const handleClickMarker = (equipment) => {
     if (selectedEquipment && selectedEquipment.id === equipment.id) {
@@ -55,7 +71,7 @@ export default function Map() {
 
   const renderMarkers = () => {
     if (!markers) return null;
-    return equipmentsLocal.map((equip, index) => {
+    return filteredEquipments.map((equip, index) => {
       const equipmentPosition = Equipment.find(e => e.id === equip.equipmentId);
 
       if (!equipmentPosition) {
@@ -100,6 +116,7 @@ export default function Map() {
 
   return (
     <main className='map'>
+
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={{ height: "100%", width: "100%" }}
@@ -116,3 +133,7 @@ export default function Map() {
     </main>
   )
 }
+
+Map.propTypes = {
+  searchTerm: PropTypes.string,
+};
