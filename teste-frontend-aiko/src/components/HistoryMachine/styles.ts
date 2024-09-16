@@ -9,5 +9,5 @@ export const Container = styled.div`
 
 export const Filters = styled.div`
   display: flex;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px 400px;
 `;

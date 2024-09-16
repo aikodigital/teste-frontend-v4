@@ -1,18 +1,18 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { useState } from 'react';
+import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { useState } from 'react'
 
 interface FilterStateProps {
-  onStateChange: (state: string) => void;
+  onStateChange: (state: string) => void
 }
 
 export const FilterState = ({ onStateChange }: FilterStateProps) => {
-  const [state, setState] = useState('');
+  const [state, setState] = useState('')
 
-  const handleChange = (event: any) => {
-    const newState = event.target.value as string;
-    setState(newState);
-    onStateChange(newState);
-  };
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    const newState = event.target.value as string
+    setState(newState)
+    onStateChange(newState)
+  }
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -32,7 +32,7 @@ export const FilterState = ({ onStateChange }: FilterStateProps) => {
         </Select>
       </FormControl>
     </Box>
-  );
-};
+  )
+}
 
 export default FilterState;

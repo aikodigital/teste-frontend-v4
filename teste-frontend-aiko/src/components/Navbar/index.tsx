@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Aiko from "../../assets/aiko.png";
+import Aiko from "../../assets/aiko.png"
 
 export const Navbar = () => {
   return (
@@ -11,4 +11,4 @@ export const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar

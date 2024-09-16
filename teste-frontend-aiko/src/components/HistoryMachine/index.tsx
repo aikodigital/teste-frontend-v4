@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import * as S from "./styles";
+import React, { useEffect, useState } from "react"
+import * as S from "./styles"
 import {
   Table,
   TableBody,
@@ -7,111 +7,121 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-} from "@mui/material";
-import FilterState from "./components/FilterState";
-
+} from "@mui/material"
+import FilterState from "./components/FilterState"
 
 interface HistoryMachineProps {
-  selectedMachineId: string | null;
+  selectedMachineId: string | null
+}
+
+interface EquipmentState {
+  date: string
+  equipmentStateId: string
+}
+
+interface StateMapEntry {
+  name: string
+  color: string
+}
+
+interface EquipmentHistory {
+  equipmentId: string
+  states: EquipmentState[]
 }
 
 export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
-  const [selectedMachineHistory, setSelectedMachineHistory] = useState<any[]>([]);
-  const [stateMap, setStateMap] = useState<Record<string, { name: string; color: string }>>({});
-  const [filteredHistory, setFilteredHistory] = useState<any[]>([]);
-  const [selectedState, setSelectedState] = useState<string>(''); 
-  const [selectedTime, setSelectedTime] = useState<number | ''>(''); 
+  const [selectedMachineHistory, setSelectedMachineHistory] = useState<EquipmentState[]>([])
+  const [stateMap, setStateMap] = useState<Record<string, StateMapEntry>>({})
+  const [filteredHistory, setFilteredHistory] = useState<EquipmentState[]>([])
+  const [selectedState, setSelectedState] = useState<string>('') 
+  const [selectedTime, setSelectedTime] = useState<number | ''>('') 
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
 
   useEffect(() => {
     if (selectedMachineId) {
       fetch("/data/equipmentStateHistory.json")
         .then((response) => response.json())
-        .then((stateHistoryData) => {
-          const selectedHistory = stateHistoryData.find((equipment: any) => {
-            return equipment.equipmentId === selectedMachineId;
-          });
+        .then((stateHistoryData: EquipmentHistory[]) => {
+          const selectedHistory = stateHistoryData.find((equipment) => {
+            return equipment.equipmentId === selectedMachineId
+          })
 
-          if (selectedHistory) {
-            if (Array.isArray(selectedHistory.states)) {
-              setSelectedMachineHistory(selectedHistory.states);
-              setFilteredHistory(selectedHistory.states); 
-            } else {
-              setSelectedMachineHistory([]);
-              setFilteredHistory([]);
-            }
+          if (selectedHistory && Array.isArray(selectedHistory.states)) {
+            setSelectedMachineHistory(selectedHistory.states)
+            setFilteredHistory(selectedHistory.states) 
           } else {
-            setSelectedMachineHistory([]);
-            setFilteredHistory([]);
+            setSelectedMachineHistory([])
+            setFilteredHistory([])
           }
-        });
+        })
     } else {
-      setSelectedMachineHistory([]);
-      setFilteredHistory([]);
+      setSelectedMachineHistory([])
+      setFilteredHistory([])
     }
-  }, [selectedMachineId]);
+  }, [selectedMachineId])
 
   useEffect(() => {
     fetch("/data/equipmentState.json")
       .then((response) => response.json())
-      .then((stateData) => {
+      .then((stateData: Array<{ id: string, name: string, color: string }>) => {
         const stateMap = stateData.reduce(
-          (acc: Record<string, { name: string; color: string }>, state: any) => {
-            acc[state.id] = { name: state.name, color: state.color };
-            return acc;
+          (acc: Record<string, StateMapEntry>, state) => {
+            acc[state.id] = { name: state.name, color: state.color }
+            return acc
           },
           {}
-        );
-        setStateMap(stateMap);
-      });
-  }, []);
+        )
+        setStateMap(stateMap)
+      })
+  }, [])
 
   useEffect(() => {
-    let filtered = selectedMachineHistory;
+    let filtered = selectedMachineHistory
 
     if (selectedState) {
       filtered = filtered.filter(
         (state) => stateMap[state.equipmentStateId]?.name === selectedState
-      );
+      )
     }
 
     if (selectedTime) {
       filtered = filtered.filter((state) => {
-        const stateDate = new Date(state.date);
-        const now = new Date();
+        const stateDate = new Date(state.date)
+        const now = new Date()
         
-        const hoursDifference = Math.abs(now.getTime() - stateDate.getTime()) / 36e5;
-        return hoursDifference <= selectedTime;
-      });
+        const hoursDifference = Math.abs(now.getTime() - stateDate.getTime()) / 36e5
+        return hoursDifference <= selectedTime
+      })
     }
 
-
-    setFilteredHistory(filtered);
-  }, [selectedState, selectedTime, selectedMachineHistory, stateMap]);
+    setFilteredHistory(filtered)
+  }, [selectedState, selectedTime, selectedMachineHistory, stateMap])
 
   const handleStateChange = (state: string) => {
-    setSelectedState(state);
-  };
+    setSelectedState(state)
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   const currentData = filteredHistory.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
-  );
+  )
 
   return (
     <S.Container>
-      <FilterState onStateChange={handleStateChange} />
+      <S.Filters>
+        <FilterState onStateChange={handleStateChange} />
+      </S.Filters>
       <Table>
         <TableHead>
           <TableRow>
@@ -156,7 +166,7 @@ export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
         labelRowsPerPage="Linhas por página"
       />
     </S.Container>
-  );
-};
+  )
+}
 
 export default HistoryMachine;

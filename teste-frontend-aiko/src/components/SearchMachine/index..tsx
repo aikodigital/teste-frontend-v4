@@ -1,20 +1,25 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material"
+
+interface MachineOption {
+  id: string
+  name: string
+}
 
 interface SearchMachineProps {
-  option: { id: string; name: string }[];
-  onSelect?: (value: string) => void;
+  option: MachineOption[]
+  onSelect?: (value: string) => void
 }
 
 export const SearchMachine = ({ option, onSelect }: SearchMachineProps) => {
-  const handleChange = (event: any, value: any) => {
+  const handleChange = (event: React.SyntheticEvent<Element, Event>, value: MachineOption | null) => {
     if (value && onSelect) {
-      onSelect(value.id);
+      onSelect(value.id)
     } else if (onSelect) {
-      onSelect("");
+      onSelect("")
     }
-  };
+  }
 
-  console.log("Options in SearchMachine:", option);
+  console.log("Options in SearchMachine:", option)
 
   return (
     <Autocomplete
@@ -23,9 +28,9 @@ export const SearchMachine = ({ option, onSelect }: SearchMachineProps) => {
       getOptionLabel={(option) => option.name}
       sx={{ width: 600, margin: "20px 0 0 0" }}
       renderInput={(params) => <TextField {...params} label="Máquinas que deseja buscar" />}
-      onChange={handleChange} 
+      onChange={handleChange}
     />
-  );
-};
+  )
+}
 
-export default SearchMachine;
+export default SearchMachine
