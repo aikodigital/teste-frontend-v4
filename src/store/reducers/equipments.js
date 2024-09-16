@@ -28,6 +28,11 @@ const formatDate = (dateString) => {
 const equipments = {
     filtered:[],
     unfiltered:[],
+    focus: {
+        latitude: -19.151801,
+        longitude: -46.007759,
+        zoom: 10,
+    }
 }
 
 equipment.forEach(item => {
@@ -83,6 +88,16 @@ const equipmentSlice = createSlice({
             } else {
                 state.filtered = state.unfiltered.filter(x => x.lastState.name === action.payload)
             }
+        },
+
+        focusEquipment: (state, action) => {
+            const selectedEquipment = state.unfiltered.find((x) => x.id === action.payload);
+        
+            if (selectedEquipment) {
+                state.focus.latitude = selectedEquipment.lastPos.lat;
+                state.focus.longitude = selectedEquipment.lastPos.lon;
+                state.focus.zoom = 12
+            }
         }
 
     }
@@ -90,5 +105,5 @@ const equipmentSlice = createSlice({
 
 // retorna o hisotrico de estados a partir de um id da payload
 
-export const { filterStatus } = equipmentSlice.actions
+export const { filterStatus, focusEquipment } = equipmentSlice.actions
 export default equipmentSlice.reducer;

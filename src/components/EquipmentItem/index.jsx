@@ -1,12 +1,22 @@
-import { useSelector } from "react-redux"
+
+import { useDispatch } from "react-redux"
 import { ListItem, History } from "./style"
 import { useState } from "react"
+import { focusEquipment } from '../../store/reducers/equipments'
 
 
 const EquipmentItem = ({id, name, model, lastState, newStateHistory}) => {
 
 
+    const dispatch = useDispatch()
+
     const [open, setOpen] = useState(false)
+
+    const focusId = (id) => {
+        dispatch(
+            focusEquipment(id)
+        )
+    }
 
     const toggleOpen = () => {
         setOpen(!open)
@@ -15,7 +25,7 @@ const EquipmentItem = ({id, name, model, lastState, newStateHistory}) => {
     return(
         <ListItem
             data-eq-id={id}
-            onClick={e => console.log(e.currentTarget.getAttribute('data-eq-id'))}
+            onClick={e => focusId(e.currentTarget.getAttribute('data-eq-id'))}
             key={id}
         
         >
