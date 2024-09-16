@@ -1,14 +1,14 @@
 # Teste Aiko - Victor Hugo Forbes
 
-Deployed Test on Vercel [Deployed Test on Vercel](https://teste-frontend-v4-seven.vercel.app/).
+<a href="https://teste-frontend-v4-seven.vercel.app/" target="_blank">Deployed Test on Vercel</a>
 
 ## Stack Escolhida
 
 Defini fazer o projeto com React utilizando typescript, tailwind e shadcn para os componentes. São tecnologias que estou familiarizado e trabalho no dia a dia.
 
-Para os mapas, passei por algumas opções mas acabei conseguindo implementar o que parece ser uma abstrações do Google Maps: https://visgl.github.io/react-google-maps/
+Para os mapas, passei por algumas opções mas acabei conseguindo implementar uma abstração para React do Google Maps: https://visgl.github.io/react-google-maps/
 
-Por nunca ter trabalhad com mapas, o setup inicial foi relativamente desafiador e não pude me aprofundar muito para conseguir andar rápido com o teste.
+Por nunca ter trabalhado com mapas, o setup inicial foi relativamente desafiador e não pude me aprofundar muito para conseguir andar rápido com o teste.
 
 ## Features Adicionadas e observações
 
@@ -47,4 +47,4 @@ Nenhum projeto está terminado, apenas decidimos que já está bom suficiente. A
 
 Agradeço a oportunidade de participar do processo, é sempre de grande valia testar minhas habilidades com regras de negócio novas e reais.
 
-Um feedback referente ao desenvolvimento e pontos de melhoria serão altament apreciados :)
+Um feedback referente ao desenvolvimento e pontos de melhoria serão altamente apreciados :)
