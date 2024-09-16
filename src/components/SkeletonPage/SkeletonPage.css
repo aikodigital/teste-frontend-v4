@@ -17,3 +17,12 @@ a {
     font-weight: bold;
     color: blue;
 }
+
+.row.full-height {
+    height: calc(100vh - 90px); /* 70px é a altura do header */
+    min-height: 400px;
+}
+
+.loading-text {
+    text-align: center;
+}

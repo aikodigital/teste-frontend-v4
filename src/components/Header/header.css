@@ -1,8 +1,9 @@
 .header {
     background-color: #1C3A5B;
-    padding: 10px 0;
-
     color: #f6f6f6;
+
+    padding: 10px 0;
+    height: 70px;
 }
 
 .logo {

@@ -36,3 +36,16 @@
 .card-title {
     font-size: 1.25rem;
 }
+
+.card-container {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    min-height: 400px;
+}
+
+@media screen and ( max-width: 768px ) {
+    .card-container {
+        overflow: visible;
+    }    
+}
