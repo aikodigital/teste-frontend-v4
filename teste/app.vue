@@ -23,6 +23,7 @@
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="[marker.lat, marker.lon]"
+        @click="selectedMarkerId = marker.id"
         >
           <LIcon
           :tooltip-anchor="[25, -25]"
@@ -52,6 +53,35 @@
               </template>
             </Card>
           </LTooltip>
+        <Drawer
+          :visible="selectedMarkerId === marker.id"
+          position="right"
+          class="bg-white !w-full md:!w-80 lg:!w-[30rem]"
+        >
+          <template #closeicon>
+            <Button
+              text
+              rounded
+              label="Small"
+              @click="selectedMarkerId = null"
+            >
+              X
+            </Button>
+          </template>
+          <template #header>
+            <div>
+              <h3 class="mt-0 mb-2">
+                {{ marker.name }}: {{ marker.model }}
+              </h3>
+              <h4 class="my-0">
+                Histórico de Estados:
+              </h4>
+            </div>
+          </template>
+          <StateDrawerContent
+            :state-history="marker.stateHistory.states"
+          />
+        </Drawer>
       </LMarker>
     </LMap>
   </div>
@@ -63,6 +93,8 @@ const zoom = ref(11)
 const store = useMyEquipmentStore()
 const { equipment, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory } = storeToRefs(store)
 const { getAllData } = store
+
+const selectedMarkerId = ref(null)
 
 await useAsyncData(() => getAllData().then(() => true))
 
@@ -100,6 +132,7 @@ const markers = computed(() => {
       lon: latestPosition.lon,
       state: state.name,
       stateColor: state.color,
+      stateHistory: stateHistory,
       icon: icon,
     }
   })
