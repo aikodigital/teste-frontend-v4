@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
-
-import { equipmentList, equipmentStatesHistory, equipmentStatesInfoList } from '../../utils/sharedData';
-
 import './SkeletonPage.css';
-
 import EquipmentStateHistorySection from '../EquipmentStateHistory/equipmentStateHistorySection';
 import CardList from '../CardList/CardList';
 import MapComponent from '../MapComponent/MapComponent';
 import Header from '../Header/header';
 import { useNavigate } from 'react-router-dom';
+import { useEquipmentData } from '../../contexts/EquipmentDataContext'; // Importa o contexto
 
 interface SkeletonPageProps {
     selectedEquipment?: string | null;
 }
 
-const SkeletonPage: React.FC<SkeletonPageProps> = ({
-    selectedEquipment
-}) => {
+const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
     const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para o termo de pesquisa
 
     const navigate = useNavigate();
 
-    // Navega para página de detalhes do Equipamento
+    // Corrigido: chamando diretamente o hook customizado `useEquipmentData`
+    const { equipmentList, equipmentStatesHistory, equipmentStatesInfoList, loading } = useEquipmentData();
+
     const handleCardClick = (id: string) => {
         navigate(`/details?id=${id}`);
     };
@@ -30,6 +27,10 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({
     const filteredEquipmentList = equipmentList.filter((equipment) =>
         equipment.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) {
+        return <p>Carregando dados...</p>;
+    }
 
     return (
         <>
@@ -50,7 +51,6 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({
                                 stateHistory={equipmentStatesHistory}
                                 stateInfoList={equipmentStatesInfoList}
                             />
-
                         </>
                     ) : (
                         <>
@@ -74,16 +74,17 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({
                                 equipmentList={filteredEquipmentList}
                                 onCardClick={handleCardClick}
                             />
-
                         </>
                     )}
                 </div>
 
                 <div className="col-md-6 map-container">
-                    <MapComponent
-                        selectedEquipment={selectedEquipment}
-                        equipmentList={filteredEquipmentList}
-                    />
+                    {filteredEquipmentList?.length > 0 &&
+                        <MapComponent
+                            selectedEquipment={selectedEquipment}
+                            equipmentList={filteredEquipmentList}
+                        />
+                    }
                 </div>
             </div>
         </>
