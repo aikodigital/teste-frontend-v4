@@ -18,7 +18,7 @@ const createMarker = ({ coordinates, popupValue, tooltipValue, icon }: MarkerPro
   const marker = new Marker(coordinates);
 
   if (popupValue) {
-    marker.bindPopup(popupValue);
+    marker.bindPopup(popupValue, { maxWidth: 500, maxHeight: 250 });
   }
 
   if (tooltipValue) {
