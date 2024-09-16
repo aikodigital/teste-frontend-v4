@@ -1,0 +1,14 @@
+.search-bar {
+    margin-bottom: 1rem;
+    .MuiOutlinedInput-root {
+      fieldset {
+        border-color: #ccc;
+      }
+      &:hover fieldset {
+        border-color: #000;
+      }
+      &.Mui-focused fieldset {
+        border-color: #3f51b5;
+      }
+    }
+  }

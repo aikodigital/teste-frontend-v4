@@ -1,207 +1,116 @@
-# Teste Frontend V4
+# Gestão de Equipamentos
 
-![Aiko](img/aiko.png)
+## Overview
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+This application is designed for managing and monitoring equipment with functionalities like displaying equipment on a map, filtering equipment data, and calculating operational metrics like productivity and earnings.
 
-## O Desafio
+## Features
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+- **Map Visualization**: Displays equipment on an interactive map using `react-leaflet`.
+- **Filtering**: Equipment can be filtered based on state, model, and operational date range.
+- **Equipment Details**: Provides detailed information about each equipment, including its operational state and historical data.
+- **Productivity and Earnings Calculation**: Displays productivity percentage and earnings based on the operational state of the equipment.
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+## Technologies Used
 
-## Requisitos
+- **React**: For building the user interface.
+- **React-Leaflet**: For map visualization.
+- **Material-UI**: For UI components like buttons and inputs.
+- **SCSS**: For styling.
+- **Jest**: For testing (though tests aren't implemented).
+- **JSON**: For data storage.
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+## Project Structure
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+- `App.js`: The main application component. Initializes states, handles data fetching, and controls the layout of the app.
+- `components/`: Contains reusable React components like `EquipmentMap`, `EquipmentList`, `EquipmentDetails`, `Filters`, and `SearchBar`.
+- `data/`: Contains JSON files used to populate the application with equipment data.
+- `utils/`: Utility functions for calculations like `calculateProductivity` and `calculateEarnings`.
+- `styles/`: Contains SCSS styles for the application.
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+## Installation and Setup
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+1. **Clone the Repository**:
+    ```bash
+    git clone <repository_url>
+    cd <project_directory>
+    ```
 
-## Dados
+2. **Install Dependencies**:
+    ```bash
+    npm install
+    ```
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+3. **Run the Application**:
+    ```bash
+    npm start
+    ```
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+    The application will be available at `http://localhost:3000`.
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+## Usage
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+1. **Map Interaction**: The map displays equipment as markers. Clicking on a marker shows a popup with detailed information about the equipment, including its operational state and productivity.
+2. **Search**: Use the search bar to find equipment by name.
+3. **Filters**: Filter equipment based on state, model, and date range.
+4. **Clear Filters**: Use the "Limpar Pesquisa" button to reset all filters.
+5. **View Details**: Click on "Ver Histórico Completo" to see detailed information about the selected equipment.
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+## Components
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+### `App.js`
+- Initializes and manages the application's state.
+- Renders child components like `EquipmentMap`, `EquipmentList`, `EquipmentDetails`, and `Filters`.
+- Implements functions to handle user interactions, such as filtering and searching equipment.
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+### `EquipmentMap.js`
+- Uses `react-leaflet` to render a map with equipment markers.
+- Displays tooltips for each equipment with its current state, productivity, and earnings.
+- Draws polylines to show the equipment's movement history.
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+### `EquipmentList.js`
+- Renders a list of equipment.
+- Calls `onEquipmentClick` to handle user clicks on equipment items.
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+### `EquipmentDetails.js`
+- Shows detailed information about the selected equipment, including its state history.
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+### `Filters.js`
+- Provides filtering options for state, model, and date range.
+- Calls `onFilterChange` to update the filter criteria.
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+### `SearchBar.js`
+- Contains an input field for searching equipment by name.
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+## Utilities
 
+### `calculateProductivity.js`
+- Calculates the productivity percentage based on the equipment's operational state.
 
-## O que é permitido
+### `calculateEarnings.js`
+- Calculates earnings based on the equipment model's hourly earnings and the equipment's operational state history.
 
-* Vue, React e Angular.
+### `formatBRL.js`
+- Formats numbers into the Brazilian Real (R$) currency format.
 
-* Typescript.
+## Data Structure
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+- `equipment.json`: Contains details about each equipment.
+- `equipmentModel.json`: Defines the models for the equipment and includes hourly earnings information.
+- `equipmentPositionHistory.json`: Stores historical positional data for each equipment.
+- `equipmentState.json`: Defines the possible states for equipment.
+- `equipmentStateHistory.json`: Tracks the state history of each equipment.
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+## Future Improvements
 
-* Template engines (Pug, Ejs, etc).
+- **Performance Optimization**: Enhance filtering and map rendering for large datasets.
+- **Accessibility**: Improve accessibility features for better usability.
+- **Error Handling**: Add comprehensive error handling and validation for robust application behavior.
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+## License
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+This project is licensed under the MIT License.
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+## Contact
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-## O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-* Relizar o fork e clonar esse repositório para sua máquina.
-  
-* Criar uma branch com o nome de `teste/[NOME]`.
-  * `[NOME]`: Seu nome.
-  * Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-  
-* Faça um commit da sua branch com a implementação do teste.
-  
-* Realize o pull request da sua branch nesse repositório.
+For questions or suggestions, please reach out to [Luiz Felipe Apolinário](mailto:lfelipeapo@gmail.com).
