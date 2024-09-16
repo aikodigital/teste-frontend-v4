@@ -9,6 +9,11 @@
             <p class="text-white mt-4">Horas de Manutenção: {{ hoursMaintenance.toFixed(2) }} horas</p>
             <p class="text-white mt-4">Horas Parado: {{ hoursIdle.toFixed(2) }} horas</p>
         </div>
+
+        <div class="text-white mt-4">
+            <p>Ganho Total: R$ {{ totalEarnings.toFixed(2) }}</p>
+        </div>
+
         <ul class="list-disc pl-5 text-white">
             <li v-for="(state, index) in stateHistoryWithHours" :key="index">
                 {{ state.date }} - {{ state.name }} ({{ state.hours.toFixed(2) }} horas)
@@ -76,6 +81,18 @@ export default defineComponent({
                 .reduce((sum, state) => sum + state.hours, 0);
         });
 
+        const operationalValue = 100;
+        const maintenanceValue = -20;
+        const idleValue = -10;
+
+        const totalEarnings = computed(() => {
+            return (
+                (hoursOperating.value * operationalValue) +
+                (hoursMaintenance.value * maintenanceValue) +
+                (hoursIdle.value * idleValue)
+            );
+        });
+
         const chartData = computed(() => ({
             labels: ['Operando', 'Manutenção', 'Parado'],
             datasets: [
@@ -99,6 +116,7 @@ export default defineComponent({
             hoursOperating,
             hoursMaintenance,
             hoursIdle,
+            totalEarnings,
             chartData,
             chartDataKey
         };
