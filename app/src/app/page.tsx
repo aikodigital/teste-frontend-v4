@@ -13,7 +13,13 @@ import {
 import { useHomeHooks } from "@/hooks/home";
 
 export default function Home() {
-  const { loading, data, centralPosition, selectedEquipment, setSelectedEquipment } = useHomeHooks()
+  const {
+    loading,
+    data,
+    centralPosition,
+    selectedEquipment,
+    setSelectedEquipment,
+  } = useHomeHooks()
 
   return (
     <div className="w-full h-full min-h-screen">
@@ -39,6 +45,8 @@ export default function Home() {
                         name={equipment.name}
                         stateName={equipment.currentState?.name}
                         stateColor={equipment.currentState?.color}
+                        productivityPercentage={equipment.productivityPercentage}
+                        equipmentGain={equipment.equipmentGain}
                       />
                     </Marker>
                   )}

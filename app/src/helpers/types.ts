@@ -44,6 +44,8 @@ export interface equipmentStateHistory {
 export interface AggregatedEquipment {
   id: string;
   name: string;
+  productivityPercentage: string;
+  equipmentGain: number;
   model: {
     id: string;
     name: string;

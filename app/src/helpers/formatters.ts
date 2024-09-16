@@ -13,3 +13,11 @@ export function formatHours(date?: string) {
     hour12: false
   }).format(dateValue)
 }
+
+export function formatMoney(value: string | number) {
+  const _value = isNaN(+value) ? 0 : +value
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(_value)
+}

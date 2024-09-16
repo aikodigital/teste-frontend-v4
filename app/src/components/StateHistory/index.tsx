@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { AggregatedEquipment } from "@/helpers/types";
 import { StateTimeline } from "../StateTimeline";
 
@@ -8,6 +8,10 @@ interface Props {
 }
 
 export function StateHistory({ data, handleClose }: Props) {
+  const orderedStateHistory = useMemo(() => {
+    return data.stateHistory?.toReversed()
+  }, [data?.stateHistory])
+
   return (
     <aside className="w-96 h-[calc(100vh-65px)] border-l">
       <div className="w-full flex justify-between px-6 my-4">
@@ -28,7 +32,7 @@ export function StateHistory({ data, handleClose }: Props) {
         </button>
       </div>
       <div className="h-[calc(100vh-145px)] overflow-y-auto p-4 pl-6">
-        <StateTimeline data={data.stateHistory} />
+        <StateTimeline data={orderedStateHistory} />
       </div>
     </aside>
   )

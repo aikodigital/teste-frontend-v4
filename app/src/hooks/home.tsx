@@ -89,15 +89,17 @@ export function useHomeHooks() {
 
       const stateHistory = equipmentStateHistories.find(
         stateHist => stateHist.equipmentId === equipment.id
-      )?.states?.reverse() || [];
+      )?.states || [];
       const currentStateId = stateHistory.length > 0
-        ? stateHistory[0].equipmentStateId
+        ? stateHistory[stateHistory.length - 1].equipmentStateId
         : null;
       const currentState = currentStateId ? stateMap.get(currentStateId) : null;
 
-      return {
+      const result = {
         id: equipment.id,
         name: equipment.name,
+        productivityPercentage: '',
+        equipmentGain: 0,
         model: model ? {
           id: model.id,
           name: model.name,
@@ -119,8 +121,46 @@ export function useHomeHooks() {
         })),
         positionHistory: positionHistory,
       };
+      const productivity = calculateProductivity(result.stateHistory, result.model)
+      result['productivityPercentage'] = productivity.productivityPercentage
+      result['equipmentGain'] = productivity.equipmentGain
+      return result
     });
     setData(data)
+  }
+
+  function calculateProductivity(
+    states: Partial<AggregatedEquipment["stateHistory"]>,
+    equipmentModel: Partial<AggregatedEquipment["model"]>,
+  ) {
+    let totalHours = 0;
+    let totalOperatingHours = 0;
+    let equipmentGain = 0;
+
+    if (!states || states.length === 0) return { productivityPercentage: '', equipmentGain };
+
+    for (let i = states.length - 1;i > 0;i--) {
+      const prevState = states[i - 1];
+      const currentState = states[i];
+
+      const startTime = new Date(String(prevState?.date)).getTime();
+      const endTime = new Date(String(currentState?.date)).getTime();
+
+      const hoursInState = (endTime - startTime) / (1000 * 60 * 60);
+      totalHours += hoursInState;
+
+      const hourlyEarning = equipmentModel?.hourlyEarnings?.find(
+        item => item.equipmentStateId === prevState?.state?.id
+      )?.value ?? 0;
+      equipmentGain += Math.abs(hoursInState) * hourlyEarning;
+
+      if (prevState?.state?.name === "Operando") {
+        totalOperatingHours += hoursInState;
+      }
+    }
+
+    const productivity = totalHours > 0 ? (totalOperatingHours / totalHours) * 100 : 0;
+    return { productivityPercentage: productivity.toFixed(2), equipmentGain };
   }
 
   useEffect(() => {
@@ -156,5 +196,11 @@ export function useHomeHooks() {
     return () => { controller.abort() }
   }, [])
 
-  return { loading, centralPosition, data, selectedEquipment, setSelectedEquipment }
+  return {
+    loading,
+    centralPosition,
+    data,
+    selectedEquipment,
+    setSelectedEquipment,
+  }
 }
