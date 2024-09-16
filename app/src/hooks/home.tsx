@@ -8,10 +8,16 @@ import {
   equipmentStateHistory
 } from "@/helpers/types"
 
+interface Option {
+  label: string
+  value: string
+}
+
 export function useHomeHooks() {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<AggregatedEquipment[]>([])
   const [selectedEquipment, setSelectedEquipment] = useState<AggregatedEquipment | null>(null)
+  const [equipmentOptions, setEquipmentOptions] = useState<Option[]>([])
 
   const centralPosition = useMemo(() => {
     const positions = data.map(item => item.currentPosition)
@@ -31,8 +37,12 @@ export function useHomeHooks() {
   async function getEquipment(signal?: AbortSignal) {
     const response = await fetch('/api/equipment', { signal })
     if (response.ok) {
-      const res = await response.json()
-      return res as Equipment[]
+      const res = (await response.json()) as Equipment[]
+      setEquipmentOptions(res.map(equipment => ({
+        label: equipment.name,
+        value: equipment.id,
+      })))
+      return res
     }
   }
 
@@ -210,5 +220,6 @@ export function useHomeHooks() {
     data,
     selectedEquipment,
     setSelectedEquipment,
+    equipmentOptions,
   }
 }

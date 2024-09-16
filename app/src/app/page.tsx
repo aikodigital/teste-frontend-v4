@@ -19,11 +19,27 @@ export default function Home() {
     centralPosition,
     selectedEquipment,
     setSelectedEquipment,
+    equipmentOptions,
   } = useHomeHooks()
 
   return (
     <div className="w-full h-full min-h-screen">
-      <Header />
+      <Header>
+        <div>
+          {!!equipmentOptions.length && (
+            <select
+              value={selectedEquipment?.id}
+              onChange={e => setSelectedEquipment(data.find(item => item.id === e.target.value) ?? null)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            >
+              <option defaultChecked>Escolha um equipamento</option>
+              {equipmentOptions.map(option => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          )}
+        </div>
+      </Header>
       <LoadingWrapper isLoading={loading} className="!h-[calc(100vh-65px)]">
         <main className={`w-full h-full grid ${!!selectedEquipment ? 'grid-cols-[1fr_auto]' : ''}`}>
           <Map>

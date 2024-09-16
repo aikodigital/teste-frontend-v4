@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { AggregatedEquipment } from "@/helpers/types";
 import { StateTimeline } from "../StateTimeline";
+import { formatMoney } from "@/helpers/formatters";
 
 interface Props {
   data: AggregatedEquipment
@@ -12,12 +13,20 @@ export function StateHistory({ data, handleClose }: Props) {
     return data.stateHistory?.toReversed()
   }, [data?.stateHistory])
 
+  const details = [
+    { label: 'Produtividade', value: `${data.productivityPercentage}%` },
+    { label: 'Ganho', value: formatMoney(data.equipmentGain) },
+  ]
+
   return (
     <aside className="w-96 h-[calc(100vh-65px)] border-l">
-      <div className="w-full flex justify-between px-6 my-4">
+      <div className="w-full flex justify-between px-6 mt-4">
         <div>
-          <h1 className="font-bold text-xl">Histórico de estados</h1>
-          <h2 className="font-medium text-sm text-gray-500">{data.name}</h2>
+          <h1 className="font-bold text-xl">{data.name} ({data.model?.name})</h1>
+          {details.map(item => (
+            <p className="text-xs text-gray-500" key={item.label}>{item.label}: {item.value}</p>
+          ))}
+          <h2 className="font-semibold text-base mt-2 text-gray-600">Histórico de estados</h2>
         </div>
         <button
           onClick={handleClose}
@@ -31,7 +40,7 @@ export function StateHistory({ data, handleClose }: Props) {
           </svg>
         </button>
       </div>
-      <div className="h-[calc(100vh-145px)] overflow-y-auto p-4 pl-6">
+      <div className="h-[calc(100vh-173px)] overflow-y-auto p-4 pl-6">
         <StateTimeline data={orderedStateHistory} />
       </div>
     </aside>
