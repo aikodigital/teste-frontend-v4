@@ -25,11 +25,17 @@
         :lat-lng="[marker.lat, marker.lon]"
         >
           <LIcon
-            :tooltip-anchor="[20, -25]"
+          :tooltip-anchor="[25, -25]"
             :icon-anchor="[9, 39]"
+          class="relative"
           >
-            <div :class="`w-6 h-6 ${marker.icon}`" />
+          <div :class="`text-2xl ${marker.icon}`" />
             <div class="i-ph-caret-down-fill" />
+          <Badge
+            v-if="marker.state !== 'Operando'"
+            pt:root:class="absolute top-[-5px] right-[-10px] w-[10px] h-[10px] rounded"
+            :pt:root:style="`background-color: ${marker.stateColor};`"
+          />
           </LIcon>
           <LTooltip>
             <Card>
@@ -103,6 +109,8 @@ const markers = computed(() => {
 .leaflet-div-icon {
   background: none;
   border: none;
+  width: fit-content !important;
+  height: fit-content !important;
   font-weight: bold;
   font-size: large;
   text-align: center;
