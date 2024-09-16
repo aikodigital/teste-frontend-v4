@@ -11,8 +11,13 @@ export interface Position {
 }
 
 export interface Equipment {
+   states: any;
    id: string;
    name: string;
+   model?: EquipmentModel;
+   position: Position;
+   state: EquipmentState;
+   stateHistory: { date: string; name: string }[];
    equipmentModelId: string;
 }
 
