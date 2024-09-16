@@ -9,7 +9,7 @@ function SearchInput() {
     <div>
       <input
         type="text"
-        placeholder="Pesquise sobre um equipamento específico"
+        placeholder="Pesquise um modelo específico"
         onChange={(e) => setSearch(e.target.value)}
       />
     </div>
