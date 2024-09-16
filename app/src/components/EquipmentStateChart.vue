@@ -3,19 +3,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, watch } from 'vue';
 import { Pie } from 'vue-chartjs';
 import type { ChartData, ChartOptions } from 'chart.js';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-import type { TooltipItem } from 'chart.js';
+import type { TooltipItem, Chart as ChartJSChart } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const colors = [
-    '#f1c40f', // Parado
-    '#e74c3c', // Manutenção
-    '#2ecc71'  // Operando
-];
+const stateColorMap: Record<string, string> = {
+    'Operando': '#2ecc71',
+    'Manutenção': '#e74c3c',
+    'Parado': '#f1c40f',
+};
 
 export default defineComponent({
     name: 'EquipmentStateChart',
@@ -36,7 +36,14 @@ export default defineComponent({
                     },
                     tooltip: {
                         callbacks: {
-                            label: (context: TooltipItem<'pie'>) => `${context.label}: ${context.raw}`
+                            label: (context: TooltipItem<'pie'>) => {
+                                const label = context.label || '';
+                                const value = context.raw as number;
+                                const total = (context.chart as ChartJSChart<'pie'>).data.datasets[0].data as number[];
+                                const totalSum = total.reduce((a, b) => (typeof a === 'number' ? a : 0) + (typeof b === 'number' ? b : 0), 0);
+                                const percentage = totalSum > 0 ? ((value / totalSum) * 100).toFixed(2) : '0.00';
+                                return `${label}: ${value} (${percentage}%)`;
+                            }
                         }
                     }
                 },
@@ -52,11 +59,15 @@ export default defineComponent({
         const updateChartColors = () => {
             const dataset = props.chartData.datasets?.[0];
             if (dataset) {
-                dataset.backgroundColor = colors;
+                dataset.backgroundColor = dataset.data.map((_, index) => {
+                    const label = props.chartData.labels?.[index] as string;
+                    return stateColorMap[label] || '#cccccc';
+                });
             }
         };
 
         updateChartColors();
+        watch(() => props.chartData, updateChartColors, { deep: true });
 
         return {
             chartData: props.chartData,
