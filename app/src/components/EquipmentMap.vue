@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted, defineComponent } from 'vue';
+import { ref, onMounted, defineComponent, watch } from 'vue';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Position } from '../stores/equipmentStore';
 
@@ -18,7 +18,6 @@ export default defineComponent({
     setup(props, { expose }) {
         const map = ref<google.maps.Map | null>(null);
         const marker = ref<google.maps.Marker | null>(null);
-        const defaultPosition = ref<Position | null>(props.initialPosition);
 
         onMounted(async () => {
             const loader = new Loader({
@@ -30,14 +29,14 @@ export default defineComponent({
             await loader.load();
 
             const mapElement = document.getElementById('map');
-            if (mapElement && defaultPosition.value) {
+            if (mapElement && props.initialPosition) {
                 map.value = new google.maps.Map(mapElement as HTMLElement, {
-                    center: defaultPosition.value,
+                    center: props.initialPosition,
                     zoom: 10,
                 });
 
                 marker.value = new google.maps.Marker({
-                    position: defaultPosition.value,
+                    position: props.initialPosition,
                     map: map.value,
                     title: 'initial',
                 });
@@ -63,6 +62,12 @@ export default defineComponent({
         }
 
         expose({ updatePosition });
+
+        watch(() => props.initialPosition, (newPosition) => {
+            if (newPosition && map.value && marker.value) {
+                updatePosition(newPosition);
+            }
+        });
 
         return {};
     },
