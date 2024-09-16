@@ -31,7 +31,7 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
         <>
             <Header />
 
-            {loading ?
+            {loading ? 
                 <div className='row full-height d-flex align-items-center justify-content-center'>
                     <p className='loading-text'>Carregando dados...</p>
                 </div>

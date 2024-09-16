@@ -3,4 +3,6 @@
   min-height: 400px;
 
   position: relative;
+
+  padding-left: 0 !important;
 }

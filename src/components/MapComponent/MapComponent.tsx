@@ -32,7 +32,7 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
 
   useEffect(() => {
     let filteredPositions: Position[] = [];
-    let latestPositions: Map<string, Position> = new Map();
+    const latestPositions: Map<string, Position> = new Map();
 
     // Se houver um equipamento selecionado, pegue suas posições
     if (selectedEquipment) {

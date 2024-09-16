@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import './CardList.css'; 
 import { CardListProps } from '../../types';
