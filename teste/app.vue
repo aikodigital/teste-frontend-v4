@@ -23,7 +23,7 @@
         v-for="marker in markers"
         :key="marker.id"
         :lat-lng="[marker.lat, marker.lon]"
-        @click="selectedMarkerId = marker.id"
+        @click="openDrawer(marker.id)"
         >
           <LIcon
           :tooltip-anchor="[25, -25]"
@@ -54,28 +54,25 @@
             </Card>
           </LTooltip>
         <Drawer
-          :visible="selectedMarkerId === marker.id"
+          v-if="selectedMarkerId == marker.id"
+          v-model:visible="isDrawerVisible"
           position="right"
-          class="bg-white !w-full md:!w-80 lg:!w-[30rem]"
+          :modal="false"
+          :dismissable="false"
+          class="bg-white"
+          pt:mask:style="pointer-events: none !important;"
         >
-          <template #closeicon>
-            <Button
-              text
-              rounded
-              label="Small"
-              @click="selectedMarkerId = null"
-            >
-              X
-            </Button>
-          </template>
           <template #header>
             <div>
-              <h3 class="mt-0 mb-2">
-                {{ marker.name }}: {{ marker.model }}
+              <h3 class="mt-0 mb-0">
+                {{ marker.name }}
               </h3>
-              <h4 class="my-0">
-                Histórico de Estados:
+              <h4 class="mt-0 mb-4">
+                {{ marker.model }}
               </h4>
+              <h5 class="my-0 py-0">
+                Histórico de Estados:
+              </h5>
             </div>
           </template>
           <StateDrawerContent
@@ -90,11 +87,18 @@
 <script setup>
 const zoom = ref(11)
 
+const isDrawerVisible = ref(false)
+
 const store = useMyEquipmentStore()
 const { equipment, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory } = storeToRefs(store)
 const { getAllData } = store
 
 const selectedMarkerId = ref(null)
+
+function openDrawer(markerId) {
+  selectedMarkerId.value = markerId
+  isDrawerVisible.value = true
+}
 
 await useAsyncData(() => getAllData().then(() => true))
 
