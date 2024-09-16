@@ -1,10 +1,14 @@
+import { useMarkers } from '@/hooks';
+
 import { MapComponent } from './components';
 
 function App() {
+  const markers = useMarkers();
+
   return (
     <>
       <h1>Aiko - Teste Frontend</h1>
-      <MapComponent />
+      {markers.length > 0 ? <MapComponent markers={markers} /> : null}
     </>
   );
 }
