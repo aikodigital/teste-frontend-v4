@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RenderOptions, render } from '@testing-library/react';
+import { RenderOptions, render, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 const queryClient = new QueryClient();
@@ -17,5 +17,10 @@ const renderWithProviders = (
   ...render(component, { wrapper: Providers, ...options })
 });
 
+const customRenderHook = (hook: () => any, options?: Omit<RenderOptions, 'wrapper'>) => ({
+  user: userEvent.setup(),
+  ...renderHook(hook, { wrapper: Providers, ...options })
+});
+
 export * from '@testing-library/react';
-export { renderWithProviders as render };
+export { renderWithProviders as render, customRenderHook as renderHook };
