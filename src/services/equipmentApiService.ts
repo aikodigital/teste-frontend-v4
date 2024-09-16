@@ -14,14 +14,14 @@ import type {
 import { arrayToObj } from '@/shared/helpers';
 
 const equipmentsApiService = {
-  getEquipments: async (): Promise<EquipmentFromAPI[]> => {
-    const response = equipmentsMock;
+  getEquipments: async (): Promise<Record<string, EquipmentFromAPI>> => {
+    const response = arrayToObj(equipmentsMock, 'id');
 
     return Promise.resolve(response);
   },
 
-  getEquipmentModels: async (): Promise<EquipmentModelFromAPI[]> => {
-    const response = equipmentModelsMock;
+  getEquipmentModels: async (): Promise<Record<string, EquipmentModelFromAPI>> => {
+    const response = arrayToObj(equipmentModelsMock, 'id');
 
     return Promise.resolve(response);
   },
