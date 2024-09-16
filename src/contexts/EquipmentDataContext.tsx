@@ -5,10 +5,9 @@ import {
     fetchEquipmentPositions,
     fetchEquipmentStatesInfo,
     fetchEquipmentStatesHistory
-} from '../api/api'; // Importa as funções que simulam chamadas de API
+} from '../api/api';
 import { Equipment, EquipmentModel, EquipmentPosition, EquipmentStateInfo, EquipmentStateHistory } from '../types';
 
-// Define a interface do contexto
 interface EquipmentDataContextProps {
     equipmentList: Equipment[];
     equipmentModelList: EquipmentModel[];
@@ -18,10 +17,8 @@ interface EquipmentDataContextProps {
     loading: boolean;
 }
 
-// Cria o contexto
 const EquipmentDataContext = createContext<EquipmentDataContextProps | undefined>(undefined);
 
-// Hook customizado para usar o contexto
 export const useEquipmentData = () => {
     const context = useContext(EquipmentDataContext);
     if (!context) {
@@ -30,12 +27,10 @@ export const useEquipmentData = () => {
     return context;
 };
 
-// Define a interface para o provedor do contexto, garantindo que `children` seja do tipo `ReactNode`
 interface EquipmentDataProviderProps {
     children: ReactNode;
 }
 
-// Componente provider
 export const EquipmentDataProvider: React.FC<EquipmentDataProviderProps> = ({ children }) => {
     const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
     const [equipmentModelList, setEquipmentModelList] = useState<EquipmentModel[]>([]);
@@ -44,7 +39,6 @@ export const EquipmentDataProvider: React.FC<EquipmentDataProviderProps> = ({ ch
     const [equipmentStatesHistory, setEquipmentStatesHistory] = useState<EquipmentStateHistory[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Função para carregar os dados simulados
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

@@ -4,14 +4,9 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.css';
 
-import { Position, Equipment, EquipmentModel } from '../../types';
+import { Position, Equipment } from '../../types';
+import { useEquipmentData } from '../../contexts/EquipmentDataContext';
 import { getEquipmentNameById, getLatestPosition, getLatestState, getStateColorById, getStateNameById } from '../../utils/getStateInfo';
-import { equipmentStatesHistory, equipmentStatesInfoList, equipmentPositionsList, equipmentModelList } from '../../utils/sharedData';
-
-interface MapComponentProps {
-  equipmentList: Equipment[];
-  selectedEquipment?: string | null;
-}
 
 // Hook para ajustar o zoom e centralizar os marcadores
 const FitMapBounds: React.FC<{ bounds: L.LatLngBoundsExpression }> = ({ bounds }) => {
@@ -25,7 +20,7 @@ const FitMapBounds: React.FC<{ bounds: L.LatLngBoundsExpression }> = ({ bounds }
   return null;
 };
 
-const MapComponent: React.FC<MapComponentProps> = ({
+const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: string | null }> = ({
   equipmentList,
   selectedEquipment
 }) => {
@@ -33,20 +28,22 @@ const MapComponent: React.FC<MapComponentProps> = ({
   const [polylinePositions, setPolylinePositions] = useState<Position[]>([]);
   const [bounds, setBounds] = useState<L.LatLngBoundsExpression>([]);
 
+  const { equipmentPositions, equipmentStatesHistory, equipmentStatesInfoList, equipmentModelList } = useEquipmentData();
+
   useEffect(() => {
     let filteredPositions: Position[] = [];
     let latestPositions: Map<string, Position> = new Map();
 
     // Se houver um equipamento selecionado, pegue suas posições
     if (selectedEquipment) {
-      const selectedEquipmentData = equipmentPositionsList.find(equipment => equipment.equipmentId === selectedEquipment);
+      const selectedEquipmentData = equipmentPositions.find(equipment => equipment.equipmentId === selectedEquipment);
       if (selectedEquipmentData) {
         filteredPositions = selectedEquipmentData.positions;
         setPolylinePositions(filteredPositions); // Desenha as rotas com Polyline
       }
     } else {
       // Caso contrário, pegue as posições mais recentes de todos os equipamentos
-      equipmentPositionsList.forEach(equipment => {
+      equipmentPositions.forEach(equipment => {
         const latestPosition = getLatestPosition(equipment.positions);
         latestPositions.set(equipment.equipmentId, latestPosition);
       });
@@ -55,7 +52,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
     // Criação dos ícones personalizados baseados no modelo do equipamento
     const getIconByModel = (modelId: string) => {
-      // Exemplo de ícones baseados no modelo de equipamento
       const modelIconMap: { [key: string]: string } = {
         'model-1': 'https://path-to-icon1.png',
         'model-2': 'https://path-to-icon2.png',
@@ -70,7 +66,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
     const markerPositions = (selectedEquipment ? filteredPositions : Array.from(latestPositions.values()))
       .map(position => {
-        const equipmentId = selectedEquipment || equipmentPositionsList.find(equip => 
+        const equipmentId = selectedEquipment || equipmentPositions.find(equip => 
           equip.positions.some(pos => pos.date === position.date && pos.lat === position.lat && pos.lon === position.lon)
         )?.equipmentId;
 
@@ -110,7 +106,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
     setMarkers(markerPositions.map(item => item.marker));
     setBounds(markerPositions.map(item => item.position)); // Armazena os bounds
 
-  }, [equipmentPositionsList, equipmentStatesHistory, equipmentStatesInfoList, selectedEquipment, equipmentList, equipmentModelList]);
+  }, [equipmentPositions, equipmentStatesHistory, equipmentStatesInfoList, selectedEquipment, equipmentList, equipmentModelList]);
 
   return (
     <MapContainer 

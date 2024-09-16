@@ -1,8 +1,7 @@
-import { equipmentStatesHistory, equipmentStatesInfoList } from './sharedData';
+import { EquipmentStateHistory, EquipmentStateInfo } from '../types';
 
 // Função para calcular a produtividade do equipamento
-export const calculateProductivity = (equipmentId: string): string => {
-    // Encontrar o histórico de estados do equipamento
+export const calculateProductivity = (equipmentId: string, equipmentStatesHistory: EquipmentStateHistory[], equipmentStatesInfoList: EquipmentStateInfo[]): string => {
     const equipmentStateHistory = equipmentStatesHistory.find(state => state.equipmentId === equipmentId)?.states || [];
 
     let productiveHours = 0;

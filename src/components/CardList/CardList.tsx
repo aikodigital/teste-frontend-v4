@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card } from 'react-bootstrap';
 import './CardList.css'; 
 import { CardListProps } from '../../types';
-import { equipmentModelList, equipmentStatesHistory, equipmentStatesInfoList } from '../../utils/sharedData';
+import { useEquipmentData } from '../../contexts/EquipmentDataContext';
 import { calculateProductivity } from '../../utils/calculateProductivity';
 
 const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
+  const { equipmentModelList, equipmentStatesHistory, equipmentStatesInfoList } = useEquipmentData();
+
   return (
     <div className="row">
       {equipmentList.map((equipment) => {
@@ -17,7 +19,7 @@ const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
           ? equipmentStatesInfoList.find(info => info.id === latestStateId)
           : null;
 
-        const productivity = calculateProductivity(equipment.id); // Calcula a produtividade
+        const productivity = calculateProductivity(equipment.id, equipmentStatesHistory, equipmentStatesInfoList);
 
         return (
           <div key={equipment.id} className="col-md-4 col-sm-6 col-12 mb-4">
@@ -32,7 +34,7 @@ const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
                   </span>
                 </Card.Text>
                 <Card.Text>
-                  <strong>Produtividade: </strong>{productivity}% {/* Exibe a produtividade */}
+                  <strong>Produtividade: </strong>{productivity}%
                 </Card.Text>
               </Card.Body>
             </Card>
