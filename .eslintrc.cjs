@@ -59,7 +59,7 @@ module.exports = {
         code: 120
       }
     ],
-    'max-nested-callbacks': ['error', 3],
+    'max-nested-callbacks': ['error', 4],
     eqeqeq: ['error', 'always'],
     'no-else-return': 'error',
     'no-multi-spaces': 'error',
