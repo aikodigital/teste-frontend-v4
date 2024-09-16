@@ -1,0 +1,112 @@
+<template>
+  <div id="map" class="w-100 h-100"></div>
+  <EquipmentHistoryModal
+    @updateVisible="handleVisibilityChange"
+    :equipmentId="equipmentId"
+    :equipmentModelId="equipmentModelId"
+    v-model="visible"
+  />
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useEquipmentStore } from '@/stores/useEquipmentStore'
+import L from 'leaflet'
+import EquipmentHistoryModal from '@/components/EquipmentHistoryModal.vue'
+
+const visible = ref<boolean>(false)
+const equipmentId = ref<string>('')
+const equipmentModelId = ref<string>('')
+
+function handleVisibilityChange(newVisible: boolean) {
+  visible.value = newVisible
+}
+
+const populateMarkers = async () => {
+  const store = useEquipmentStore()
+
+  await store.fetchEquipmentData()
+  await store.fetchEquipmentStates()
+  await store.fetchEquipmentStateHistory()
+  await store.fetchEquipmentPositionHistory()
+  await store.fetchEquipmentModelsData()
+
+  return store.equipmentData
+    .map((equipment) => {
+      const latestPosition = store.getLatestPositionById(equipment.id)
+      const latestState = store.getLatestEquipmentStateById(equipment.id)
+
+      if (latestPosition) {
+        return {
+          id: equipment.id,
+          name: equipment.name,
+          modelId: equipment.equipmentModelId,
+          state: latestState ? latestState.name : 'Desconhecido',
+          stateDate: latestState ? latestState.date : 'N/A',
+          color: latestState ? latestState.color : '#000000',
+          position: [latestPosition.lat, latestPosition.lon] as L.LatLngExpression
+        }
+      }
+      return null
+    })
+    .filter((marker) => marker !== null) as Array<{
+    id: string
+    name: string
+    modelId: string
+    state: string
+    stateDate: string
+    color: string
+    position: L.LatLngExpression
+  }>
+}
+
+const initializeMap = async () => {
+  const markersData = await populateMarkers()
+
+  const map = L.map('map').setView([0, 0], 8)
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map)
+
+  if (markersData.length > 0) {
+    const bounds = L.latLngBounds(markersData.map((marker) => marker.position))
+
+    markersData.forEach((markerData) => {
+      const marker = L.marker(markerData.position).addTo(map)
+      const formattedDate = new Date(markerData.stateDate).toLocaleString()
+      const popupContent = `
+        <div style="color: ${markerData.color}">
+          <h4>${markerData.name}: ${markerData.state || 'Desconhecido'}</h4>
+          <span>${formattedDate}</span>
+        </div>
+      `
+
+      marker.bindPopup(popupContent, {
+        closeButton: false
+      })
+
+      marker.on('click', () => {
+        equipmentId.value = markerData.id
+        equipmentModelId.value = markerData.modelId
+        visible.value = true
+      })
+
+      marker.on('mouseover', () => {
+        marker.openPopup()
+      })
+
+      marker.on('mouseout', () => {
+        marker.closePopup()
+      })
+    })
+
+    map.fitBounds(bounds)
+  }
+}
+
+onMounted(() => {
+  initializeMap()
+})
+</script>
