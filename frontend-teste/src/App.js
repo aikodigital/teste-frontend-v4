@@ -160,6 +160,7 @@ const App = () => {
           equipments={filteredEquipments}
           states={states}
           stateHistory={stateHistory}
+          models={models}
           onEquipmentSelect={handleEquipmentClick}
         />
         </div>
