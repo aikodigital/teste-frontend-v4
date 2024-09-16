@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 import equipmentPositionHistory from '@/data/equipmentPositionHistory.json'
+import equipmentStateHistory from '@/data/equipmentStateHistory.json'
+import equipmentState from '@/data/equipmentState.json'
+import equipment from '@/data/equipment.json'
+import equipmentModel from '@/data/equipmentModel.json'
 import { ref, type Ref } from 'vue'
 
 export type Position = {
@@ -13,10 +17,32 @@ export interface IEquipmentsPosition {
   position: Position
 }
 
+export type State = {
+  id: string
+  name: string
+  color: string
+}
+
+export interface IEquipmentsState {
+  equipmentId: string
+  state: State
+}
+
+export interface IEquipment {
+  name: string
+  model: string
+  equipmentId: string
+  state: State
+  position: Position
+  icon: String
+}
+
 export const useEquipment = defineStore('useEquipment', () => {
   const equipmentsLatestPosition: Ref<IEquipmentsPosition[]> = ref([])
+  const equipmentsLatestState: Ref<IEquipmentsState[]> = ref([])
   const southwestEquipment: Ref<IEquipmentsPosition> = ref({} as IEquipmentsPosition)
   const northeastEquipment: Ref<IEquipmentsPosition> = ref({} as IEquipmentsPosition)
+  const allEquipments: Ref<IEquipment[]> = ref([])
 
   function getPositions() {
     const equipmentsPositions = equipmentPositionHistory.map((equipment) => {
@@ -31,12 +57,10 @@ export const useEquipment = defineStore('useEquipment', () => {
   }
 
   function findExtremeMarkers() {
-    // Inicializa os marcadores extremos com o primeiro elemento da lista
     let southwest = equipmentsLatestPosition.value[0]
     let northeast = equipmentsLatestPosition.value[0]
 
     equipmentsLatestPosition.value.forEach((position) => {
-      // Verifica se o marcador atual está mais a sudoeste
       if (
         position.position.lat < southwest.position.lat ||
         (position.position.lat === southwest.position.lat &&
@@ -45,7 +69,6 @@ export const useEquipment = defineStore('useEquipment', () => {
         southwest = position
       }
 
-      // Verifica se o marcador atual está mais a nordeste
       if (
         position.position.lat > northeast.position.lat ||
         (position.position.lat === northeast.position.lat &&
@@ -59,11 +82,69 @@ export const useEquipment = defineStore('useEquipment', () => {
     northeastEquipment.value = northeast
   }
 
+  function getStates() {
+    const equipmentsStatesById = equipmentStateHistory.map((equipment) => {
+      const states = equipment.states.sort((a, b) => {
+        return new Date(b.date).getDate() - new Date(a.date).getDate()
+      })
+
+      return { equipmentId: equipment.equipmentId, state: states[0] }
+    })
+
+    const equipmentsStates = equipmentsStatesById.map((equipment) => {
+      const state = equipmentState.find((state) => state.id === equipment.state.equipmentStateId)
+
+      return { equipmentId: equipment.equipmentId, state: state || ({} as State) }
+    })
+
+    equipmentsLatestState.value = equipmentsStates
+  }
+
+  function equipmentData(equipmentId: string) {
+    if (!equipmentsLatestState.value.length) {
+      getStates()
+    }
+
+    if (!equipmentsLatestPosition.value.length) {
+      getPositions()
+    }
+
+    const state = equipmentsLatestState.value.find(
+      (equipment) => equipment.equipmentId === equipmentId
+    )
+    const position = equipmentsLatestPosition.value.find(
+      (equipment) => equipment.equipmentId === equipmentId
+    )
+
+    const name = equipment.find((equipment) => equipment.id === equipmentId)
+    const model = equipmentModel.find((equipment) => name?.equipmentModelId === equipment.id)
+
+    return {
+      equipmentId,
+      state: state?.state || ({} as State),
+      position: position?.position || ({} as Position),
+      icon: '',
+      name: name?.name || '',
+      model: model?.name || ''
+    }
+  }
+
+  function getAllEquipments() {
+    equipment.forEach((e) => {
+      allEquipments.value.push(equipmentData(e.id))
+    })
+  }
+
   return {
     equipmentsLatestPosition,
+    equipmentsLatestState,
     southwestEquipment,
     northeastEquipment,
+    allEquipments,
     getPositions,
-    findExtremeMarkers
+    getStates,
+    findExtremeMarkers,
+    equipmentData,
+    getAllEquipments
   }
 })

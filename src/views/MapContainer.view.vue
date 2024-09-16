@@ -9,18 +9,28 @@ import { useEquipment } from '@/stores/equipment.store'
 
 const equipmentStore = useEquipment()
 let map: L.Map
+const emit = defineEmits(['openPopUp'])
 
-const initialPosition = () => {
+function openPopUp() {
+  emit('openPopUp')
+}
+
+const insertCopyright = () => {
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map)
 }
 
 const markAllEquipments = () => {
+  equipmentStore.getPositions()
   equipmentStore.equipmentsLatestPosition.forEach((equipment) =>
-    L.marker([equipment.position.lat, equipment.position.lon]).addTo(map)
+    L.marker([equipment.position.lat, equipment.position.lon]).addTo(map).on('click', openPopUp)
   )
 
+  centralizeMap()
+}
+
+const centralizeMap = () => {
   equipmentStore.findExtremeMarkers()
 
   const bounds = L.latLngBounds([
@@ -36,9 +46,8 @@ const markAllEquipments = () => {
 
 onMounted(() => {
   map = L.map('map').setView([-15.78, -56], 5)
-  equipmentStore.getPositions()
 
-  initialPosition()
+  insertCopyright()
   markAllEquipments()
 })
 </script>
@@ -46,5 +55,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 #map {
   height: 100vh;
+  width: 100%;
 }
 </style>
