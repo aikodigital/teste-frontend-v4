@@ -44,7 +44,8 @@
               </template>
               <template #content>
                 Lat: {{ marker.lat }}, Lon: {{ marker.lon }} | <Tag
-                  :style="`background-color: ${marker.stateColor}; color: white`"
+                class="text-white"
+                :style="`background-color: ${marker.stateColor};`"
                   :value="marker.state"
                   rounded
                 />
