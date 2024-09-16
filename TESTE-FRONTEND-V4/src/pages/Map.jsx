@@ -2,6 +2,8 @@ import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-map
 import EquipmentsLocation from '../components/EquipmentsLocation';
 import EquipamentState from '../components/EquipamentState';
 import Equipment from '../data/equipment.json';
+import equipmentStateHistory from '../data/equipmentStateHistory.json';
+import equipmentState from '../data/equipmentState.json';
 import { useEffect, useState } from 'react';
 import './Map.css';
 
@@ -14,6 +16,7 @@ export default function Map() {
   const [equipmentsLocal, setEquipmentsLocal] = useState([]);
   const [markers, setMarkers] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
+  const [equipmentHistory, setEquipmentHistory] = useState([]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -22,6 +25,29 @@ export default function Map() {
       setMarkers(true);
     }
   }, [isLoaded]);
+
+  const handleClickMarker = (equipment) => {
+    if (selectedEquipment && selectedEquipment.id === equipment.id) {
+      setSelectedEquipment(null);
+      setEquipmentHistory([]);
+    } else {
+      setSelectedEquipment(equipment);
+      const equipmentHistoryData = equipmentStateHistory.find(e => e.equipmentId === equipment.id);
+      if (equipmentHistoryData) {
+        const history = equipmentHistoryData.states.map(state => {
+          const stateData = equipmentState.find(e => e.id === state.equipmentStateId);
+          return {
+            ...state,
+            stateName: stateData ? stateData.name : 'Estado desconhecido',
+            stateColor: stateData ? stateData.color : '#000',
+          };
+        });
+        setEquipmentHistory(history);
+      } else {
+        setEquipmentHistory([]);
+      }
+    }
+  };
 
   const handleMouseOver = (equipmentId) => {
     setSelectedEquipment(equipmentId);
@@ -42,6 +68,7 @@ export default function Map() {
           key={index}
           position={{ lat: equip.lat, lng: equip.lng }}
           label={equipmentPosition.name}
+          onClick={() => handleClickMarker(equipmentPosition)}
           onMouseOver={() => handleMouseOver(equipmentPosition)}
         >
           {selectedEquipment && selectedEquipment.id === equipmentPosition.id && (
@@ -52,6 +79,15 @@ export default function Map() {
               <div>
                 <h3>{equipmentPosition.name}</h3>
                 <EquipamentState equipmentId={selectedEquipment.id} />
+                <h4>Histórico de estados</h4>
+                <ul>
+                  {equipmentHistory.map((state, index) => (
+                    <li key={index} style={{ backgroundColor: state.stateColor, padding: '3px', borderRadius: '5px', color: 'white' }}>
+                      <strong>{state.stateName}</strong>
+                      <p>{new Date(state.date).toLocaleDateString()}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </InfoWindow>
           )}
