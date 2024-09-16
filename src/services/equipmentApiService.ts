@@ -11,12 +11,7 @@ import type {
   EquipmentStateFromAPI,
   EquipmentStateHistoryFromAPI
 } from '@/services/types';
-
-const arrayToObj = <T extends { equipmentId: string }>(array: T[]): Record<string, T> =>
-  array.reduce<Record<string, T>>((obj, item) => {
-    obj[item.equipmentId] = item;
-    return obj;
-  }, {});
+import { arrayToObj } from '@/shared/helpers';
 
 const equipmentsApiService = {
   getEquipments: async (): Promise<EquipmentFromAPI[]> => {
@@ -34,7 +29,7 @@ const equipmentsApiService = {
   getEquipmentPositionHistory: async (): Promise<
     Record<string, EquipmentPositionHistoryFromAPI>
   > => {
-    const response = arrayToObj(equipmentPositionHistoryMock);
+    const response = arrayToObj(equipmentPositionHistoryMock, 'equipmentId');
 
     return Promise.resolve(response);
   },
@@ -46,7 +41,7 @@ const equipmentsApiService = {
   },
 
   getEquipmentStateHistory: async (): Promise<Record<string, EquipmentStateHistoryFromAPI>> => {
-    const response = arrayToObj(equipmentStateHistoryMock);
+    const response = arrayToObj(equipmentStateHistoryMock, 'equipmentId');
 
     return Promise.resolve(response);
   }
