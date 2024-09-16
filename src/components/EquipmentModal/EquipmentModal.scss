@@ -1,0 +1,159 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  width: 600px;
+  height: 80vh; 
+  overflow: auto; 
+  z-index: 1050;
+  box-sizing: border-box; 
+
+  @media (max-width: 768px) {
+    width: 95%;
+    height: 90vh;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.state-history {
+  margin-top: 20px;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #eaeaea;
+    }
+  }
+}
+
+.select-filter,
+.date-filter,
+.time-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.select-filter {
+  background-color: #f9f9f9;
+}
+
+.date-filter {
+  background-color: #fff;
+}
+
+.timeAndDateInputs{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.timeInputContainer,
+.dateInputContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.time-input {
+  display: flex;
+  justify-content: space-between;
+  
+  .time-hour,
+  .time-minute {
+    width: calc(50% - 5px); 
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .time-am-pm {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+}
+
+.close-button {
+  position: absolute;   /* Adiciona o posicionamento absoluto */
+  top: 10px;            /* Posiciona 10px do topo */
+  right: 10px;          /* Posiciona 10px da direita */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: #0056b3;
+  }
+}

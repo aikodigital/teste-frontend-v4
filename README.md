@@ -1,3 +1,96 @@
+# Documentação
+
+## Funcionalidades
+
+1. **Filtros**:
+   - Filtrar as visualizações por estado atual do equipamento.
+   - Filtrar por modelo de equipamento.
+
+2. **Pesquisa**:
+   - Permite pesquisar e visualizar dados de um equipamento específico.
+
+3. **Percentual de Produtividade do Equipamento**:
+   - Calcula a produtividade do equipamento como a relação das horas produtivas (em estado "Operando") em relação ao total de horas.
+
+4. **Ganho por Equipamento**:
+   - Calcula o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento.
+
+5. **Diferenciação dos Equipamentos**:
+   - Diferencia visualmente os equipamentos por modelo de equipamento na visualização do mapa para facilitar a identificação.
+
+6. **Histórico de Posições**:
+   - Permite visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele no mapa.
+
+## Dependências
+
+- **React (`^18.3.1`)**: Biblioteca para construção da interface de usuário.
+- **React DOM (`^18.3.1`)**: Manipulação do DOM para React.
+- **React Modal (`^3.16.1`)**: Utilizado para criar e gerenciar modais acessíveis e estilizados.
+- **React Datepicker (`^7.3.0`)**: Fornece um seletor de datas para filtragem de dados.
+- **Leaflet (`^1.9.4`)**: Biblioteca de mapeamento interativo.
+- **React Leaflet (`^4.2.1`)**: Integra o Leaflet com React, permitindo a visualização de mapas.
+- **Date-fns (`^3.6.0`)**: Manipulação e formatação de datas.
+- **Sass (`^1.78.0`)**: Pré-processador CSS para estilização.
+- **Vite (`^5.4.1`)**: Ferramenta de build e desenvolvimento para projetos modernos de front-end.
+- **Typescript (`^5.5.3`)**: Superset de JavaScript que adiciona tipagem estática.
+- **ESLint (`^9.9.0`)**: Ferramenta para identificar e corrigir problemas em código JavaScript e TypeScript.
+- **TailwindCSS (`^3.4.11`)**: Framework de utilitários CSS para estilização rápida e responsiva.
+- **Autoprefixer (`^10.4.20`)**: Adiciona prefixos de fornecedor para compatibilidade com navegadores.
+
+## Decisões Tomadas
+
+1. **Escolha do Vite para Build e Desenvolvimento**:
+   - **Motivo**: Vite proporciona uma configuração rápida e eficiente para projetos modernos, com tempo de inicialização menor e suporte para módulos ES.
+
+2. **Uso de TypeScript**:
+   - **Motivo**: TypeScript adiciona tipagem estática ao JavaScript, o que ajuda na detecção de erros durante o desenvolvimento e melhora a manutenção do código.
+
+3. **Escolha das Bibliotecas e Frameworks**:
+   - **React e React DOM**: Utilizados para a construção da interface de usuário de maneira eficiente e modular.
+   - **React Modal**: Para gerenciar e estilizar modais, proporcionando uma experiência de usuário melhor e acessível.
+   - **React Datepicker**: Oferece um seletor de datas funcional para filtragem de dados.
+   - **Leaflet e React Leaflet**: Facilitam a integração com mapas interativos, essencial para a visualização de dados de localização.
+   - **Date-fns**: Manipula e formata datas de maneira eficiente e com suporte para diferentes regiões.
+   - **Sass**: Utilizado para estilização avançada e manutenção dos estilos CSS.
+   - **TailwindCSS**: Fornece um framework de utilitários para estilização rápida e responsiva.
+
+4. **Uso de ESLint e Prettier**:
+   - **Motivo**: Para garantir a qualidade do código e seguir padrões consistentes de codificação, além de identificar e corrigir problemas durante o desenvolvimento.
+
+## Especificação dos Componentes Desenvolvidos
+
+1. **DateFilter**:
+   - **Responsabilidade**: Permite ao usuário filtrar dados por data utilizando um seletor de datas. Formata a data no formato MM/DD/YYYY.
+   - **Dependências**: `react-datepicker` para o componente de seleção de datas.
+
+2. **TimeInputFilter**:
+   - **Responsabilidade**: Permite ao usuário filtrar dados com base na hora e no período do dia (AM/PM).
+   - **Dependências**: Nenhuma dependência externa específica.
+
+3. **EquipmentMap**:
+   - **Responsabilidade**: Gerencia a visualização de equipamentos em um mapa, permitindo filtrar equipamentos por estado e modelo. Calcula e exibe a produtividade e o ganho de um equipamento selecionado. Também exibe um histórico de posições e fornece um modal com detalhes do equipamento.
+   - **Dependências**: react, leaflet, react-leaflet para a visualização do mapa e interação com os dados dos equipamentos.
+
+4. **MapComponent**:
+   - **Responsabilidade**: Exibe a visualização de um mapa com marcadores para os equipamentos. Mostra o histórico de posições dos equipamentos e permite a interação com os marcadores para visualizar detalhes adicionais em um modal.
+   - **Dependências**: `leaflet` e `react-leaflet` para a visualização e manipulação do mapa.
+
+5. **EquipmentModal**:
+   - **Responsabilidade**: Exibe detalhes sobre um equipamento selecionado em um modal. Permite filtrar o histórico de estados e visualizar dados como produtividade e ganho.
+   - **Dependências**: `react-modal` para a criação do modal e `leaflet`/`react-leaflet` para a visualização de mapas.
+
+## Instruções de Uso
+
+1. **Instalação**:
+   - Clone o repositório: `git clone <URL_DO_REPOSITORIO>`
+   - Navegue até o diretório do projeto: `cd teste-frontend-v4`
+   - Instale as dependências: `npm install` ou `yarn install`
+
+2. **Desenvolvimento**:
+   - Inicie o servidor de desenvolvimento: `npm run dev` ou `yarn dev`
+
+--------------------------------------------------------------------
+
 # Teste Frontend V4
 
 ![Aiko](img/aiko.png)

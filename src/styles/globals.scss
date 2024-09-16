@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .app-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .leaflet-container {
+    border-radius: 10px;
+    overflow: hidden;
+  }
