@@ -7,9 +7,9 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@mui/material";
-import SearchMachine from "../SearchMachine/index.";
+import FilterState from "./components/FilterState";
+
 
 interface HistoryMachineProps {
   selectedMachineId: string | null;
@@ -18,9 +18,12 @@ interface HistoryMachineProps {
 export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
   const [selectedMachineHistory, setSelectedMachineHistory] = useState<any[]>([]);
   const [stateMap, setStateMap] = useState<Record<string, { name: string; color: string }>>({});
+  const [filteredHistory, setFilteredHistory] = useState<any[]>([]);
+  const [selectedState, setSelectedState] = useState<string>(''); 
+  const [selectedTime, setSelectedTime] = useState<number | ''>(''); 
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     if (selectedMachineId) {
@@ -34,15 +37,19 @@ export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
           if (selectedHistory) {
             if (Array.isArray(selectedHistory.states)) {
               setSelectedMachineHistory(selectedHistory.states);
+              setFilteredHistory(selectedHistory.states); 
             } else {
               setSelectedMachineHistory([]);
+              setFilteredHistory([]);
             }
           } else {
             setSelectedMachineHistory([]);
+            setFilteredHistory([]);
           }
         });
     } else {
       setSelectedMachineHistory([]);
+      setFilteredHistory([]);
     }
   }, [selectedMachineId]);
 
@@ -61,6 +68,33 @@ export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
       });
   }, []);
 
+  useEffect(() => {
+    let filtered = selectedMachineHistory;
+
+    if (selectedState) {
+      filtered = filtered.filter(
+        (state) => stateMap[state.equipmentStateId]?.name === selectedState
+      );
+    }
+
+    if (selectedTime) {
+      filtered = filtered.filter((state) => {
+        const stateDate = new Date(state.date);
+        const now = new Date();
+        
+        const hoursDifference = Math.abs(now.getTime() - stateDate.getTime()) / 36e5;
+        return hoursDifference <= selectedTime;
+      });
+    }
+
+
+    setFilteredHistory(filtered);
+  }, [selectedState, selectedTime, selectedMachineHistory, stateMap]);
+
+  const handleStateChange = (state: string) => {
+    setSelectedState(state);
+  };
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -70,13 +104,14 @@ export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
     setPage(0);
   };
 
-  const currentData = selectedMachineHistory.slice(
+  const currentData = filteredHistory.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
 
   return (
     <S.Container>
+      <FilterState onStateChange={handleStateChange} />
       <Table>
         <TableHead>
           <TableRow>
@@ -113,7 +148,7 @@ export const HistoryMachine = ({ selectedMachineId }: HistoryMachineProps) => {
 
       <TablePagination
         component="div"
-        count={selectedMachineHistory.length}
+        count={filteredHistory.length}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}

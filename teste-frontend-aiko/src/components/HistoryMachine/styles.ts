@@ -6,3 +6,8 @@ export const Container = styled.div`
   align-items: center;
   padding: 20px;
 `;
+
+export const Filters = styled.div`
+  display: flex;
+  margin: 0 0 30px 0;
+`;

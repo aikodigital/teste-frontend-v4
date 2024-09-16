@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {LocalShippingIcon} from '@mui/icons-material/LocalShipping';
-import AgricultureIcon from '@mui/icons-material/Agriculture';
-import L from "leaflet";
+
 
 interface Position {
   lat: number;
@@ -48,25 +46,6 @@ interface LocateMachinesProps {
   machineId: string | null; 
 }
 
-const icons = {
-  "tipo1": L.icon({
-    iconUrl: "LocalShippingIcon", 
-    iconSize: [25, 41], 
-    iconAnchor: [12, 41], 
-  }),
-  "tipo2": L.icon({
-    iconUrl: "/path/to/icon2.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  }),
-  "tipo3": L.icon({
-    iconUrl: "/path/to/icon2.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  }),
-};
 
 export const LocateMachines = ({ machineId }: LocateMachinesProps) => {
   const [machines, setMachines] = useState<ProcessedMachine[]>([]);
