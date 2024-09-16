@@ -35,7 +35,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['fecharDialogoStatus', 'confirmarExclusao']);
+const emit = defineEmits(['fecharDialogoStatus']);
 
 const busca = ref('Todos');
 const nomeEquipamento = ref('');

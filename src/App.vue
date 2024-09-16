@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-app-bar :elevation="2" color="appbar">
-      <!--  Navigation Menu -->
       <template v-slot:prepend>
         <v-img min-width="200" :max-height="60" aspect-ratio="16/9" src="img/aiko.png" />
       </template>

@@ -3,8 +3,6 @@
         :append-icon="iconeInicial"
         :color="cor"
         :variant="variante"
-        :type="tipo"
-        :size="tamanho"
         :loading="loading"
         :disabled="desabilitar"
     >
@@ -30,8 +28,6 @@ defineProps({
         required: false,
         type: Boolean,
     },
-    tipo: String,
-    tamanho: String,
     desabilitar: Boolean
 })
 </script>

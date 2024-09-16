@@ -57,12 +57,12 @@ const retornarHistoricoStatusEquipamento = (nomeEquipamento) => {
         dataHora: modificarData(status.date)
     }));
     return { ...equipamento, historico: historicoModificado};
-}
+};
 
 function modificarData(data) {
     const dataISO = data;
     const dataFormatar = new Date(dataISO);
-    return dataFormatar.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return dataFormatar.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
 }
 
 export const funcoesEquipamento = {

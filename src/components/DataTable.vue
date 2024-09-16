@@ -1,12 +1,29 @@
 <template>
     <v-card class="w-100" variant="outlined">
-        <v-data-table :items-per-page="itemsPorPagina" :headers="headers" :items="items" :height="height"
+        <v-data-table :items-per-page="itemsPorPagina" :headers="headers" :items="retornaItems" :height="height"
             :search="search" class="elevation-0" no-data-text="Não há dados disponíveis." density="compact">
+            <template v-slot:[`item.acoes`]="{ item }">
+                <v-tooltip text="Detalhes" location="end">
+                    <template v-slot:activator="{ props }">
+                        <v-icon icon="mdi-clipboard" size="large" color="primary" v-bind="props"
+                            @click="visualizarDetalhes(item)" />
+                    </template>
+                </v-tooltip>
+            </template>
             <template v-slot:[`item.date`]="{ item }">
                 {{ funcoesEquipamento.modificarData(item.date) }}
             </template>
+            <template v-slot:[`item.data`]="{ item }">
+                {{ item.data.split('-').reverse().join('/') }}
+            </template>
             <template v-slot:[`item.status`]="{ item }">
                 <v-chip :color="item.corStatus">{{ item.status }}</v-chip>
+            </template>
+            <template v-slot:[`item.porcentagemProdutividade`]="{ item }">
+                {{ item.porcentagemProdutividade.toFixed(2).replace('.', ',') }}
+            </template>
+            <template v-slot:[`item.totalGanho`]="{ item }">
+                {{ `R$ ${item.totalGanho.toFixed(2).replace('.', ',')}` }}
             </template>
             <template v-slot:bottom>
                 <v-data-table-footer class="border-t" page-text="{0}-{1} de {2}" items-per-page-text="Items por página:"
@@ -19,8 +36,9 @@
 
 <script setup>
 import { funcoesEquipamento } from '@/util/funcoesEquipamentos';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
     headers: {
         type: Array,
         required: true,
@@ -54,4 +72,12 @@ defineProps({
         ]
     },
 });
+
+const emit = defineEmits(['itemDetalhar']);
+
+const retornaItems = computed(() => props.items)
+
+const visualizarDetalhes = (dadosItem) => {
+    emit('itemDetalhar', dadosItem);
+};
 </script>
