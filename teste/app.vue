@@ -3,7 +3,13 @@
     <LMap
       ref="map"
       :zoom="zoom"
+      :min-zoom="3"
         :center="[-19.151801, -46.007759]"
+      :max-bounds="[
+        [-90, -180],
+        [90, 180],
+      ]"
+      :max-bounds-viscosity="1.0"
       :use-global-leaflet="false"
     >
       <LTileLayer
@@ -11,6 +17,7 @@
         attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
         layer-type="base"
         name="OpenStreetMap"
+        :no-wrap="true"
       />
       <LMarker
         v-for="marker in markers"
