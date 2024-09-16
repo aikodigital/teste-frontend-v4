@@ -115,7 +115,7 @@ export const EquipmentInfo = ({
         </div>
 
         <div>
-          <div className="relative rounded-md border overflow-auto max-h-[30vh]">
+          <div className="relative rounded-md border overflow-auto max-h-[46vh]">
             <StateHistoryTable equipmentStateHistory={equipmentStateHistory} />
           </div>
         </div>

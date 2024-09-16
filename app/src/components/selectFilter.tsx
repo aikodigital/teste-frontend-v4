@@ -22,7 +22,7 @@ export const SelectFilter = ({
 
   return (
     <Select onValueChange={handleChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-full md:w-[180px] ">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

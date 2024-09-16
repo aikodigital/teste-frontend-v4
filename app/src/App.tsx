@@ -137,7 +137,7 @@ function App() {
               placeholder="Nome do equipamento"
               value={nameInput}
               onChange={(e) => handleNameInputChange(e.target.value)}
-              className="max-w-48"
+              className="w-full md:w-[180px]"
             />
 
             <div className=" z-30 gap-4 items-center">
@@ -147,7 +147,7 @@ function App() {
                     id="date"
                     variant={"outline"}
                     className={cn(
-                      "w-[300px] justify-start text-left font-normal",
+                      "justify-start text-left font-normal w-full md:w-[300px]",
                       !date && "text-muted-foreground"
                     )}
                   >
@@ -181,7 +181,7 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/2 p-1 border-2 border-neutral dark:border-white/80 rounded-md shadow-xl dark:shadow-white/10 h-[50vh] md:h-[64vh]">
+            <div className="md:w-1/2 p-1 border-2 border-neutral dark:border-white/80 rounded-md shadow-xl dark:shadow-white/10 h-[50vh] md:h-[64vh] mt-1">
               <MapComponent
                 selectEquipment={setSelectedEquipment}
                 selectedEquipment={selectedEquipment}

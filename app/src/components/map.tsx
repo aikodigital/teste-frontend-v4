@@ -4,12 +4,10 @@ import {
   useMap,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import { Polyline } from "@react-google-maps/api";
 import { Equipment } from "../interfaces";
 import { fetchOrderedPositions } from "../api/simulatedApi";
 import { useThemeStore } from "../store/themeStore";
 import { EquipmentPin } from "./equipmentPin";
-import { useEffect } from "react";
 
 export const MapComponent = ({
   equipments,
@@ -35,7 +33,7 @@ export const MapComponent = ({
     return null;
   }
 
-  const flightPath = new maps.Polyline({
+  const equipPath = new maps.Polyline({
     path: positionHistory?.map((pos) => ({
       lat: pos.lat,
       lng: pos.lon,
@@ -47,11 +45,7 @@ export const MapComponent = ({
     strokeWeight: 2,
   });
 
-  flightPath.setMap(map);
-
-  function removeLine(): void {
-    flightPath.setMap(null);
-  }
+  equipPath.setMap(map);
 
   const getLastPosition = (id: string) => {
     const lastPosition = fetchOrderedPositions(id)[0];
@@ -81,21 +75,6 @@ export const MapComponent = ({
       disableDefaultUI={true}
       mapId="2e7c8bde9a9f1eb3"
     >
-      <Polyline
-        path={[
-          { lat: 37.772, lng: -122.214 },
-          { lat: 21.291, lng: -157.821 },
-          { lat: -18.142, lng: 178.431 },
-          { lat: -27.467, lng: 153.027 },
-        ]}
-        options={{
-          strokeColor: "#FF0000",
-          strokeOpacity: 1.0,
-          strokeWeight: 3,
-          geodesic: true,
-        }}
-      />
-
       {equipments.length > 0
         ? equipments.map((equipment) => {
             return (

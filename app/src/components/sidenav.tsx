@@ -22,15 +22,7 @@ export function SideNav() {
 }
 
 export function NavLinks() {
-  const links = [
-    { name: "Link1", href: "/dashboard", icon: "" },
-    {
-      name: "Link2",
-      href: "/",
-      icon: "",
-    },
-    { name: "Link3", href: "/", icon: "" },
-  ];
+  const links = [{ name: "Home", href: "/", icon: "" }];
 
   return (
     <>
