@@ -1,9 +1,9 @@
 <template>
-    <Pie :data="chartData" :options="chartOptions" class="w-96 h-80" />
+    <Pie :data="chartData" :options="chartOptions" />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, watch } from 'vue';
+import { defineComponent, PropType, watch, ref } from 'vue';
 import { Pie } from 'vue-chartjs';
 import type { ChartData, ChartOptions } from 'chart.js';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
@@ -56,21 +56,25 @@ export default defineComponent({
         }
     },
     setup(props) {
+        const chartData = ref(props.chartData);
+
         const updateChartColors = () => {
-            const dataset = props.chartData.datasets?.[0];
+            const dataset = chartData.value.datasets?.[0];
             if (dataset) {
                 dataset.backgroundColor = dataset.data.map((_, index) => {
-                    const label = props.chartData.labels?.[index] as string;
+                    const label = chartData.value.labels?.[index] as string;
                     return stateColorMap[label] || '#cccccc';
                 });
             }
         };
 
-        updateChartColors();
-        watch(() => props.chartData, updateChartColors, { deep: true });
+        watch(() => props.chartData, (newData) => {
+            chartData.value = newData;
+            updateChartColors();
+        }, { deep: true });
 
         return {
-            chartData: props.chartData,
+            chartData,
             chartOptions: props.chartOptions
         };
     }
