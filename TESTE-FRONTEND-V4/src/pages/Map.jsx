@@ -1,6 +1,7 @@
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import EquipmentsLocation from '../components/EquipmentsLocation';
-import equipment from '../data/equipment.json';
+import EquipamentState from '../components/EquipamentState';
+import Equipment from '../data/equipment.json';
 import { useEffect, useState } from 'react';
 import './Map.css';
 
@@ -12,6 +13,7 @@ export default function Map() {
 
   const [equipmentsLocal, setEquipmentsLocal] = useState([]);
   const [markers, setMarkers] = useState(false);
+  const [selectedEquipment, setSelectedEquipment] = useState(null);
 
   useEffect(() => {
     if (isLoaded) {
@@ -21,10 +23,14 @@ export default function Map() {
     }
   }, [isLoaded]);
 
+  const handleMouseOver = (equipmentId) => {
+    setSelectedEquipment(equipmentId);
+  };
+
   const renderMarkers = () => {
     if (!markers) return null;
     return equipmentsLocal.map((equip, index) => {
-      const equipmentPosition = equipment.find(e => e.id === equip.equipmentId);
+      const equipmentPosition = Equipment.find(e => e.id === equip.equipmentId);
 
       if (!equipmentPosition) {
         console.error(`Equipamento com id ${equip.equipmentId} não encontrado`);
@@ -36,12 +42,25 @@ export default function Map() {
           key={index}
           position={{ lat: equip.lat, lng: equip.lng }}
           label={equipmentPosition.name}
-        />
+          onMouseOver={() => handleMouseOver(equipmentPosition)}
+        >
+          {selectedEquipment && selectedEquipment.id === equipmentPosition.id && (
+            <InfoWindow
+              position={{ lat: equip.lat, lng: equip.lng }}
+              onCloseClick={() => setSelectedEquipment(null)}
+            >
+              <div>
+                <h3>{equipmentPosition.name}</h3>
+                <EquipamentState equipmentId={selectedEquipment.id} />
+              </div>
+            </InfoWindow>
+          )}
+        </Marker>
       );
     });
   };
 
-  const inicialPosition = equipmentsLocal. length > 0 ? { lat: equipmentsLocal[0].lat, lng: equipmentsLocal[0].lng } : { lat: 0, lng: 0 }
+  const inicialPosition = equipmentsLocal.length > 0 ? { lat: equipmentsLocal[0].lat, lng: equipmentsLocal[0].lng } : { lat: 0, lng: 0 }
 
   return (
     <main className='map'>
