@@ -13,20 +13,66 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const EquipmentMap = () => {
+function EquipmentMap() {
   const [positions, setPositions] = useState([]);
+  const [equipmentModels, setEquipmentModels] = useState([]);
+  const [equipmentState, setEquipmentState] = useState([]);
+  const [equipmentStateHistory, setEquipmentStateHistory] = useState ([]);
 
   useEffect(() => {
+    // Buscar dados de posição
     axios.get('/data/equipmentPositionHistory.json')
-    .then(response => {
-      setPositions(response.data); // Armazena os dados de posição
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  
+      .then(response => {
+        setPositions(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+    // Buscar dados do modelo de equipamento
+    axios.get('/data/equipmentModel.json')
+      .then(response => {
+        setEquipmentModels(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+      axios.get('/data/equipmentState.json')
+      .then(response => {
+        setEquipmentState(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+      axios.get('/data/equipmentStateHistory.json')
+      .then(response => {
+        setEquipmentStateHistory(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
   }, []);
 
+  // Função para obter o nome do equipamento pelo ID
+  const getEquipmentName = (equipmentId) => {
+    const equipment = equipmentModels.find(model => model.id === equipmentId);
+    return equipment ? equipment.name : 'Nome do equipamento não adicionado';
+  };
+
+  const getEquipmentState = (equipmentId) => {
+    const equipment = equipmentState.find(model => model.id === equipmentId);
+    return equipment ? equipment.state : 'Estado não adicionado';
+  };
+
+  const getEquipmentStateHistory = (equipmentId) => {
+    const equipment = equipmentStateHistory.find(model => model.id === equipmentId);
+    return equipment ? equipment.equipmentId.states : 'Histórico não atualizado'
+  }
+
   return (
- 
 
 <MapContainer center={[-19.126536, -45.947756]} zoom={13} style={{ height: '500px', width: '100%' }}>
   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -35,8 +81,11 @@ const EquipmentMap = () => {
       <Marker key={`${equipment.equipmentId}-${idx}`} position={[position.lat, position.lon]}>
         <Popup>
          <h3> Equipamento ID: {equipment.equipmentId}</h3><br />
-          <p>Latitude: {position.lat}</p><br />
-          <p>Longitude: {position.lon}</p><br />      
+         <p>Nome: {getEquipmentName(equipment.equipmentId)}</p>
+          <p>Latitude: {position.lat}</p>
+          <p>Longitude: {position.lon}</p>
+          <p>Estado Atual: {getEquipmentState(equipment.equipmentId.name)}</p> 
+          <p>Movimentação do equipamento : {getEquipmentStateHistory(equipment.equipmentId)}</p>
         </Popup>
       </Marker>
     ))
