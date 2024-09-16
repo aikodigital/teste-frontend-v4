@@ -1,5 +1,7 @@
 # Teste Aiko - Victor Hugo Forbes
 
+Deployed Test on Vercel [Deployed Test on Vercel](https://teste-frontend-v4-seven.vercel.app/).
+
 ## Stack Escolhida
 
 Defini fazer o projeto com React utilizando typescript, tailwind e shadcn para os componentes. São tecnologias que estou familiarizado e trabalho no dia a dia.
