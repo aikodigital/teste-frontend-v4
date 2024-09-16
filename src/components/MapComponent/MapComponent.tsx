@@ -4,9 +4,9 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.css';
 
-import { Position, Equipment } from '../../types';
+import { Position, Equipment, EquipmentModel } from '../../types';
 import { getEquipmentNameById, getLatestPosition, getLatestState, getStateColorById, getStateNameById } from '../../utils/getStateInfo';
-import { equipmentStatesHistory, equipmentStatesInfoList, equipmentPositionsList } from '../../utils/sharedData';
+import { equipmentStatesHistory, equipmentStatesInfoList, equipmentPositionsList, equipmentModelList } from '../../utils/sharedData';
 
 interface MapComponentProps {
   equipmentList: Equipment[];
@@ -18,7 +18,7 @@ const FitMapBounds: React.FC<{ bounds: L.LatLngBoundsExpression }> = ({ bounds }
   const map = useMap();
   useEffect(() => {
     if (bounds && (bounds as [number, number][]).length > 0) {
-      map.fitBounds(bounds as L.LatLngBoundsExpression, { padding: [50, 50] }); // Ajusta o mapa para caber nos bounds
+      map.fitBounds(bounds as L.LatLngBoundsExpression, { padding: [50, 50] });
     }
   }, [map, bounds]);
 
@@ -31,7 +31,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 }) => {
   const [markers, setMarkers] = useState<JSX.Element[]>([]);
   const [polylinePositions, setPolylinePositions] = useState<Position[]>([]);
-  const [bounds, setBounds] = useState<L.LatLngBoundsExpression>([]); // Para armazenar os limites
+  const [bounds, setBounds] = useState<L.LatLngBoundsExpression>([]);
 
   useEffect(() => {
     let filteredPositions: Position[] = [];
@@ -53,6 +53,21 @@ const MapComponent: React.FC<MapComponentProps> = ({
       setPolylinePositions([]);
     }
 
+    // Criação dos ícones personalizados baseados no modelo do equipamento
+    const getIconByModel = (modelId: string) => {
+      // Exemplo de ícones baseados no modelo de equipamento
+      const modelIconMap: { [key: string]: string } = {
+        'model-1': 'https://path-to-icon1.png',
+        'model-2': 'https://path-to-icon2.png',
+        'model-3': 'https://path-to-icon3.png',
+      };
+
+      return L.icon({
+        iconUrl: modelIconMap[modelId] || 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+        iconSize: [20, 30],
+      });
+    };
+
     const markerPositions = (selectedEquipment ? filteredPositions : Array.from(latestPositions.values()))
       .map(position => {
         const equipmentId = selectedEquipment || equipmentPositionsList.find(equip => 
@@ -66,16 +81,18 @@ const MapComponent: React.FC<MapComponentProps> = ({
         const stateColor = stateId ? getStateColorById(stateId, equipmentStatesInfoList) : 'gray';
         const equipmentName = getEquipmentNameById(equipmentId, equipmentList);
 
+        // Obtém o modelo do equipamento e aplica um ícone específico
+        const equipment = equipmentList.find(equip => equip.id === equipmentId);
+        const equipmentModel = equipment ? equipmentModelList.find(model => model.id === equipment.equipmentModelId) : null;
+        const modelIcon = equipmentModel ? getIconByModel(equipmentModel.id) : undefined;
+
         return {
           position: [position.lat, position.lon] as [number, number],
           marker: (
             <Marker
               key={`${equipmentId}-${position.date}`}
               position={[position.lat, position.lon]}
-              icon={L.icon({ 
-                iconUrl: `https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png`, 
-                iconSize: [20, 30] 
-              })}
+              icon={modelIcon} // Aplica o ícone baseado no modelo do equipamento
             >
               <Popup>
                 <div>
@@ -93,7 +110,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
     setMarkers(markerPositions.map(item => item.marker));
     setBounds(markerPositions.map(item => item.position)); // Armazena os bounds
 
-  }, [equipmentPositionsList, equipmentStatesHistory, equipmentStatesInfoList, selectedEquipment, equipmentList]);
+  }, [equipmentPositionsList, equipmentStatesHistory, equipmentStatesInfoList, selectedEquipment, equipmentList, equipmentModelList]);
 
   return (
     <MapContainer 

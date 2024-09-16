@@ -1,16 +1,9 @@
 import React from 'react';
-
 import { Card } from 'react-bootstrap';
 import './CardList.css'; 
-
-import { Equipment } from '../../types';
-
+import { CardListProps } from '../../types';
 import { equipmentModelList, equipmentStatesHistory, equipmentStatesInfoList } from '../../utils/sharedData';
-
-interface CardListProps {
-  equipmentList: Equipment[];
-  onCardClick: (id: string) => void;
-}
+import { calculateProductivity } from '../../utils/calculateProductivity';
 
 const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
   return (
@@ -24,6 +17,8 @@ const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
           ? equipmentStatesInfoList.find(info => info.id === latestStateId)
           : null;
 
+        const productivity = calculateProductivity(equipment.id); // Calcula a produtividade
+
         return (
           <div key={equipment.id} className="col-md-4 col-sm-6 col-12 mb-4">
             <Card className="h-100 d-flex flex-column custom-card" onClick={() => onCardClick(equipment.id)}>
@@ -35,6 +30,9 @@ const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
                   <span style={{ color: stateInfo?.color ?? 'black'}}>
                     {stateInfo ? stateInfo.name : 'Desconhecido'}
                   </span>
+                </Card.Text>
+                <Card.Text>
+                  <strong>Produtividade: </strong>{productivity}% {/* Exibe a produtividade */}
                 </Card.Text>
               </Card.Body>
             </Card>

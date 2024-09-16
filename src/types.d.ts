@@ -49,7 +49,5 @@ export interface MapComponentProps {
 
 export interface CardListProps {
     equipmentList: Equipment[];
-    equipmentModelList: EquipmentModel[];
-    stateInfoList: EquipmentStateInfo[];
     onCardClick: (id: string) => void;
 }
