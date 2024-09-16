@@ -13,5 +13,11 @@
         "id": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f",
         "name": "Manutenção",
         "color": "#e74c3c"
+    },
+    {
+        "id":"c79ef1de-92f3-4edd-bd55-553056640449",
+        "name":"Operando",
+        "color":"#2ecc71"
+
     }
 ]
