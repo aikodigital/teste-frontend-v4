@@ -28,7 +28,7 @@ th {
 .scroll {
     border-radius: 20px;
     border: 1px solid #CDCDCD;
-    max-height: 88.3Avh;
+    max-height: 88.3vh;
 
     width: 90%;
 
@@ -60,4 +60,24 @@ p {
     color: #00437a;
     font-size: 16px;
     font-weight: 600;
+}
+
+@media (max-width: 425px) {
+    .scroll {
+        border-radius: 20px;
+        border: 1px solid #CDCDCD;
+        max-height: 88.3vh;
+    
+        width: 90%;
+    
+        overflow-y: auto;
+        scrollbar-width:none; 
+        margin: 6px 1px 0 1px;
+    
+        padding-right: 0px;
+    
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    
+        background-color: #00437a;
+    }  
 }
