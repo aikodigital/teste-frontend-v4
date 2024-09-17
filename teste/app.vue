@@ -34,7 +34,7 @@
             <div class="i-ph-caret-down-fill" />
           <Badge
             v-if="marker.state !== 'Operando'"
-            pt:root:class="absolute top-[-5px] right-[-10px] w-[10px] h-[10px] rounded"
+            pt:root:class="absolute top-0 right-0 w-[10px] h-[10px] rounded"
             :pt:root:style="`background-color: ${marker.stateColor};`"
           />
           </LIcon>
