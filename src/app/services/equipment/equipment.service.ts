@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+import equipments from '../../../assets/data/equipment.json'
+import models from '../../../assets/data/equipmentModel.json'
+import state from '../../../assets/data/equipmentState.json'
+import positionHistory from '../../../assets/data/equipmentPositionHistory.json'
+import stateHistory from '../../../assets/data/equipmentStateHistory.json'
 
 interface Equipment {
   id: string;
@@ -47,6 +52,26 @@ export class EquipmentService {
 
   constructor() { }
 
+  getEquipmentsData() {
+    return equipments;
+  }
+
+  getModelsData() {
+    return models;
+  }
+
+  getStatesData() {
+    return state;
+  }
+
+  getStateHistoryData() {
+    return stateHistory;
+  }
+
+  getPositionsHistoryData() {
+    return positionHistory;
+  }
+
   getEquipmentInfo(equipmentId: string, equipments: Equipment[]): Equipment | undefined {
     return equipments.find((equip: Equipment) => equip.id === equipmentId);
   }
@@ -68,5 +93,25 @@ export class EquipmentService {
 
     const latestState = equipmentState!.states.sort((a: { date: string | number | Date; }, b: { date: string | number | Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
     return state.find((info: State) => info.id === latestState.equipmentStateId);
+  }
+
+  getStateInfoById(stateId: string) {
+    return state.find((state: any) => state.id === stateId);
+  }
+
+  getStateHistoryByEquipmentId(equipmentId: string) {
+    let states = stateHistory.find((state: StateHistory) => state.equipmentId === equipmentId);
+
+    if (states) {
+      states.states = states.states.map(item => {
+        const stateInfo = this.getStateInfoById(item.equipmentStateId);
+        return {
+          ...item,
+          stateInfo,
+        };
+      });
+    }
+
+    return states;
   }
 }
