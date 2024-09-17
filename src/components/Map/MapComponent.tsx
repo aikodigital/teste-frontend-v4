@@ -13,10 +13,7 @@ export const MapComponent = ({ markers }: MapComponentProps) => {
 
   return (
     <div>
-      <div id="map" style={{ height: '700px', width: '100vw' }} />
-      {/* {markers.length > 0 && markers[0]?.equipmentId && (
-        <EquipmentDetails equipmentId={markers[0].equipmentId} />
-      )} */}
+      <div id="map" data-testid="map" style={{ height: '700px', width: '100vw' }} />
     </div>
   );
 };
