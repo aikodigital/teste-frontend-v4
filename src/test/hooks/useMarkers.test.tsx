@@ -131,10 +131,10 @@ describe('<useMarkers />', () => {
         }
       ];
 
-      expect(result.current).toHaveLength(1);
-      expect(result.current[0].coordinates).toEqual(expectedMarkers[0]?.coordinates);
-      expect(result.current[0].tooltipValue).toBe(expectedMarkers[0]?.tooltipValue);
-      expect(result.current[0].popupValue).toBe(expectedMarkers[0]?.popupValue);
+      expect.soft(result.current).toHaveLength(1);
+      expect.soft(result.current[0].coordinates).toEqual(expectedMarkers[0]?.coordinates);
+      expect.soft(result.current[0].tooltipValue).toBe(expectedMarkers[0]?.tooltipValue);
+      expect.soft(result.current[0].popupValue).toBe(expectedMarkers[0]?.popupValue);
     });
   });
 });
