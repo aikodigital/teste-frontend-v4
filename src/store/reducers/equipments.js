@@ -32,6 +32,11 @@ const equipments = {
         latitude: -19.151801,
         longitude: -46.007759,
         zoom: 10,
+    },
+    filters: {
+        status: 'Todos',
+        model: 'Todos',
+        search:''
     }
 }
 
@@ -81,13 +86,49 @@ const equipmentSlice = createSlice({
     initialState,
     reducers: {
 
-
         filterStatus: (state, action) => {
-            if (action.payload === 'Todos') {
-                state.filtered = state.unfiltered // reseta o array filtered para os valores nao filtrados
-            } else {
-                state.filtered = state.unfiltered.filter(x => x.lastState.name === action.payload)
-            }
+
+            //atualiza o criterio do filtro armazenado no estado
+            state.filters.status = action.payload;
+
+            // Aplica todos os filtros presentes no estado
+            state.filtered = state.unfiltered.filter(item =>
+
+                //compara o termo de busca armazenado no estado com o nome dos equipamentos
+                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) &&
+
+                // verifica se o filtro engloba todos os itens, OU se existe alguma correspondencia ao filtro de status
+                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
+
+                //o mesmo da linha de cima, porem verifica correspondencia ao filtro de modelo
+                (state.filters.model === 'Todos' || item.model === state.filters.model)
+            );
+        },
+
+        filterModel: (state, action) => {
+
+            //atualiza o criterio do filtro armazenado no estado
+            state.filters.model = action.payload;
+
+            state.filtered = state.unfiltered.filter(item =>
+
+                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) &&
+                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
+                (state.filters.model === 'Todos' || item.model === state.filters.model)
+            );
+        },
+
+        filterSearch: (state, action) => {
+
+            //atualiza o criterio do filtro armazenado no estado
+            state.filters.search = action.payload;
+
+            state.filtered = state.unfiltered.filter(item =>
+                
+                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
+                (state.filters.model === 'Todos' || item.model === state.filters.model) &&
+                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) 
+            );
         },
 
         focusEquipment: (state, action) => {
@@ -105,5 +146,5 @@ const equipmentSlice = createSlice({
 
 // retorna o hisotrico de estados a partir de um id da payload
 
-export const { filterStatus, focusEquipment } = equipmentSlice.actions
+export const { filterStatus, filterModel, filterSearch, focusEquipment } = equipmentSlice.actions
 export default equipmentSlice.reducer;

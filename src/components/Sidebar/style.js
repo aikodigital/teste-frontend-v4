@@ -5,13 +5,22 @@ export const SidebarWrapper = styled.div`
     flex-direction: column;
     padding: 16px;
     
+
     
     .filters{
-        background-color: aliceblue;
-        align-self: flex-end;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
         border-radius: 8px;
         padding: 8px;
         margin-bottom: 20px;
+        background-color: aliceblue;
+
+        .search{
+
+            margin-bottom: 16px;
+
+        }
         
         select{
             padding: 4px;
