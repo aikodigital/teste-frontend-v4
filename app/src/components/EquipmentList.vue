@@ -1,6 +1,7 @@
 <template>
     <div class="w-1/4 pr-1">
         <h2 class="text-white">Lista de Equipamentos</h2>
+        
         <div class="mb-4">
             <label for="stateFilter" class="text-white">Filtrar por Estado:</label>
             <select id="stateFilter" v-model="selectedStateFilter" class="ml-2">
@@ -10,6 +11,7 @@
                 </option>
             </select>
         </div>
+
         <div class="mb-4">
             <label for="modelFilter" class="text-white">Filtrar por Modelo:</label>
             <select id="modelFilter" v-model="selectedModelFilter" class="ml-2">
@@ -19,30 +21,30 @@
                 </option>
             </select>
         </div>
+
         <div class="mb-4">
             <label for="search" class="text-white">Pesquisar:</label>
-            <input id="search" v-model="searchQuery" type="text" placeholder="Digite o nome do equipamento"
-                class="ml-2" />
+            <input id="search" v-model="searchQuery" type="text" placeholder="Digite o nome do equipamento" class="ml-2" />
         </div>
+
         <div class="mb-4">
             <button @click="clearFilters" class="px-4 py-2 bg-gray-600 text-white rounded">
                 Limpar Filtros
             </button>
         </div>
+
         <ul class="list-disc pl-5 text-white">
-            <li v-for="equipment in filteredEquipments" :key="equipment.id" class="cursor-pointer hover:underline"
-                @click="handleEquipmentClick(equipment)">
+            <li v-for="equipment in filteredEquipments" :key="equipment.id" class="cursor-pointer hover:underline" @click="handleEquipmentClick(equipment)">
                 {{ equipment.name }}
-                <span v-if="selectedEquipment && selectedEquipment.id === equipment.id"
-                    :style="{ color: selectedEquipment.states[selectedEquipment.states.length - 1]?.color }">
+                <span v-if="isSelectedEquipment(equipment)" :style="{ color: getLastStateColor(equipment) }">
                     <strong>Status:</strong>
-                    {{ selectedEquipment.states.length > 0 ? selectedEquipment.states[selectedEquipment.states.length -
-                        1]?.name : 'Nenhum Status disponível' }}
+                    {{ getLastStateName(equipment) || 'Nenhum Status disponível' }}
                 </span>
             </li>
         </ul>
     </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, PropType, computed, ref } from 'vue';
 import { Equipment, EquipmentModel, EquipmentState } from '../stores/equipmentStore';
@@ -77,19 +79,29 @@ export default defineComponent({
 
         const filteredEquipments = computed(() => {
             return props.equipments.filter(equipment => {
-                const matchesSearch = equipment.name.toLowerCase().includes(searchQuery.value.toLowerCase());
-
-                const matchesState = selectedStateFilter.value
-                    ? equipment.states.length > 0 && equipment.states[equipment.states.length - 1]?.name === selectedStateFilter.value
-                    : true;
-
-                const matchesModel = selectedModelFilter.value
-                    ? equipment.model && equipment.model.name === selectedModelFilter.value
-                    : true;
-
-                return matchesSearch && matchesState && matchesModel;
+                return (
+                    matchesSearch(equipment) &&
+                    matchesState(equipment) &&
+                    matchesModel(equipment)
+                );
             });
         });
+
+        const matchesSearch = (equipment: Equipment) => {
+            return equipment.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+        };
+
+        const matchesState = (equipment: Equipment) => {
+            if (!selectedStateFilter.value) return true;
+            const lastState = equipment.states[equipment.states.length - 1];
+            return lastState && lastState.name === selectedStateFilter.value;
+        };
+
+        const matchesModel = (equipment: Equipment) => {
+            return selectedModelFilter.value
+                ? equipment.model && equipment.model.name === selectedModelFilter.value
+                : true;
+        };
 
         const clearFilters = () => {
             searchQuery.value = '';
@@ -97,12 +109,27 @@ export default defineComponent({
             selectedModelFilter.value = '';
         };
 
+        const getLastStateName = (equipment: Equipment) => {
+            return equipment.states.length > 0 ? equipment.states[equipment.states.length - 1]?.name : '';
+        };
+
+        const getLastStateColor = (equipment: Equipment) => {
+            return equipment.states.length > 0 ? equipment.states[equipment.states.length - 1]?.color : '#fff';
+        };
+
+        const isSelectedEquipment = (equipment: Equipment) => {
+            return props.selectedEquipment && props.selectedEquipment.id === equipment.id;
+        };
+
         return {
             searchQuery,
             selectedStateFilter,
             selectedModelFilter,
             filteredEquipments,
-            clearFilters
+            clearFilters,
+            getLastStateName,
+            getLastStateColor,
+            isSelectedEquipment
         };
     }
 });
