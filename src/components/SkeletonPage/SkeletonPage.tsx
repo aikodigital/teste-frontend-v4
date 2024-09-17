@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEquipmentData } from '../../contexts/EquipmentDataContext';
 
 import EquipmentStateHistorySection from '../EquipmentStateHistory/equipmentStateHistorySection';
+import EquipmentFilters from '../EquipmentFilters/EquipmentFilters';
 import CardList from '../CardList/CardList';
 import MapComponent from '../MapComponent/MapComponent';
 import Header from '../Header/header';
@@ -14,21 +15,16 @@ interface SkeletonPageProps {
 }
 
 const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [modelFilter, setModelFilter] = useState<string>('');
-    const [stateFilter, setStateFilter] = useState<string>('');
-    const [showFilters, setShowFilters] = useState<boolean>(false);
-    
+    const [searchTerm, setSearchTerm] = useState<string>(''); // Filtro por nome de equipamento
+    const [modelFilter, setModelFilter] = useState<string>(''); // Filtro por nome de modelo
+    const [stateFilter, setStateFilter] = useState<string>(''); // Filtro por nome de estado
+
     const navigate = useNavigate();
 
     const { equipmentList, equipmentModelList, equipmentStatesHistory, equipmentStatesInfoList, loading } = useEquipmentData();
 
     const handleCardClick = (id: string) => {
         navigate(`/details?id=${id}`);
-    };
-
-    const toggleFilters = () => {
-        setShowFilters(!showFilters);
     };
 
     // Função para aplicar o filtro de equipamento, modelo e estado
@@ -56,7 +52,7 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
         <>
             <Header />
 
-            {loading ?
+            {loading ? 
                 <div className='row full-height d-flex align-items-center justify-content-center'>
                     <p className='loading-text'>Carregando dados...</p>
                 </div>
@@ -86,80 +82,33 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
                                     de posições e estados.
                                 </p>
 
-                                <div className="row mb-3">
-                                    {/* Input de pesquisa por nome do equipamento */}
-                                    <div className="col-md-8">
-                                        <input
-                                            type="text"
-                                            placeholder="Pesquisar equipamentos por código..."
-                                            className="form-control"
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                        />
-                                    </div>
+                                {/* Componente de filtros */}
+                                <EquipmentFilters
+                                    searchTerm={searchTerm}
+                                    setSearchTerm={setSearchTerm}
+                                    modelFilter={modelFilter}
+                                    setModelFilter={setModelFilter}
+                                    stateFilter={stateFilter}
+                                    setStateFilter={setStateFilter}
+                                    equipmentModelList={equipmentModelList}
+                                    equipmentStatesInfoList={equipmentStatesInfoList}
+                                />
 
-                                    {/* Botão de Filtrar */}
-                                    <div className="col-md-4 d-flex">
-                                        <button
-                                            className="btn btn-primary w-100"
-                                            onClick={toggleFilters}
-                                        >
-                                            {showFilters ? 'Esconder Filtros' : 'Filtrar'}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {showFilters && (
-                                    <div className="row">
-                                        {/* Select para filtrar por modelo */}
-                                        <div className="col-md-12 mb-3">
-                                            <select
-                                                className="form-control"
-                                                value={modelFilter}
-                                                onChange={(e) => setModelFilter(e.target.value)}
-                                            >
-                                                <option value="">Todos os modelos</option>
-                                                {equipmentModelList.map((model) => (
-                                                    <option key={model.id} value={model.name}>
-                                                        {model.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        {/* Select para filtrar por estado */}
-                                        <div className="col-md-12 mb-3">
-                                            <select
-                                                className="form-control"
-                                                value={stateFilter}
-                                                onChange={(e) => setStateFilter(e.target.value)}
-                                            >
-                                                <option value="">Todos os estados</option>
-                                                {equipmentStatesInfoList.map((state) => (
-                                                    <option key={state.id} value={state.name}>
-                                                        {state.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {filteredEquipmentList?.length > 0 ?
-                                    <CardList
-                                        equipmentList={filteredEquipmentList}
-                                        onCardClick={handleCardClick}
-                                    /> : <p>Não há equipamentos que correspondam à esses filtros.</p>
-                                }
+                                <CardList
+                                    equipmentList={filteredEquipmentList}
+                                    onCardClick={handleCardClick}
+                                />
                             </>
                         )}
                     </div>
 
                     <div className="col-md-6 map-container">
-                        <MapComponent
-                            selectedEquipment={selectedEquipment}
-                            equipmentList={filteredEquipmentList}
-                        />
+                        {filteredEquipmentList?.length > 0 &&
+                            <MapComponent
+                                selectedEquipment={selectedEquipment}
+                                equipmentList={filteredEquipmentList}
+                            />
+                        }
                     </div>
                 </div>
             }
