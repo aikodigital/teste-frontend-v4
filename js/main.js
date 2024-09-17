@@ -75,22 +75,74 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayEquipmentHistory(equipmentId, equipments, stateHistory, states) {
         const history = stateHistory.find(hist => hist.equipmentId === equipmentId);
         const equipmentName = getEquipmentName(equipmentId, equipments);
-        let historyHtml = `<h3>${equipmentName} - Histórico de Estados</h3><ul>`;
+        const rowsPerPage = 18;
+        let currentPage = 1;
+        let filteredStates = history.states;
+        
+        const stateFilter = document.getElementById('state-filter');
+        const tableBody = document.getElementById('table-body');
     
-        history.states.forEach(stateRecord => {
-            const state = states.find(s => s.id === stateRecord.equipmentStateId);
-            const date = new Date(stateRecord.date);
-            const dateTimeStr = formatDateTimeToLocal(date);
-            historyHtml += `
-                <li>
-                    <span>${dateTimeStr}</span>: ${state.name}
-                </li>
-            `;
+        function formatDateTime(date) {
+            return formatDateTimeToLocal(new Date(date));
+        }
+    
+        function updateTable() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredStates.slice(start, end);
+    
+            tableBody.innerHTML = pageData.map(stateRecord => {
+                const state = states.find(s => s.id === stateRecord.equipmentStateId);
+                return `
+                    <tr>
+                        <td>${formatDateTime(stateRecord.date)}</td>
+                        <td>${state.name}</td>
+                    </tr>
+                `;
+            }).join('');
+    
+            document.getElementById('page-info').textContent = `Página ${currentPage} de ${Math.ceil(filteredStates.length / rowsPerPage)}`;
+    
+            document.getElementById('prev-page').disabled = currentPage === 1;
+            document.getElementById('next-page').disabled = currentPage === Math.ceil(filteredStates.length / rowsPerPage);
+        }
+    
+        function updateFilter() {
+            const uniqueStates = [...new Set(history.states.map(s => s.equipmentStateId))];
+            stateFilter.innerHTML = '<option value="all">Todos</option>' +
+                states.filter(s => uniqueStates.includes(s.id)).map(state => 
+                    `<option value="${state.id}">${state.name}</option>`
+                ).join('');
+        }
+    
+        function applyFilter() {
+            const selectedStateId = stateFilter.value;
+            filteredStates = selectedStateId === 'all' ?
+                history.states :
+                history.states.filter(record => record.equipmentStateId === selectedStateId);
+            currentPage = 1; 
+            updateTable();
+        }
+    
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
         });
-        historyHtml += '</ul>';
     
-        const equipmentInfoDiv = document.getElementById('equipment-info');
-        equipmentInfoDiv.innerHTML = historyHtml;
-        equipmentInfoDiv.style.display = 'block'; 
-    }   
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPage < Math.ceil(filteredStates.length / rowsPerPage)) {
+                currentPage++;
+                updateTable();
+            }
+        });
+    
+        stateFilter.addEventListener('change', applyFilter);
+    
+        document.getElementById('equipment-title').textContent = `${equipmentName} - Histórico de Estados`;
+        updateFilter();
+        applyFilter();
+        document.getElementById('equipment-info').style.display = 'block';
+    }     
 });

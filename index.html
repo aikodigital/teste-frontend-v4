@@ -6,6 +6,7 @@
     <title>Aiko - M.E.F</title>
     <link rel="icon" href="img/aiko.png" type="image/png">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
@@ -13,8 +14,31 @@
         <h1>Mapa de Equipamentos Florestais</h1>
     </header>
     <main>
-        <div id="map" style="height: 600px;"></div>
-        <div id="equipment-info"></div>
+        <div id="map"></div>
+        <div id="equipment-info">
+            <h3 id="equipment-title"></h3>
+            <div id="filter-container">
+                <label for="state-filter">Filtrar por Estado:</label>
+                <select id="state-filter">
+                    <option value="all">Todos</option>
+                </select>
+            </div>
+            <table id="equipment-table">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+            <div id="pagination-controls">
+                <button id="prev-page" disabled>Anterior</button>
+                <span id="page-info"></span>
+                <button id="next-page">Próximo</button>
+            </div>
+        </div>
     </main>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="js/main.js"></script>
