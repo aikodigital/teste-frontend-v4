@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import styles from './MainPage.module.scss';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/index';
 
 export default function MainPage() {
 
@@ -9,20 +9,9 @@ export default function MainPage() {
 
     return (
         <div className={styles.container}>
-            <header>
-                <nav>
-                    <div>
-                    <Link to='/map'>
-                        Map
-                    </Link>
-                    </div>
-                    <div>
-                    <Link to='/trucks'>
-                        Trucks
-                    </Link>
-                    </div>
-                </nav>
-            </header>
+            <div className={styles.navbar}>
+                <Navbar />
+            </div>
             <div className={styles['container-outlet']}>
                 <Outlet />
             </div>

@@ -1,8 +1,8 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Map from "./pages/Map/Map";
-import Trucks from "./pages/Trucks/Trucks";
-import MainPage from "./pages/MainPage/MainPage";
+import Map from "./pages/Map/index";
+import Trucks from "./pages/Trucks/index";
+import MainPage from "./pages/MainPage";
 
 export default function Router() {
   return (
@@ -12,7 +12,7 @@ export default function Router() {
       <Routes>
         <Route path='/' element={<MainPage />}>
           <Route path='/trucks' element={<Trucks />} />
-          <Route path='/map' element={<Map/>} />
+          <Route index element={<Map/>} />
         </Route>
       </Routes>
     </BrowserRouter>

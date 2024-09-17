@@ -54,25 +54,25 @@ export default function Map() {
     ];
     
     const customIcon = new Icon({
-    iconUrl: "../img/box-truck.png",
+    iconUrl: "src/assets/box-truck.png",
     iconSize: [38, 38]
     })
 
   return (
     <MapContainer center={[-19.151801, -46.007759]} zoom={13} scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-    <MarkerClusterGroup chunkedLoading >
-    {markers.map(marker => (
-      <Marker position={marker.geocode} icon={customIcon} key={uuidv4()}>
-        <Popup>{marker.equipmentId}</Popup>
-      </Marker>
-    ))
-  }
-    </MarkerClusterGroup>
+      <MarkerClusterGroup chunkedLoading >
+      {markers.map(marker => (
+        <Marker position={marker.geocode} icon={customIcon} key={uuidv4()}>
+          <Popup>{marker.equipmentId}</Popup>
+        </Marker>
+      ))
+    }
+      </MarkerClusterGroup>
     </MapContainer>
   )
 }

@@ -1,0 +1,48 @@
+@import '../../styles/breakpoints';
+
+.nav {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  background-color: rgb(2, 82, 35);
+  padding: 0 120px;
+  border-bottom: #fff solid 2px;
+
+  @media(max-width: $tablet) {
+    grid-template-areas:
+      'logo logo'
+      'links icones'
+      'busca busca';
+    grid-template-columns: 6fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 200px;
+    justify-items: center;
+  }
+  @media(max-width: $mobile-sm) {
+    padding: 0 50px;
+  }
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+
+  @media(max-width: $tablet) {
+    justify-self: start;
+  }
+}
+
+.link {
+  color: white;
+  font-size: 22px;
+}
+
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
