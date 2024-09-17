@@ -1,6 +1,7 @@
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import EquipmentsLocation from '../components/EquipmentsLocation';
 import EquipamentState from '../components/EquipamentState';
+import EquipmentsModel from '../components/EquipmentModel';
 import Equipment from '../data/equipment.json';
 import equipmentStateHistory from '../data/equipmentStateHistory.json';
 import equipmentState from '../data/equipmentState.json';
@@ -17,7 +18,7 @@ export default function Map() {
   const [markers, setMarkers] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [equipmentHistory, setEquipmentHistory] = useState([]);
-  const [selectedState, setSelectedState] = useState(''); // Estado selecionado
+  const [selectedState, setSelectedState] = useState('');
 
   useEffect(() => {
     if (isLoaded) {
@@ -103,6 +104,7 @@ export default function Map() {
               <div>
                 <h3>{equipmentPosition.name}</h3>
                 <EquipamentState equipmentId={selectedEquipment.id} />
+                <EquipmentsModel equipmentModelId={equipmentPosition.equipmentModelId} />
                 <h4>Histórico de estados</h4>
                 <ul>
                   {equipmentHistory.map((state, index) => (
