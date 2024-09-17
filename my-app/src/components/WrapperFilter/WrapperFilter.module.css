@@ -1,0 +1,17 @@
+.displayGrid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  margin-bottom: 2rem;
+  row-gap: 2rem;
+  column-gap: 0;
+  justify-content: space-between;
+  margin-top: 4rem;
+}
+
+@media screen and (max-width: 980px) {
+  .displayGrid {
+    column-gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+}

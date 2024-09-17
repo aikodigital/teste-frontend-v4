@@ -1,0 +1,54 @@
+.WrapperAccordion {
+    margin: 2rem 0rem;
+  }
+  
+  .MuiAccordion-root {
+    border: 1px solid var(--blueDark);
+    box-shadow: none;
+    opacity: 0.5;
+    background: white 
+  }
+  
+  .MuiAccordion-root:hover,
+  .MuiAccordion-root.Mui-expanded {
+    opacity: 1;
+    transition: all ease 0.3s;
+  }
+  
+  .MuiAccordion-root {
+    border: 1px solid var(--blueDark);
+    opacity: 0.5;
+    
+    border-radius: 8px !important;
+    padding: 0.8rem;
+    padding-top: 1rem;
+    background: white;
+  }
+  
+  .MuiAccordionSummary-expandIconWrapper svg {
+    font-size: 2rem;
+    color: black
+  }
+  
+  .MuiAccordionSummary-root {
+    min-height: 5rem;
+  }
+  
+  .MuiAccordionSummary-content {
+    margin: 0;
+  }
+  
+  .MuiAccordionSummary-content p {
+    font-size: 2rem;
+    font-weight: var(--fontBold);
+    color: black;
+  }
+  
+  .MuiAccordionSummary-root.Mui-expanded {
+    min-height: 5rem;
+    /* border-bottom: 1px solid var(--blueDark); */
+  }
+
+  .disabledButton {
+    cursor: not-allowed !important;
+  }
