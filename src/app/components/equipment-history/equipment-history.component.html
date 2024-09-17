@@ -2,9 +2,11 @@
     <div class="content">
         <div class="equipment-info">
             <p>{{equipment.name}} - {{equipment.model}}</p>
+
+            <p>Ganhos: {{earnings}}R$</p>
         </div>
 
-        <li *ngFor="let state of statesHistory.states" class="list-item">
+        <li *ngFor="let state of equipment.states.states" class="list-item">
             <p class="state-name">
                 {{state.stateInfo.name}}
             </p>

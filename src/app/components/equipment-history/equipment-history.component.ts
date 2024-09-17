@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MapService } from '../../services/map/map.service';
 import { EquipmentService } from '../../services/equipment/equipment.service';
 import { CommonModule } from '@angular/common';
@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './equipment-history.component.html',
   styleUrl: './equipment-history.component.css'
 })
-export class EquipmentHistoryComponent implements OnChanges {
+export class EquipmentHistoryComponent {
   @Input() equipment: any;
 
+  earnings: number = 0;
   statesHistory: any;
   isSidebarOpen: boolean = true;
 
@@ -21,14 +22,8 @@ export class EquipmentHistoryComponent implements OnChanges {
     private equipmentService: EquipmentService
   ) { }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['equipment'] && changes['equipment'].currentValue) {
-      this.loadEquipmentHistory();
-    }
-  }
-
-  loadEquipmentHistory() {
-    this.statesHistory = this.equipmentService.getStateHistoryByEquipmentId(this.equipment.equipmentId);
+  ngOnInit() {
+    this.earnings = this.equipmentService.calculateEarnings(this.equipment.equipmentId)
   }
 
   closeSidebar() {
