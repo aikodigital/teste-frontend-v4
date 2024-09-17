@@ -1,10 +1,8 @@
 <template>
     <v-btn
-        :append-icon="iconeInicial"
         :color="cor"
         :variant="variante"
         :loading="loading"
-        :disabled="desabilitar"
     >
         <slot />
     </v-btn>
@@ -12,7 +10,6 @@
 
 <script setup>
 defineProps({
-    iconeInicial: String,
     cor: {
         default: 'primary',
         required: false,
@@ -28,6 +25,5 @@ defineProps({
         required: false,
         type: Boolean,
     },
-    desabilitar: Boolean
 })
 </script>

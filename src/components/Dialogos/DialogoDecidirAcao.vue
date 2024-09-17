@@ -31,10 +31,12 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false,
+        required: true,
     },
     estaNoHistorico: {
         type: Boolean,
         default: false,
+        required: true,
     }
 });
 

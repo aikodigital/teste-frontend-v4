@@ -1,12 +1,12 @@
 <template>
   <CardPrincipal titulo="Produtividade dos Equipamentos" cor="colorCardPrincipal">
     <v-row dense class="py-3">
-      <v-col cols="2">
+      <v-col lg="2" md="4" sm="5" cols="12">
         <v-autocomplete v-model="nomeSelecionado" label="Nome" item-title="nome" item-value="nome"
           :items="nomesEquipamentos" no-data-text="Não há dados disponíveis." variant="outlined" density="compact"
           persistent-placeholder @update:model-value="filtrarPorNome()" />
       </v-col>
-      <v-col cols="4" class="ml-2 py-4">
+      <v-col lg="4" md="4" sm="4" cols="12" class="ml-2 py-sm-4 pb-sm-0 pb-5">
         <span>Modelo: {{ modelo }}</span>
       </v-col>
       <DataTable :headers="headers" :items="retornaListaProdutividade" height="68vh" @itemDetalhar="mostrarDetalhes" />

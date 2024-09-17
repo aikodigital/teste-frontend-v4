@@ -1,24 +1,24 @@
 <template>
-  <Card :titulo="titulo" cor="colorCardPrincipal">
-    <v-row dense class="py-5 justify-end align-center">
-      <v-col cols="2">
+  <CardPrincipal :titulo="titulo" cor="colorCardPrincipal">
+    <v-row dense class="py-5 d-flex justify-lg-end align-center justify-sm-center">
+      <v-col lg="2" sm="4" cols="6">
         <span>Caminhão de carga</span>
         <v-switch v-model="mostrarCaminhaoDeCarga" color="#FF5733" inset :disabled="estaEmHistorico"
           @update:model-value="criarMarcadoresUltimaPosicao(true)" />
       </v-col>
-      <v-col cols="2">
+      <v-col lg="2" sm="4" cols="6">
         <span>Harvester</span>
         <v-switch v-model="mostrarHarvester" color="#583470" inset :disabled="estaEmHistorico"
           @update:model-value="criarMarcadoresUltimaPosicao(true)" />
       </v-col>
-      <v-col cols="2">
+      <v-col lg="2" sm="4" cols="12">
         <span>Garra traçadora</span>
         <v-switch v-model="mostrarGarraTracadora" color="#33FF57" inset :disabled="estaEmHistorico"
           @update:model-value="criarMarcadoresUltimaPosicao(true)" />
       </v-col>
-      <v-col cols="2" class="float-right">
+      <v-col lg="2" md="8" sm="8" cols="12" class="float-right flex-lg-column d-sm-flex flex-sm-row ga-sm-3">
         <SelectField v-model="buscaPorStatus" label="Status" :items="statusABuscar"
-          :disabled="estaEmHistorico || comFiltroNome" @update:model-value="modificarPorStatus()" />
+          :disabled="comFiltroNome || estaEmHistorico" @update:model-value="modificarPorStatus()" />
         <v-autocomplete v-model="nomesSelecionados" label="Nome" item-title="nome" item-value="nome" :multiple="true"
           :items="nomesEquipamentos" no-data-text="Não há dados disponíveis." variant="outlined" density="compact"
           persistent-placeholder clearable :disabled="estaEmHistorico || comFiltroStatus" @update:model-value="modificarPorNome()">
@@ -33,7 +33,7 @@
         </v-autocomplete>
       </v-col>
     </v-row>
-    <v-card class="w-75 d-flex justify-center mx-auto">
+    <v-card class="w-100 w-lg-75 d-flex justify-center mx-auto">
       <v-card-text class="bg-colorCardMap pt-4" variant="outlined">
         <div id="map" ref="initialMap"></div>
       </v-card-text>
@@ -44,7 +44,7 @@
       @verUltimasPosicoes="criarMarcadoresUltimaPosicao(true)" />
     <DialogoStatus v-if="mostrarDialogoStatus" :show="mostrarDialogoStatus" :equipamento="marcadorSelecionado"
       @fecharDialogoStatus="mostrarDialogoStatus = false" />
-  </Card>
+  </CardPrincipal>
 </template>
 
 <script setup>
@@ -53,7 +53,7 @@ import { funcoesEquipamento } from "@/util/funcoesEquipamentos";
 import { filtroEquipamento } from "@/util/filtroEquipamentos";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import Card from "@/components/CardPrincipal.vue";
+import CardPrincipal from "@/components/CardPrincipal.vue";
 import DialogoDecidirAcao from "@/components/Dialogos/DialogoDecidirAcao.vue";
 import DialogoStatus from "@/components/Dialogos/DialogoStatus.vue";
 import SelectField from "@/components/SelectField.vue";

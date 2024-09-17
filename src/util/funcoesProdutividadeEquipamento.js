@@ -12,8 +12,6 @@ const listaEquipamentos = equipamento.map((equip) => {
         return {
             ...equipamentoStatus,
             id: equip.id,
-            nome: equip.name,
-            modelo: tipoEquipamento.name,
             status: statusDoEquipamento.name,
             corStatus: statusDoEquipamento.color,
             dataHora: funcoesEquipamento.modificarData(equipamentoStatus.date)

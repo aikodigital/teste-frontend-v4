@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="mostrarDialogoDetalhes" max-width="700px" min-width="200px" persistent>
+    <v-dialog v-model="mostrarDialogoDetalhes" max-width="700px" min-width="400px" persistent>
         <v-card>
             <v-card-title class="d-flex justify-center font-weight-bold">
                 {{ `Histórico de Status do Dia: ${historico.data.split('-').reverse().join('/')}` }}
@@ -25,9 +25,11 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false,
+        required: true
     },
     historico: {
         type: Object,
+        required: true
     }
 });
 

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar :elevation="2" color="appbar">
+    <v-app-bar :elevation="2" color="appbar" class="d-sm-block d-none">
       <template v-slot:prepend>
         <v-img min-width="200" :max-height="60" aspect-ratio="16/9" src="img/aiko.png" />
       </template>
@@ -9,7 +9,7 @@
         <v-btn to="/produtividade">Produtividade</v-btn>
       </v-row>
       <template v-slot:append>
-        <v-row dense class="mx-13">
+        <v-row dense class="mx-0 mx-md-13">
           <Button :prepend-icon="tema === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night'" cor="buttonColor"
             variante="text" @click="toggleTheme()" class="my-2">
             Tema
@@ -17,11 +17,30 @@
         </v-row>
       </template>
     </v-app-bar>
-    <v-main>
+    <v-main class="pt-sm-16 pt-0">
       <v-row dense class="d-flex justify-center">
         <RouterView />
       </v-row>
     </v-main>
+    <v-bottom-navigation class="d-sm-none">
+      <v-btn to="/" value="recent">
+        <v-icon>mdi-map-marker</v-icon>
+
+        <span>Posições</span>
+      </v-btn>
+
+      <v-btn to="/produtividade" value="favorites">
+        <v-icon>mdi-chart-box</v-icon>
+
+        <span>Produtividade</span>
+      </v-btn>
+
+      <v-btn value="nearby" variant="text" @click="toggleTheme()">
+        <v-icon>{{ tema === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
+
+        <span>Tema</span>
+      </v-btn>
+    </v-bottom-navigation>
   </v-app>
 </template>
 

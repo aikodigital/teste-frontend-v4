@@ -1,6 +1,6 @@
 <template>
     <v-card class="ma-5 w-100" :class="cor ? `bg-${cor}` : ''" min-height="90vh">
-        <v-card-title v-if="titulo" class="d-flex justify-center pl-4 text-h5">{{ titulo }}</v-card-title>
+        <v-card-title v-if="titulo" class="text-center pl-0 text-h5 pl-sm-4">{{ titulo }}</v-card-title>
         <v-card-text>
             <slot />
         </v-card-text>
@@ -13,3 +13,9 @@ defineProps({
     cor: String,
 })
 </script>
+
+<style scoped>
+.v-card-title {
+    white-space: normal;
+}
+</style>

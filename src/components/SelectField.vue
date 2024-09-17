@@ -12,7 +12,7 @@
 
 <script setup>
 defineProps({
-    value: Array,
+    value: String,
     items: {
         type: Array || Function,
         required: true,

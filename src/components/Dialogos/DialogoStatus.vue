@@ -29,9 +29,11 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false,
+        required: true
     },
     equipamento: {
         type: String,
+        required: true
     }
 });
 
