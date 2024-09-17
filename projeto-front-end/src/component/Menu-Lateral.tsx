@@ -8,7 +8,7 @@ export default function Menu() {
         <FaBars size={24} />
       </div>
       <div className="mt-8 p-2 text-gray-700 hover:text-blue-500 cursor-pointer">
-        <FaHome size={24} />
+        <button><FaHome size={24} /></button>
       </div>
     </div>
   );

@@ -306,6 +306,16 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@mapbox/corslite@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@mapbox/corslite/-/corslite-0.0.7.tgz"
+  integrity sha512-w/uS474VFjmqQ7fFWIMZINQM1BAQxDLuoJaZZIPES1BmeYpCtlh9MtbFxKGGDAsfvut8/HircIsVvEYRjQ+iMg==
+
+"@mapbox/polyline@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@mapbox/polyline/-/polyline-0.2.0.tgz"
+  integrity sha512-GCddO0iw6AzOQqZgBmjEQI9Pgo40/yRgkTkikGctE01kNBN0ThWYuAnTD+hRWrAWMV6QJ0rNm4m8DAsaAXE7Pg==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -331,6 +341,11 @@
   version "0.11.0"
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
+
+"@react-leaflet/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@react-leaflet/core/-/core-2.1.0.tgz"
+  integrity sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==
 
 "@remix-run/router@1.19.2":
   version "1.19.2"
@@ -1211,6 +1226,20 @@ keyv@^4.5.4:
   dependencies:
     json-buffer "3.0.1"
 
+leaflet-routing-machine@^3.2.12:
+  version "3.2.12"
+  resolved "https://registry.npmjs.org/leaflet-routing-machine/-/leaflet-routing-machine-3.2.12.tgz"
+  integrity sha512-HLde58G1YtD9xSIzZavJ6BPABZaV1hHeGst8ouhzuxmSC3s32NVtADT+njbIUMW1maHRCrsgTk/E4hz5QH7FrA==
+  dependencies:
+    "@mapbox/corslite" "0.0.7"
+    "@mapbox/polyline" "^0.2.0"
+    osrm-text-instructions "^0.13.2"
+
+leaflet@^1.9.0, leaflet@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/levn/-/levn-0.4.1.tgz"
@@ -1358,6 +1387,11 @@ optionator@^0.9.3:
     type-check "^0.4.0"
     word-wrap "^1.2.5"
 
+osrm-text-instructions@^0.13.2:
+  version "0.13.4"
+  resolved "https://registry.npmjs.org/osrm-text-instructions/-/osrm-text-instructions-0.13.4.tgz"
+  integrity sha512-ge4ZTIetMQKAHKq2MwWf83ntzdJN20ndRKRaVNoZ3SkDkBNO99Qddz7r6+hrVx38I+ih6Rk5T1yslczAB6Q9Pg==
+
 p-limit@^3.0.2:
   version "3.1.0"
   resolved "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz"
@@ -1495,7 +1529,7 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.3.1, react-dom@>=16.8, react-dom@>=16.8.0:
+react-dom@^18.0.0, react-dom@^18.3.1, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -1507,6 +1541,13 @@ react-icons@^5.3.0:
   version "5.3.0"
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-5.3.0.tgz"
   integrity sha512-DnUk8aFbTyQPSkCfF8dbX6kQjXA9DktMeJqfjrg6cK9vwQVMxmcA3BfP4QoiztVmEHtwlTgLFsPuH2NskKT6eg==
+
+react-leaflet@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/react-leaflet/-/react-leaflet-4.2.1.tgz"
+  integrity sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==
+  dependencies:
+    "@react-leaflet/core" "^2.1.0"
 
 react-refresh@^0.14.2:
   version "0.14.2"
@@ -1528,7 +1569,7 @@ react-router@6.26.2:
   dependencies:
     "@remix-run/router" "1.19.2"
 
-react@*, react@^18.3.1, react@>=16.8, react@>=16.8.0:
+react@*, react@^18.0.0, react@^18.3.1, react@>=16.8, react@>=16.8.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
