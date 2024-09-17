@@ -3,7 +3,7 @@
         <h2 class="text-white">Detalhes do Equipamento</h2>
         <p><strong>Nome:</strong> {{ selectedEquipment.name }}</p>
         <p><strong>Modelo:</strong> {{ selectedEquipment.model?.name }}</p>
-        <p><strong>Localização atual:</strong> {{ selectedEquipment.position.lat }}, {{ selectedEquipment.position.lng
+        <p><strong>Localização atual:</strong> {{ selectedEquipment.position.lat }}, {{ selectedEquipment.position.lon
             }}</p>
         <p><strong>status:</strong> {{ selectedEquipment.states.length > 0 ?
             selectedEquipment.states[selectedEquipment.states.length -

@@ -8,7 +8,7 @@ export function getEquipmentPosition(equipmentId: string) {
       const lastPosition = positionHistory.positions[positionHistory.positions.length - 1];
       return {
          lat: lastPosition.lat,
-         lng: lastPosition.lon,
+         lon: lastPosition.lon,
       };
    }
 

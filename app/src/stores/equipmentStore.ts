@@ -7,7 +7,7 @@ import equipmentStateHistoryData from '../../../data/equipmentStateHistory.json'
 
 export interface Position {
    lat: number;
-   lng: number;
+   lon: number;
 }
 
 export interface Equipment {
@@ -17,8 +17,13 @@ export interface Equipment {
    model?: EquipmentModel;
    position: Position;
    state: EquipmentState;
-   stateHistory: { date: string; name: string }[];
+   stateHistory: {
+      position?: any;
+      date: string;
+      name: string;
+   }[];
    equipmentModelId: string;
+   positionHistory: { date: string; lat: number; lon: number }[];
 }
 
 export interface EquipmentModel {
@@ -62,7 +67,10 @@ export const useEquipmentStore = defineStore('equipment', {
          return this.models.find((model) => model.id === id);
       },
       getPositionHistory(id: string) {
-         return this.positionsHistories.find((history) => history.equipmentId === id);
+         const positionHistory = this.positionsHistories.find(
+            (history) => history.equipmentId === id
+         );
+         return positionHistory || { positions: [] };
       },
       getStateHistory(id: string) {
          const history = this.stateHistories.find((history) => history.equipmentId === id);
