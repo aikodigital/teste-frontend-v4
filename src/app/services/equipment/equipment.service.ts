@@ -114,4 +114,40 @@ export class EquipmentService {
 
     return states;
   }
+
+  getPositionsHistoryByEquipmentId(equipmentId: string) {
+    return positionHistory.find((pos: PositionHistory) => pos.equipmentId === equipmentId)
+  }
+
+  calculateEarnings(equipmentId: string) {
+    const equipment = equipments.find((equip: Equipment) => equip.id === equipmentId);
+    const equipModel = models.find((model: any) => model.id === equipment!.equipmentModelId);
+    console.log(equipModel)
+
+    const hourlyEarnings = equipModel!.hourlyEarnings;
+
+    const earningsMap = new Map<string, number>();
+    hourlyEarnings.forEach(e => {
+      earningsMap.set(e.equipmentStateId, e.value);
+    });
+
+    const equipmentStateHistory = this.getStateHistoryByEquipmentId(equipmentId);
+    const sortedStates = equipmentStateHistory!.states.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    let totalEarnings = 0;
+
+    for (let i = 0; i < sortedStates.length - 1; i++) {
+      const currentState = sortedStates[i];
+      const nextState = sortedStates[i + 1];
+
+      const currentDate = new Date(currentState.date).getTime();
+      const nextDate = new Date(nextState.date).getTime();
+      const durationHours = (nextDate - currentDate) / (1000 * 60 * 60);
+
+      const valuePerHour = earningsMap.get(currentState.equipmentStateId) || 0;
+      totalEarnings += valuePerHour * durationHours;
+    }
+
+    return totalEarnings;
+  }
 }
