@@ -120,7 +120,10 @@ function openDrawer(markerId, position) {
   flyToMarker(position)
 }
 
-await useAsyncData(() => getAllData().then(() => true))
+onMounted(() => {
+  getAllData()
+})
+
 
 function getLatestItem(item) {
   return item.reduce((latest, current) => {
