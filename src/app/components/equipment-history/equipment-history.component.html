@@ -1,5 +1,14 @@
 <div class="sidebar">
     <div class="content">
-        {{equipment.equipmentId}}
+        <div class="equipment-info">
+            <p>{{equipment.name}} - {{equipment.model}}</p>
+        </div>
+
+        <li *ngFor="let state of statesHistory.states" class="list-item">
+            <p class="state-name">
+                {{state.stateInfo.name}}
+            </p>
+            <p class="state-date">{{formatDate(state.date)}}</p>
+        </li>
     </div>
 </div>
