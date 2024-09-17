@@ -1,0 +1,33 @@
+//Author: Daniel Emidio
+//Github: https://github.com/DanielEmidio1988
+
+button,
+input[type="submit"]{
+    border-radius: 10px;
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    color: $white-color;
+    background-color: $primary-color;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s;
+
+    &:hover{
+        background-color: $white-color;
+        border-color: $primary-color;
+        color: $primary-color
+    }
+}
+
+.btnReverse{
+    color: $primary-color;
+    background-color: $white-color;
+    border-color: $primary-color;
+
+    &:hover{
+        background-color: $primary-color;
+        border-color: $white-color;
+        color: $white-color
+    }
+}
