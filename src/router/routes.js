@@ -1,18 +1,21 @@
 const routes = [
   {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
-    ]
+      {
+        alias: "/",
+        name: "home",
+        path: "/home",
+        component: () => import("pages/IndexPage.vue"),
+      },
+      {
+        name: "mapa_equipamentos",
+        path: "/mapa-equipamentos",
+        component: () => import("pages/MapaEquipamentos.vue"),
+      },
+    ],
   },
+];
 
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
-]
-
-export default routes
+export default routes;

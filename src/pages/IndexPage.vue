@@ -1,15 +1,17 @@
 <template>
   <q-page class="flex flex-center">
     <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+      class="rounded-lg"
+      alt="Aiko logo"
+      :src="imageAiko"
+      style="width: 250px; height: 100px"
+    />
   </q-page>
 </template>
 
 <script setup>
+import imageAiko from "/img/aiko.png";
 defineOptions({
-  name: 'IndexPage'
+  name: "IndexPage",
 });
 </script>
