@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { Popup } from 'react-leaflet';
-import MyContext from '../../context/MyContext';
-import { FilterState } from '../../interfaces/FilterState.interface';
 import HistoryState from '../History.State';
+import MyContext from '../../context/MyContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { FilterState } from '../../interfaces/FilterState.interface';
 
 function PopupLeaflet(props: {
   currentState: string;
@@ -38,6 +38,8 @@ function PopupLeaflet(props: {
         shadow-md
         font-medium
         rounded-full
+        bg-gray-200
+        text-gray-700
         hover:bg-blue-400
       `}
         >
