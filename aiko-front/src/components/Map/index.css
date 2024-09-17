@@ -1,0 +1,9 @@
+.wrapper {
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(208,235,241);
+  background: linear-gradient(90deg, rgba(208,235,241,1) 0%, rgba(255,255,255,1) 50%, rgba(208,235,241,1) 100%);
+}
