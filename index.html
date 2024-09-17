@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiko - M.E.F</title>
+    <link rel="icon" href="img/aiko.png" type="image/png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>Mapa de Equipamentos Florestais</h1>
+    </header>
+    <main>
+        <div id="map"></div>
+        <div id="equipment-info">
+            <h3 id="equipment-title"></h3>
+            <div id="filter-container">
+                <label for="state-filter">Filtrar por Estado:</label>
+                <select id="state-filter">
+                    <option value="all">Todos</option>
+                </select>
+            </div>
+            <table id="equipment-table">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+            <div id="pagination-controls">
+                <button id="prev-page" disabled>Anterior</button>
+                <span id="page-info"></span>
+                <button id="next-page">Próximo</button>
+            </div>
+        </div>
+    </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+</body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</html>
