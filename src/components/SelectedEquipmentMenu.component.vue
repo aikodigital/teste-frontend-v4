@@ -1,13 +1,5 @@
 <template>
-  <v-list-item
-    class="py-4"
-    :style="{
-      position: 'sticky',
-      top: 0,
-      zIndex: 1,
-      backgroundColor: equipment.state.color
-    }"
-  >
+  <v-list-item class="py-4 top-0 position-sticky selected-equipment-menu__list-item">
     <template #title>
       <span class="text-h5 font-weight-bold">
         {{ equipment.name }}
@@ -28,3 +20,10 @@ defineProps<{
   equipment: IEquipment
 }>()
 </script>
+
+<style lang="scss" scoped>
+.selected-equipment-menu__list-item {
+  z-index: 1;
+  background-color: v-bind('equipment.state.color');
+}
+</style>
