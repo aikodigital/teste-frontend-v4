@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IEquipment } from '@/stores/equipment.store'
+import type { IEquipment } from '@/stores/equipment.types'
 
 defineProps<{
   equipment: IEquipment

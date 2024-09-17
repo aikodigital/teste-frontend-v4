@@ -5,7 +5,7 @@
     </div>
     <div v-else class="d-flex flex-column ga-4 py-6">
       <v-list-item
-        v-for="equipment in equipmentStore.allEquipments"
+        v-for="equipment in equipmentStore.equipments"
         v-bind:key="equipment.equipmentId"
       >
         <EquipmentCardComponent :equipment="equipment" @click="onClick(equipment.equipmentId)" />

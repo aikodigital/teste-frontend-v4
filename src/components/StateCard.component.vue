@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { State } from '@/stores/equipment.store'
+import type { State } from '@/stores/equipment.types'
 import { format } from 'date-fns'
 import { computed } from 'vue'
 

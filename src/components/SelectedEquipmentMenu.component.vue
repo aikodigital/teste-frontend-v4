@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { IEquipment } from '@/stores/equipment.store'
+import type { IEquipment } from '@/stores/equipment.types'
 import StateCard from './StateCard.component.vue'
 
 defineProps<{
