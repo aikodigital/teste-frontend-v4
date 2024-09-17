@@ -1,0 +1,230 @@
+@import '../../assets/scss/styled.scss';
+
+@media(min-width: 500px){
+    .navmenu{
+        width: 200px;
+        height: 100vh;
+        background-color: $white-color;
+        border-bottom: 1px solid $gray-color-strong;
+
+        .navmenu__toggleBtn_area{
+            display: none;
+        }
+    
+        .navmenu___navmenu_area{
+            width: 100%;
+    
+            .navmenu___navmenu_area___logo_box_area{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                .navmenu___navmenu_area___logo_box_area___logo{
+                    width: 100px;
+                }
+            }
+
+            .navmenu___navmenu_area___menu{
+                background-color: $primary-color;
+                border-radius: 24px;
+                width: 100%;
+                margin-top: 20px;
+                padding: 28px 12px;
+
+                .navmenu___navmenu_area___menu__box{
+                    .navmenu___navmenu_area___menu__box___title{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 12px 0;
+                        border-bottom: 1px solid $white-color;
+                        cursor: pointer;
+
+                        p, span{
+                            color: $white-color;
+                            font-weight: 700;
+                        }
+
+                    }
+
+                    .navmenu___navmenu_area___menu__box___options{
+                        
+                        .navmenu___navmenu_area___menu__box___options___item{
+                            padding: 8px 0;
+                            cursor: pointer;
+                            border-bottom: 1px solid white;
+                            position: relative;
+
+                            p{
+                                color: $white-color;
+
+                                &.title{
+                                    font-size: 14px;
+                                }
+
+                                &.model{
+                                    font-size: 12px;
+                                }
+
+                                &.status{                                 
+                                    font-size: 12px;
+
+                                    .statusCircle{
+                                        display: inline-block;
+                                        width: 12px;
+                                        height: 12px;
+                                        border-radius: 50%;
+                                        margin-right: 4px;
+                                    }
+                                }
+                            }
+
+                            .input_box{
+                                display: flex;
+                                flex-direction: column;
+                                padding: 8px 0;
+
+                                label{
+                                    color: $white-color;
+                                    margin-bottom: 4px;
+                                }
+                            }
+
+                            .btnFilterEquipment{
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 500px){
+    .navmenu{
+        position: fixed;
+        top: 88%;
+        left: 0;
+        z-index: 1002;
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+
+        &.activeNavMenu{
+            top: 0;
+
+            .containernavmenu{
+                .navmenu__toggleBtn_area{
+                    margin-bottom: -52px;
+
+                    .navmenu__toggleBtn_area___Button{
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+            
+        }
+
+        .containernavmenu{
+            position: relative;
+            z-index: 1010;
+
+            .navmenu__toggleBtn_area{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                    
+                .navmenu__toggleBtn_area___Button{
+                    background-color: $primary-color;
+                    padding: 12px;
+                    border: 5px solid $white-color;
+                    border-radius: 50%;
+                }
+    
+            }
+    
+            .navmenu___navmenu_area{
+                background-color: $primary-color;;
+                width: 100%;
+                height: 100vh;
+                border-radius: 36px;
+
+                .navmenu___navmenu_area___logo_box_area{
+                    display: none;
+                }
+
+                .navmenu___navmenu_area___menu__box___title:first-child{
+                    padding-top: 72px;
+                }
+
+                .navmenu___navmenu_area___menu__box___title{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 20px 32px;
+
+                    p, span{
+                        font-size: 18px;
+                        font-weight: 700;
+                        color: #FFF;
+                    }  
+                    
+                    span{
+                        font-size: 34px;
+                    }
+                
+                }
+
+                .navmenu___navmenu_area___menu__box___options{
+                    height: 50vh;
+                    overflow: auto;    
+                    text-align: center;
+
+                    .navmenu___navmenu_area___menu__box___options___item{
+                        padding: 8px 0;
+                        cursor: pointer;
+                        border-bottom: 1px solid white;
+                        position: relative;
+
+                        p{
+                            color: $white-color;
+
+                            &.title{
+                                font-size: 18px;
+                            }
+
+                            &.status{                                 
+                                
+                                .statusCircle{
+                                    display: inline-block;
+                                    width: 12px;
+                                    height: 12px;
+                                    border-radius: 50%;
+                                    margin-right: 4px;
+                                }
+                            }
+                        }
+
+                        .input_box{
+                            display: flex;
+                            flex-direction: column;
+                            padding: 8px 0;
+
+                            label{
+                                color: $white-color;
+                                margin-bottom: 4px;
+                            }
+                        }
+
+                        .btnFilterEquipment{
+                            width: 100%;
+                        }
+                    }
+                }  
+            }
+        }        
+    }
+}
