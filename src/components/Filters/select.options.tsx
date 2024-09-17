@@ -25,20 +25,34 @@ const SelectOptions: React.FC = () => {
     setFilterByCurrentState(currentChoice);
   }, [currentChoice]);
 
+  const fixTitle = (title: string) => {
+    if (title === 'Parado') return 'Parados';
+    if (title === 'Manutenção') return 'Em Manutenção';
+    return title;
+  };
+
   return (
     <div className="flex-col space-x-2 justify-center my-10">
-      <h1>Selecione o estado do equipamento</h1>
-      {stateOptions.map((option) => (
-        <FilterButton
-          key={option.id}
-          currentId={option.id}
-          currentChoice={currentChoice}
-          setCurrentChoice={setCurrentChoice}
-          active={currentChoice === option.id}
-        >
-          {option.name}
-        </FilterButton>
-      ))}
+      <h1>Desejo visualizar os equipamentos que estão:</h1>
+      {stateOptions.map((option) => {
+        const titleThatDoesntNeedFix = option.name === 'Operando';
+
+        const currentOption = titleThatDoesntNeedFix
+          ? option.name
+          : fixTitle(option.name);
+
+        return (
+          <FilterButton
+            key={option.id}
+            currentId={option.id}
+            currentChoice={currentChoice}
+            setCurrentChoice={setCurrentChoice}
+            active={currentChoice === option.id}
+          >
+            {currentOption}
+          </FilterButton>
+        );
+      })}
     </div>
   );
 };

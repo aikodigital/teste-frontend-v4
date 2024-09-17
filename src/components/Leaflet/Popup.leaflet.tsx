@@ -16,6 +16,11 @@ function PopupLeaflet(props: { currentState: string }) {
     setItemStateName(info);
   }, [stateOptions]);
 
+  useEffect(() => {
+    if (itemStateName === 'Manutenção')
+      return setItemStateName('Em Manutenção');
+  }, [itemStateName]);
+
   return (
     <Popup>
       <p>{`Este equipamento está: ${itemStateName}`}</p>
