@@ -19,133 +19,30 @@
         name="OpenStreetMap"
         :no-wrap="true"
       />
-      <LFeatureGroup
+      <MarkerGroup
         v-for="marker in markers"
         :key="marker.id"
-      >
-        <LMarker
-        :lat-lng="marker.position"
-        @click="openDrawer(marker.id, marker.position)"
-      >
-        <LIcon
-          :tooltip-anchor="[25, -25]"
-          :icon-anchor="selectedMarkerId == marker.id ? [16, 60] : [11, 41]"
-          class="relative"
-        >
-          <div :style="`${selectedMarkerId == marker.id ? 'filter: drop-shadow(0px 0px 1px dodgerblue);' : ''}`">
-            <div :class="`${marker.icon} ${selectedMarkerId == marker.id ? 'text-4xl' : 'text-2xl'}`" />
-            <div :class="`i-ph-caret-down-fill ${selectedMarkerId == marker.id ? 'text-4xl text-blue-500' : 'text-2xl'}`" />
-          </div>
-          <Badge
-            v-if="marker.state !== 'Operando'"
-            pt:root:class="absolute top-0 right-0 w-[10px] h-[10px] rounded"
-            :pt:root:style="`background-color: ${marker.stateColor};`"
-          />
-        </LIcon>
-        <LTooltip>
-          <Card>
-            <template #title>
-              {{ marker.name }}: {{ marker.model }}
-            </template>
-            <template #content>
-                <p class="pt-0">
-                  {{ marker.date }}
-                </p>
-                <p class="pt-0">
-                  Lat: {{ marker.position.lat }}, Lon: {{ marker.position.lon }} | <Tag
-                class="text-white"
-                :style="`background-color: ${marker.stateColor};`"
-                :value="marker.state"
-                rounded
-              />
-                </p>
-            </template>
-          </Card>
-        </LTooltip>
-        <Drawer
-          v-if="selectedMarkerId == marker.id"
-          :visible="true"
-          position="right"
-          :modal="false"
-          :dismissable="false"
-          class="bg-white"
-          pt:mask:style="pointer-events: none !important;"
-        >
-          <template #closeicon>
-            <Button
-              size="small"
-              text
-              @click="selectedMarkerId = null"
-            >
-              X
-            </Button>
-          </template>
-          <template #header>
-            <div>
-              <h3 class="mt-0 mb-0">
-                {{ marker.name }}
-              </h3>
-              <h4 class="mt-0 mb-4">
-                {{ marker.model }}
-              </h4>
-              <h5 class="my-0 py-0">
-                Histórico de Estados:
-              </h5>
-            </div>
-          </template>
-          <StateDrawerContent
-            :state-history="marker.stateHistory.states"
-          />
-        </Drawer>
-      </LMarker>
-        <div v-if="selectedMarkerId == marker.id">
-          <LMarker
-            v-for="position in marker.positionHistory.positions"
-            :key="position.date"
-            :lat-lng="[position.lat, position.lon]"
-          >
-            <LIcon
-              v-if="position !== marker.position"
-              :icon-anchor="[8, 11]"
-              class="relative"
-            >
-              <div class="i-ph-caret-down-fill 'text-4xl text-black-500 opacity-50" />
-            </LIcon>
-            <LTooltip>
-              <Card>
-                <template #title>
-                  {{ getStringDate(position.date) }}
-                </template>
-                <template #content>
-                  Lat: {{ position.lat }}, Lon: {{ position.lon }}
-                </template>
-              </Card>
-            </LTooltip>
-          </LMarker>
-          <LPolyline
-            :lat-lngs="marker.positionHistory.positions.map((position) => {
-              return [position.lat, position.lon]
-            })"
-            color="black"
-            weight="1"
-            opacity="0.3"
-            dash-array="4 4"
-          />
-        </div>
-      </LFeatureGroup>
+        :marker="marker"
+        :selected-marker-id="selectedMarkerId"
+        @open-drawer="openDrawer"
+      />
     </LMap>
   </div>
 </template>
 
 <script setup>
-const map = ref(null)
+onMounted(() => {
+  getAllData()
+})
 
-const zoom = ref(11)
+const { getLatestItem, getIcon, getStringDate } = useMarkerUtils()
 
 const store = useMyEquipmentStore()
 const { equipment, equipmentModel, equipmentPositionHistory, equipmentState, equipmentStateHistory } = storeToRefs(store)
 const { getAllData } = store
 
+const map = ref(null)
+const zoom = ref(11)
 const selectedMarkerId = ref(null)
 
 function flyToMarker(position) {
@@ -160,41 +57,6 @@ function flyToMarker(position) {
 function openDrawer(markerId, position) {
   selectedMarkerId.value = markerId
   flyToMarker(position)
-}
-
-onMounted(() => {
-  getAllData()
-})
-
-function getLatestItem(item) {
-  return item.reduce((latest, current) => {
-    return new Date(current.date) > new Date(latest.date) ? current : latest
-  })
-}
-
-function getIcon(model) {
-  switch (model) {
-    case 'Caminhão de carga':
-      return 'i-ph-truck-trailer-fill'
-    case 'Harvester':
-      return 'i-ph-tractor-fill'
-    case 'Garra traçadora':
-      return 'i-ph-crane-fill'
-  }
-}
-
-function getStringDate(dateString) {
-  const dateTime = new Date(dateString)
-
-  const date = dateTime.toLocaleDateString('pt-BR')
-
-  const time = dateTime.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  })
-
-  return `${date} ${time}`
 }
 
 const markers = computed(() => {
