@@ -120,7 +120,7 @@ function LeafletMap() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="py-10 flex justify-center">
       <MapContainer
         zoom={9}
         center={[initialMapPosition.lat, initialMapPosition.lon]}

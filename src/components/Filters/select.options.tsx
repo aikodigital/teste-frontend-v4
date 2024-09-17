@@ -32,8 +32,8 @@ const SelectOptions: React.FC = () => {
   };
 
   return (
-    <div className="flex-col space-x-2 justify-center my-10">
-      <h1>Desejo visualizar os equipamentos que estão:</h1>
+    <div className="flex-col space-x-2 justify-center my-10 space-y-3">
+      <h1 className="pb-5">Desejo visualizar os equipamentos que estão:</h1>
       {stateOptions.map((option) => {
         const titleThatDoesntNeedFix = option.name === 'Operando';
 
