@@ -1,0 +1,95 @@
+.map {
+  position: relative;
+
+  &__total {
+    width: 120px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 400;
+  }
+
+  &__history {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 400;
+  }
+}
+
+.history-drawer {
+  .MuiPaper-root {
+    border-radius: 20px 0 0 20px;
+    background: linear-gradient(180deg, rgb(26, 26, 26) 0%, rgb(28, 28, 28) 100%);
+
+    @media only screen and (max-width: 900px) {
+      border-radius: 20px 20px 0 0;
+    }
+  }
+
+  .MuiList-root {
+    overflow: hidden;
+    padding: 0;
+
+    .MuiListItem-root {
+      padding: 0;
+
+      .MuiButtonBase-root {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        cursor: auto;
+
+        .MuiListItemIcon-root {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #2f2f2f ;
+          min-width: 40px;
+          min-height: 40px;
+          border-radius: 50%;
+        }
+
+        .MuiListItemText-root {
+          .MuiTypography-body1 {
+            font-family: 'oxygen', sans-serif !important;
+            color: #FDFDFD;
+            font-weight: 700;
+          }
+
+          .MuiTypography-body2 {
+            font-family: 'oxygen', sans-serif !important;
+            font-weight: 400;
+            color: #FDFDFD;
+          }
+        }
+      }
+    }
+  }
+}
+
+.leaflet-popup {
+  bottom: 0 !important;
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0 !important;
+  }
+
+  &-content-wrapper {
+    padding: 8px 16px !important;
+    background: linear-gradient(180deg, rgb(26, 26, 26) 0%, rgb(28, 28, 28) 100%) !important;
+    color: #FDFDFD !important;
+  }
+
+  &-tip {
+    background: #1c1c1c !important;
+  }
+}
+
+.leaflet-control-attribution {
+  display: none;
+}

@@ -1,0 +1,31 @@
+.input-text-dark {
+  font-family: 'oxygen', sans-serif !important;
+  background: #1c1c1c;
+
+  input {
+    padding: 10px 16px;
+    font-size: 16px;
+    color: #FDFDFD;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 16px;
+    color: #FDFDFD;
+    font-family: 'oxygen', sans-serif !important;
+
+    &.Mui-focused {
+      color: #FDFDFD !important;
+    }
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border-color: #2f2f2f;
+  }
+
+  .Mui-focused {
+    .MuiOutlinedInput-notchedOutline {
+      border-color: #2f2f2f !important;
+    }
+  }
+}
+

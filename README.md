@@ -1,6 +1,68 @@
 # Teste Frontend V4
 
-![Aiko](img/aiko.png)
+Este é um projeto desenvolvido com React, Vite, TypeScript e Zustand, utilizando Sass para estilização e MUI para a base dos componentes. O objetivo do projeto é consumir os dados da pasta DATA e apresentar os dados de forma interativa.
+
+## Requisitos
+
+- Node.js 20.10.0
+- npm (10) ou yarn
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
+
+### `npm run dev`
+
+Roda o app em modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para ver no navegador.
+
+A página recarregará automaticamente se você fizer edições no código.\
+Você verá também quaisquer erros de lint no console.
+
+### `npm run build`
+
+Compila o app para produção na pasta `dist`.
+
+## Bibliotecas Utilizadas
+
+### React
+
+Biblioteca principal para construção da interface de usuário.
+
+### Vite
+
+Ferramenta de build rápida e otimizada para desenvolvimento front-end moderno.
+
+### TypeScript
+
+Superconjunto de JavaScript que adiciona tipos estáticos ao código.
+
+### Zustand
+
+Biblioteca de gerenciamento de estado leve e simples.
+
+### Sass
+
+Uma biblioteca de componentes React que fornece uma implementação pronta de elementos de UI seguindo as diretrizes do Material Design.
+
+## Configuração do Projeto
+
+### `vite.config.ts`
+
+Configuração do Vite para build e desenvolvimento.
+
+### `tsconfig.json`
+
+Configuração do TypeScript para o projeto.
+
+### `eslintrc.config.js` && `.prettierrc.json`
+
+Configuração do ESLint para garantir a qualidade do código.
+
+##
+##
+
+![Aiko](src/assets/img/aiko.png)
 
 Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
 
