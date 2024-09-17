@@ -1,8 +1,8 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Map from "./pages/Map/index";
+import Map from "./pages/Map/Map";
 import Trucks from "./pages/Trucks/index";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/MainPage/MainPage";
 
 export default function Router() {
   return (

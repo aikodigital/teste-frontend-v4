@@ -1,6 +1,10 @@
 import { LatLngExpression } from "leaflet";
 import styles from "./Trucks.module.scss";
 import Footer from "../../components/Footer";
+import Search from "../../components/Search/Search";
+import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 type markerType = {
   equipmentId: String,
@@ -9,58 +13,23 @@ type markerType = {
 
 export default function Trucks() {
 
-  const trucks: markerType[] = [
-    {
-        equipmentId: "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        geocode: [-19.151801, -46.007759],
-    },
-    {
-        equipmentId: "1c7e9615-cc1c-4d72-8496-190fe5791c8b",
-        geocode: [-19.195811, -45.825157]
-    },
-    {
-        equipmentId: "2b5796cb-21c1-480e-8886-4498ea593a65",
-        geocode: [-19.134644, -46.087206]
-    },
-    {
-        equipmentId: "1d222cdc-01dd-4caa-8934-5351d3995cfb",
-        geocode: [-18.978732, -45.918204]
-    },
-    {
-        equipmentId: "491b983b-950c-4a88-942d-487e99b92540",
-        geocode: [-19.027071, -46.004085]
-    },
-    {
-        equipmentId: "39317fcb-79e7-4e7e-83dc-723a9b63633c",
-        geocode: [-19.287676, -46.082552]
-    },
-    {
-        equipmentId: "c79ef1de-92f3-4edd-bd55-553056640449",
-        geocode: [-19.091692, -46.14889]
-    },
-    {
-        equipmentId: "b7aaba00-13f7-44a0-8bf1-bc163afcf9d8",
-        geocode: [-19.172475, -46.080028]
-    },
-    {
-        equipmentId: "fe2a2e11-bfa6-46b6-990b-fd8175946b7e",
-        geocode: [-19.163073, -46.06338]
+  const { trucks } = useSelector((state: RootState) => {
+    const regexp = new RegExp(state.search, 'i');
+    return {
+      trucks: state.trucks.filter((truck: markerType) => truck.equipmentId.match(regexp)),
     }
-  ];
+  });
 
 
     return (
       <div className={styles.container}>
         <header>
           <h2>List of trucks: </h2>
-          <input
-            className={styles.input}
-            placeholder="Search"
-          />
+          <Search/>
         </header>
-        {trucks.map(truck => (
+        {trucks?.map((truck: markerType) => (
           <div className={styles.item}>
-            <img src="src/assets/box-truck.png" alt="truck" className={styles.image} />
+            <img src="src/assets/box-truck.png" alt="truck" className={styles.image} key={uuidv4()} />
             <div className={styles.info}>
               <p>Id:</p>
               <p>{truck.equipmentId}</p>
