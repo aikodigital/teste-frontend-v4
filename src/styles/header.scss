@@ -1,0 +1,23 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 2em;
+    border-bottom: 1px solid #cecece;
+}
+.button-about{
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 1rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 193 0 / var(--tw-bg-opacity));
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+    font-size: 1.063rem;
+    font-weight: 600;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+}

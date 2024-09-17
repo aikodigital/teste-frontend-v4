@@ -1,0 +1,23 @@
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color: #fff;
+    padding: 30px;
+    border-top: 1px solid #cecece;
+    background-color: rgb(0, 51, 128);
+    font-weight: 700;
+    &_redirect{
+        font-size: 1em;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: underline;
+        padding-left: 6px;
+    
+    }
+    @media (max-width: 768px){
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}

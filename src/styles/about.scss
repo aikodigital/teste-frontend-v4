@@ -1,0 +1,32 @@
+.about{
+    &-container{
+        max-width: 1000px;
+        margin: 0 auto;
+        @media (max-width: 768px){
+            padding: 0 15px;
+        }
+    }
+    &-header{
+        &--item{
+            > h1, > h2{
+                text-align: center;
+                padding-block: 1em;
+            }
+            > pre{
+                display: flex;
+                justify-content: center;
+                margin: 0 auto;
+                color: #ffffff;
+                font-size: 16px;
+                padding-block: 1em;
+                background: black;
+                border-radius: 5px;
+                @media (max-width: 768px){
+                    font-size: 7px;
+                    font-weight: 900;
+                    line-height: 192%;
+                }
+            }
+        }
+    }
+}

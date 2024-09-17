@@ -1,0 +1,128 @@
+.marker-icon {
+  &.operando {
+    border: 2px solid #2ecc71;
+  }
+  &.parado {
+    border: 2px solid #f39c12;
+  }
+  &.manutencao {
+    border: 2px solid #e74c3c;
+  }
+  div {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+  }
+}
+
+//FilterComponent
+.filter{
+  &_main{
+    display: flex;
+    justify-content: space-between;
+    padding: 4em 0;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    @media (max-width: 768px){
+      gap: 1em;
+      flex-direction: column;
+    }
+
+    &--item{
+      display: flex;
+      gap: .5em;
+      align-items: flex-end;
+
+      > #state, > #model, > #search {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #c6c6c6;
+      }
+      @media (max-width: 768px){
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+//EquipmentMap
+#map_container{
+  border-radius: 10px;
+  height: 80vh;
+  width: 90%;
+  margin: 2em auto;
+
+  @media (max-width: 768px){
+    width: 90%;
+    height: 70vh;
+    position: relative;
+    margin: 2em auto;
+  }
+
+}
+
+//MapComponent
+.history_main{
+  &--item{
+    height: 80vh;
+    margin-bottom: 1em;
+    padding: 0;
+  }
+  &--itens{
+    padding-block: .5em;
+    
+    > span{
+      color: rgb(0 0 0);
+      padding: 5px;
+      border-radius: 5px;
+      font-weight: 500;
+      @media (max-width: 768px){
+        padding: 4px;
+      }
+    }
+  }
+}
+
+//EquipamentDetails
+.details{
+  &_main {
+    max-height: calc(100vh - 40px); 
+    overflow-y: auto;
+    @media (max-width: 768px){
+      font-size: 11px;
+    }
+  }
+
+  &-sidebar {
+    height: 100%;
+    width: 400px;
+    position: fixed;
+    top: 0;
+    right: -300px; 
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.9s ease;
+    z-index: 1000; 
+    padding: 20px;
+
+      &.open {
+        right: 0;
+        transition: left 0.9s ease;
+
+      }
+    @media (max-width: 768px){
+      width: 230px;
+    }
+  }
+
+  &-close {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 26px;
+    cursor: pointer;
+  }
+}
