@@ -19,9 +19,11 @@
         name="OpenStreetMap"
         :no-wrap="true"
       />
-      <LMarker
+      <LFeatureGroup
         v-for="marker in markers"
         :key="marker.id"
+      >
+        <LMarker
         :lat-lng="marker.position"
         @click="openDrawer(marker.id, marker.position)"
       >
@@ -96,6 +98,41 @@
           />
         </Drawer>
       </LMarker>
+        <div v-if="selectedMarkerId == marker.id">
+          <LMarker
+            v-for="position in marker.positionHistory.positions"
+            :key="position.date"
+            :lat-lng="[position.lat, position.lon]"
+          >
+            <LIcon
+              v-if="position !== marker.position"
+              :icon-anchor="[8, 11]"
+              class="relative"
+            >
+              <div class="i-ph-caret-down-fill 'text-4xl text-black-500 opacity-50" />
+            </LIcon>
+            <LTooltip>
+              <Card>
+                <template #title>
+                  {{ getStringDate(position.date) }}
+                </template>
+                <template #content>
+                  Lat: {{ position.lat }}, Lon: {{ position.lon }}
+                </template>
+              </Card>
+            </LTooltip>
+          </LMarker>
+          <LPolyline
+            :lat-lngs="marker.positionHistory.positions.map((position) => {
+              return [position.lat, position.lon]
+            })"
+            color="black"
+            weight="1"
+            opacity="0.3"
+            dash-array="4 4"
+          />
+        </div>
+      </LFeatureGroup>
     </LMap>
   </div>
 </template>
@@ -146,6 +183,20 @@ function getIcon(model) {
   }
 }
 
+function getStringDate(dateString) {
+  const dateTime = new Date(dateString)
+
+  const date = dateTime.toLocaleDateString('pt-BR')
+
+  const time = dateTime.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+
+  return `${date} ${time}`
+}
+
 const markers = computed(() => {
   return equipment.value.map((equipment) => {
     const positionHistory = equipmentPositionHistory.value.find(position => position.equipmentId == equipment.id)
@@ -153,6 +204,7 @@ const markers = computed(() => {
     const model = equipmentModel.value.find(model => model.id == equipment.equipmentModelId)
     const stateHistory = equipmentStateHistory.value.find(state => state.equipmentId == equipment.id)
     const latestState = getLatestItem(stateHistory.states)
+    const latestDate = getLatestItem(positionHistory.positions).date
     const state = equipmentState.value.find(state => state.id == latestState.equipmentStateId)
     const icon = getIcon(model.name)
     return {
@@ -160,6 +212,8 @@ const markers = computed(() => {
       name: equipment.name,
       model: model.name,
       position: latestPosition,
+      date: getStringDate(latestDate),
+      positionHistory: positionHistory,
       state: state.name,
       stateColor: state.color,
       stateHistory: stateHistory,
