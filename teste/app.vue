@@ -4,7 +4,7 @@
       ref="map"
       :zoom="zoom"
       :min-zoom="3"
-        :center="[-19.151801, -46.007759]"
+      :center="[-19.151801, -46.007759]"
       :max-bounds="[
         [-90, -180],
         [90, 180],
@@ -24,12 +24,12 @@
         :key="marker.id"
         :lat-lng="marker.position"
         @click="openDrawer(marker.id, marker.position)"
-        >
-          <LIcon
+      >
+        <LIcon
           :tooltip-anchor="[25, -25]"
           :icon-anchor="selectedMarkerId == marker.id ? [16, 60] : [11, 41]"
           class="relative"
-          >
+        >
           <div :style="`${selectedMarkerId == marker.id ? 'filter: drop-shadow(0px 0px 1px dodgerblue);' : ''}`">
             <div :class="`${marker.icon} ${selectedMarkerId == marker.id ? 'text-4xl' : 'text-2xl'}`" />
             <div :class="`i-ph-caret-down-fill ${selectedMarkerId == marker.id ? 'text-4xl text-blue-500' : 'text-2xl'}`" />
@@ -39,22 +39,22 @@
             pt:root:class="absolute top-0 right-0 w-[10px] h-[10px] rounded"
             :pt:root:style="`background-color: ${marker.stateColor};`"
           />
-          </LIcon>
-          <LTooltip>
-            <Card>
-              <template #title>
-                {{ marker.name }}: {{ marker.model }}
-              </template>
-              <template #content>
-                Lat: {{ marker.lat }}, Lon: {{ marker.lon }} | <Tag
+        </LIcon>
+        <LTooltip>
+          <Card>
+            <template #title>
+              {{ marker.name }}: {{ marker.model }}
+            </template>
+            <template #content>
+              Lat: {{ marker.lat }}, Lon: {{ marker.lon }} | <Tag
                 class="text-white"
                 :style="`background-color: ${marker.stateColor};`"
-                  :value="marker.state"
-                  rounded
-                />
-              </template>
-            </Card>
-          </LTooltip>
+                :value="marker.state"
+                rounded
+              />
+            </template>
+          </Card>
+        </LTooltip>
         <Drawer
           v-if="selectedMarkerId == marker.id"
           :visible="true"
