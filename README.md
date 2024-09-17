@@ -11,13 +11,14 @@ Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação we
 * Angular, Typescript, Leaflet
 
 ## Instalação
-
-* git clone https://github.com/OtavioFSantos/teste-frontend-v4.git
-* npm i
-* ng serve
+```bash
+git clone https://github.com/OtavioFSantos/teste-frontend-v4.git
+npm i
+ng serve
+```
 
 ## Screenshots 
 
-![Captura de tela 1](assets/img/screenshot-1.png)
+![Captura de tela 1](src/assets/img/screenshot-1.png)
 
-![Captura de tela 2](assets/img/screenshot-2.png)
+![Captura de tela 2](src/assets/img/screenshot-2.png)
