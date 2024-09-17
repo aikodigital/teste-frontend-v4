@@ -1,43 +1,16 @@
 import React from 'react';
-import "./index.css";
+import './index.css';
 
-import moment from "moment";
+
+import moment from 'moment';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
 import positions from '../../data/equipmentPositionHistory.json';
 import equipments from '../../data/equipment.json';
 import states from '../../data/equipmentState.json';
-import histories from '../../data/equipmentPositionHistory.json';
 import equipmentStatesHistory from '../../data/equipmentStateHistory.json';
-
-function getLattestEquipLocation(equipmentPosition) {
-  const { positions } = equipmentPosition;
-  
-  const lastDate = moment.max(positions.map(pos => moment(pos.date)));
-  return positions.find(pos => pos.date === lastDate._i);
-}
-
-function getEquipmentTitle(equipPos) {
-  return equipments.find(equip => equip.id === equipPos.equipmentId).name;
-}
-
-function getEquipmentCurrentState(equipPos) {
-  const equipment = equipments.find(equip => equip.id === equipPos.equipmentId);
-  
-  const equipmentStates = equipmentStatesHistory.find(sts => sts.equipmentId === equipment.id);
-  const currentState = moment.max(equipmentStates.states.map(sts => moment(sts.date)));
-  
- console.log(equipmentStatesHistory.find(his => his.states.date === currentState._i));
-}
-
-/* function getEquipmentHistory(equipPos) {
-  const history = histories.find(his => his.equipmentId === equipPos.equipmentId);
-
-  console.log(history);
-} */
 
 export function Layout() {
   const Icon = L.icon({
@@ -46,13 +19,39 @@ export function Layout() {
     iconAnchor: [19, 38],
     popupAnchor: [0, -40]
   });
+  
+  function getLattestEquipLocation(equipmentPosition) {
+    const { positions } = equipmentPosition;
+    
+    const lastDate = moment.max(positions.map(pos => moment(pos.date)));
+    return positions.find(pos => pos.date === lastDate._i);
+  }
+
+  function getEquipmentCurrentState(equipPos) {
+    const equipment = equipments.find(equip => equip.id === equipPos.equipmentId);
+    
+    const equipmentState = equipmentStatesHistory.find(sts => sts.equipmentId === equipment.id);
+    const currentState = moment.max(equipmentState.states.map(sts => moment(sts.date)));
+    
+    return states
+      .find(sts => sts.id === equipmentState.states
+      .find(sts => sts.date === currentState._i).equipmentStateId).name
+  }
+
+  function getEquipmentStateHistory(equipPos) {
+    const equip = equipmentStatesHistory.find(his => his.equipmentId === equipPos.equipmentId);
+    return equip.states;
+  }
 
   return (
     <div 
       className='wrapper'
     >
       <MapContainer  
-        center={{ lat: positions[0].positions[0].lat, lng: positions[0].positions[0].lon }}
+        center={{ 
+          lat: positions[0].positions[0].lat, 
+          lng: positions[0].positions[0].lon
+        }}
         zoom={11}
         style={{ height: "600px", width: "800px" }}
         scrollWheelZoom={true}
@@ -64,17 +63,28 @@ export function Layout() {
 
         {
           positions.map((equipPos, index) => (
-              <Marker 
-                key={index} 
-                position={[
-                  getLattestEquipLocation(equipPos).lat, 
-                  getLattestEquipLocation(equipPos).lon
-                ]}
-                icon={Icon}
-                title={getEquipmentTitle(equipPos)}
-              >
-                <Popup>{getEquipmentCurrentState(equipPos)}</Popup>
-              </Marker>
+            <Marker 
+              key={index} 
+              position={[
+                getLattestEquipLocation(equipPos).lat, 
+                getLattestEquipLocation(equipPos).lon
+              ]}
+              icon={Icon}
+              title={getEquipmentCurrentState(equipPos)}
+            >
+              <Popup className='popup-wrapper'>{
+                getEquipmentStateHistory(equipPos)
+                .reverse()
+                .map((hsts) => (
+                  <>
+                    <p>
+                      {moment(hsts.date).format("DD/MM/YY")} 
+                        - 
+                      {states.find(sts => sts.id === hsts.equipmentStateId).name}
+                    </p>
+                  </>
+                ))}</Popup>
+            </Marker>
             ))
         }
       </MapContainer>
