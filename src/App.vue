@@ -4,8 +4,10 @@ import SidebarMenuComponent from './components/SidebarMenu.component.vue'
 </script>
 
 <template>
-  <div class="d-flex">
+  <v-layout>
     <SidebarMenuComponent />
-    <RouterView />
-  </div>
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-layout>
 </template>
