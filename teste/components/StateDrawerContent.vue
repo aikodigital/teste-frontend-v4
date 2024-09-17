@@ -51,7 +51,3 @@ const states = computed(() => {
   })
 })
 </script>
-
-<style>
-
-</style>
