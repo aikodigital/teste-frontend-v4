@@ -1,0 +1,37 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 1.6rem;
+  }
+  
+  .wrapper[data-value] {
+    color: var(--gray_04);
+  }
+  
+  .wrapper label {
+    position: absolute;
+    transform: translateX(10px) translateY(-11px);
+    z-index: 1;
+    font-size: 1rem;
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-weight: var(--font-bold);
+    padding: 0px 10px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  .react-select__input input {
+    color: var(--gray_04);
+  }
+  
+  .react-select__single-value {
+    color: var(--gray_04) !important;
+  }
+  
+  .react-select__placeholder,
+  .react-select__input-container {
+    color: var(--gray_04);
+  }

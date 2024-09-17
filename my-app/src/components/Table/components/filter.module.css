@@ -1,0 +1,76 @@
+/* Filter.module.css */
+
+.wrapperFilter {
+  background-color: var(--white-color);
+  padding: 1rem;
+  width: 200px;
+}
+
+.wrapperSearch {
+  margin-bottom: 1rem;
+  position: relative;
+  height: 25px;
+}
+
+.wrapperSearch input {
+  height: 25px;
+  padding-left: 25px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--gray-02-color);
+  outline: none;
+  font-family: var(--font-family);
+}
+
+.wrapperSearch svg {
+  position: absolute;
+  width: 1.5rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 5px;
+}
+
+.wrapperOptions {
+  height: 100px;
+  overflow-y: auto;
+  padding-left: 0.5rem;
+}
+
+.wrapperOptions label {
+  font-family: var(--font-family);
+  font-size: var(--font-small-size);
+  font-weight: var(--font-normal-weight);
+  color: var(--gray-05-color);
+  width: 7.5rem;
+}
+
+.wrapperOptions button {
+  border-color: var(--gray-05-color);
+}
+
+.wrapperButtons {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonClearFilter,
+.buttonSetFilter {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-family);
+  font-size: var(--font-small-size);
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.buttonClearFilter {
+  color: var(--gray-04-color);
+}
+
+.buttonSetFilter {
+  background-color: var(--blue-text-color);
+  color: var(--white-color);
+}

@@ -1,0 +1,47 @@
+/* CheckboxComponent.module.css */
+
+.wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkboxRoot {
+    background-color: var(--white-color);
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px var(--background-home-color);
+    cursor: pointer;
+  }
+  
+  .checkboxRoot:disabled {
+    opacity: 30%;
+    cursor: not-allowed;
+  }
+  
+  .checkboxRoot:focus {
+    box-shadow: 0 0 0 1px black;
+  }
+  
+  .checkboxIndicator {
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    background-color: var(--blue-dark-color);
+  }
+  
+  .label {
+    color: black;
+    padding-left: 1.5rem;
+    font-size: 15px;
+    font-weight: var(--font-bold-weight);
+  }
+  
+  .labelDisabled {
+    opacity: 30%;
+    cursor: not-allowed;
+  }

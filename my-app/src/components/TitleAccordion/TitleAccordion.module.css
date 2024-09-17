@@ -1,0 +1,26 @@
+.wrapperIcon {
+    width: 3.8rem;
+    height: 3.8rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+  }
+  
+  .label {
+    color: var(--blackDarkMode);
+    font-size: var(--xlarge);
+    
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 0px;
+    margin-left: 0px;
+    color: var(--blackDarkMode);
+  }

@@ -1,0 +1,73 @@
+/* Navigation.module.css */
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 4rem;
+    position: absolute;
+    left: 0;
+  }
+  
+  .navigation p {
+    display: block;
+    color: #000;
+    font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+    line-height: 16px;
+    margin: 0 0 1rem 10rem;
+  }
+  
+  .navigation div {
+    background-color: #EEEFEF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 102px;
+    gap: 3.2rem;
+    max-width: 400px;
+    border-top-right-radius: 42px;
+    border-bottom-right-radius: 42px;
+    padding: 1.4rem 4.2rem;
+  }
+  
+  .navigation h1 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 2vw, 3.2rem);
+    line-height: 28px;
+    color: #000;
+  }
+  
+  @media (max-width: 768px) {
+    .navigation {
+      flex-wrap: wrap;
+      max-width: 100px;
+    }
+  }
+  
+  .buttonChevron {
+    min-height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D8DADD;
+    border: none;
+    transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  }
+  
+  .buttonChevron:hover {
+    cursor: pointer;
+  }
+  
+  .buttonChevron:focus-visible {
+    outline: 1px solid #002868;
+    transform: scale(1.1);
+  }
+  
+  .accordionChevron {
+    color: #002868;
+    font-size: 1.6rem;
+    transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  }

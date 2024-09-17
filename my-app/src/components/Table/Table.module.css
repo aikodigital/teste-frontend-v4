@@ -1,0 +1,51 @@
+/* StickyHeadTable.module.css */
+
+.tableContainer {
+  max-height: 800px;
+  overflow-y: auto;
+  z-index: 0;
+}
+
+.tableContainer::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+  background: #FFFFFF;
+  border-radius: 10px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+  background-color: #002868;
+  border-radius: 10px;
+}
+
+.button-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-family: var(--type-first);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background: #002868;
+  color: white;
+  min-width: 3.6rem;
+  padding: 0.8rem 0;
+  box-sizing: border-box;
+  transition: 0.1s;
+}
+
+.button-action:hover,
+.button-action:focus {
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 4px #002868;
+}
+
+.disabledButton {
+  cursor: not-allowed !important;
+}

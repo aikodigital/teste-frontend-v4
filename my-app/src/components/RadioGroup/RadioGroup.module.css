@@ -1,0 +1,22 @@
+/* RadioGroup.module.css */
+
+.wrapper {
+    display: flex;
+  }
+  
+  .wrapperRow {
+    flex-direction: row;
+  }
+  
+  .wrapperColumn {
+    flex-direction: column;
+  }
+  
+  .wrapperRadio {
+    display: flex;
+    align-items: center;
+  }
+  
+  .label {
+    font-size: var(--font-medium-size);
+  }
