@@ -103,6 +103,7 @@ OBS.: Se você já tiver um projeto rodando no endereço padrão de *localhost* 
 
 * **Arquitetura BFF:** 'Back-end for Front-end' utilizando Nuxt para consumir dados JSON e distribuir através de rotas API.
 * **Ícones:** Para distinguir os marcadores de equipamentos.
+* **Histórico de posições:** É exibido uma trilha tracejada denotada por marcadores com tooltip informando data, latitude e longitude ao clicar sobre um marcador de equipamento.
 * **Destaque e foco:** Marcadores são destacados e focados ao abir a gaveta com o histórico de estados ao clicar sobre os marcadores.
 * **Alerta de estado:** Equipamentos não operacionais são sinalizados por um ponto colorido acima de seu marcador.
 * **Centralização e delimitação do mapa:** O mapa é centralizado nos marcadores (somente de forma estática/hardcoded) e delimitado de modo a não exibir os azulejos repetidos, como no padrão do Leaflet.
@@ -114,7 +115,6 @@ OBS.: Se você já tiver um projeto rodando no endereço padrão de *localhost* 
 * Pesquisa
 * Percentual de Produtividade do equipamento
 * Ganho por equipamento
-* Histórico de posições
 * Testes
 * Documentação da API
 * Componentes de layout
