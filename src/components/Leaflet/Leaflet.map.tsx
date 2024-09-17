@@ -21,14 +21,19 @@ function LeafletMap() {
     lon: -46.007759,
   });
 
-  const { search, filterByCurrentState, setStateOptions } = useContext(
-    MyContext,
-  ) as FilterState;
+  const {
+    search,
+    filterByCurrentState,
+    setStateOptions,
+    isLoading,
+    setIsLoading,
+  } = useContext(MyContext) as FilterState;
 
   useEffect(() => {
     if (!equipments.length) return;
 
     setStateOptions(StateOptions);
+
     const firstPosition = equipments[0].currentPosition;
 
     if (firstPosition) {
@@ -37,6 +42,7 @@ function LeafletMap() {
   }, [equipments]);
 
   useEffect(() => {
+    setIsLoading(true);
     const userDidntSelectAnyFilter = filterByCurrentState === '';
 
     const equipmentsState = getEquipmentsCurrentState();
@@ -46,13 +52,17 @@ function LeafletMap() {
       equipmentsPosition,
     );
 
-    if (userDidntSelectAnyFilter) return setEquipments(currentEquipments);
+    if (userDidntSelectAnyFilter) {
+      setIsLoading(false);
+      return setEquipments(currentEquipments);
+    }
 
     const equipmentsFilteredByState = currentEquipments.filter(
       (item) => item.currentState === filterByCurrentState,
     );
 
     setEquipments(equipmentsFilteredByState);
+    setIsLoading(false);
   }, [search, filterByCurrentState]);
 
   const getEquipmentsCurrentState = () => {
@@ -107,6 +117,8 @@ function LeafletMap() {
     return currentEquipments;
   };
 
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <div>
       <MapContainer
@@ -121,8 +133,8 @@ function LeafletMap() {
         {equipments.map((item) => {
           const itemInfo = {
             ...item,
-            currentPosition: item.currentPosition || initialMapPosition,
             currentState: item.currentState || '',
+            currentPosition: item.currentPosition || initialMapPosition,
           };
           return <MarkerLeaflet key={item.id} item={itemInfo} />;
         })}
