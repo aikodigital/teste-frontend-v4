@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Modal, Box, Typography, Button } from '@mui/material';
@@ -69,11 +69,15 @@ const EquipmentMap = ({ equipmentPositions }) => {
 
               <Box id="modal-description" sx={{ mt: 2, maxHeight: '300px', overflowY: 'auto' }}>
                 <ul>
-                  {selectedEquipment.history.map((state, index) => (
-                    <li key={index}>
-                      {new Date(state.date).toLocaleString()}: {state.stateName}
-                    </li>
+                  {selectedEquipment.history.map((entry, index) => (
+                    <Box key={index} sx={entryStyle}>
+                      <Typography><strong>Data:</strong> {new Date(entry.date).toLocaleString()}</Typography>
+                      <Typography><strong>Estado:</strong> {entry.name}</Typography>
+                      <Typography><strong>Duração:</strong> {entry.duration} horas</Typography>
+                      <Typography><strong>Ganho nesse estado:</strong> R$ {entry.stateEarnings}</Typography>
+                    </Box>
                   ))}
+                  <Typography sx={totalStyle}><strong>Ganho total:</strong> R$ {selectedEquipment.totalEarnings}</Typography>
                 </ul>
               </Box>
               <Button variant="contained" color="primary" onClick={handleClose}>
@@ -99,6 +103,22 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
+};
+
+const entryStyle = {
+  mb: 2,
+  p: 2,
+  borderBottom: '1px solid #ccc',
+  borderRadius: '4px',
+  backgroundColor: '#f9f9f9',
+};
+
+const totalStyle = {
+  mt: 2,
+  p: 2,
+  fontWeight: 'bold',
+  backgroundColor: '#e0f7fa',
+  borderRadius: '4px',
 };
 
 export default EquipmentMap;

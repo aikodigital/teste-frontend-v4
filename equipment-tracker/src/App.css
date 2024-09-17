@@ -2,15 +2,18 @@
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
-}
-
 main {
   height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h1 {
+  color: #282c34; 
+  font-size: 2.5rem; 
+  margin: 20px 0; 
+  text-align: center; 
+  font-weight: bold; 
+  letter-spacing: 2px; 
 }

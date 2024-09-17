@@ -1,60 +1,64 @@
 import { useState, useEffect } from 'react';
+import './App.css';
 import equipment from './data/equipment.json';
 import equipmentPositionHistory from './data/equipmentPositionHistory.json';
 import equipmentStateHistory from './data/equipmentStateHistory.json';
 import equipmentState from './data/equipmentState.json';
+import equipmentModel from './data/equipmentModel.json';
 import EquipmentMap from './components/EquipmentMap';
 
 function App() {
   const [equipmentPositions, setEquipmentPositions] = useState([]);
 
   useEffect(() => {
-    // Função para obter o estado pelo ID
-    const getStateById = (stateId) => {
-      const state = equipmentState.find(state => state.id === stateId);
-      return state ? { name: state.name, color: state.color } : { name: 'Desconhecido', color: '#000000' };
-    };
-
-    // Preparar os dados de posição e estado dos equipamentos
     const latestPositions = equipmentPositionHistory.map((positionData) => {
-      // Encontrar o equipamento correspondente pelo ID
       const equipmentData = equipment.find(e => e.id === positionData.equipmentId);
-      if (!equipmentData) {
-        console.error(`Equipamento com ID ${positionData.equipmentId} não encontrado.`);
-        return null; // Ignorar equipamento que não é encontrado
-      }
-
-      // Pegar a posição mais recente
       const latestPosition = positionData.positions[positionData.positions.length - 1];
 
-      // Obter o estado mais recente
+      // Obtendo o estado mais recente
       const stateHistory = equipmentStateHistory.find(e => e.equipmentId === positionData.equipmentId);
-      if (!stateHistory) {
-        console.error(`Histórico de estado não encontrado para o equipamento com ID ${positionData.equipmentId}`);
-        return null;
-      }
+      const latestStateId = stateHistory ? stateHistory.states[stateHistory.states.length - 1].equipmentStateId : null;
+      const latestState = latestStateId ? equipmentState.find(state => state.id === latestStateId) : null;
 
-      const latestStateId = stateHistory.states[stateHistory.states.length - 1].equipmentStateId;
-      const latestState = getStateById(latestStateId);
+      // Associando o modelo de equipamento
+      const model = equipmentModel.find(m => m.id === equipmentData.equipmentModelId);
+      const earningsPerHour = model ? model.hourlyEarnings.find(e => e.equipmentStateId === latestStateId) : null;
+      const hourlyEarnings = earningsPerHour ? earningsPerHour.value : 0;
 
-      // Preparar o histórico de estados para o modal
-      const history = stateHistory.states.map((stateEntry) => {
-        const stateInfo = getStateById(stateEntry.equipmentStateId);
+      // Cálculo do ganho total
+      let totalEarnings = 0;
+      const history = stateHistory ? stateHistory.states.map((stateEntry, index) => {
+        const state = equipmentState.find(s => s.id === stateEntry.equipmentStateId);
+        const earnings = model ? model.hourlyEarnings.find(e => e.equipmentStateId === stateEntry.equipmentStateId) : null;
+        const earningsValue = earnings ? earnings.value : 0;
+
+        // Calcular a diferença de tempo entre esse estado e o próximo
+        const nextEntry = stateHistory.states[index + 1];
+        const endTime = nextEntry ? new Date(nextEntry.date) : new Date();  // Se for o último, usa o tempo atual
+        const duration = (endTime - new Date(stateEntry.date)) / (1000 * 60 * 60);  // Duração em horas
+        const stateEarnings = earningsValue * duration;
+        totalEarnings += stateEarnings;
+
         return {
           date: stateEntry.date,
-          stateName: stateInfo.name,
+          name: state ? state.name : 'Sem nome',
+          earnings: earningsValue,
+          duration: duration.toFixed(2),  // Duração em horas
+          stateEarnings: stateEarnings.toFixed(2),  // Ganhos nesse estado
         };
-      });
+      }) : [];
 
       return {
-        name: equipmentData.name,
+        name: equipmentData ? equipmentData.name : 'Sem nome',
         lat: latestPosition.lat,
         lon: latestPosition.lon,
-        state: latestState.name,
-        stateColor: latestState.color,
+        state: latestState ? latestState.name : 'Sem estado',
+        stateColor: latestState ? latestState.color : '#000000',
+        hourlyEarnings: hourlyEarnings,  // Ganhos por hora no estado atual
         history: history,
+        totalEarnings: totalEarnings.toFixed(2),  // Ganhos totais calculados
       };
-    }).filter(e => e !== null); // Filtrar equipamentos inválidos
+    });
 
     setEquipmentPositions(latestPositions);
   }, []);
