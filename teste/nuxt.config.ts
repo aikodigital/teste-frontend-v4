@@ -13,17 +13,17 @@ export default defineNuxtConfig({
   css: [
     '@/assets/styles.css',
   ],
-  hooks: {
-    'build:before': () => {
-      exec('pnpm lint-watch', (err, stdout, stderr) => {
-        if (err) {
-          console.error(`lint-watch error: ${stderr}`)
-          throw err
-        }
-        console.log(stdout)
-      })
-    },
-  },
+  // hooks: {
+  //   'build:before': () => {
+  //     exec('pnpm lint-watch', (err, stdout, stderr) => {
+  //       if (err) {
+  //         console.error(`lint-watch error: ${stderr}`)
+  //         throw err
+  //       }
+  //       console.log(stdout)
+  //     })
+  //   },
+  // },
   primevue: {
     options: {
       unstyled: true,
