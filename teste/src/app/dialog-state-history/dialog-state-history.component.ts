@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   export class DialogStateHistoryComponent {
     dataSourceState = new MatTableDataSource<any>([]);
     dataSourcePosition = new MatTableDataSource<any>([]);
-    displayedColumnsState: string[] = ['date', 'stateName', 'equipmentStateId'];
+    displayedColumnsState: string[] = ['date', 'stateName'];
     displayedColumnsPosition: string[] = ['date', 'lat', 'lon'];
 
     constructor(
