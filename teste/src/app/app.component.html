@@ -1,0 +1,11 @@
+<h1 class="title">Fleet Manager</h1>
+
+<google-map height="620px" width="1520px" [options]="options" mapId="MAP_ID"> 
+  <map-advanced-marker #markerElem 
+    *ngFor="let equipment of equipmentsFormated.equipmentsFormatedList"
+    (mapClick)="equipmentStateHistory(equipment)"
+    [position]="equipment.position"
+    [title]="equipment.name + ' - ' + equipment.stateName"
+    [content]="equipment.content"
+  ></map-advanced-marker>
+</google-map>

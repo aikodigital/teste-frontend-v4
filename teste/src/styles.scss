@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Public Sans', sans-serif; }
+
+.operating {
+    color: #2ecc71;
+}
+
+.maintenance {
+    color: #e74c3c;
+}
+
+.stopped {
+    color: #f1c40f;
+}
+
+.app-root {
+    display: grid;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+    color: rgb(0 34 85);
+    margin: 1rem !important;
+}
