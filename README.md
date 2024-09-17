@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# Teste frontend Aiko
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é um rastreador de equipamentos que exibe suas posições e estados em um mapa, utilizando React, React-Leaflet e Bootstrap. A aplicação permite a filtragem de equipamentos por estado e modelo, além de fornecer detalhes específicos sobre produtividade e ganhos dos equipamentos. 
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- **Visualização de Posições dos Equipamentos**: Exibe a posição mais recente dos equipamentos em um mapa.
+- **Histórico de Estados**: Permite visualizar o histórico de estados dos equipamentos, mostrando quando estavam operando, parados ou em manutenção.
+- **Histórico de Posições**: Exibe o histórico de posições (trajetos) dos equipamentos.
+- **Filtros**: Filtre os equipamentos por estado ou modelo.
+- **Pesquisa**: Pesquisa por nome ou ID de um equipamento.
+- **Cálculo de Produtividade**: Calcula a produtividade de um equipamento com base no tempo em operação.
+- **Cálculo de Ganhos**: Calcula os ganhos dos equipamentos com base nos estados e no modelo de equipamento.
 
-### `npm start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React**: Framework de interface de usuário.
+- **React-Leaflet**: Biblioteca para integrar mapas interativos.
+- **Bootstrap**: Framework CSS para estilização.
+- **React-Bootstrap**: Integração de componentes do Bootstrap com React.
+- **TypeScript**: Usado para segurança de tipos no código.
+- **Leaflet**: Para exibir os mapas.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Pré-requisitos
 
-### `npm test`
+Antes de iniciar, você precisa ter instalado em sua máquina o [Node.js](https://nodejs.org/en/).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Como Buildar e Rodar o Projeto
 
-### `npm run build`
+1. Instale as dependências do projeto:
+    ```bash
+    npm install
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Inicie o servidor de desenvolvimento:
+    ```bash
+    npm start
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    O projeto estará disponível no endereço [http://localhost:3000](http://localhost:3000).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Estrutura do Projeto
 
-### `npm run eject`
+A estrutura de pastas do projeto está organizada da seguinte forma:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+.
+├── public
+├── src
+│   ├── assets
+│   │   └── img
+│   │       └── aiko.png # Imagem utilizada no header
+│   ├── components
+│   │   ├── Header.tsx # Componente de cabeçalho
+│   │   └── EquipmentMap.tsx # Mapa com as posições e informações dos equipamentos
+│   ├── data
+│   │   ├── equipment.json # Dados de equipamentos
+│   │   ├── equipmentModel.json # Dados de modelos de equipamentos
+│   │   ├── equipmentPositionHistory.json # Histórico de posições dos equipamentos
+│   │   ├── equipmentState.json # Estados dos equipamentos
+│   │   └── equipmentStateHistory.json # Histórico de estados dos equipamentos
+│   ├── App.tsx # Arquivo principal da aplicação
+│   └── index.tsx # Arquivo de entrada da aplicação
+├── package.json # Informações do projeto e dependências
+└── README.md # Documentação do projeto
