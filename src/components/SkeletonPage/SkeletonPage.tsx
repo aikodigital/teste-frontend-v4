@@ -52,7 +52,7 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
         <>
             <Header />
 
-            {loading ? 
+            {loading ?
                 <div className='row full-height d-flex align-items-center justify-content-center'>
                     <p className='loading-text'>Carregando dados...</p>
                 </div>
@@ -103,12 +103,10 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
                     </div>
 
                     <div className="col-md-6 map-container">
-                        {filteredEquipmentList?.length > 0 &&
-                            <MapComponent
-                                selectedEquipment={selectedEquipment}
-                                equipmentList={filteredEquipmentList}
-                            />
-                        }
+                        <MapComponent
+                            selectedEquipment={selectedEquipment}
+                            equipmentList={filteredEquipmentList}
+                        />
                     </div>
                 </div>
             }

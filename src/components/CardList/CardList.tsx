@@ -22,7 +22,7 @@ const CardList: React.FC<CardListProps> = ({ equipmentList, onCardClick }) => {
         const productivity = calculateProductivity(equipment.id, equipmentStatesHistory, equipmentStatesInfoList);
 
         return (
-          <div key={equipment.id} className="col-md-4 col-sm-6 col-12 mb-4">
+          <div key={equipment.id} className="col-md-6 col-sm-6 col-lg-4 col-12 mb-4">
             <Card className="h-100 d-flex flex-column custom-card" onClick={() => onCardClick(equipment.id)}>
               <Card.Body className="d-flex flex-column flex-grow-1">
                 <Card.Title className="card-title">
