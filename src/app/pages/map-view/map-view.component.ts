@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import equipments from '../../../assets/data/equipment.json'
-import models from '../../../assets/data/equipmentModel.json'
-import state from '../../../assets/data/equipmentState.json'
-import positionHistory from '../../../assets/data/equipmentPositionHistory.json'
-import stateHistory from '../../../assets/data/equipmentStateHistory.json'
 
 import { EquipmentHistoryComponent } from '../../components/equipment-history/equipment-history.component';
 import { CommonModule } from '@angular/common';
@@ -36,11 +31,11 @@ interface State {
   styleUrls: ['./map-view.component.css']
 })
 export class MapViewComponent implements OnInit {
-  private positionHistory: any = positionHistory;
-  private stateHistory: any = stateHistory;
-  private models: any = models;
-  private state: any = state;
-  private equipments: any = equipments;
+  private positionHistory: any;
+  private stateHistory: any;
+  private models: any;
+  private state: any;
+  private equipments: any;
 
   public sidebarVisible: boolean = false;
   public selectedEquipment: any;
@@ -54,7 +49,17 @@ export class MapViewComponent implements OnInit {
     this.mapService.isSidebarOpen$.subscribe(status => {
       this.sidebarVisible = status;
     });
+
+    this.loadData();
     this.initMap();
+  }
+
+  private loadData() {
+    this.equipments = this.equipmentService.getEquipmentsData();
+    this.models = this.equipmentService.getModelsData();
+    this.positionHistory = this.equipmentService.getPositionsHistoryData();
+    this.state = this.equipmentService.getStatesData();
+    this.stateHistory = this.equipmentService.getStateHistoryData();
   }
 
   private initMap(): void {
@@ -62,7 +67,7 @@ export class MapViewComponent implements OnInit {
       minZoom: 6,
       maxZoom: 17,
     };
-    const zoom = 9;
+    const zoom = 10;
 
     const lat = -19.231295;
     const lng = -46.104467;
@@ -87,7 +92,9 @@ export class MapViewComponent implements OnInit {
       if (latestPosition && latestState) {
         const customIcon = L.divIcon({
           className: 'marker-icon',
-          html: `<div style="background-color: ${latestState.color}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white;"></div>`,
+          html: `<div style="background-color: ${latestState.color}; width: 38px; height: 38px; border-radius: 50%; border: 2px solid white; margin-left: -15px; display:flex; align-items: center; justify-content: center;">
+          <img src="assets/img/${model!.name}.svg" alt="${model!.name}" style="width: 26px; height: 26px;">
+          </div>`,
         });
 
         const marker = L.marker([latestPosition.lat, latestPosition.lon], { icon: customIcon }).addTo(map);
@@ -105,17 +112,22 @@ export class MapViewComponent implements OnInit {
         });
 
         marker.on('click', () => {
-          this.showSidebar(positions.equipmentId, latestPosition, latestState);
+          this.showSidebar(positions.equipmentId, latestState, model!.name, equipment!.name);
         });
       }
     });
   }
 
-  private showSidebar(equipmentId: string, latestPosition: Position, latestState: State): void {
+  onMapClick(event: MouseEvent) {
+    this.sidebarVisible = false;
+  }
+
+  private showSidebar(equipmentId: string, latestState: State, model: string, name: string): void {
     this.selectedEquipment = {
       equipmentId,
-      latestPosition,
-      latestState
+      latestState,
+      model,
+      name
     };
     this.sidebarVisible = true;
   }
