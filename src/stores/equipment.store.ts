@@ -21,6 +21,7 @@ export type State = {
   id: string
   name: string
   color: string
+  icon: string
   date?: Date
 }
 
@@ -98,10 +99,39 @@ export const useEquipment = defineStore('useEquipment', () => {
     const equipmentsStates = equipmentsStatesById.map((equipment) => {
       const state = equipmentState.find((state) => state.id === equipment.state.equipmentStateId)
 
-      return { equipmentId: equipment.equipmentId, state: state || ({} as State) }
+      return {
+        equipmentId: equipment.equipmentId,
+        state: { ...state!, icon: getStateIcon(state?.name) } || ({} as State)
+      }
     })
 
     equipmentsLatestState.value = equipmentsStates
+  }
+
+  function getStateIcon(stateName?: string) {
+    switch (stateName) {
+      case 'Operando':
+        return 'manufacturing'
+      case 'Manutenção':
+        return 'handyman'
+      case 'Parado':
+        return 'cancel'
+      default:
+        return ''
+    }
+  }
+
+  function getModelIcon(modelName?: string) {
+    switch (modelName) {
+      case 'Caminhão de carga':
+        return 'local_shipping'
+      case 'Harvester':
+        return 'agriculture'
+      case 'Garra traçadora':
+        return 'auto_towing'
+      default:
+        return ''
+    }
   }
 
   function equipmentData(equipmentId: string) {
@@ -131,7 +161,7 @@ export const useEquipment = defineStore('useEquipment', () => {
       equipmentId,
       state: state?.state || ({} as State),
       position: position?.position || ({} as Position),
-      icon: '',
+      icon: getModelIcon(model?.name),
       name: name?.name || '',
       model: model?.name || '',
       stateHistory: selectedEquipmentStateHistory.value
@@ -156,7 +186,11 @@ export const useEquipment = defineStore('useEquipment', () => {
       const state = equipmentState.find((state) => state.id === equipment.equipmentStateId)
 
       if (state)
-        selectedEquipmentStateHistory.value?.push({ ...state, date: new Date(equipment.date) })
+        selectedEquipmentStateHistory.value?.push({
+          ...state,
+          date: new Date(equipment.date),
+          icon: getStateIcon(state.name)
+        })
     })
   }
 
