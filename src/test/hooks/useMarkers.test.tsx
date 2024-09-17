@@ -1,6 +1,11 @@
 import { act } from 'react';
 import { renderToString } from 'react-dom/server';
 
+import {
+  QueryObserverLoadingErrorResult,
+  QueryObserverSuccessResult,
+  UseQueryResult
+} from '@tanstack/react-query';
 import { vi } from 'vitest';
 
 import { EquipmentDetails } from '@/components';
@@ -49,7 +54,7 @@ describe('<useMarkers />', () => {
     }
   };
 
-  const mockStateData: EquipmentStateFromAPI[] = [
+  const mockStateData: Partial<EquipmentStateFromAPI>[] = [
     {
       id: 'state-1',
       name: 'Operando'
@@ -67,26 +72,27 @@ describe('<useMarkers />', () => {
   const mockEquipmentModelsData: Record<string, EquipmentModelFromAPI> = {
     model1: {
       id: 'model1',
-      name: 'Modelo Teste'
+      name: 'Modelo Teste',
+      hourlyEarnings: []
     }
   };
 
   beforeEach(() => {
     vi.mocked(useEquipmentPositionHistory).mockReturnValue({
-      data: mockPositionData as Record<string, EquipmentPositionHistoryFromAPI> | undefined
-    });
+      data: mockPositionData
+    } as UseQueryResult<Record<string, EquipmentPositionHistoryFromAPI>>);
     vi.mocked(useEquipmentStateHistory).mockReturnValue({
-      data: mockStateHistoryData as Record<string, EquipmentStateHistoryFromAPI> | undefined
-    });
+      data: mockStateHistoryData
+    } as UseQueryResult<Record<string, EquipmentStateHistoryFromAPI>>);
     vi.mocked(useEquipmentState).mockReturnValue({
-      data: mockStateData as EquipmentStateFromAPI[] | undefined
-    });
+      data: mockStateData
+    } as UseQueryResult<EquipmentStateFromAPI[]>);
     vi.mocked(useEquipments).mockReturnValue({
-      data: mockEquipmentsData as Record<string, EquipmentFromAPI> | undefined
-    });
+      data: mockEquipmentsData
+    } as QueryObserverSuccessResult<Record<string, EquipmentFromAPI>>);
     vi.mocked(useEquipmentModels).mockReturnValue({
-      data: mockEquipmentModelsData as Record<string, EquipmentModelFromAPI> | undefined
-    });
+      data: mockEquipmentModelsData
+    } as QueryObserverSuccessResult<Record<string, EquipmentModelFromAPI>>);
   });
 
   afterEach(() => {
@@ -94,7 +100,9 @@ describe('<useMarkers />', () => {
   });
 
   it('should return an empty list if any data is missing', () => {
-    vi.mocked(useEquipmentPositionHistory).mockReturnValueOnce({ data: undefined });
+    vi.mocked(useEquipmentPositionHistory).mockReturnValueOnce({
+      data: undefined
+    } as QueryObserverLoadingErrorResult<Record<string, EquipmentPositionHistoryFromAPI>>);
 
     const { result } = renderHook(() => useMarkers());
 
@@ -114,7 +122,7 @@ describe('<useMarkers />', () => {
             <EquipmentDetails
               equipmentId="equipment1"
               stateHistory={mockStateHistoryData}
-              states={mockStateData}
+              states={mockStateData as EquipmentStateFromAPI[]}
               equipments={mockEquipmentsData}
               equipmentModels={mockEquipmentModelsData}
             />
