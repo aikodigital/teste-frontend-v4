@@ -1,0 +1,47 @@
+/* Estilo do botão de filtrar */
+.filter-button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #357ABD;
+}
+
+.filter-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.5);
+}
+
+.filter-button:active {
+    background-color: #2D6AA8;
+}
+
+/* Estilo do select */
+.custom-select {
+    position: relative;
+}
+
+.custom-select select {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    width: 100%;
+    appearance: auto;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-select select:focus {
+    border-color: #4A90E2;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.5);
+}

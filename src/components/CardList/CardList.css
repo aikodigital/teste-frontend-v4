@@ -15,10 +15,6 @@
     cursor: pointer;
 }
 
-.custom-card.active {
-    background-color: #4A90E2;
-}
-
 .custom-card:hover {
     transform: scale(1.05);
 }

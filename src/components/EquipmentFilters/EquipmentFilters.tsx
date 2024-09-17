@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './EquipmentFilters.css'; // Importe o CSS
 
 interface EquipmentFiltersProps {
     searchTerm: string;
@@ -44,7 +45,7 @@ const EquipmentFilters: React.FC<EquipmentFiltersProps> = ({
                 {/* Botão de Filtrar */}
                 <div className="col-md-4 d-flex">
                     <button
-                        className="btn btn-primary w-100"
+                        className="filter-button w-100"
                         onClick={toggleFilters}
                     >
                         {showFilters ? 'Esconder Filtros' : 'Filtrar'}
@@ -55,9 +56,8 @@ const EquipmentFilters: React.FC<EquipmentFiltersProps> = ({
             {showFilters && (
                 <div className="row">
                     {/* Select para filtrar por modelo */}
-                    <div className="col-md-12 mb-3">
+                    <div className="col-md-12 mb-3 custom-select">
                         <select
-                            className="form-control"
                             value={modelFilter}
                             onChange={(e) => setModelFilter(e.target.value)}
                         >
@@ -71,9 +71,8 @@ const EquipmentFilters: React.FC<EquipmentFiltersProps> = ({
                     </div>
 
                     {/* Select para filtrar por estado */}
-                    <div className="col-md-12 mb-3">
+                    <div className="col-md-12 mb-3 custom-select">
                         <select
-                            className="form-control"
                             value={stateFilter}
                             onChange={(e) => setStateFilter(e.target.value)}
                         >
