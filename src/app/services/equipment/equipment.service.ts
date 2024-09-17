@@ -151,16 +151,6 @@ export class EquipmentService {
   }
 
   calculateProductivity(equipmentId: string) {
-    const equipment = equipments.find((equip: Equipment) => equip.id === equipmentId);
-    const equipModel = models.find((model: any) => model.id === equipment!.equipmentModelId);
-
-    const hourlyEarnings = equipModel!.hourlyEarnings;
-
-    const earningsMap = new Map<string, number>();
-    hourlyEarnings.forEach(e => {
-      earningsMap.set(e.equipmentStateId, e.value);
-    });
-
     const equipmentStateHistory = this.getStateHistoryByEquipmentId(equipmentId);
     const sortedStates = equipmentStateHistory!.states.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()) as any;
 
