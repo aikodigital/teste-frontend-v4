@@ -1,0 +1,57 @@
+html, body{
+  background: #fff;
+  font-family: "SUSE", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+input::placeholder,
+textarea::placeholder{
+  color: #aaa;
+  font-family: "SUSE", sans-serif;
+
+}
+
+input:focus,
+textarea:focus{
+  outline: none;
+}
+
+a, nav button{
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: .2s;
+  color: #000;
+  font-family: "SUSE", sans-serif;
+}
+
+a:hover, nav button:hover{
+  color: #bbb;
+}
+ul{
+  list-style: none;
+}
+label{
+  font-size: 1.3em;
+}
+::-webkit-scrollbar {
+  width: 5px; 
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f100; 
+  border-radius: 5px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00c3ff; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
