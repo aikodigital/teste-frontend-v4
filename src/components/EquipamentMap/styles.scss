@@ -1,0 +1,18 @@
+.MapContainer {
+    height: 98%;
+    width: 100%;
+    margin-top: 2%;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    overflow: hidden; /* Garante que o conteúdo do mapa não ultrapasse os limites da borda */
+}
+
+
+@media (max-width: 1024px) {
+    .MapContainer {
+        height: 60vh; 
+        width: 100%;
+        margin: 0 auto; 
+        border-radius: 15px; 
+    }
+}

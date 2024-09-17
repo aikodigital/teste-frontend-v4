@@ -1,0 +1,25 @@
+.container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px; 
+}
+
+.map {
+    width: 98%; 
+    height: 90vh;
+    margin: -30px 10px 0 10px;
+    grid-column: 2;
+}
+
+.listHistoric {
+    width: 100%;
+    grid-column: 1;
+    margin: -10px 10px 0 10px;
+}
+
+.p {
+    width: 100%;
+    grid-column: 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-left: 0;
+}

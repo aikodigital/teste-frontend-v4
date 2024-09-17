@@ -1,0 +1,63 @@
+.containerList td {
+    border: 1px solid #CDCDCD;
+    border-radius: 3px;
+
+    background-color: #f0f0fd; 
+
+    text-align: center;
+    padding: 5px 15px;
+
+    color: #00437a;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+th {
+    border: 1px solid #CDCDCD;
+    border-radius: 3px;
+
+    background-color: #CDCDCD; 
+
+    text-align: center;
+
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.scroll {
+    border-radius: 20px;
+    border: 1px solid #CDCDCD;
+    max-height: 88.3Avh;
+
+    width: 90%;
+
+    overflow-y: auto;
+    scrollbar-width:none; 
+    margin: 6px 1px 0 1px;
+
+    padding-right: 34px;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+
+    background-color: #00437a;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border: 1px solid #CDCDCD;
+    border-radius: 8px;
+
+    margin: 20px 3px 20px 20px;
+    padding: 15px 15px;
+
+    background-color: #f0f0fd; 
+
+    color: #00437a;
+    font-size: 16px;
+    font-weight: 600;
+}
