@@ -1,0 +1,66 @@
+{
+  "name": "teste-frontend-v4",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.7",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.6",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-leaflet": "^3.0.0",
+    "@types/react-redux": "^7.1.33",
+    "autoprefixer": "^10.4.20",
+    "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
+    "leaflet": "^1.9.4",
+    "moment": "^2.30.1",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.4",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "react-redux": "^9.1.2",
+    "react-scripts": "5.0.1",
+    "redux": "^5.0.1",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.6.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "vitest run",
+    "test:ui": "vitest ui",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/leaflet": "^1.9.12",
+    "@vitest/ui": "^2.1.1",
+    "happy-dom": "^15.7.4",
+    "vitest": "^2.1.1"
+  }
+}
