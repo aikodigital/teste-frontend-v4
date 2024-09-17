@@ -1,0 +1,31 @@
+.container {
+    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px 10px;
+    }
+    
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 10px 15px;
+    height: 100px;
+    border: #000 solid 1px;
+    cursor: pointer;
+}
+
+.image {
+    height: 80%;
+}
+
+.input {
+    width: 300px;
+}

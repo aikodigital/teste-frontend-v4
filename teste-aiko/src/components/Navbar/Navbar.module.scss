@@ -2,19 +2,14 @@
 
 .nav {
   display: flex;
+  gap: 90px;
   align-items: center;
-  height: 80px;
-  background-color: rgb(2, 82, 35);
-  padding: 0 120px;
-  border-bottom: #fff solid 2px;
+  height: 100px;
+  background-color: #fff;
+  padding: 0.75rem 95px 0.75rem;
+  border-bottom: #00000028 solid 1px;
 
   @media(max-width: $tablet) {
-    grid-template-areas:
-      'logo logo'
-      'links icones'
-      'busca busca';
-    grid-template-columns: 6fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     height: 200px;
     justify-items: center;
   }
@@ -24,13 +19,15 @@
 }
 
 .logo {
+  height: 3rem;
   cursor: pointer;
 }
 
 .links {
   display: flex;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 50px;
+  
 
   @media(max-width: $tablet) {
     justify-self: start;
@@ -38,8 +35,14 @@
 }
 
 .link {
-  color: white;
+  color: #002255;
   font-size: 22px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  color: #167ee0;
 }
 
 .selected {
