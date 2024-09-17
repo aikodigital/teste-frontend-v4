@@ -46,12 +46,16 @@
               {{ marker.name }}: {{ marker.model }}
             </template>
             <template #content>
-              Lat: {{ marker.lat }}, Lon: {{ marker.lon }} | <Tag
+                <p class="pt-0">
+                  {{ marker.date }}
+                </p>
+                <p class="pt-0">
                 class="text-white"
                 :style="`background-color: ${marker.stateColor};`"
                 :value="marker.state"
                 rounded
               />
+                </p>
             </template>
           </Card>
         </LTooltip>
