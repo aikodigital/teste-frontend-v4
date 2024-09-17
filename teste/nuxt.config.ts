@@ -27,6 +27,10 @@ export default defineNuxtConfig({
   primevue: {
     options: {
       unstyled: true,
+      ptOptions: {
+        mergeSections: true,
+        mergeProps: true,
+      },
     },
     importPT: { as: 'Aura', from: '@/presets/aura' },
   },
