@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background: rgb(16,16,16);
+  background: linear-gradient(180deg, rgba(16,16,16,1) 0%, rgba(22,22,22,1) 100%);
+  font-family: 'oxygen', sans-serif !important;
+}
+
+.global {
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: 900px) {
+    flex-direction: row;
+  }
+}
