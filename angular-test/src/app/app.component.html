@@ -1,0 +1,42 @@
+<h1 class="flex justify-center font-bold text-blue-400 m-3 mt-10 font-sans">Test-frontend</h1>
+
+@if(!showHistoricPos()) {
+    <app-filter (filterEquipments)="onGetEquipments($event)" />
+} @else {
+    <div class="text-center mt-8">
+        <button mat-flat-button (click)="onShowAll()">Show equipments</button>
+    </div>
+}
+
+
+    <google-map class="flex justify-center mt-24"
+            height="500px"
+            width="900px"
+            [center]="center"
+            [zoom]="zoom"
+            mapId="DEMO_MAP_ID"
+            (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)">
+            <!-- <map-marker (mapClick)="onClick()" [position]="position" [label]="label"></map-marker> -->
+
+    @if (equipments().length > 0 && !showHistoricPos()) {
+        @for (posEquipment of equipments(); track posEquipment.id) {
+            <map-advanced-marker 
+            (mapClick)="onClick(posEquipment)" 
+            [position]="posEquipment?.pos!" 
+            [title]="posEquipment?.state!"
+            ></map-advanced-marker>
+            <!-- [content]="posEquipment?.pos?.content" -->
+        } 
+    } 
+       
+     @if(historicPositions().length > 0 && showHistoricPos()) {
+        @for (positions of historicPositions(); track $index) {
+            <map-advanced-marker 
+            [position]="positions"></map-advanced-marker>
+        }
+     }   
+
+</google-map>
+
+  

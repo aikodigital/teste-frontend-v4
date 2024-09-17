@@ -1,0 +1,26 @@
+<section class="flex flex-row flex-wrap w-3/4 justify-around gap-4 bg-slate-300 rounded-lg mx-auto">
+        <div class="basis-1/3 p-3 m-3">
+                <label class="font-sans text-base font-semibold">Select a state</label>
+                <select class="w-full p-3 m-3 rounded-lg" disableRipple (change)="onChangeStatusFilter(filterStatus.value)" #filterStatus>
+                  <option value="all">All</option>
+                  @for (option of equipmentStateOptions; track option.value) {
+                    <option [value]="option.value">{{ option.text }}</option>
+                  }
+                </select>
+        </div>
+        <div class="basis-1/3 p-3 m-3">
+            
+                <label class="font-sans text-base font-semibold">Select a model</label>
+                <select class="w-full p-3 m-3 rounded-lg" (change)="onChangeModelFilter(filterModel.value)" #filterModel>
+                  <option value="all">All</option>
+                  @for (option of equipmentModelOptions; track option.value) {
+                    <option [value]="option.value">{{ option.text }}</option>
+                  }
+                </select>
+            
+        </div>
+        <div class="basis-1/3 p-3 m-3">
+          <button class="w-full p-3 m-3" (click)="onFilter()" class="w-10 p-3 mr-5" mat-stroked-button>Filter</button> 
+        </div>
+    
+</section>
