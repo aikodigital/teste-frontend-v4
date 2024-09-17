@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Modal, Box, Typography, Button } from '@mui/material';
@@ -68,17 +68,30 @@ const EquipmentMap = ({ equipmentPositions }) => {
               </Typography>
 
               <Box id="modal-description" sx={{ mt: 2, maxHeight: '300px', overflowY: 'auto' }}>
-                <ul>
+                <ul style={ulStyle}>
                   {selectedEquipment.history.map((entry, index) => (
-                    <Box key={index} sx={entryStyle}>
-                      <Typography><strong>Data:</strong> {new Date(entry.date).toLocaleString()}</Typography>
-                      <Typography><strong>Estado:</strong> {entry.name}</Typography>
-                      <Typography><strong>Duração:</strong> {entry.duration} horas</Typography>
-                      <Typography><strong>Ganho nesse estado:</strong> R$ {entry.stateEarnings}</Typography>
-                    </Box>
+                    <li key={index} style={entryStyle}>
+                      <Typography variant="body2" style={dateStyle}>
+                        Data: {new Date(entry.date).toLocaleString()}
+                      </Typography>
+                      <Typography variant="body2" style={stateStyle}>
+                        Estado: {entry.name}
+                      </Typography>
+                      <Typography variant="body2">
+                        Duração: {entry.duration} horas
+                      </Typography>
+                      <Typography variant="body2">
+                        Ganho nesse estado: R$ {entry.stateEarnings}
+                      </Typography>
+                    </li>
                   ))}
-                  <Typography sx={totalStyle}><strong>Ganho total:</strong> R$ {selectedEquipment.totalEarnings}</Typography>
                 </ul>
+                <Typography variant="h6" style={totalEarningsStyle}>
+                  Ganho total: R$ {selectedEquipment.totalEarnings}
+                </Typography>
+                <Typography variant="h6" style={productivityStyle}>
+                  Percentual de Produtividade: {selectedEquipment.productivityPercentage.toFixed(2)}%
+                </Typography>
               </Box>
               <Button variant="contained" color="primary" onClick={handleClose}>
                 Fechar
@@ -105,20 +118,41 @@ const modalStyle = {
   borderRadius: 2,
 };
 
+const ulStyle = {
+  listStyleType: 'none',
+  padding: 0,
+};
+
 const entryStyle = {
-  mb: 2,
-  p: 2,
-  borderBottom: '1px solid #ccc',
+  marginBottom: '15px',
+  padding: '10px',
+  border: '1px solid #ddd',
   borderRadius: '4px',
   backgroundColor: '#f9f9f9',
 };
 
-const totalStyle = {
-  mt: 2,
-  p: 2,
+const dateStyle = {
   fontWeight: 'bold',
-  backgroundColor: '#e0f7fa',
-  borderRadius: '4px',
+  color: '#215d87',
+};
+
+const stateStyle = {
+  fontWeight: 'bold',
+  color: '#9ec023',
+};
+
+const totalEarningsStyle = {
+  fontWeight: 'bold',
+  fontSize: '1.0em',
+  color: '#28a745', 
+  marginTop: '15px',
+};
+
+const productivityStyle = {
+  fontWeight: 'bold',
+  fontSize: '1.0em',
+  color: '#17a2b8', 
+  marginTop: '5px',
 };
 
 export default EquipmentMap;

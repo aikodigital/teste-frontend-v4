@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import './App.css';
 import equipment from './data/equipment.json';
 import equipmentPositionHistory from './data/equipmentPositionHistory.json';
 import equipmentStateHistory from './data/equipmentStateHistory.json';
 import equipmentState from './data/equipmentState.json';
-import equipmentModel from './data/equipmentModel.json';
+import equipmentModel from './data/equipmentModel.json'; // Adiciona o import do equipmentModel
 import EquipmentMap from './components/EquipmentMap';
 
 function App() {
@@ -20,33 +19,28 @@ function App() {
       const latestStateId = stateHistory ? stateHistory.states[stateHistory.states.length - 1].equipmentStateId : null;
       const latestState = latestStateId ? equipmentState.find(state => state.id === latestStateId) : null;
 
-      // Associando o modelo de equipamento
-      const model = equipmentModel.find(m => m.id === equipmentData.equipmentModelId);
-      const earningsPerHour = model ? model.hourlyEarnings.find(e => e.equipmentStateId === latestStateId) : null;
-      const hourlyEarnings = earningsPerHour ? earningsPerHour.value : 0;
-
-      // Cálculo do ganho total
-      let totalEarnings = 0;
+      // Preparando o histórico de estados para o modal
       const history = stateHistory ? stateHistory.states.map((stateEntry, index) => {
         const state = equipmentState.find(s => s.id === stateEntry.equipmentStateId);
-        const earnings = model ? model.hourlyEarnings.find(e => e.equipmentStateId === stateEntry.equipmentStateId) : null;
-        const earningsValue = earnings ? earnings.value : 0;
-
-        // Calcular a diferença de tempo entre esse estado e o próximo
-        const nextEntry = stateHistory.states[index + 1];
-        const endTime = nextEntry ? new Date(nextEntry.date) : new Date();  // Se for o último, usa o tempo atual
-        const duration = (endTime - new Date(stateEntry.date)) / (1000 * 60 * 60);  // Duração em horas
-        const stateEarnings = earningsValue * duration;
-        totalEarnings += stateEarnings;
+        const duration = calculateDuration(stateEntry.date, stateHistory.states[index + 1]?.date || new Date().toISOString());
+        const hourlyEarnings = getHourlyEarnings(equipmentData.equipmentModelId, stateEntry.equipmentStateId);
+        const stateEarnings = duration * hourlyEarnings;
 
         return {
           date: stateEntry.date,
           name: state ? state.name : 'Sem nome',
-          earnings: earningsValue,
-          duration: duration.toFixed(2),  // Duração em horas
-          stateEarnings: stateEarnings.toFixed(2),  // Ganhos nesse estado
+          duration,
+          stateEarnings,
         };
       }) : [];
+
+      // Calcula o ganho total
+      const totalEarnings = history.reduce((total, entry) => total + entry.stateEarnings, 0);
+
+      // Calcula o percentual de produtividade
+      const totalHours = history.reduce((total, entry) => total + entry.duration, 0);
+      const operatingHours = history.reduce((total, entry) => entry.name === 'Operando' ? total + entry.duration : total, 0);
+      const productivityPercentage = totalHours > 0 ? (operatingHours / totalHours) * 100 : 0;
 
       return {
         name: equipmentData ? equipmentData.name : 'Sem nome',
@@ -54,14 +48,31 @@ function App() {
         lon: latestPosition.lon,
         state: latestState ? latestState.name : 'Sem estado',
         stateColor: latestState ? latestState.color : '#000000',
-        hourlyEarnings: hourlyEarnings,  // Ganhos por hora no estado atual
-        history: history,
-        totalEarnings: totalEarnings.toFixed(2),  // Ganhos totais calculados
+        history,
+        totalEarnings,
+        productivityPercentage, // Adiciona o percentual de produtividade
       };
     });
 
     setEquipmentPositions(latestPositions);
   }, []);
+
+  // Função para calcular a duração em horas entre duas datas
+  const calculateDuration = (startDate, endDate) => {
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+    return (end - start) / (1000 * 60 * 60); // Converte milissegundos para horas
+  };
+
+  // Função para obter o valor por hora do estado
+  const getHourlyEarnings = (equipmentModelId, equipmentStateId) => {
+    const model = equipmentModel.find(m => m.id === equipmentModelId);
+    if (model) {
+      const hourlyEarning = model.hourlyEarnings.find(e => e.equipmentStateId === equipmentStateId);
+      return hourlyEarning ? hourlyEarning.value : 0;
+    }
+    return 0;
+  };
 
   return (
     <div>
