@@ -7,12 +7,32 @@ import Provider from './context/FilterProvider';
 
 function App() {
   return (
-    <div className="App">
-      <Provider>
-        <SelectOptions />
-        <SearchInput />
-        <LeafletMap />
-      </Provider>
+    <div
+      className={`
+        h-screen p-4
+        flex-col items-center
+        justify-center text-center
+        bg-gray-100 min-h-screen
+      `}
+    >
+      <main className="flex-grow">
+        <Provider>
+          <SelectOptions />
+          <SearchInput />
+          <LeafletMap />
+        </Provider>
+      </main>
+      <footer className="mt-20">
+        {`Project by `}
+        <a
+          href="https://danieldaher-portfolio.vercel.app/"
+          target="_blank"
+          rel="noreferrer"
+          className="underline hover:underline-offset-4"
+        >
+          {`Daniel Daher`}
+        </a>
+      </footer>
     </div>
   );
 }
