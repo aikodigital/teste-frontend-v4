@@ -6,19 +6,16 @@
 import { onMounted } from 'vue'
 import L from 'leaflet'
 import { useEquipment } from '@/stores/equipment.store'
+import { useMap } from '@/stores/map.store'
 
 const equipmentStore = useEquipment()
+const mapStore = useMap()
+
 let map: L.Map
 const emit = defineEmits(['openPopUp'])
 
 function openPopUp() {
   emit('openPopUp')
-}
-
-const insertCopyright = () => {
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map)
 }
 
 const markAllEquipments = () => {
@@ -27,27 +24,13 @@ const markAllEquipments = () => {
     L.marker([equipment.position.lat, equipment.position.lon]).addTo(map).on('click', openPopUp)
   )
 
-  centralizeMap()
-}
-
-const centralizeMap = () => {
-  equipmentStore.findExtremeMarkers()
-
-  const bounds = L.latLngBounds([
-    [
-      equipmentStore.southwestEquipment.position.lat,
-      equipmentStore.southwestEquipment.position.lon
-    ],
-    [equipmentStore.northeastEquipment.position.lat, equipmentStore.northeastEquipment.position.lon]
-  ])
-
-  map.fitBounds(bounds)
+  map.fitBounds(mapStore.getExtremeBounds)
 }
 
 onMounted(() => {
   map = L.map('map').setView([-15.78, -56], 5)
 
-  insertCopyright()
+  mapStore.copyright.addTo(map)
   markAllEquipments()
 })
 </script>
