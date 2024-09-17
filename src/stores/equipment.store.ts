@@ -21,6 +21,7 @@ export type State = {
   id: string
   name: string
   color: string
+  date?: Date
 }
 
 export interface IEquipmentsState {
@@ -35,6 +36,7 @@ export interface IEquipment {
   state: State
   position: Position
   icon: String
+  stateHistory?: State[]
 }
 
 export const useEquipment = defineStore('useEquipment', () => {
@@ -43,6 +45,8 @@ export const useEquipment = defineStore('useEquipment', () => {
   const southwestEquipment: Ref<IEquipmentsPosition> = ref({} as IEquipmentsPosition)
   const northeastEquipment: Ref<IEquipmentsPosition> = ref({} as IEquipmentsPosition)
   const allEquipments: Ref<IEquipment[]> = ref([])
+  const selectedEquipment: Ref<IEquipment | null> = ref(null)
+  const selectedEquipmentStateHistory: Ref<State[]> = ref([])
 
   function getPositions() {
     const equipmentsPositions = equipmentPositionHistory.map((equipment) => {
@@ -109,6 +113,10 @@ export const useEquipment = defineStore('useEquipment', () => {
       getPositions()
     }
 
+    if (!selectedEquipmentStateHistory.value.length) {
+      stateHistory(equipmentId)
+    }
+
     const state = equipmentsLatestState.value.find(
       (equipment) => equipment.equipmentId === equipmentId
     )
@@ -125,7 +133,8 @@ export const useEquipment = defineStore('useEquipment', () => {
       position: position?.position || ({} as Position),
       icon: '',
       name: name?.name || '',
-      model: model?.name || ''
+      model: model?.name || '',
+      stateHistory: selectedEquipmentStateHistory.value
     }
   }
 
@@ -135,16 +144,36 @@ export const useEquipment = defineStore('useEquipment', () => {
     })
   }
 
+  function selectEquipment(equipmentId: string) {
+    selectedEquipment.value = equipmentData(equipmentId)
+  }
+
+  function stateHistory(equipmentId: string) {
+    const equipmentsStatesById = equipmentStateHistory.find(
+      (equipment) => equipment.equipmentId === equipmentId
+    )
+    equipmentsStatesById?.states.map((equipment) => {
+      const state = equipmentState.find((state) => state.id === equipment.equipmentStateId)
+
+      if (state)
+        selectedEquipmentStateHistory.value?.push({ ...state, date: new Date(equipment.date) })
+    })
+  }
+
   return {
+    allEquipments,
     equipmentsLatestPosition,
     equipmentsLatestState,
-    southwestEquipment,
     northeastEquipment,
-    allEquipments,
+    selectedEquipment,
+    southwestEquipment,
+    selectedEquipmentStateHistory,
+    equipmentData,
+    findExtremeMarkers,
+    getAllEquipments,
     getPositions,
     getStates,
-    findExtremeMarkers,
-    equipmentData,
-    getAllEquipments
+    selectEquipment,
+    stateHistory
   }
 })
