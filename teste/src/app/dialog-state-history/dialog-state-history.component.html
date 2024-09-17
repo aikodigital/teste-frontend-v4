@@ -1,0 +1,47 @@
+<h2 mat-dialog-title class="title">{{data.name}}</h2>
+<mat-dialog-content>
+
+    <h3 class="subtitle">State History</h3>
+    <table mat-table [dataSource]="dataSourceState" class="mat-elevation-z8 first-table">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date:'short'}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="stateName">
+          <th mat-header-cell *matHeaderCellDef> State Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsState"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsState;"></tr>
+        
+    </table>
+
+    <h3 class="subtitle">Position History</h3>
+    <table mat-table [dataSource]="dataSourcePosition" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date:'short'}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="lat">
+          <th mat-header-cell *matHeaderCellDef> Latitude </th>
+          <td mat-cell *matCellDef="let element"> {{element.lat}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="lon">
+          <th mat-header-cell *matHeaderCellDef> longitude </th>
+          <td mat-cell *matCellDef="let element"> {{element.lon}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPosition"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsPosition;"></tr>
+        
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions class="actions">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
