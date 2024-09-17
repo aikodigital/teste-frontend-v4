@@ -6,6 +6,10 @@ import equipmentPositionHistory from '../../data/equipmentPositionHistory.json'
 import equipmentState from '../../data/equipmentState.json'
 import equipmentStateHistory from '../../data/equipmentStateHistory.json'
 
+
+
+//----------FUNCOES--------------------//
+
 //funcao que passa o estado por todos os filtros presentes
 const filterAll = (state) => {
     
@@ -23,7 +27,6 @@ const filterAll = (state) => {
     )
 }
 
-
 //funcao que formata as datas dos jsons
 const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -38,8 +41,12 @@ const formatDate = (dateString) => {
     return `${day}/${month}/${year}, ${hrs}:${min}h`
 
 }
+//--------------------------/-/--------------------------------//
 
-// agrega as infos de cada equipamento em um array so 
+
+
+
+//------agrega as infos de cada equipamento em um array so------//
 const equipments = {
     filtered:[],
     unfiltered:[],
@@ -80,8 +87,6 @@ equipment.forEach(item => {
         newStateHistory.push({date:newDate, state:newState})
     })
 
-
-
     const lastStateId = stateHistory[stateHistory.length -1].equipmentStateId
     const lastState = equipmentState.filter((x) => lastStateId === x.id)[0]
 
@@ -92,7 +97,11 @@ equipment.forEach(item => {
 
 });
 
-equipments.filtered = equipments.unfiltered
+equipments.filtered = equipments.unfiltered //copio o array unfiltered inteiro para o array unfiltered para o estado inicial
+
+//-------------------------------------------------------
+
+
 
 const initialState = equipments;
 
@@ -105,25 +114,25 @@ const equipmentSlice = createSlice({
 
             //atualiza o criterio do filtro armazenado no estado
             state.filters.status = action.payload
+            //passa o estado por todos os filtros
             filterAll(state)
         },
 
         filterModel: (state, action) => {
 
-            //atualiza o criterio do filtro armazenado no estado
             state.filters.model = action.payload
             filterAll(state)
         },
 
         filterSearch: (state, action) => {
 
-            //atualiza o criterio do filtro armazenado no estado
             state.filters.search = action.payload
             filterAll(state)
         },
 
+        //foca no mapa a ultima posicao do equipamento clicado
         focusEquipment: (state, action) => {
-            
+
             const selectedEquipment = state.unfiltered.find((x) => x.id === action.payload);
         
             if (selectedEquipment) {

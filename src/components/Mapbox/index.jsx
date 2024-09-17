@@ -50,7 +50,6 @@ const Mapbox = () => {
                     </Popup>
                 </div>
 
-
             ))}
         </Map>
 

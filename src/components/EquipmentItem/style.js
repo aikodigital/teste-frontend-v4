@@ -31,14 +31,21 @@ export const ListItem = styled.li`
             .list-name{
                 font-size: 1.3em;
                 font-weight: bold;
+
             }
             
             .list-model{
                 margin-bottom: 8px;
             }
-    
+
+            
         }
-    
+        
+        .btns{
+            display: flex;
+            flex-direction: column;
+        }
+
         button{
             display: inline-block;
             align-self: flex-end;
@@ -47,6 +54,8 @@ export const ListItem = styled.li`
             background-color: transparent;
             padding: 4px;
             border-radius: 4px;
+            cursor:pointer;
+            margin-bottom: 8px;
         }
     }
 

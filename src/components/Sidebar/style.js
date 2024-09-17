@@ -12,7 +12,7 @@ export const SidebarWrapper = styled.div`
         flex-direction: column;
         width: 100%;
         border-radius: 8px;
-        padding: 8px;
+        padding: 16px;
         margin-bottom: 20px;
         background-color: aliceblue;
 

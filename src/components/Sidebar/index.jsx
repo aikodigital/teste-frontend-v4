@@ -62,7 +62,6 @@ const Sidebar = () => {
                 <div className="status-filter">
                     <label htmlFor="status">Filtrar por status: </label>
                     <select name="status" onChange={e => handleStatusFilterChange(e.target.value)}>
-
                         {statusOptions.map(x => (
                             <option value={x} key={x}>{x}</option>
                         ))}

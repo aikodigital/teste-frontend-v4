@@ -24,10 +24,7 @@ const EquipmentItem = ({id, name, model, lastState, newStateHistory}) => {
 
     return(
         <ListItem
-            data-eq-id={id}
-            onClick={e => focusId(e.currentTarget.getAttribute('data-eq-id'))}
             key={id}
-        
         >
             <div className="list-item-wrapper">
 
@@ -37,8 +34,16 @@ const EquipmentItem = ({id, name, model, lastState, newStateHistory}) => {
                     <p className="list-status" style={{ backgroundColor: lastState.color}}>{lastState.name}</p>
                 </div>
 
+                <div className="btns">
+                    <button
+                        data-eq-id={id}
+                        onClick={e => focusId(e.currentTarget.getAttribute('data-eq-id'))}
+                    >Ver no mapa</button>
 
-                <button onClick={toggleOpen}>Ver histórico</button>
+                    <button onClick={toggleOpen}>Ver histórico</button>
+                    
+                </div>
+
             </div>
 
             {open && (
