@@ -6,7 +6,22 @@ import equipmentPositionHistory from '../../data/equipmentPositionHistory.json'
 import equipmentState from '../../data/equipmentState.json'
 import equipmentStateHistory from '../../data/equipmentStateHistory.json'
 
+//funcao que passa o estado por todos os filtros presentes
+const filterAll = (state) => {
+    
+    // Aplica todos os filtros presentes no estado
+    state.filtered = state.unfiltered.filter(item =>
 
+        //compara o termo de busca armazenado no estado com o nome dos equipamentos
+        (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) &&
+
+        // verifica se o filtro engloba todos os itens, OU se existe alguma correspondencia ao filtro de status
+        (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
+
+        //o mesmo da linha de cima, porem verifica correspondencia ao filtro de modelo
+        (state.filters.model === 'Todos' || item.model === state.filters.model)
+    )
+}
 
 
 //funcao que formata as datas dos jsons
@@ -14,7 +29,7 @@ const formatDate = (dateString) => {
     const date = new Date(dateString)
 
     const day = date.getDate().toString().padStart(2, '0')
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); //meses comecam no 0
+    const month = (date.getMonth() + 1).toString().padStart(2, '0')
     const year = date.getFullYear().toString().slice(-2)
 
     const hrs = date.getHours().toString().padStart(2, '0')
@@ -89,49 +104,26 @@ const equipmentSlice = createSlice({
         filterStatus: (state, action) => {
 
             //atualiza o criterio do filtro armazenado no estado
-            state.filters.status = action.payload;
-
-            // Aplica todos os filtros presentes no estado
-            state.filtered = state.unfiltered.filter(item =>
-
-                //compara o termo de busca armazenado no estado com o nome dos equipamentos
-                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) &&
-
-                // verifica se o filtro engloba todos os itens, OU se existe alguma correspondencia ao filtro de status
-                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
-
-                //o mesmo da linha de cima, porem verifica correspondencia ao filtro de modelo
-                (state.filters.model === 'Todos' || item.model === state.filters.model)
-            );
+            state.filters.status = action.payload
+            filterAll(state)
         },
 
         filterModel: (state, action) => {
 
             //atualiza o criterio do filtro armazenado no estado
-            state.filters.model = action.payload;
-
-            state.filtered = state.unfiltered.filter(item =>
-
-                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) &&
-                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
-                (state.filters.model === 'Todos' || item.model === state.filters.model)
-            );
+            state.filters.model = action.payload
+            filterAll(state)
         },
 
         filterSearch: (state, action) => {
 
             //atualiza o criterio do filtro armazenado no estado
-            state.filters.search = action.payload;
-
-            state.filtered = state.unfiltered.filter(item =>
-                
-                (state.filters.status === 'Todos' || item.lastState.name === state.filters.status) &&
-                (state.filters.model === 'Todos' || item.model === state.filters.model) &&
-                (item.name.toLowerCase().includes(state.filters.search.toLowerCase())) 
-            );
+            state.filters.search = action.payload
+            filterAll(state)
         },
 
         focusEquipment: (state, action) => {
+            
             const selectedEquipment = state.unfiltered.find((x) => x.id === action.payload);
         
             if (selectedEquipment) {
