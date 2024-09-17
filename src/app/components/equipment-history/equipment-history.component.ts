@@ -14,6 +14,7 @@ export class EquipmentHistoryComponent {
   @Input() equipment: any;
 
   earnings: number = 0;
+  productivity: string = '';
   statesHistory: any;
   isSidebarOpen: boolean = true;
 
@@ -24,6 +25,7 @@ export class EquipmentHistoryComponent {
 
   ngOnInit() {
     this.earnings = this.equipmentService.calculateEarnings(this.equipment.equipmentId)
+    this.productivity = this.equipmentService.calculateProductivity(this.equipment.equipmentId)
   }
 
   closeSidebar() {

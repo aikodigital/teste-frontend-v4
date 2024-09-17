@@ -122,7 +122,6 @@ export class EquipmentService {
   calculateEarnings(equipmentId: string) {
     const equipment = equipments.find((equip: Equipment) => equip.id === equipmentId);
     const equipModel = models.find((model: any) => model.id === equipment!.equipmentModelId);
-    console.log(equipModel)
 
     const hourlyEarnings = equipModel!.hourlyEarnings;
 
@@ -149,5 +148,41 @@ export class EquipmentService {
     }
 
     return totalEarnings;
+  }
+
+  calculateProductivity(equipmentId: string) {
+    const equipment = equipments.find((equip: Equipment) => equip.id === equipmentId);
+    const equipModel = models.find((model: any) => model.id === equipment!.equipmentModelId);
+
+    const hourlyEarnings = equipModel!.hourlyEarnings;
+
+    const earningsMap = new Map<string, number>();
+    hourlyEarnings.forEach(e => {
+      earningsMap.set(e.equipmentStateId, e.value);
+    });
+
+    const equipmentStateHistory = this.getStateHistoryByEquipmentId(equipmentId);
+    const sortedStates = equipmentStateHistory!.states.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()) as any;
+
+    let totalHours = 0;
+    let workingHours = 0;
+
+    for (let i = 0; i < sortedStates.length - 1; i++) {
+      const currentState = sortedStates[i];
+      const nextState = sortedStates[i + 1];
+
+      const currentDate = new Date(currentState.date).getTime();
+      const nextDate = new Date(nextState.date).getTime();
+      const durationHours = (nextDate - currentDate) / (1000 * 60 * 60);
+
+      if (currentState.stateInfo.name == 'Operando') {
+        workingHours += durationHours;
+      }
+      totalHours += durationHours;
+    }
+
+    let productivity = workingHours / totalHours * 100;
+
+    return productivity.toFixed(2);
   }
 }

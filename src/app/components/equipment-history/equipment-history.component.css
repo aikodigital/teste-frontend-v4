@@ -53,3 +53,15 @@
     font-weight: 600;
     text-align: center;
 }
+
+.equipment-name {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.equip-detail {
+    font-size: 16px;
+    font-weight: 500;
+    color: #131313;
+}
