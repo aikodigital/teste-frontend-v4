@@ -7,8 +7,8 @@ import { MapService } from '../../services/map/map.service';
 import { EquipmentService } from '../../services/equipment/equipment.service';
 
 interface PositionHistory {
-  equipmentId: string,
-  positions: Position[]
+  equipmentId: string;
+  positions: Position[];
 }
 
 interface Position {
@@ -39,6 +39,7 @@ export class MapViewComponent implements OnInit {
 
   public sidebarVisible: boolean = false;
   public selectedEquipment: any;
+  private movementHistoryLayer: L.LayerGroup = L.layerGroup();  // Initialize LayerGroup
 
   constructor(
     private mapService: MapService,
@@ -63,7 +64,7 @@ export class MapViewComponent implements OnInit {
   }
 
   private initMap(): void {
-    let config = {
+    const config = {
       minZoom: 6,
       maxZoom: 17,
     };
@@ -79,6 +80,7 @@ export class MapViewComponent implements OnInit {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
+    this.movementHistoryLayer.addTo(map);
     this.displayEquipmentMarkers(map);
   }
 
@@ -112,22 +114,39 @@ export class MapViewComponent implements OnInit {
         });
 
         marker.on('click', () => {
-          this.showSidebar(positions.equipmentId, latestState, model!.name, equipment!.name);
+          const states = this.equipmentService.getStateHistoryByEquipmentId(positions.equipmentId);
+          const equipmentPositions = this.equipmentService.getPositionsHistoryByEquipmentId(positions.equipmentId);
+
+          if (equipmentPositions) {
+            this.showSidebar(positions.equipmentId, latestState, model!.name, equipment!.name, states);
+            this.drawMovementHistory(equipmentPositions, map);
+          } else {
+            console.warn(`No position history found for equipment ID ${positions.equipmentId}`);
+          }
         });
       }
     });
   }
 
-  onMapClick(event: MouseEvent) {
-    this.sidebarVisible = false;
+  private drawMovementHistory(positions: PositionHistory, map: L.Map): void {
+    this.movementHistoryLayer.clearLayers();
+
+    const positionsList: L.LatLngExpression[] = positions.positions.map(pos => [pos.lat, pos.lon]);
+    L.polyline(positionsList, { color: '#6899FC', weight: 2, dashArray: '10,5' }).addTo(this.movementHistoryLayer);
   }
 
-  private showSidebar(equipmentId: string, latestState: State, model: string, name: string): void {
+  onMapClick() {
+    this.sidebarVisible = false;
+    this.movementHistoryLayer.clearLayers();
+  }
+
+  private showSidebar(equipmentId: string, latestState: State, model: string, name: string, states: any): void {
     this.selectedEquipment = {
       equipmentId,
       latestState,
       model,
-      name
+      name,
+      states
     };
     this.sidebarVisible = true;
   }
