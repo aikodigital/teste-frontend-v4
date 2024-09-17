@@ -105,3 +105,5 @@ Diálogos:
 - Visualizar histórico de status do equipamento em determinado dia;
 
 ## 🎬 Vídeo de Demonstração:
+
+[demonstraçãoSistema.webm](https://github.com/user-attachments/assets/f89863c2-184f-489a-a626-950e322e10ff)
