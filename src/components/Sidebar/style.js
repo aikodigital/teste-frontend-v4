@@ -20,14 +20,36 @@ export const SidebarWrapper = styled.div`
 
             margin-bottom: 16px;
 
+            input{
+                font-size: 1em;
+                padding: 4px;
+                border-radius: 4px;
+                border:solid 1px grey;
+                width: 100%;
+            }
+
         }
-        
-        select{
-            padding: 4px;
-            border-radius: 4px;
-            border:solid 1px grey;
-            margin-left: 8px;
+
+        .filters-wrapper{
+
+            display: flex;
+            justify-content: space-between;
+
+            .status-filter, .model-filter{
+                display: flex;
+                flex-direction: column;
+                width: 45%;
+            }
+    
+            
+            select{
+                padding: 4px;
+                border-radius: 4px;
+                border:solid 1px grey;
+            }
+
         }
+
 
     }
 

@@ -31,6 +31,7 @@ export const ListItem = styled.li`
             .list-name{
                 font-size: 1.3em;
                 font-weight: bold;
+                cursor: pointer;
 
             }
             
@@ -56,6 +57,13 @@ export const ListItem = styled.li`
             border-radius: 4px;
             cursor:pointer;
             margin-bottom: 8px;
+
+            transition: 200ms;
+
+            &:hover{
+                background-color: grey;
+                color: white;
+            }
         }
     }
 

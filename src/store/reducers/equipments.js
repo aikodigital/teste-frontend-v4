@@ -8,7 +8,7 @@ import equipmentStateHistory from '../../data/equipmentStateHistory.json'
 
 
 
-//----------FUNCOES--------------------//
+//------------------------FUNCOES-----------------------------//
 
 //funcao que passa o estado por todos os filtros presentes
 const filterAll = (state) => {
@@ -97,7 +97,7 @@ equipment.forEach(item => {
 
 });
 
-equipments.filtered = equipments.unfiltered //copio o array unfiltered inteiro para o array unfiltered para o estado inicial
+equipments.filtered = equipments.unfiltered //copia o array unfiltered inteiro para o array unfiltered para o estado inicial
 
 //-------------------------------------------------------
 
@@ -144,8 +144,6 @@ const equipmentSlice = createSlice({
 
     }
 });
-
-// retorna o hisotrico de estados a partir de um id da payload
 
 export const { filterStatus, filterModel, filterSearch, focusEquipment } = equipmentSlice.actions
 export default equipmentSlice.reducer;

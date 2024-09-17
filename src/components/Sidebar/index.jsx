@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { test } from "../../store/reducers/test"
 import { SidebarWrapper } from "./style"
+
 import EquipmentItem from "../EquipmentItem"
 
 import equipmentState from '../../data/equipmentState.json'
@@ -51,33 +51,40 @@ const Sidebar = () => {
     return(
         <SidebarWrapper>
 
+            <div className="img-wrapper">
+                <h1>Teste Front-end</h1>
+                <img src="/img/aiko.png" alt="aiko" />
+            </div>
 
             <div className="filters">
 
                 <div className="search">
-                    <p>Buscar equipamento</p>
-                    <input type="text" onChange={(e) => handleSearchFilterChange(e.target.value)}></input>
+                    <input type="text" placeholder="Buscar Equipamento" onChange={(e) => handleSearchFilterChange(e.target.value)}></input>
                 </div>
 
-                <div className="status-filter">
-                    <label htmlFor="status">Filtrar por status: </label>
-                    <select name="status" onChange={e => handleStatusFilterChange(e.target.value)}>
-                        {statusOptions.map(x => (
-                            <option value={x} key={x}>{x}</option>
-                        ))}
+                <div className="filters-wrapper">
 
-                    </select>
-                </div>
+                    <div className="status-filter">
+                        <label htmlFor="status">Filtrar por status: </label>
+                        <select name="status" onChange={e => handleStatusFilterChange(e.target.value)}>
+                            {statusOptions.map(x => (
+                                <option value={x} key={x}>{x}</option>
+                            ))}
 
-                <div className="model-filter">
-                    <label htmlFor="model">Filtrar por modelo: </label>
-                    <select name="model" onChange={e => handleModelFilterChange(e.target.value)}>
+                        </select>
+                    </div>
 
-                        {modelOptions.map(x => (
-                            <option value={x} key={x}>{x}</option>
-                        ))}
+                    <div className="model-filter">
+                        <label htmlFor="model">Filtrar por modelo: </label>
+                        <select name="model" onChange={e => handleModelFilterChange(e.target.value)}>
 
-                    </select>
+                            {modelOptions.map(x => (
+                                <option value={x} key={x}>{x}</option>
+                            ))}
+
+                        </select>
+                    </div>
+
                 </div>
 
             </div>
