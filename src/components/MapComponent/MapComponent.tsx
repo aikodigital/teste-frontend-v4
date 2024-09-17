@@ -36,7 +36,7 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
 
     // Se houver um equipamento selecionado, pegue suas posições
     if (selectedEquipment) {
-      const selectedEquipmentData = equipmentPositions.find(equipment => equipment.equipmentId === selectedEquipment);
+      const selectedEquipmentData = equipmentPositions?.find(equipment => equipment.equipmentId === selectedEquipment);
       if (selectedEquipmentData) {
         filteredPositions = selectedEquipmentData.positions;
         setPolylinePositions(filteredPositions); // Desenha as rotas com Polyline
@@ -58,7 +58,7 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
         'model-3': 'https://path-to-icon3.png',
       };
 
-      return L.icon({
+      return L?.icon({
         iconUrl: modelIconMap[modelId] || 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
         iconSize: [20, 30],
       });
@@ -66,20 +66,20 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
 
     const markerPositions = (selectedEquipment ? filteredPositions : Array.from(latestPositions.values()))
       .map(position => {
-        const equipmentId = selectedEquipment || equipmentPositions.find(equip => 
+        const equipmentId = selectedEquipment || equipmentPositions?.find(equip =>
           equip.positions.some(pos => pos.date === position.date && pos.lat === position.lat && pos.lon === position.lon)
         )?.equipmentId;
 
         if (!equipmentId) return null;
 
-        const stateId = equipmentId ? getLatestState(equipmentStatesHistory.find(equip => equip.equipmentId === equipmentId)?.states || [])?.equipmentStateId : '';
+        const stateId = equipmentId ? getLatestState(equipmentStatesHistory?.find(equip => equip.equipmentId === equipmentId)?.states || [])?.equipmentStateId : '';
         const stateName = stateId ? getStateNameById(stateId, equipmentStatesInfoList) : 'Desconhecido';
         const stateColor = stateId ? getStateColorById(stateId, equipmentStatesInfoList) : 'gray';
         const equipmentName = getEquipmentNameById(equipmentId, equipmentList);
 
         // Obtém o modelo do equipamento e aplica um ícone específico
-        const equipment = equipmentList.find(equip => equip.id === equipmentId);
-        const equipmentModel = equipment ? equipmentModelList.find(model => model.id === equipment.equipmentModelId) : null;
+        const equipment = equipmentList?.find(equip => equip.id === equipmentId);
+        const equipmentModel = equipment ? equipmentModelList?.find(model => model.id === equipment.equipmentModelId) : null;
         const modelIcon = equipmentModel ? getIconByModel(equipmentModel.id) : undefined;
 
         return {
@@ -109,8 +109,8 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
   }, [equipmentPositions, equipmentStatesHistory, equipmentStatesInfoList, selectedEquipment, equipmentList, equipmentModelList]);
 
   return (
-    <MapContainer 
-      center={[-19.2, -45.95]} 
+    <MapContainer
+      center={[-19.2, -45.95]}
       zoom={13}
       className='map-container'
     >
@@ -119,10 +119,10 @@ const MapComponent: React.FC<{ equipmentList: Equipment[]; selectedEquipment?: s
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
 
-      {markers}
-      
+      {(markers?.length > 0) && markers}
+
       {selectedEquipment && polylinePositions.length > 1 && (
-        <Polyline 
+        <Polyline
           positions={polylinePositions.map(pos => [pos.lat, pos.lon])}
           color="blue"
         />
