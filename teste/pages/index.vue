@@ -50,6 +50,7 @@
                   {{ marker.date }}
                 </p>
                 <p class="pt-0">
+                  Lat: {{ marker.position.lat }}, Lon: {{ marker.position.lon }} | <Tag
                 class="text-white"
                 :style="`background-color: ${marker.stateColor};`"
                 :value="marker.state"
