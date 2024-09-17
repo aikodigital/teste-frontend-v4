@@ -1,0 +1,17 @@
+<div class="sidebar">
+    <div class="content">
+        <div class="equipment-info">
+            <p class="equipment-name">{{equipment.name}} - {{equipment.model}}</p>
+
+            <p class="equip-detail">Ganhos: {{earnings}}R$</p>
+            <p class="equip-detail">{{productivity}}% de produtividade</p>
+        </div>
+
+        <li *ngFor="let state of equipment.states.states" class="list-item">
+            <p class="state-name">
+                {{state.stateInfo.name}}
+            </p>
+            <p class="state-date">{{formatDate(state.date)}}</p>
+        </li>
+    </div>
+</div>

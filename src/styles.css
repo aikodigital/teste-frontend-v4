@@ -1,0 +1,18 @@
+* {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+}
