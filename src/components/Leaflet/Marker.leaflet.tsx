@@ -12,12 +12,7 @@ import { FilterState } from '../../interfaces/FilterState.interface';
 
 function MarkerLeaflet(props: { item: EquipmentPropsToMarker; key: string }) {
   const {
-    item: {
-      currentPosition,
-      currentState,
-      equipmentModelId,
-      // id, name,
-    },
+    item: { id, currentPosition, currentState, equipmentModelId, name },
   } = props;
 
   const { equipmentModels } = useContext(MyContext) as FilterState;
@@ -68,7 +63,7 @@ function MarkerLeaflet(props: { item: EquipmentPropsToMarker; key: string }) {
       position={[currentPosition.lat, currentPosition.lon]}
       icon={getIcon()}
     >
-      <PopupLeaflet currentState={currentState} />
+      <PopupLeaflet currentState={currentState} itemId={id} itemName={name} />
     </Marker>
   );
 }
