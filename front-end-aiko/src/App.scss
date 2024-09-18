@@ -1,0 +1,269 @@
+
+#root{
+  font-family: "Open Sans", system-ui;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100svh;
+}
+
+.mainContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 15px;
+}
+
+.lContainer {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 100%;
+  min-height: 100vh;
+  align-items: center;
+  background-color: #2d2d2d;
+  border-right: 1px solid #161616;
+  gap: 54px;
+  padding-top: 1%;
+  &--image{
+    width: 50%;
+    max-width: 150px;
+  }
+  &--navbar{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 20px;
+    font-weight: 600;
+    gap: 14px;
+  }
+}
+
+.button-navbar{
+  width: 100%;
+  display:inline-block;
+  color: #FAFAFA;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+}
+.button-navbar:hover{
+  color: #04c404;
+}
+
+.button-navbar::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #04c404;
+  transition: width .3s;
+}
+
+.button-navbar:hover::after {
+  width: 100%;
+}
+
+.navbar-icons{
+  width: 24px;
+}
+
+.rContainer {
+  width: 100%;
+  &--body{
+    display: flex;
+    flex-direction: column;
+    &_header{
+      width: 100%;
+      min-height: 70px;
+      align-items: center;
+      display: flex;
+    }
+    &_map{
+      height: 800px;
+      width: 100%;
+      align-items: center;
+    }
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.equipment-container {
+  display: grid;
+  align-items: center;
+  margin-top: 5%;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Cada item da grid terá no mínimo 150px */
+  gap: 20px; /* Espaço entre os itens da grid */
+  padding: 20px;
+}
+
+.equipment-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s ease;
+}
+
+.equipment-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Efeito ao passar o mouse */
+}
+
+.equipment-item img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.equipment-item span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.equipment-item div {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.containerButtons{
+  margin-top: 2%;
+display: flex;
+width: 100%;
+gap: 10px;
+font-size: 18px;
+font-weight: 600;
+color: #028c02;
+&_equipments{
+  border: 1px solid green;
+  border-radius: 10px;
+  padding: 8px;
+  width: 20%;
+  &:hover{
+    background-color: #134413;
+    color: #FAFAFA;
+  }
+}
+
+}
+
+.positionhistorycard{
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+  color: #013901;
+  height: 10%;
+}
+
+.filtragem{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap: 14px;
+  &--input{
+    border-radius: 6px;
+    padding-left: 4px;
+    font-size: 14px;
+    border-bottom: 2px solid green;
+  }
+  &--select{
+    border-radius: 10px;
+    font-size: 14px;
+    &_option{
+      border-radius: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+.dialogbox{
+  width: 100%;
+  border-radius: 10px;
+  &--title{
+    font-family: "Open Sans", system-ui; 
+  }
+  &--content{
+    font-family: "Open Sans", system-ui;
+    font-size: 14px;
+    color: #707070;
+  }
+}
+
+.docContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  &--header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    &_logo{
+      width: 5%;
+    }
+    &_title{
+      font-family: "Open Sans", system-ui;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  &--text{
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    &_title{
+      font-weight: 600;
+    }
+    &_container{
+      display: flex;
+      gap: 8px;
+      &_img{
+        width: 3%;
+      }
+    }
+    &_structure{
+      display: flex;
+      flex-direction: column;
+      white-space: wrap;
+      background-color: #282828;
+      color: #FAFAFA;
+      border-radius: 5px;
+      padding-left: 4px;
+      width: 25%;
+    }
+  }
+}
