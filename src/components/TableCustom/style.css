@@ -1,0 +1,8 @@
+.container-table{
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: rgb(248,249,250);
+}
