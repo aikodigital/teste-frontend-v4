@@ -1,47 +1,57 @@
 <template>
-    <div class="w-1/4 pr-1">
-        <h2 class="text-white">Lista de Equipamentos</h2>
-        
-        <div class="mb-4">
-            <label for="stateFilter" class="text-white">Filtrar por Estado:</label>
-            <select id="stateFilter" v-model="selectedStateFilter" class="ml-2">
-                <option value="">Todos</option>
-                <option v-for="state in states" :key="state.id" :value="state.name">
-                    {{ state.name }}
-                </option>
-            </select>
-        </div>
+    <div class="w-3/4 md:w-1/4 p-4 bg-gray-800 text-white shadow-lg fixed z-50">
+        <img src="../../public/images/aiko.png" alt="Aiko logo" class="mx-auto w-40 py-4" />
+        <div class="border-t-2 border-gray-600 pt-2">
+            <h2 class="text-2xl font-semibold mb-4">Filtros</h2>
+            <div class="mb-4">
+                <label for="stateFilter" class="block text-sm font-medium">Filtrar por Estado:</label>
+                <select id="stateFilter" v-model="selectedStateFilter"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-sm bg-gray-900 text-white focus:outline-none sm:text-sm">
+                    <option value="">Todos</option>
+                    <option v-for="state in states" :key="state.id" :value="state.name">
+                        {{ state.name }}
+                    </option>
+                </select>
+            </div>
 
-        <div class="mb-4">
-            <label for="modelFilter" class="text-white">Filtrar por Modelo:</label>
-            <select id="modelFilter" v-model="selectedModelFilter" class="ml-2">
-                <option value="">Todos</option>
-                <option v-for="model in models" :key="model.id" :value="model.name">
-                    {{ model.name }}
-                </option>
-            </select>
-        </div>
+            <div class="mb-4">
+                <label for="modelFilter" class="block text-sm font-medium">Filtrar por Modelo:</label>
+                <select id="modelFilter" v-model="selectedModelFilter"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-sm bg-gray-900 text-white focus:outline-none sm:text-sm">
+                    <option value="">Todos</option>
+                    <option v-for="model in models" :key="model.id" :value="model.name">
+                        {{ model.name }}
+                    </option>
+                </select>
+            </div>
 
-        <div class="mb-4">
-            <label for="search" class="text-white">Pesquisar:</label>
-            <input id="search" v-model="searchQuery" type="text" placeholder="Digite o nome do equipamento" class="ml-2" />
-        </div>
+            <div class="mb-4">
+                <label for="search" class="block text-sm font-medium">Pesquisar:</label>
+                <input id="search" v-model="searchQuery" type="text" placeholder="Digite o nome do equipamento"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-sm bg-gray-900 text-white focus:outline-none sm:text-sm" />
+            </div>
 
-        <div class="mb-4">
-            <button @click="clearFilters" class="px-4 py-2 bg-gray-600 text-white rounded">
-                Limpar Filtros
-            </button>
+            <div class="mb-4">
+                <button @click="clearFilters"
+                    class="px-4 py-2 bg-gray-600 text-white rounded-sm hover:bg-gray-700 focus:outline-none ">
+                    Limpar Filtros
+                </button>
+            </div>
         </div>
-
-        <ul class="list-disc pl-5 text-white">
-            <li v-for="equipment in filteredEquipments" :key="equipment.id" class="cursor-pointer hover:underline" @click="handleEquipmentClick(equipment)">
-                {{ equipment.name }}
-                <span v-if="isSelectedEquipment(equipment)" :style="{ color: getLastStateColor(equipment) }">
-                    <strong>Status:</strong>
-                    {{ getLastStateName(equipment) || 'Nenhum Status disponível' }}
-                </span>
-            </li>
-        </ul>
+        <div class="border-t-2 border-gray-600 pt-2">
+            <h2 class="text-2xl font-semibold mb-4">Equipamentos</h2>
+            <ul class="list-none text-gray-300 p-0 overflow-y-auto overflow-x-hidden">
+                <li @click="handleEquipmentClick(equipment)" v-for="equipment in filteredEquipments" :key="equipment.id"
+                    :class="selectedEquipment?.name === equipment.name && 'bg-gray-700 translate-x-2'"
+                    class="flex items-center cursor-pointer mb-1 hover:bg-gray-900 rounded-sm p-4 transition duration-200 ease-in-out">
+                    <span class="flex-1 font-semibold">{{ equipment.name }}</span>
+                    <span :style="{ color: getLastStateColor(equipment) }" class="status ml-3 text-sm font-medium">
+                        <div class="indicator" :style="{ backgroundColor: getLastStateColor(equipment) }"></div>
+                        {{ getLastStateName(equipment) || 'Nenhum Status disponível' }}
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -134,3 +144,17 @@ export default defineComponent({
     }
 });
 </script>
+
+<style scoped>
+.status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status .indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+</style>
