@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import equipmentData from '../data/equipment.json';
 import equipmentStateHistory from '../data/equipmentStateHistory.json';
 import equipmentState from '../data/equipmentState.json';
+import equipmentPositionHistory from '../data/equipmentPositionHistory.json';
+import { GoogleMap, useJsApiLoader, Marker, Polyline } from '@react-google-maps/api';
 
 function EquipmentHistory({ history }) {
   return history.length > 0 ? (
@@ -15,7 +17,6 @@ function EquipmentHistory({ history }) {
         >
           <strong>{state.stateName}</strong>
           <p>Data: {new Date(state.date).toLocaleDateString()}</p>
-          <p>Horas: {state.hours || 0} horas</p>
         </li>
       ))}
     </ul>
@@ -37,8 +38,14 @@ EquipmentHistory.propTypes = {
 };
 
 export default function Equipamentos() {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyD9-vWJSREKOUMMvHjzalbmsHYJrr64WTY'
+  });
+
   const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [equipmentHistory, setEquipmentHistory] = useState([]);
+  const [equipmentPositions, setEquipmentPositions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredEquipment = equipmentData.filter(equipment =>
@@ -47,6 +54,11 @@ export default function Equipamentos() {
 
   useEffect(() => {
     if (selectedEquipment) {
+      // Limpa o histórico anterior ao selecionar um novo equipamento
+      setEquipmentHistory([]);
+      setEquipmentPositions([]);
+
+      // Carrega o histórico de estados
       const equipmentHistoryData = equipmentStateHistory.find(e => e.equipmentId === selectedEquipment);
       if (equipmentHistoryData) {
         const history = equipmentHistoryData.states.map(state => {
@@ -55,18 +67,27 @@ export default function Equipamentos() {
             ...state,
             stateName: stateData ? stateData.name : 'Estado desconhecido',
             stateColor: stateData ? stateData.color : '#000',
-            hours: state.hours || 0,
           };
         });
         setEquipmentHistory(history);
-      } else {
-        setEquipmentHistory([]);
+      }
+
+      // Carrega o histórico de posições
+      const equipmentPositionsData = equipmentPositionHistory.find(e => e.equipmentId === selectedEquipment);
+      if (equipmentPositionsData) {
+        const validPositions = equipmentPositionsData.positions.map(position => ({
+          lat: position.lat,
+          lng: position.lon, // Mapeia corretamente 'lon' para 'lng'
+        })).filter(position => !isNaN(position.lat) && !isNaN(position.lng)); // Filtra posições inválidas
+        
+        // Atualiza apenas as posições válidas do equipamento atual
+        setEquipmentPositions(validPositions);
       }
     }
   }, [selectedEquipment]);
 
   const handleClickEquipment = (equipmentId) => {
-    setSelectedEquipment(equipmentId);
+    setSelectedEquipment(equipmentId); // Define o novo equipamento selecionado
   };
 
   const getEquipmentName = (equipmentId) => {
@@ -100,15 +121,42 @@ export default function Equipamentos() {
       </div>
 
       {selectedEquipment && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">
-            Histórico de Estados: {getEquipmentName(selectedEquipment)}
-          </h2>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Histórico de estados */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">
+              Histórico de Estados: {getEquipmentName(selectedEquipment)}
+            </h2>
+            <EquipmentHistory history={equipmentHistory} />
+          </div>
 
-          <div className="grid grid-cols-1">
-            <div>
-              <EquipmentHistory history={equipmentHistory} />
-            </div>
+          {/* Mapa com o histórico de posições */}
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Mapa do Trajeto</h2>
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={{ height: '400px', width: '100%' }}
+                center={equipmentPositions.length > 0 ? equipmentPositions[0] : { lat: 0, lng: 0 }}
+                zoom={10}
+              >
+                {equipmentPositions.map((position, index) => (
+                  <Marker key={index} position={position} />
+                ))}
+                {/* Renderiza as polylines somente se houver mais de 1 posição */}
+                {equipmentPositions.length > 1 && (
+                  <Polyline
+                    path={equipmentPositions}
+                    options={{
+                      strokeColor: '#FF0000',
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                    }}
+                  />
+                )}
+              </GoogleMap>
+            ) : (
+              <p>Carregando mapa...</p>
+            )}
           </div>
         </div>
       )}
