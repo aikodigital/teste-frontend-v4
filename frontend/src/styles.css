@@ -1,0 +1,20 @@
+.gm-style-iw button.gm-ui-hover-effect {
+  height: 2rem !important;
+}
+
+.gm-style-iw {
+  display: flex;
+  padding-left: 1rem !important;
+  margin: 0 !important;
+}
+
+/* Estiliza o header do InfoWindow(parte cabeçalho) */
+.gm-style-iw-chr {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Estiliza o content do InfoWindow (parte do conteúdo) */
+.gm-style-iw-d {
+  min-height: 175px;
+}

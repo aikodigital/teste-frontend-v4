@@ -1,0 +1,45 @@
+.margin-top {
+  margin-top: -30px;
+}
+
+.padding-top {
+  padding-top: -30px;
+}
+
+.show-color-status {
+  margin-left: 4.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.title-item-info-window {
+  padding-left: 0.5rem;
+  padding-bottom: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.value-item-info-window {
+  padding-left: 0.8rem;
+  padding-top: 2px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.margin-bottom-info-value {
+  margin-bottom: 0.5rem;
+}
+
+.map-container {
+  position: relative;
+  height: 100vh;
+}
+
+.dropdown {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10; /* Garante que o dropdown fique sobre o mapa */
+  background-color: white; /* Adiciona um fundo branco para o dropdown ficar visível */
+}
