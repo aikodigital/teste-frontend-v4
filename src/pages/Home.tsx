@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import ReactDOMServer from "react-dom/server"; // Importar ReactDOMServer
+import ReactDOMServer from "react-dom/server"; 
 import equipmentPositionHistory from "../data/equipmentPositionHistory.json";
 import equipmentStateHistory from "../data/equipmentStateHistory.json";
 import equipmentState from "../data/equipmentState.json";
@@ -12,19 +12,19 @@ import { EquipamentPositionHistory } from "../types/types";
 import { FaTruck, FaSeedling, FaTools } from "react-icons/fa";
 import { IconType } from "react-icons";
 
-// Mapeamento de ícones baseado no tipo de equipamento (name)
+
 const iconsMap: { [key: string]: IconType } = {
   "Caminhão de carga": FaTruck,
   Harvester: FaSeedling,
   "Garra traçadora": FaTools,
 };
 
-// Criar função para gerar ícones do Leaflet baseados em um ícone de FontAwesome
+
 const createLeafletIcon = (IconComponent: IconType) => {
   return L.divIcon({
-    html: ReactDOMServer.renderToString(<IconComponent size={24} />), // Converter ícone para HTML
-    iconSize: [30, 30], // Tamanho do ícone
-    className: "custom-icon", // Classe personalizada se precisar estilizar via CSS
+    html: ReactDOMServer.renderToString(<IconComponent size={24} />), 
+    iconSize: [30, 30],
+    className: "custom-icon", 
   });
 };
 
@@ -37,43 +37,43 @@ export const Home = () => {
     { equipmentId: string; stateName: string; stateColor: string }[]
   >([]);
 
-  // Função para obter o modelo de equipamento com base no equipmentId
+
   const getEquipamentModelName = (equipmentId: string): string => {
-    // Encontrar o equipamento pelo ID
+  
     const equipament = equipment.find((equip) => equip.id === equipmentId);
 
-    // Se o equipamento não for encontrado, retornar 'Modelo desconhecido'
+  
     if (!equipament) return "Modelo desconhecido";
 
-    // Encontrar o modelo de equipamento pelo equipmentModelId do equipamento
+ 
     const equipmentModelItem = equipmentModel.find(
       (model) => model.id === equipament.equipmentModelId
     );
 
-    // Retornar o nome do modelo ou 'Modelo desconhecido' se o modelo não for encontrado
+ 
     return equipmentModelItem ? equipmentModelItem.name : "Modelo desconhecido";
   };
 
-  // Função para buscar o tipo de equipamento pelo ID usando o equipmentModel
+
   const getEquipamentType = (equipmentId: string) => {
     const equipamentType = getEquipamentModelName(equipmentId);
     return equipamentType;
   };
 
-  // Função para buscar o histórico completo de estados do equipamento
+
   const getEquipmentStateHistory = (equipmentId: string) => {
     const history = equipmentStateHistory.find(
       (entry) => entry.equipmentId === equipmentId
     );
     if (!history) return [];
 
-    // Ordenar estados por data, do mais recente para o mais antigo
+
     return history.states.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   };
 
-  // Função para mapear um ID de estado para o nome e cor
+
   const getStateDetails = (equipmentStateId: string) => {
     const stateDetails = equipmentState.find(
       (state) => state.id === equipmentStateId
@@ -130,15 +130,15 @@ export const Home = () => {
             const equipamentType = getEquipamentType(position.equipamentId);
             const SelectedIcon = iconsMap[equipamentType] || FaTools;
 
-            // Criar o ícone personalizado com base no tipo de equipamento
+          
             const leafletIcon = createLeafletIcon(SelectedIcon);
 
-            // Buscar o estado atual do equipamento
+        
             const currentState = equipmentStatesMap.find(
               (state) => state.equipmentId === position.equipamentId
             );
 
-            // Buscar o histórico de estados do equipamento
+         
             const stateHistory = getEquipmentStateHistory(
               position.equipamentId
             );
