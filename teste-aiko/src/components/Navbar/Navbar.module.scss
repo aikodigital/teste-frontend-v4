@@ -1,0 +1,51 @@
+@import '../../styles/breakpoints';
+
+.nav {
+  display: flex;
+  gap: 90px;
+  align-items: center;
+  height: 100px;
+  background-color: #fff;
+  padding: 0.75rem 95px 0.75rem;
+  border-bottom: #00000028 solid 1px;
+
+  @media(max-width: $tablet) {
+    height: 200px;
+    justify-items: center;
+  }
+  @media(max-width: $mobile-sm) {
+    padding: 0 50px;
+  }
+}
+
+.logo {
+  height: 3rem;
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  justify-content: flex-start;
+  gap: 50px;
+  
+
+  @media(max-width: $tablet) {
+    justify-self: start;
+  }
+}
+
+.link {
+  color: #002255;
+  font-size: 22px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  color: #167ee0;
+}
+
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}

@@ -1,0 +1,10 @@
+.leaflet-container {
+    height: calc(100vh - 80px);
+}
+
+.cluster-icon {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-color: #fff;
+}
