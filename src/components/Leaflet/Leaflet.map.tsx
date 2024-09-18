@@ -1,26 +1,23 @@
+import MyContext from '../../context/MyContext';
+import React, { useContext, useEffect, useState } from 'react';
+
 //https://www.youtube.com/watch?v=6t73yqu0qOA leaflet lib
 import 'leaflet/dist/leaflet.css'; // import this on every leaflet usage
-import React, { useContext, useEffect, useState } from 'react';
+
 import MarkerLeaflet from './Marker.leaflet';
-import MyContext from '../../context/MyContext';
 import { TileLayer, MapContainer } from 'react-leaflet';
-import { FilterState } from '../../interfaces/FilterState.interface';
-import { EquipmentPropsToLeaflet } from '../../interfaces/EquipmentProps.interface';
-import { PositionProps } from '../../interfaces/EquipmentPositionProps.interface';
-import Equipments from '../../challenge-info/data/equipment.json';
+
 import StateOptions from '../../challenge-info/data/equipmentState.json';
-import StateHistory from '../../challenge-info/data/equipmentStateHistory.json';
-import PositionHistory from '../../challenge-info/data/equipmentPositionHistory.json';
+
+import { FilterState } from '../../interfaces/FilterState.interface';
+import { PositionProps } from '../../interfaces/EquipmentPositionProps.interface';
+import { EquipmentPropsToLeaflet } from '../../interfaces/EquipmentProps.interface';
+
+import { formatEquipmentsData } from '../../helpers/format.equipments.data';
+import { getEquipmentsCurrentState } from '../../helpers/get.equipments.current.state';
+import { getEquipmentsCurrentPosition } from '../../helpers/get.equipments.current.position';
 
 function LeafletMap() {
-  const [equipments, setEquipments] = useState<EquipmentPropsToLeaflet[]>([]);
-
-  const [initialMapPosition, setInitialMapPosition] = useState<PositionProps>({
-    date: '',
-    lat: -19.151801,
-    lon: -46.007759,
-  });
-
   const {
     search,
     filterByCurrentState,
@@ -28,6 +25,14 @@ function LeafletMap() {
     isLoading,
     setIsLoading,
   } = useContext(MyContext) as FilterState;
+
+  const [equipments, setEquipments] = useState<EquipmentPropsToLeaflet[]>([]);
+
+  const [initialMapPosition, setInitialMapPosition] = useState<PositionProps>({
+    date: '',
+    lat: -19.151801,
+    lon: -46.007759,
+  });
 
   useEffect(() => {
     if (!equipments.length) return;
@@ -64,58 +69,6 @@ function LeafletMap() {
     setEquipments(equipmentsFilteredByState);
     setIsLoading(false);
   }, [search, filterByCurrentState]);
-
-  const getEquipmentsCurrentState = () => {
-    const equipmentStateHistory = StateHistory;
-
-    const equipmentsState = equipmentStateHistory.map(
-      ({ equipmentId, states }) => {
-        const lastState = states.length - 1;
-
-        return {
-          equipmentId,
-          currentState: states[lastState].equipmentStateId,
-        };
-      },
-    );
-
-    return equipmentsState;
-  };
-
-  const getEquipmentsCurrentPosition = () => {
-    const equipmentPositionHistory = PositionHistory;
-
-    const equipmentsPosition = equipmentPositionHistory.map(
-      ({ equipmentId, positions }) => {
-        const lastPosition = positions.length - 1;
-        return { equipmentId, currentPosition: positions[lastPosition] };
-      },
-    );
-
-    return equipmentsPosition;
-  };
-
-  const formatEquipmentsData = (
-    equipmentsState: { equipmentId: string; currentState: string }[],
-    equipmentsPosition: {
-      equipmentId: string;
-      currentPosition: PositionProps;
-    }[],
-  ) => {
-    const currentEquipments = Equipments.map((item) => {
-      const currentState = equipmentsState.find(
-        (machine) => machine.equipmentId === item.id,
-      )?.currentState;
-
-      const currentPosition = equipmentsPosition.find(
-        (info) => info.equipmentId === item.id,
-      )?.currentPosition;
-
-      return { ...item, currentState, currentPosition };
-    });
-
-    return currentEquipments;
-  };
 
   if (isLoading) return <div>Loading...</div>;
 

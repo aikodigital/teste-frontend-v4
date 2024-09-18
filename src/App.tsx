@@ -12,7 +12,6 @@ function App() {
         h-screen p-4
         flex-col items-center
         justify-center text-center
-        bg-gray-100 min-h-screen
       `}
     >
       <main className="flex-grow">
