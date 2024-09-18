@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { FaSearch, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import equipmentState from '../../../data/equipmentState.json'
+import { EquipmentStatusI } from "../utils/interface";
 
-export default function Filtros({ onFilterChange, onSearch, onToggleExpand }) {
+export default function Filtros({ onFilterChange, onSearch, onToggleExpand }:any) {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedModel, setSelectedModel] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleStatusChange = (e) => {
+
+  const handleStatusChange = (e:any) => {
     setSelectedStatus(e.target.value);
     onFilterChange({ status: e.target.value, model: selectedModel });
   };
 
-  const handleModelChange = (e) => {
+  const handleModelChange = (e:any) => {
     setSelectedModel(e.target.value);
     onFilterChange({ status: selectedStatus, model: e.target.value });
   };
@@ -48,9 +51,11 @@ export default function Filtros({ onFilterChange, onSearch, onToggleExpand }) {
             className="bg-white bg-opacity-80 text-black font-bold py-2 pl-4 pr-8 rounded-full shadow-md hover:bg-opacity-100 transition duration-300 focus:outline-none appearance-none w-full"
           >
             <option value="">Todos os estados</option>
-            <option value="operando">Operando</option>
-            <option value="parado">Parado</option>
-            <option value="manutencao">Em Manutenção</option>
+            {
+              equipmentState.map((e:EquipmentStatusI) => {
+                return (<option key={e.id + e.name} value={e?.id}>{e?.name}</option>)
+              })
+            }
           </select>
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <FaChevronDown className="text-gray-600" />

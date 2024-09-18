@@ -3,8 +3,8 @@ import Filtros from '../component/filtros';
 import Menu from '../component/menu-Lateral';
 import { APIProvider, Map, Marker, InfoWindow } from '@vis.gl/react-google-maps';
 import Havester from '../assets/Harvester.png';
-import Caminhao from '../assets/Caminhão de carga.png';
-import Garra from '../assets/Garra traçadora.png';
+import Caminhao from '../assets/caminhao.png';
+import Garra from '../assets/garra.png';
 import equipmentData from '../../../data/equipment.json';
 import equipmentModelData from '../../../data/equipmentModel.json';
 import equipmentPositionData from '../../../data/equipmentPositionHistory.json';
@@ -12,20 +12,20 @@ import equipmentStateData from '../../../data/equipmentState.json';
 import equipmentStateHistory from '../../../data/equipmentStateHistory.json';
 import EquipmentHistoryModal from '../component/modal-Historico';
 import ModalPosicaoHistorico from '../component/modal-posicao-historico'; // Importando o novo modal
-import { orderBydate, orderBydateObject } from '../utils/functions';
+import { orderBydateObject } from '../utils/functions';
+import { EquipmentPositionHistoryI, EquipmentViewI } from '../utils/interface';
 
 function Painel() {
   const [mapCenter, setMapCenter] = useState({ lat: -7.11532, lng: -34.861 });
-  const [positions, setPositions] = useState([]);
-  const [filteredPositions, setFilteredPositions] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [filteredPositions, setFilteredPositions] = useState<EquipmentViewI[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [showRouteModal, setShowRouteModal] = useState(false); // Novo estado para o modal de rotas
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState(null);
-  const [hoveredMarker, setHoveredMarker] = useState(null);
+  const [selectedEquipmentId, setSelectedEquipmentId] =  useState<string | any>(null);
+  const [hoveredMarker, setHoveredMarker] = useState<string | any>(null);
   const [filters, setFilters] = useState({ status: '', model: '' });
   const [searchQuery, setSearchQuery] = useState('');
 
-  const openModal = (equipmentId: any, type: string) => {
+  const openModal = (equipmentId: string, type: string) => {
     setSelectedEquipmentId(equipmentId);
     if (type === 'historico') {
       setShowModal(true);
@@ -44,19 +44,22 @@ function Painel() {
     setSelectedEquipmentId(null);
   };
 
-  const getLatestState = (equipmentId:any) => {
+  const getLatestState = (equipmentId:string) => {
     const history = equipmentStateHistory.find((e) => e.equipmentId === equipmentId);
     if (history && history.states.length > 0) {
       const lastStateId = history.states[history.states.length - 1].equipmentStateId;
       const state = equipmentStateData.find((s) => s.id === lastStateId);
-      return state ? state.name : 'Estado desconhecido';
+      return state ? {
+        name:state.name,
+        id: state.id
+      } : 'Estado desconhecido';
     }
     return 'Sem histórico de estado';
   };
 
   const getLatestPositions = () => {
     let list = orderBydateObject(equipmentPositionData)
-    return list.map((equipment) => {
+    return list.map((equipment:EquipmentPositionHistoryI) => {
       const lastPosition = equipment.positions[equipment.positions.length - 1];
       const equipmentInfo = equipmentData.find((e) => e.id === equipment.equipmentId);
 
@@ -66,10 +69,9 @@ function Painel() {
       if (equipmentInfo) {
         const equipmentModel = equipmentModelData.find((model) => model.id === equipmentInfo.equipmentModelId);
         equipmentModelName = equipmentModel ? equipmentModel.name : 'Modelo desconhecido';
-        equipmentName = equipmentInfo.name; // Pegue o nome do equipamento
+        equipmentName = equipmentInfo.name;
       }
 
-      // Define o ícone correto para o modelo do equipamento
       if (equipmentModelName === 'Harvester') {
         icon = Havester;
       } else if (equipmentModelName === 'Garra traçadora') {
@@ -83,22 +85,22 @@ function Painel() {
         lat: lastPosition.lat,
         lon: lastPosition.lon,
         modelName: equipmentModelName,
-        name: equipmentName, // Adicione o nome do equipamento
+        name: equipmentName,
         icon: icon,
         state: getLatestState(equipment.equipmentId),
       };
     });
   };
 
-  const applyFilters = (positions:any) => {
-    return positions.filter((position:any) => {
-      const matchStatus = filters.status ? position.state.toLowerCase() === filters.status.toLowerCase() : true;
+  const applyFilters = (positions:EquipmentViewI[]) => {
+    return positions.filter((position:EquipmentViewI) => {
+      const matchStatus = filters.status ? position.state.id.toLowerCase() === filters.status?.toLowerCase() : true;
       const matchModel = filters.model ? position.modelName.toLowerCase() === filters.model.toLowerCase() : true;
       return matchStatus && matchModel;
     });
   };
 
-  const applySearch = (positions:any) => {
+  const applySearch = (positions:EquipmentViewI[]) => {
     if (!searchQuery) return positions;
     return positions.filter(
       (position:any) =>
@@ -108,10 +110,41 @@ function Painel() {
     );
   };
 
+  function calcularGanho(equipmentId: string){
+    const history = equipmentStateHistory.find((e) => e.equipmentId === equipmentId);
+    const equipment = equipmentData.find((e) => e.id === equipmentId);
+    if (!history || !equipment) return 0;
+
+    const equipmentModel = equipmentModelData.find((model) => model.id === equipment.equipmentModelId);
+    if (!equipmentModel) return 0;
+
+    let totalGanho = 0;
+    history.states.forEach((state) => {
+      const ganhoPorHora = equipmentModel.hourlyEarnings.find(
+        (earning) => earning.equipmentStateId === state.equipmentStateId
+      );
+      if (ganhoPorHora) {
+        totalGanho += ganhoPorHora.value;
+      }
+    });
+
+    return totalGanho;
+  };
+
+  function calcularProdutividade(equipmentId: string){
+    const history = equipmentStateHistory.find((e) => e.equipmentId === equipmentId);
+    if (!history || history.states.length === 0) return 0;
+
+    const operandoStateId = '0808344c-454b-4c36-89e8-d7687e692d57';
+    const totalHoras = history.states.length;
+    const horasOperando = history.states.filter((state) => state.equipmentStateId === operandoStateId).length;
+
+    return (horasOperando / totalHoras) * 100;
+  };
+
   useEffect(() => {
-    const latestPositions:any = getLatestPositions();
+    const latestPositions:EquipmentViewI[] = getLatestPositions();
     setMapCenter({ lat: latestPositions[0].lat, lng: latestPositions[0].lon });
-    setPositions(latestPositions);
     setFilteredPositions(applySearch(applyFilters(latestPositions)));
   }, [filters, searchQuery]);
 
@@ -144,7 +177,7 @@ function Painel() {
                 maxZoom={22}
                 style={{ width: '100%', height: '100%', borderRadius: '24px' }}
               >
-                {filteredPositions.map((position:any) => (
+                {filteredPositions.map((position:EquipmentViewI) => (
                   <Marker
                     key={position.id}
                     position={{ lat: position.lat, lng: position.lon }}
@@ -157,7 +190,7 @@ function Painel() {
                 ))}
 
                 {filteredPositions.map(
-                  (position:any) =>
+                  (position:EquipmentViewI) =>
                     hoveredMarker === position.id && (
                       <InfoWindow
                         key={position.id}
@@ -167,7 +200,9 @@ function Painel() {
                         <div className="text-center">
                           <h4>{`Equipamento: ${position.modelName}`}</h4>
                           <p>{`Código: ${position.name}`}</p>
-                          <p>{`Estado: ${position.state}`}</p>
+                          <p>{`Estado: ${position.state.name}`}</p>
+                          <p>{`Percentual: ${(calcularProdutividade(position.id)).toFixed(2)}%`}</p>
+                          <p>{`Ganho: R$ ${(calcularGanho(position.id))}`}</p>
                           <p>{`Última posição: ${position.lat.toFixed(5)}, ${position.lon.toFixed(5)}`}</p>
                           <button
                             className="bg-sky-900 text-white font-bold py-2 px-6 rounded-full mt-2"

@@ -1,7 +1,8 @@
+import { EquipmentI, EquipmentPositionHistoryI } from "./interface";
 
 
 export function orderBydateObject(arrayList: any) {
-    let aux = arrayList.map(equipment => {
+    let aux = arrayList.map((equipment:EquipmentPositionHistoryI) => {
         if (equipment.positions && equipment.positions.length > 0) {
             // Ordena as posições por data (da mais recente para a mais antiga)
             equipment.positions.sort((a, b) => 
@@ -13,8 +14,8 @@ export function orderBydateObject(arrayList: any) {
     return aux;
 }
 
-export function orderBydate(arrayList:any){
-    let aux = arrayList.map(equipment => {
+export function orderBydate(arrayList:EquipmentI[]){
+    let aux = arrayList.map((equipment:EquipmentI) => {
         if (equipment.states && equipment.states.length > 0) {
             // Ordena as posições por data (da mais recente para a mais antiga)
             equipment.states.sort((a, b) => 

@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import equipmentStateHistory from '../../../data/equipmentStateHistory.json';
 import equipmentStateData from '../../../data/equipmentState.json';
 import { orderBydate } from '../utils/functions';
+import { EquipmentI, EquipmentStateI, EquipmentStatusI, EquipmentStatusViewI } from '../utils/interface';
 
 function EquipmentHistoryModal({ equipmentId, show, onClose }:any) {
+  const [equipmentStateHistoryList, setEquipmentStateHistoryList] = useState<EquipmentI[]>(equipmentStateHistory)
   if (!show) return null; // Não renderiza o modal se não estiver visível
 
-  const auxList = orderBydate(equipmentStateHistory)
-  console.log(auxList)
+  const auxList = orderBydate(equipmentStateHistoryList)
   const equipment = auxList.find(e => e.equipmentId === equipmentId);
-  const states = equipment ? equipment.states.map((state) => {
-    const stateInfo:any = equipmentStateData.find(s => s.id === state.equipmentStateId);
+  const states = equipment ? equipment.states.map((state:EquipmentStateI) => {
+  const stateInfo:EquipmentStatusViewI | any = equipmentStateData.find(s => s.id === state.equipmentStateId);
     return {
       ...state,
-      stateName: stateInfo.name,
-      stateColor: stateInfo.color
+      name: stateInfo.name,
+      color: stateInfo.color
     };
   }) : [];
 
@@ -27,10 +28,10 @@ function EquipmentHistoryModal({ equipmentId, show, onClose }:any) {
         </div>
         <div className="max-h-60 overflow-y-auto ">
           <ul>
-            {states.map((state, index) => (
+            {states.map((state:EquipmentStatusViewI | any, index:number) => (
               <li key={index} className="my-2 ">
-                <span style={{ color: state.stateColor }}>
-                  {state.stateName} - {new Date(state.date).toLocaleString()}
+                <span style={{ color: state.color }}>
+                  {state.name} - {new Date(state.date).toLocaleString()}
                 </span>
               </li>
             ))}
