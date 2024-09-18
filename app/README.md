@@ -7,7 +7,7 @@ Esta aplicação foi desenvolvida como parte de um teste técnico e é um exempl
 1. [Especificação da aplicação](#especificação-dos-componentes)
 3. [Instruções de Uso](#instruções-de-uso)
 
-## Decisões de Design
+## Especificação da aplicação
 
 - **Framework**: Vue.js foi escolhido para a construção da aplicação devido à sua simplicidade e capacidade de criar interfaces reativas.
 - **Gerenciamento de Estado**: Utilizei Pinia para gerenciar o estado da aplicação, garantindo que o estado global seja compartilhado e gerenciado de forma eficiente.
