@@ -44,10 +44,13 @@ function HistoryState(props: { itemId: string }) {
         const formattedItemState =
           addPreposition.toLowerCase() || 'erro ao buscar os dados';
 
+        const isWeekend =
+          formattedDate.includes('domingo') || formattedDate.includes('sábado');
+
         return (
           <div key={item.date}>
             <p>
-              {`Na ${formattedDate}, o equipamento estava `}
+              {`${isWeekend ? `No` : `Na`} ${formattedDate}, o equipamento estava `}
               <span className="font-bold">{`${formattedItemState}.`}</span>
             </p>
           </div>
