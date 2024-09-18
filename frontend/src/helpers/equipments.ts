@@ -13,6 +13,16 @@ import equipmentPositionHistories from "../../../data/equipmentPositionHistory.j
 import equipmentStateHistories from "../../../data/equipmentStateHistory.json";
 import equipmentStates from "../../../data/equipmentState.json";
 
+import caminhao from "../../public/caminhao.png";
+import harvester from "../../public/harvester.png";
+import garra from "../../public/garra.webp";
+
+const modelsInfo: Record<string, string> = {
+  "a3540227-2f0e-4362-9517-92f41dabbfdf": caminhao,
+  "a4b0c114-acd8-4151-9449-7d12ab9bf40f": harvester,
+  "9c3d009e-0d42-4a6e-9036-193e9bca3199": garra,
+};
+
 export const getAllEquipments = (): TypeEquipmentBasic[] | null => {
   try {
     equipments.map((equipment: TypeEquipmentBasic) => {
@@ -42,6 +52,8 @@ export const getModel = (modelId: string): TypeEquipmentModel | null => {
     );
 
     if (!model) throw new Error("model not found");
+
+    model.image = modelsInfo[modelId];
 
     return model;
   } catch (error) {
@@ -133,12 +145,15 @@ export const getEquipmentDetails = (
 
     const positionHistory = getPositionHistory(equipment.id);
     const stateHistory = getStateHistory(equipment.id);
+    const modelInfo = getModel(equipment.equipmentModelId);
 
     if (!positionHistory) throw new Error("failed to get the position history");
     if (!stateHistory) throw new Error("failed to get the state history");
+    if (!modelInfo) throw new Error("failed to get model information");
 
     equipmentDetails.positions = [...positionHistory.positions];
     equipmentDetails.states = [...stateHistory.states];
+    equipmentDetails.model = modelInfo;
 
     return equipmentDetails;
   } catch (error) {

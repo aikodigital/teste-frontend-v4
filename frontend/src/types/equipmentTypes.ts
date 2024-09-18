@@ -36,6 +36,7 @@ export type TypeEquipmentModel = {
     equipmentStateId: string;
     value: number;
   }[];
+  image?: string;
 };
 
 export type TypePositionHistory = {

@@ -1,18 +1,26 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App.tsx";
+import { EquipmentProvider } from "./context/EquipmentContext.tsx";
 import "./index.css";
 import MainLayout from "./layouts/MainLayout.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import EquipDetailPage from "./pages/EquipDetailPage.tsx";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <App />,
+        element: <HomePage />,
+      },
+      {
+        path: "equipmentDetail",
+        element: <EquipDetailPage />,
       },
     ],
   },
@@ -20,6 +28,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <EquipmentProvider>
+      <RouterProvider router={router} />
+    </EquipmentProvider>
   </StrictMode>
 );
