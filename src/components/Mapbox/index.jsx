@@ -14,8 +14,6 @@ const Mapbox = () => {
     const equipmentMarkers = equipments.filtered
     const focus = equipments.focus
 
-    console.log(equipments)
-
 
     const [view, setView] = useState(focus);
 
