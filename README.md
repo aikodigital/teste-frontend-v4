@@ -18,6 +18,13 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Bootstrap](https://getbootstrap.com/)
 - [Sass](https://sass-lang.com/)
 
+### Features
+* Pesquisa por nome do equipamento
+* Filtros por nome do estado ou nome do modelo
+* Exibição de histórico de posições do equipamento
+* Distinção entre ícones de diferentes modelos
+* Exibição da produtividade do equipamento
+
 ### Estrutura de Repositório
 
 Abaixo, segue a descrição das principais pastas e arquivos presentes no repositório:
