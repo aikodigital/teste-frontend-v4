@@ -26,10 +26,10 @@ export const useMap = defineStore('useMap', () => {
   })
 
   function findExtremeMarkers() {
-    let southwest = equipmentStore.equipmentsLatestPosition[0].position
-    let northeast = equipmentStore.equipmentsLatestPosition[0].position
+    let southwest = equipmentStore.equipments[0].position
+    let northeast = equipmentStore.equipments[0].position
 
-    equipmentStore.equipmentsLatestPosition.forEach((equipment) => {
+    equipmentStore.equipments.forEach((equipment) => {
       if (
         equipment.position.lat < southwest.lat ||
         (equipment.position.lat === southwest.lat && equipment.position.lon < southwest.lon)

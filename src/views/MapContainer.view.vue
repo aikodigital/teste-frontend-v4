@@ -12,16 +12,11 @@ const equipmentStore = useEquipment()
 const mapStore = useMap()
 
 let map: L.Map
-const emit = defineEmits(['openPopUp'])
-
-function openPopUp() {
-  emit('openPopUp')
-}
 
 const markAllEquipments = () => {
   equipmentStore.getPositions()
-  equipmentStore.equipmentsLatestPosition.forEach((equipment) =>
-    L.marker([equipment.position.lat, equipment.position.lon]).addTo(map).on('click', openPopUp)
+  equipmentStore.equipments.forEach((equipment) =>
+    L.marker([equipment.position.lat, equipment.position.lon]).addTo(map)
   )
 
   map.fitBounds(mapStore.getExtremeBounds)

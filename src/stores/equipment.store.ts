@@ -18,6 +18,7 @@ export const useEquipment = defineStore('useEquipment', () => {
   const equipmentsLatestPosition: Ref<IEquipmentsPosition[]> = ref([])
   const equipmentsLatestState: Ref<IEquipmentsState[]> = ref([])
   const selectedEquipment: Ref<IEquipment | null> = ref(null)
+
   const iconsRecord: Record<string, string> = {
     'Caminhão de carga': 'local_shipping',
     Harvester: 'agriculture',
@@ -28,7 +29,7 @@ export const useEquipment = defineStore('useEquipment', () => {
   }
 
   function getPositions() {
-    const equipmentsPositions = equipmentPositionHistory.map((equipment) => {
+    const latestPositions = equipmentPositionHistory.map((equipment) => {
       const positions = equipment.positions.sort((a, b) => {
         return new Date(b.date).getDate() - new Date(a.date).getDate()
       })
@@ -36,7 +37,7 @@ export const useEquipment = defineStore('useEquipment', () => {
       return { equipmentId: equipment.equipmentId, position: positions[0] }
     })
 
-    equipmentsLatestPosition.value = equipmentsPositions
+    equipmentsLatestPosition.value = latestPositions
   }
 
   function getStates() {
@@ -96,6 +97,7 @@ export const useEquipment = defineStore('useEquipment', () => {
     const state = equipmentsLatestState.value.find(
       (equipment) => equipment.equipmentId === equipmentId
     )
+
     const position = equipmentsLatestPosition.value.find(
       (equipment) => equipment.equipmentId === equipmentId
     )
@@ -157,8 +159,6 @@ export const useEquipment = defineStore('useEquipment', () => {
 
   return {
     equipments,
-    equipmentsLatestPosition,
-    equipmentsLatestState,
     selectedEquipment,
     getAllEquipments,
     getPositions,

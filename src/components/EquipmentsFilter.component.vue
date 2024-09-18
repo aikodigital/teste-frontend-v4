@@ -58,7 +58,11 @@ const textValue: Ref<string | undefined> = ref()
 const models = computed(() => ['Caminhão de carga', 'Harvester', 'Garra traçadora'])
 const states = computed(() => ['Parado', 'Manutenção', 'Operando'])
 
-const filterEquipments = () => {
-  equipmentStore.filterEquipments(selectedModels.value, selectedStates.value, textValue.value)
+const filterEquipments = async () => {
+  equipmentStore.filterEquipments(
+    selectedModels.value,
+    selectedStates.value,
+    textValue.value?.toLocaleLowerCase()
+  )
 }
 </script>
