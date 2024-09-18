@@ -15,12 +15,10 @@ code {
 
 a {
     font-weight: bold;
-    color: blue;
 }
 
 .row.full-height {
-    height: calc(100vh - 90px);
-    /* 70px é a altura do header */
+    height: calc(100vh - 90px); /* 70px é a altura do header */
     min-height: 400px;
 }
 
@@ -28,11 +26,15 @@ a {
     text-align: center;
 }
 
-@media screen and (max-width: 768) {
+@media screen and (max-width: 768px) {
     .row.full-height {
         display: flex;
         flex-direction: column;
-        height: unset;
-        min-height: unset;
+        height: unset !important;
+        min-height: unset !important;
+    }
+
+    .form-control {
+        margin-bottom: 8px;
     }
 }
