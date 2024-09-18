@@ -7,8 +7,6 @@ import Truck from "./pages/Truck/Truck";
 
 export default function Router() {
   return (
-
-
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<MainPage />}>
@@ -18,6 +16,5 @@ export default function Router() {
         </Route>
       </Routes>
     </BrowserRouter>
-    
   )
 }

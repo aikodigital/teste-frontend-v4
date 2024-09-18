@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { changeSearch, resetSearch } from '../../store/reducers/search';
 import { RootState } from '../../store/store';
-import { EnhancedStore } from '@reduxjs/toolkit';
 import { LatLngExpression } from 'leaflet';
 
 type markerType = {

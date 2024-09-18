@@ -3,6 +3,7 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 
     header {
         display: flex;
@@ -10,19 +11,23 @@
         padding: 0 15px 10px;
     }
     
+    .fleet {
+        min-height: 100vh;
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        margin: 10px 15px;
+        height: 100px;
+        border: #000 solid 1px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    
+    .image {
+        height: 80%;
+    }
 }
 
-.item {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    margin: 10px 15px;
-    height: 100px;
-    border: #000 solid 1px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.image {
-    height: 80%;
-}

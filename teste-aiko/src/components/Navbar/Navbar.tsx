@@ -15,8 +15,8 @@ export default function Navbar() {
                         </Link>
                     </div>
                     <div>
-                        <Link to='/trucks' className={styles.link}>
-                            Trucks
+                        <Link to='/fleet' className={styles.link}>
+                            Fleet
                         </Link>
                     </div>
                 </div>   

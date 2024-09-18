@@ -1,6 +1,6 @@
 import { LatLngExpression } from "leaflet";
 import styles from "./Fleet.module.scss";
-import Footer from "../../components/Footer";
+import Footer from "../../components/Footer/Footer";
 import Search from "../../components/Search/Search";
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from "react-redux";
@@ -29,6 +29,8 @@ export default function Fleet() {
           <h2>Fleet: </h2>
           <Search/>
         </header>
+
+        <div className={styles.fleet}>
           {trucks?.map((truck: markerType) => (
             <div onClick={() => navigate(`/truck/${truck.equipmentId}`)} className={styles.item}>
               <img src="src/assets/box-truck.png" alt="truck" className={styles.image} key={uuidv4()} />
@@ -41,10 +43,11 @@ export default function Fleet() {
                 <p>Last location:</p>
                 <p>{truck.geocode.toString()}</p>
               </div>
-              
+                
             </div>
-        ))
-        }
+          ))}
+        </div>
+
         <Footer/>
       </div>
     )

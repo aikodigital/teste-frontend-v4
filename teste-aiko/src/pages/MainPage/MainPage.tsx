@@ -1,11 +1,8 @@
 import styles from './MainPage.module.scss';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar/index';
+import Navbar from '../../components/Navbar/Navbar';
 
 export default function MainPage() {
-
-    const location = useLocation();
-    const navigate = useNavigate();
 
     return (
         <div className={styles.container}>
@@ -15,7 +12,6 @@ export default function MainPage() {
             <div className={styles['container-outlet']}>
                 <Outlet />
             </div>
-            
         </div>
     )
 }
