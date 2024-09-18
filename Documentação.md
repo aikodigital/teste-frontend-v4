@@ -3,7 +3,7 @@
 **Autor**: Silas Ribeiro dos Santos
 **Data de Conclusão**: 18 de Setembro de 2024
 
-![Aiko](img/aiko.png)
+![Aiko](public/img/aiko.png)
 
 ## O Desafio
 
