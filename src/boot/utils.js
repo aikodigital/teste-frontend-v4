@@ -117,6 +117,10 @@ const utils = {
     return color;
   },
 
+  toPercentDecimal(number) {
+    return (number * 100).toFixed(2).toString().replace(".", ",") + "%";
+  },
+
   formataDataComHoras(tipoIntevalo, data, horas = "00:00:00") {
     if (tipoIntevalo === "final") horas = "23:59:59";
     const dia = data.substring(0, 2);
@@ -140,6 +144,12 @@ const utils = {
     const dt = new Date(data);
     dt.setHours(dt.getHours() + 3);
     return date.formatDate(dt, formato);
+  },
+
+  newDataGMT(data, formato) {
+    const dt = new Date(data);
+    dt.setHours(dt.getHours() + 3);
+    return dt;
   },
 
   formatarDataUTC(data, formato) {

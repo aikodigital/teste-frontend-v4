@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 90vh; width: 90vw">
+  <div class="mapa-layout">
     <l-map
       v-if="ready"
       id="map"
@@ -59,17 +59,44 @@
       :offset="[18, 18]"
       style="z-index: 1000"
     >
-      <q-btn fab icon="center_focus_strong" color="primary" @click="getLoc" />
+      <!-- <q-btn fab icon="center_focus_strong" color="primary" @click="getLoc" /> -->
+      <q-fab
+        v-model="fabMap"
+        color="indigo-10"
+        glossy
+        icon="keyboard_arrow_up"
+        direction="up"
+      >
+        <q-fab-action
+          color="indigo-10"
+          @click="getLoc"
+          icon="center_focus_strong"
+        >
+          <q-tooltip anchor="center left" self="center right" :offset="[10, 10]"
+            >Centralizar Mapa</q-tooltip
+          >
+        </q-fab-action>
+        <q-fab-action
+          color="indigo-10"
+          @click="filterDialog = true"
+          icon="filter_list"
+        >
+          <q-tooltip anchor="center left" self="center right" :offset="[10, 10]"
+            >Filtrar dados</q-tooltip
+          >
+        </q-fab-action>
+      </q-fab>
     </q-page-sticky>
   </div>
-  <q-dialog v-model="equipDialog" persistent>
+  <q-dialog v-model="equipDialog">
     <q-card class="card q-pa-md" style="width: 500px; min-height: 460px">
       <q-card-section>
-        <div class="text-h6">
+        <div class="text-h6 text-indigo-10">
           <q-icon
             class="q-pr-sm"
             name="fa-solid fa-screwdriver-wrench"
             size="md"
+            color="indigo-10"
           />
           Detalhes do equipamento
         </div>
@@ -109,6 +136,12 @@
                 </div>
                 {{ ultimaAtualizacaoEquipamentoSelecionado }}
               </div>
+              <div class="col-md-12">
+                <div class="text-subtitle1 text-weight-medium">
+                  Percentual de produtividade do equipamento
+                </div>
+                {{ horasProdutivasSelecionado }}
+              </div>
             </div>
           </q-tab-panel>
 
@@ -124,7 +157,7 @@
                   <div class="text-md">
                     Data:
                     {{
-                      utils.formatarData(history.date, "DD/MM/YYYY HH:MM:SS")
+                      utils.formatarDataGMT(history.date, "DD/MM/YYYY HH:MM:SS")
                     }}
                   </div>
                   <div class="q-mt-sm text-md">
@@ -141,6 +174,63 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="filterDialog">
+    <q-card class="card q-pa-md">
+      <q-card-section>
+        <div class="text-h6 text-indigo-10">
+          <q-icon class="q-pr-sm" name="filter_alt" size="md" />
+          Filtrar Dados
+        </div>
+      </q-card-section>
+      <q-card-section class="row items-center">
+        <div>
+          <div class="text-subtitle1 q-pl-sm">Estado</div>
+          <q-checkbox
+            v-model="filters.states"
+            val="Operando"
+            label="Operando"
+          />
+          <q-checkbox v-model="filters.states" val="Parado" label="Parado" />
+          <q-checkbox
+            v-model="filters.states"
+            val="Manutenção"
+            label="Manutenção"
+          />
+        </div>
+      </q-card-section>
+      <q-separator spaced inset vertical dark />
+      <q-card-section class="row items-center">
+        <div>
+          <div class="text-subtitle1 q-pl-sm">Modelo</div>
+          <q-checkbox
+            v-model="filters.models"
+            val="Caminhão de carga"
+            label="Caminhão de carga"
+          />
+          <q-checkbox
+            v-model="filters.models"
+            val="Harvester"
+            label="Harvester"
+          />
+          <q-checkbox
+            v-model="filters.models"
+            val="Garra traçadora"
+            label="Garra traçadora"
+          />
+        </div>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat label="Cancelar" color="indigo-10" v-close-popup />
+        <q-btn
+          flat
+          label="Filtrar"
+          color="indigo-10"
+          @click="getSpecificGeolocation"
+          v-close-popup
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -151,7 +241,6 @@ import L from "leaflet";
 import utils from "../boot/utils";
 import { storeToRefs } from "pinia";
 import { useEquipamentoStore } from "../stores/equipamento.store";
-import StatusEquipamentos from "../data/equipmentState.json";
 
 const { equipamentos, equipamentoDetalhes } = storeToRefs(
   useEquipamentoStore()
@@ -164,45 +253,19 @@ const url = ref("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 const zoom = ref(11);
 const center = ref([]);
 const markerLatLng = ref([]);
-// const picoleLatLng = ref([]);
+const fabMap = ref(false);
+const filters = ref({
+  states: [],
+  models: [],
+});
 const equipmentsLatLng = ref([]);
 const ready = ref(false);
 const equipDialog = ref(false);
+const filterDialog = ref(false);
 const tabEquip = ref("informacoes");
 const estadoEquipamentoSelecionado = ref("");
+const horasProdutivasSelecionado = ref("");
 const ultimaAtualizacaoEquipamentoSelecionado = ref("");
-
-const icon = ref(
-  L.icon({
-    iconUrl: "/img/excavator.png",
-    iconSize: [50, 50],
-    iconAnchor: [16, 37],
-  })
-);
-
-const iconGreen = ref(
-  L.icon({
-    iconUrl: "/img/excavator_green.png",
-    iconSize: [50, 50],
-    iconAnchor: [16, 37],
-  })
-);
-
-const iconYellow = ref(
-  L.icon({
-    iconUrl: "/img/excavator_yellow.png",
-    iconSize: [50, 50],
-    iconAnchor: [16, 37],
-  })
-);
-
-const iconRed = ref(
-  L.icon({
-    iconUrl: "/img/excavator_red.png",
-    iconSize: [50, 50],
-    iconAnchor: [16, 37],
-  })
-);
 
 onMounted(() => {
   getEquipamentos();
@@ -221,36 +284,42 @@ const zoomUpdated = (zm) => {
   }
 };
 
-// const getSpecificGeolocation = async () => {
-//   debugger;
-//   utils.showLoadingWithMessage("Centralizando mapa...");
-//   const dadosLatLong = await utils.buscaLatLong();
-//   if (dadosLatLong.length > 0) {
-//     latitude.value = parseFloat(dadosLatLong[0].lat);
-//     longitude.value = parseFloat(dadosLatLong[0].lon);
-//     const position = {
-//       latitude: parseFloat(dadosLatLong[0].lat),
-//       longitude: parseFloat(dadosLatLong[0].lon),
-//     };
-//     setPosition(position);
-//     // getCurrentGeolocation()
-//   } else {
-//     errorPosition();
-//   }
-// };
-
 const setStateIcon = (equip) => {
-  let choosedIcon = icon.value;
+  let choosedNameIcon = "excavator";
 
   console.log(equip);
 
-  if (equip.state === "Operando") {
-    choosedIcon = iconGreen.value;
-  } else if (equip.state === "Parado") {
-    choosedIcon = iconYellow.value;
-  } else if (equip.state === "Manutenção") {
-    choosedIcon = iconRed.value;
+  if (equip.model === "Caminhão de carga") {
+    if (equip.state === "Operando") {
+      choosedNameIcon = "truck_green";
+    } else if (equip.state === "Parado") {
+      choosedNameIcon = "truck_yellow";
+    } else if (equip.state === "Manutenção") {
+      choosedNameIcon = "truck_red";
+    }
+  } else if (equip.model === "Harvester") {
+    if (equip.state === "Operando") {
+      choosedNameIcon = "harvester_green";
+    } else if (equip.state === "Parado") {
+      choosedNameIcon = "harvester_yellow";
+    } else if (equip.state === "Manutenção") {
+      choosedNameIcon = "harvester_red";
+    }
+  } else if (equip.model === "Garra traçadora") {
+    if (equip.state === "Operando") {
+      choosedNameIcon = "excavator_green";
+    } else if (equip.state === "Parado") {
+      choosedNameIcon = "excavator_yellow";
+    } else if (equip.state === "Manutenção") {
+      choosedNameIcon = "excavator_red";
+    }
   }
+
+  const choosedIcon = L.icon({
+    iconUrl: `/img/${choosedNameIcon}.png`,
+    iconSize: [50, 50],
+    iconAnchor: [16, 37],
+  });
 
   return choosedIcon;
 };
@@ -275,6 +344,8 @@ const setEquipPositions = () => {
   const positions = equipamentos.value.map((arr) => {
     const lastPosition =
       arr.posicoesEquipamento[arr.posicoesEquipamento.length - 1];
+
+    const horasProdutivas = getHorasProdutivas(arr.historicoEquipamento);
     return {
       date: lastPosition.date,
       lat: lastPosition.lat,
@@ -282,26 +353,103 @@ const setEquipPositions = () => {
       info: arr.nomeEquipamento,
       id: arr.idEquipamento,
       state: arr.historicoEquipamento[0].stateName,
+      model: arr.modeloEquipamento.name,
+      horas_produtivas: horasProdutivas,
     };
   });
 
-  equipmentsLatLng.value = positions;
+  console.log(filters.value);
+
+  let filterPosition = positions;
+
+  if (filters.value.states.length > 0) {
+    filterPosition = filterPosition.filter((v) =>
+      filters.value.states.includes(v.state)
+    );
+  }
+
+  if (filters.value.models.length > 0) {
+    filterPosition = filterPosition.filter((v) =>
+      filters.value.models.includes(v.model)
+    );
+  }
+
+  equipmentsLatLng.value = filterPosition;
+};
+
+const getHorasProdutivas = (historico) => {
+  // Data específica para comparação
+  const dataEspecifica = utils.newDataGMT(
+    historico[0].date,
+    "DD/MM/YYYY HH:MM:SS"
+  );
+
+  // Intervalo de 24 horas atrás da data específica
+  const inicioIntervalo = new Date(
+    dataEspecifica.getTime() - 24 * 60 * 60 * 1000
+  );
+  const fimIntervalo = dataEspecifica;
+
+  const dadosFiltrados = historico.filter((obj) => {
+    return (
+      utils.newDataGMT(obj.date, "DD/MM/YYYY HH:MM:SS") >= inicioIntervalo &&
+      utils.newDataGMT(obj.date, "DD/MM/YYYY HH:MM:SS") <= fimIntervalo
+    );
+  });
+
+  console.log(dadosFiltrados);
+  let horasProdutivas = 0;
+
+  dadosFiltrados.forEach((dado, index) => {
+    let dataInicial;
+    let dataFinal;
+    let diferencaMilissegundos;
+    let horas;
+    if (dado.stateName === "Operando" && index > 0) {
+      if (index < dadosFiltrados.length - 1) {
+        dataInicial = utils.newDataGMT(
+          dadosFiltrados[index + 1].date,
+          "DD/MM/YYYY HH:MM:SS"
+        );
+        dataFinal = utils.newDataGMT(dado.date, "DD/MM/YYYY HH:MM:SS");
+      } else if (index === dadosFiltrados.length - 1) {
+        dataInicial = utils.newDataGMT(dado.date, "DD/MM/YYYY HH:MM:SS");
+        dataFinal = utils.newDataGMT(
+          dadosFiltrados[index - 1].date,
+          "DD/MM/YYYY HH:MM:SS"
+        );
+      }
+      diferencaMilissegundos = dataFinal - dataInicial;
+
+      horas = diferencaMilissegundos / (1000 * 60 * 60);
+
+      horasProdutivas += horas;
+    }
+  });
+
+  return horasProdutivas;
 };
 
 const getEquipDetails = (equip) => {
   estadoEquipamentoSelecionado.value = equip.state;
-  ultimaAtualizacaoEquipamentoSelecionado.value = utils.formatarData(
+  ultimaAtualizacaoEquipamentoSelecionado.value = utils.formatarDataGMT(
     equip.date,
     "DD/MM/YYYY HH:MM:SS"
+  );
+  horasProdutivasSelecionado.value = calculoProdutividadeEquipamento(
+    equip.horas_produtivas
   );
   getEquipamentoDetalhes(equip.id);
   equipDialog.value = true;
   tabEquip.value = "informacoes";
 };
 
+const calculoProdutividadeEquipamento = (horas) => {
+  return utils.toPercentDecimal(horas / 24);
+};
+
 const getSpecificGeolocation = async () => {
   utils.showLoadingWithMessage("Centralizando mapa...");
-  // const dadosLatLong = await utils.buscaLatLong();
   setEquipPositions();
   if (equipmentsLatLng.value.length > 0) {
     latitude.value = parseFloat(equipmentsLatLng.value[0].lat);
@@ -311,7 +459,6 @@ const getSpecificGeolocation = async () => {
       longitude: parseFloat(equipmentsLatLng.value[0].log),
     };
     setPosition(position);
-    // getCurrentGeolocation()
   } else {
     errorPosition();
   }
@@ -328,42 +475,6 @@ const getLoc = () => {
 
 const setPosition = () => {
   center.value = new L.LatLng(latitude.value, longitude.value + 0.001);
-  // markerLatLng.value = [latitude.value, longitude.value];
-  // picoleLatLng.value = [
-  //   {
-  //     lat: latitude.value + 0.0005,
-  //     log: longitude.value + 0.0005,
-  //     info: "Kibom",
-  //   },
-  //   {
-  //     lat: latitude.value + 0.0008,
-  //     log: longitude.value + 0.0008,
-  //     info: "Nestle",
-  //   },
-  //   {
-  //     lat: latitude.value + -0.0005,
-  //     log: longitude.value + -0.0005,
-  //     info: "Magnum",
-  //   },
-  //   {
-  //     lat: latitude.value + 0.001,
-  //     log: longitude.value + -0.0013,
-  //     info: "Limão",
-  //   },
-  // ];
-
-  ///////
-
-  // const positions = equipamentos.value
-  //   .map((arr) => arr.posicoesEquipamento[arr.posicoesEquipamento.length - 1])
-  //   .map((pos) => {
-  //     return {
-  //       lat: pos.lat,
-  //       lon: pos.lon,
-  //       info: arr.nomeEquipamento,
-  //     };
-  //   });
-
   utils.hideLoading();
   utils.mensagemSucesso("Posição recuperada com sucesso!");
   ready.value = true;
@@ -372,22 +483,13 @@ const setPosition = () => {
 const errorPosition = () => {
   utils.mensagemErro("Não foi possível recupera sua posição!");
 };
-
-const handleMapClick = (event) => {
-  const newMarker = [event.latlng.lat, event.latlng.lng];
-  latitude.value = newMarker[0];
-  longitude.value = newMarker[1];
-  zoom.value = 18;
-  utils.showLoadingWithMessage("Carregando nova localização...");
-  setTimeout(() => {
-    center.value = new L.LatLng(newMarker[0], newMarker[1] + 0.001);
-    markerLatLng.value = newMarker;
-    utils.hideLoading();
-  }, 2000);
-};
 </script>
 
 <style>
+.mapa-layout {
+  height: calc(100vh - 50px);
+  width: calc(100vw - 57px);
+}
 .text-green-aiko {
   color: #2ecc71 !important;
 }
