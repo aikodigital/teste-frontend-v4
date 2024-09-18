@@ -35,7 +35,6 @@ export const Timeline = ({ equipment }: any) => {
         },
       }}
     >
-      {/* <Paper elevation={3} sx={{ borderRadius: 3 }}> */}
       <TimelineMui position="right" sx={{ margin: 0 }}>
         {equipment.states.statesResult.map(
           (e: { name: string; date: string; color: string }, index: number) => (
@@ -49,7 +48,6 @@ export const Timeline = ({ equipment }: any) => {
               </TimelineSeparator>
               <TimelineContent>
                 <Card variant="outlined">
-                  {/* <CardHeader title={"aaaaaa"}></CardHeader> */}
                   <CardContent>
                     <Typography
                       gutterBottom
