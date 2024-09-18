@@ -4,7 +4,8 @@ import Map, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 
-const mapboxToken = 'pk.eyJ1IjoianBiZXB1IiwiYSI6ImNtMTB5aHgxYjBtNHoycm9xZjNsNnB0ZDEifQ.V56FFWFtPvomXakxb-76_A';
+const mapboxToken = process.env.REACT_APP_API_TOKEN;
+
 
 const Mapbox = () => {
     
@@ -12,7 +13,6 @@ const Mapbox = () => {
     const equipments = useSelector((state) => state.equipments)
     const equipmentMarkers = equipments.filtered
     const focus = equipments.focus
-
 
     console.log(equipments)
 
