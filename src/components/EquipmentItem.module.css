@@ -1,0 +1,46 @@
+.equipmentItem,
+.equipmentItem:link,
+.equipmentItem:visited {
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 1rem 2rem;
+  border: 2px solid transparent;
+  border-left: 5px solid var(--color-brand--2);
+  cursor: pointer;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.equipmentItem:hover {
+  border: 2px solid var(--color-brand--2);
+  border-left: 5px solid var(--color-brand--2);
+}
+
+.equipmentItem--active {
+  border: 2px solid var(--color-brand--2);
+  border-left: 5px solid var(--color-brand--2);
+}
+
+.name {
+  font-size: 1.7em;
+  font-weight: 600;
+}
+
+.date {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .equipmentItem,
+  .equipmentItem:link,
+  .equipmentItem:visited {
+    gap: 0.7rem;
+    padding: 0.8rem 1rem;
+  }
+}
