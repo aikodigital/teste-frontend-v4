@@ -1,10 +1,11 @@
 # MachinaWatch
 
+------------------------
 ### `npm start`
 
 Roda o APP em modo de desenvolvimento.
 Abre [http://localhost:3000](http://localhost:3000) para vizualização no browser.
-
+------------------------
 
 Através dessa aplicação é possível vizualizar a ultima localização de todos os equipamentos cadastrados em equipments.json.
 
