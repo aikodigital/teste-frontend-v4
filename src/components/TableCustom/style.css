@@ -6,3 +6,12 @@
     border-radius: 8px;
     background-color: rgb(248,249,250);
 }
+
+@media only screen and (max-width: 600px) {
+    .container-table nav{
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        margin-bottom: 18px;
+    }
+  }

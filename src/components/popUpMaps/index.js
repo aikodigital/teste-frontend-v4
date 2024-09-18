@@ -35,7 +35,8 @@ const PopUpMaps = ({ position }) => {
     setCoodinateSelected,
     setStateModal,
     findState,
-    calculateTotalTimeByState
+    calculateTotalTimeByState,
+    formatDate
   } = useContext(EquipamentContext);
 
   const [stateNow,setStateNow] = useState()
@@ -142,7 +143,7 @@ const PopUpMaps = ({ position }) => {
                               }
                               }}
                             >
-                              {item.date}
+                              {formatDate(item.date)}
                             </ListGroup.Item>
                           );
                         }

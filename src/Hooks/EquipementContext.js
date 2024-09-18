@@ -8102,13 +8102,11 @@ export const EquipamentProvider = ({ children }) => {
   function findEquipmentById(equipments, id) {
     console.log({id})
 
-    if(id === ''){
-      return null
-    }
-    if(id){
+
       const newEquipaments = equipments?.find(equipment => equipment.id === id) || null;
-      setEquipaments(newEquipaments)
-    }
+      if(!newEquipaments) return  setEquipaments(equipamentsData);
+    console.log({newEquipaments})
+      return setEquipaments([{...newEquipaments}])
   }
 
   const findDataEquipament = ({id,equipamentID}) =>{
@@ -8170,6 +8168,24 @@ export const EquipamentProvider = ({ children }) => {
     // Retorna o objeto com as durações totais por estado
     return stateDurations;
 }
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  // Opções de formatação
+  const options = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: 'UTC' // ou 'local', se quiser a hora no fuso horário do usuário
+  };
+
+  // Formatar a data
+  return date.toLocaleString('pt-BR', options);
+}
   
   useEffect(()=>{
     if(equipamentSelected){
@@ -8197,7 +8213,8 @@ export const EquipamentProvider = ({ children }) => {
       setDataEquipamentSelected,
       dataEquipamentSelected,
       findState,
-      findEquipmentById
+      findEquipmentById,
+      formatDate
        }}>
       {children}
     </EquipamentContext.Provider>
