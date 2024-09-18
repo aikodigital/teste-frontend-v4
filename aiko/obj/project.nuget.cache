@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "JDAbjLHX68wNydPcBON8w+zkH1JUorOAhouyXLt+XeoYrJzHKnL2KvxuKweF3lXs6mKwumpPraObBlJdTsRRgA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ray.oliveira\\source\\repos\\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\\aiko\\aiko.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ray.oliveira\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

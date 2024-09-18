@@ -1,0 +1,77 @@
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\appsettings.Development.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\appsettings.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.staticwebassets.runtime.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.exe
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.deps.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.runtimeconfig.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.dll
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\aiko.pdb
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.GeneratedMSBuildEditorConfig.editorconfig
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.AssemblyInfoInputs.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.AssemblyInfo.cs
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.csproj.CoreCompileInputs.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.MvcApplicationPartsAssemblyInfo.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.RazorAssemblyInfo.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.RazorAssemblyInfo.cs
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets.build.json
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets.development.json
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets\msbuild.aiko.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets\msbuild.build.aiko.props
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.aiko.props
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.aiko.props
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\scopedcss\bundle\aiko.styles.css
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\scopedcss\projectbundle\aiko.bundle.scp.css
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.dll
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\refint\aiko.dll
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.pdb
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.genruntimeconfig.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\ref\aiko.dll
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Data\equipment.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Data\equipmentModel.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Data\equipmentPositionHistory.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Data\equipmentState.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Data\equipmentStateHistory.json
+C:\Backup Ray\aiko\aiko\aiko\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.csproj.AssemblyReference.cache
+C:\Backup Ray\aiko\aiko\aiko\obj\Debug\net8.0\aiko.csproj.Up2Date
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\appsettings.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Data\equipment.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Data\equipmentModel.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Data\equipmentPositionHistory.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Data\equipmentState.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Data\equipmentStateHistory.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.staticwebassets.runtime.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.exe
+C:\Users\ray.oliveira\Source\Repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.deps.json
+C:\Users\ray.oliveira\Source\Repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.runtimeconfig.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.dll
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\aiko.pdb
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.csproj.AssemblyReference.cache
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.AssemblyInfoInputs.cache
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.AssemblyInfo.cs
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.csproj.CoreCompileInputs.cache
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.RazorAssemblyInfo.cache
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.RazorAssemblyInfo.cs
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.sourcelink.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets\msbuild.aiko.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets\msbuild.build.aiko.props
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.aiko.props
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.aiko.props
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\scopedcss\bundle\aiko.styles.css
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\scopedcss\projectbundle\aiko.bundle.scp.css
+C:\Users\ray.oliveira\Source\Repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.csproj.Up2Date
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.dll
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\refint\aiko.dll
+C:\Users\ray.oliveira\source\repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.pdb
+C:\Users\ray.oliveira\Source\Repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\aiko.genruntimeconfig.cache
+C:\Users\ray.oliveira\Source\Repos\teste-frontend-v4-Ray-Felipe-Nascimento-Oliveira\aiko\obj\Debug\net8.0\ref\aiko.dll
