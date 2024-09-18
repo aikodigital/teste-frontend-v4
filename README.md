@@ -1,5 +1,5 @@
 # Teste Frontend V4
-Boas vindas ao Frontend V4 da empresa Aiko, onde você pode visualizar no mapa onde está seu equipamento florestal. Além disso, também consegue ver o status atual e todo o histórico daquele item.
+Boas vindas ao Frontend V4 da empresa Aiko! Aqui você pode visualizar no mapa onde está seu equipamento florestal. Além disso, também consegue ver o status atual e todo o histórico daquele item.
 
 ## Objetivos:
 
