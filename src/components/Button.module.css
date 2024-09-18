@@ -1,0 +1,44 @@
+.btn {
+  color: var(--color-dark--1);
+  text-transform: uppercase;
+  padding: 0.8rem 1.6rem;
+  font-family: inherit;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back {
+  font-weight: 800;
+  background: var(--color-brand--2);
+}
+
+.position {
+  font-weight: 700;
+  position: absolute;
+  z-index: 1000;
+  font-size: 1.4rem;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-brand--2);
+  color: var(--color-dark--1);
+  box-shadow: 0 0.4rem 1.2rem rgba(36, 42, 46, 0.16);
+}
+
+.toggleSidebar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .toggleSidebar {
+    display: block;
+    position: absolute;
+    bottom: 25px;
+    right: -30px;
+    padding: 1.3rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px #b5b5b5;
+  }
+}

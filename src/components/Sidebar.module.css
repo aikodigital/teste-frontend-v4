@@ -1,0 +1,41 @@
+.sidebar {
+  flex-basis: 56rem;
+  background-color: var(--color-white--0);
+  padding: 3rem 5rem 3.5rem 5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 4.8rem);
+  transition: transform 0.3s ease;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.copyright {
+  font-size: 1.2rem;
+  color: var(--color-light--1);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    height: 100vh;
+    width: 85vw;
+    padding: 1rem 1rem 1.5rem 1rem;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+}
