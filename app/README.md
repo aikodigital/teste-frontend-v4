@@ -2,8 +2,8 @@
 
 Web software para monitoramento de dados coletados por equipamentos durante operações florestais.
 
-Partindo do princípio de manter a estrutura de dados original dos arquivos `.json` no diretório `./data`, minhas principais opções para tratamento e manipulação desses dados foram:
-- utilizar os _mockups_ como _seeds_ em uma base de dados com um ORM como o Prisma; 
+Partindo do princípio de manter a estrutura de dados original dos arquivos `.json` no diretório `./data` sem transformar num único grande objeto com as chaves estrangeiras resolvidas, minhas principais opções para tratamento e manipulação desses dados foram:
+- utilizar os _mockups_ como _seeds_ em uma base de dados com um ORM como o Prisma;
 - emular um modelo entidade-relacionamento com programação funcional através de uma biblioteca de gerenciamento de estado.
 
 Dada a natureza focada em front-end do teste, optei por seguir pela segunda opção usando tecnologias do ecossistema Vue.js que me pareceu estar mais destacado nas instruções.
@@ -23,7 +23,7 @@ Dada a natureza focada em front-end do teste, optei por seguir pela segunda opç
 
 ## Requisitos
 
-- [ ] Tratamento de dados _mockados_ nos arquivos .json
+- [x] Tratamento de dados _mockados_ nos arquivos .json
 - [ ] Exibir as últimas posições registradas
 - [ ] Exibir os últimos estados registrados
 - [ ] Exibir o histórico de estados de cada equipamento
