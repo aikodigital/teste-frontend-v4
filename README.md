@@ -27,20 +27,35 @@ O repositório está organizado da seguinte forma:
 
 src/
 │
+
 ├── api/
+
 ├── assets/
+
 ├── components/
+
 │   ├── EquipmentFilters/
+
 │   ├── EquipmentStateHistory/
+
 │   ├── Header/
+
 │   ├── MapComponent/
+
 │   └── SkeletonPage/
+
 ├── contexts/
+
 ├── data/
+
 ├── pages/
+
 │   ├── DetailsPage.tsx
+
 │   └── HomePage.tsx
+
 ├── utils/
+
 └── App.css
 
 Abaixo, segue a descrição das pastas e arquivos:
