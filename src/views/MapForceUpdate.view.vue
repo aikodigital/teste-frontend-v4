@@ -14,10 +14,24 @@ const mapStore = useMap()
 let map: L.Map
 
 const markAllEquipments = () => {
+  if (!equipmentStore.equipments.length) return
   equipmentStore.getPositions()
-  equipmentStore.equipments.forEach((equipment) =>
-    L.marker([equipment.position.lat, equipment.position.lon]).addTo(map)
-  )
+  equipmentStore.equipments.forEach((equipment) => {
+    const markerHtmlStyles = `
+      color: ${equipment.state.color};
+      font-size: 32px;
+      display: block;
+      position: relative;
+      `
+    const icon = L.divIcon({
+      className: 'my-custom-pin',
+      iconAnchor: [0, 24],
+      popupAnchor: [0, -36],
+      html: `<span class="material-symbols-outlined" style="${markerHtmlStyles}">${equipment.icon}</span>`
+    })
+
+    L.marker([equipment.position.lat, equipment.position.lon], { icon }).addTo(map)
+  })
 
   map.fitBounds(mapStore.getExtremeBounds)
 }
