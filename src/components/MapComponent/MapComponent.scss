@@ -1,5 +1,10 @@
 @use '../../assets/base.scss' as *;
 
+// Variáveis de cores dos ícones
+$icon-color-1: #ff5733; // Exemplo de cor para "Caminhão de carga"
+$icon-color-2: #33c1ff; // Exemplo de cor para "Harvester"
+$icon-color-3: #33ff57; // Exemplo de cor para "Garra traçadora"
+
 .map-container {
   height: $content-height;
   min-height: 400px;
@@ -7,4 +12,60 @@
   position: relative;
 
   padding-left: 0 !important;
+}
+
+.icon-model-1 {
+  background-color: $icon-color-1; /* Cor para "Caminhão de carga" */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-model-2 {
+  background-color: $icon-color-2; /* Cor para "Harvester" */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-model-3 {
+  background-color: $icon-color-3; /* Cor para "Garra traçadora" */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.legend-container {
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
