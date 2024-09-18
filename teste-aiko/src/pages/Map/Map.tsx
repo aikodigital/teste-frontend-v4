@@ -5,16 +5,12 @@ import "leaflet/dist/leaflet.css";
 import { Icon, LatLngExpression, DivIcon, divIcon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { v4 as uuidv4 } from 'uuid';
-    
-type markerType = {
-    equipmentId: String,
-    geocode: LatLngExpression,
-}
+import { MarkerType } from "../../interfaces/MarkerType";
 
 export default function Map() {
     
     
-    const markers: markerType[] = [
+    const markers: MarkerType[] = [
     {
         equipmentId: "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
         geocode: [-19.151801, -46.007759],
@@ -66,7 +62,7 @@ export default function Map() {
         />
 
       <MarkerClusterGroup chunkedLoading >
-      {markers.map(marker => (
+      {markers?.map(marker => (
         <Marker position={marker.geocode} icon={customIcon} key={uuidv4()}>
           <Popup>{marker.equipmentId}</Popup>
         </Marker>

@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Map from "./pages/Map/Map";
 import Fleet from "./pages/Fleet/Fleet";
 import MainPage from "./pages/MainPage/MainPage";
-import Truck from "./pages/Truck/Truck";
+import EquipmentDetails from "./pages/EquipmentDetails/EquipmentDetails";
 
 export default function Router() {
   return (
@@ -12,7 +12,7 @@ export default function Router() {
         <Route path='/' element={<MainPage />}>
           <Route index element={<Map/>} />
           <Route path='/fleet' element={<Fleet />} />
-          <Route path='/truck/:equipmentId' element={<Truck/>} />
+          <Route path='/equipmentDetails/:equipmentId' element={<EquipmentDetails/>} />
         </Route>
       </Routes>
     </BrowserRouter>

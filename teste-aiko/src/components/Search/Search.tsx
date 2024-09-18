@@ -4,12 +4,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { changeSearch, resetSearch } from '../../store/reducers/search';
 import { RootState } from '../../store/store';
-import { LatLngExpression } from 'leaflet';
-
-type markerType = {
-  equipmentId: String,
-  geocode: LatLngExpression,
-}
 
 export default function Search() {
   const search = useSelector((state: RootState) => state.search)
@@ -19,10 +13,6 @@ export default function Search() {
   useEffect(() => {
     dispatch(resetSearch());
   }, [location.pathname, dispatch])
-
-  useEffect(() => {
-    console.log(typeof search);
-  }, [])
   
   return (
     <div className={styles.search}>

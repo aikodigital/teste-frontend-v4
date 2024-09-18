@@ -1,18 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchSlice from './reducers/search';
-import trucksSlice from './reducers/trucks';
+import fleetSlice from './reducers/fleet';
 import { useDispatch } from 'react-redux';
+import { combineReducers } from '@reduxjs/toolkit'
 
 const store = configureStore({
     reducer: {
         search: searchSlice,
-        trucks: trucksSlice,
+        fleet: fleetSlice,
     }
 })
 
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 
-export type RootState = ReturnType<typeof store.getState>;
+const rootReducer = combineReducers({})
+export type RootState = ReturnType<typeof rootReducer>
 
 export default store;

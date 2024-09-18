@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LatLngExpression } from "leaflet";
 
-const initialState = "";
+const initialState: String = "";
 
 const searchSlice = createSlice({
     name: 'search',
