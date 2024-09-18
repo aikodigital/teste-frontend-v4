@@ -118,13 +118,41 @@ export const useEquipment = defineStore('useEquipment', () => {
   }
 
   function getAllEquipments() {
-    equipment.forEach((e) => {
-      equipments.value.push(equipmentData(e.id))
+    equipments.value = equipment.map((e) => {
+      return equipmentData(e.id)
     })
   }
 
   function selectEquipment(equipmentId: string) {
     selectedEquipment.value = equipmentData(equipmentId)
+  }
+
+  function filterEquipments(models: string[], states: string[], term?: string) {
+    getAllEquipments()
+
+    if (models.length) {
+      equipments.value = equipments.value.filter((equipment) => {
+        return models.some((model) => {
+          return equipment.model.includes(model)
+        })
+      })
+    }
+    if (states.length) {
+      equipments.value = equipments.value.filter((equipment) => {
+        return states.some((state) => {
+          return equipment.state && equipment.state.name.includes(state)
+        })
+      })
+    }
+    if (term) {
+      equipments.value = equipments.value.filter((equipment) => {
+        return (
+          equipment.model.toLowerCase().includes(term) ||
+          equipment.name.toLowerCase().includes(term) ||
+          (equipment.state && equipment.state.name.toLowerCase().includes(term))
+        )
+      })
+    }
   }
 
   return {
@@ -134,6 +162,7 @@ export const useEquipment = defineStore('useEquipment', () => {
     selectedEquipment,
     getAllEquipments,
     getPositions,
-    selectEquipment
+    selectEquipment,
+    filterEquipments
   }
 })
