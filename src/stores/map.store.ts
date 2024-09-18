@@ -3,6 +3,7 @@ import { computed, ref, type Ref } from 'vue'
 import type { Position } from './equipment.types'
 import { useEquipment } from './equipment.store'
 import L from 'leaflet'
+import router from '@/router'
 
 export const useMap = defineStore('useMap', () => {
   const southwestEquipment: Ref<Position> = ref({} as Position)
@@ -49,11 +50,18 @@ export const useMap = defineStore('useMap', () => {
     northeastEquipment.value = northeast
   }
 
+  function updateMap() {
+    if (router.currentRoute.value.name === 'update') {
+      router.push('/')
+    } else router.push('/updated')
+  }
+
   return {
     copyright,
     getExtremeBounds,
     northeastEquipment,
     southwestEquipment,
-    findExtremeMarkers
+    findExtremeMarkers,
+    updateMap
   }
 })

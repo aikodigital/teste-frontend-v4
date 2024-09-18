@@ -48,9 +48,11 @@
 
 <script lang="ts" setup>
 import { useEquipment } from '@/stores/equipment.store'
+import { useMap } from '@/stores/map.store'
 import { computed, ref, type Ref } from 'vue'
 
 const equipmentStore = useEquipment()
+const mapStore = useMap()
 const selectedModels: Ref<string[]> = ref([])
 const selectedStates: Ref<string[]> = ref([])
 const textValue: Ref<string | undefined> = ref()
@@ -64,5 +66,7 @@ const filterEquipments = async () => {
     selectedStates.value,
     textValue.value?.toLocaleLowerCase()
   )
+
+  mapStore.updateMap()
 }
 </script>
