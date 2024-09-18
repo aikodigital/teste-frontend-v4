@@ -1,0 +1,10 @@
+<h2>Detalhes do Equipamento</h2>
+<p>ID: {{ equipmentId }}</p>
+<p>Nome: {{ equipment?.name }}</p>
+
+<h3>Histórico de Estados</h3>
+<ul>
+  <li *ngFor="let state of stateHistory">
+    {{ state.date }} - {{ state.equipmentStateId }}
+  </li>
+</ul>
