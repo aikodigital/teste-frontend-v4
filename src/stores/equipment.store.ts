@@ -12,12 +12,15 @@ import type {
   Position,
   State
 } from './equipment.types'
+import { useMap } from './map.store'
 
 export const useEquipment = defineStore('useEquipment', () => {
   const equipments: Ref<IEquipment[]> = ref([])
   const equipmentsLatestPosition: Ref<IEquipmentsPosition[]> = ref([])
   const equipmentsLatestState: Ref<IEquipmentsState[]> = ref([])
   const selectedEquipment: Ref<IEquipment | null> = ref(null)
+
+  const mapStore = useMap()
 
   const iconsRecord: Record<string, string> = {
     'Caminhão de carga': 'local_shipping',
@@ -53,7 +56,11 @@ export const useEquipment = defineStore('useEquipment', () => {
       if (findState) {
         equipmentsLatestState.value.push({
           equipmentId,
-          state: { ...findState, icon: iconsRecord[findState.name] }
+          state: {
+            ...findState,
+            icon: iconsRecord[findState.name],
+            date: new Date(latestState.date)
+          }
         })
       }
     })
@@ -125,8 +132,14 @@ export const useEquipment = defineStore('useEquipment', () => {
     })
   }
 
-  function selectEquipment(equipmentId: string) {
-    selectedEquipment.value = equipmentData(equipmentId)
+  function selectEquipment(equipmentId?: string) {
+    if (equipmentId) {
+      selectedEquipment.value = equipmentData(equipmentId)
+    } else {
+      selectedEquipment.value = null
+    }
+
+    mapStore.updateMap()
   }
 
   function filterEquipments(models: string[], states: string[], term?: string) {

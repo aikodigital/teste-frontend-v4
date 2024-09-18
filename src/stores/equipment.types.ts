@@ -9,7 +9,7 @@ export type State = {
   name: string
   color: string
   icon: string
-  date?: Date
+  date: Date
 }
 
 export interface IEquipmentsPosition {
@@ -28,7 +28,7 @@ export interface IEquipment {
   equipmentId: string
   state: State
   position: Position
-  icon: String
+  icon: string
   stateHistory: State[]
   positionHistory: Position[]
 }
