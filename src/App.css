@@ -5,14 +5,12 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
-}
-
-
-a {
-    font-weight: bold;
 }

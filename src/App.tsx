@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
 import { EquipmentDataProvider } from './contexts/EquipmentDataContext';
 
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App: React.FC = () => {

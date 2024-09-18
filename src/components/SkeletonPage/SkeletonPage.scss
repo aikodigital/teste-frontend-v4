@@ -1,0 +1,27 @@
+@use '../../assets/base.scss' as *;
+
+.row.full-height {
+    height: $content-height;
+    min-height: 400px;
+
+    a {
+        font-weight: bold;
+    }
+}
+
+.loading-text {
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .row.full-height {
+        display: flex;
+        flex-direction: column;
+        height: unset !important;
+        min-height: unset !important;
+    }
+
+    .form-control {
+        margin-bottom: 8px;
+    }
+}

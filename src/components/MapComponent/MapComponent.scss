@@ -1,5 +1,7 @@
+@use '../../assets/base.scss' as *;
+
 .map-container {
-  height: calc(100vh - 90px); /* 70px é a altura do header */
+  height: $content-height;
   min-height: 400px;
 
   position: relative;

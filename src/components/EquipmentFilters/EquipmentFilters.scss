@@ -1,7 +1,9 @@
+@use '../../assets/base' as *;
+
 /* Estilo do botão de filtrar */
 .filter-button {
-    background-color: #4A90E2;
-    color: white;
+    background-color: $primary-color;
+    color: $text-color;
     border: none;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
@@ -11,16 +13,16 @@
 }
 
 .filter-button:hover {
-    background-color: #357ABD;
+    background-color: $primary-dark;
 }
 
 .filter-button:focus {
     outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.5);
+    box-shadow: 0 0 0 0.2rem $focus-color;
 }
 
 .filter-button:active {
-    background-color: #2D6AA8;
+    background-color: $primary-darker;
 }
 
 /* Estilo do select */
@@ -29,8 +31,8 @@
 }
 
 .custom-select select {
-    background-color: #ffffff;
-    border: 1px solid #ced4da;
+    background-color: $background-color;
+    border: 1px solid $border-color;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -41,7 +43,7 @@
 }
 
 .custom-select select:focus {
-    border-color: #4A90E2;
+    border-color: $primary-color;
     outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.5);
+    box-shadow: 0 0 0 0.2rem $focus-color;
 }

@@ -8,7 +8,7 @@ import CardList from '../CardList/CardList';
 import MapComponent from '../MapComponent/MapComponent';
 import Header from '../Header/header';
 
-import './SkeletonPage.css';
+import './SkeletonPage.scss';
 
 interface SkeletonPageProps {
     selectedEquipment?: string | null;

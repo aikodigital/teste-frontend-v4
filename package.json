@@ -13,6 +13,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "dart-sass": "^1.25.0",
     "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
@@ -54,8 +55,11 @@
     "@eslint/js": "^9.10.0",
     "@types/leaflet": "^1.9.12",
     "eslint": "^8.57.1",
+    "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.36.1",
     "globals": "^15.9.0",
+    "sass": "^1.79.1",
+    "sass-loader": "^16.0.1",
     "typescript-eslint": "^8.6.0"
   }
 }

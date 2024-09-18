@@ -1,0 +1,13 @@
+@use '../../assets/base.scss' as *;
+
+.header {
+    background-color: $primar-super-darker;
+    color: $text-color;
+
+    padding: 10px 0;
+    height: $header-height;
+}
+
+.logo {
+    height: 50px;
+}

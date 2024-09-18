@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import './CardList.css'; 
+import './CardList.scss'; 
 import { CardListProps } from '../../types';
 import { useEquipmentData } from '../../contexts/EquipmentDataContext';
 import { calculateProductivity } from '../../utils/calculateProductivity';

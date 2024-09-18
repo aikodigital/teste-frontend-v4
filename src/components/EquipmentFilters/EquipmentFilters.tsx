@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './EquipmentFilters.css'; // Importe o CSS
+import './EquipmentFilters.scss'; // Importe o CSS
 
 interface EquipmentFiltersProps {
     searchTerm: string;
