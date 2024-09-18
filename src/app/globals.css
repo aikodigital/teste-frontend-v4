@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.leaflet-container {
+  height: 60vw;
+  max-height: 600px;
+  width: 100vw;
+  z-index: 0;
+ 
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.slick-slide>div{
+  margin: 0 6px;
+}
+
+.slick-prev:before, .slick-next:before, .slick-dots li.slick-active button:before, .slick-dots li button:before {
+  
+  color: #10B981 !important;
+  
+  
+}
+
+@layer base{
+  body {
+      @apply dark:bg-bgdark bg-bglight dark:text-textdark text-textlight font-Roboto
+      
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 }
