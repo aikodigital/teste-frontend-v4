@@ -7,7 +7,7 @@
             </svg>
         </button>
 
-        <div v-if="isMenuOpen" @click="toggleMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+        <div v-show="isMenuOpen && isMobile" @click="toggleMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
 
         <div :class="[
             'transform top-0 left-0 fixed h-full z-50 w-4/5 sm:w-3/4 md:w-2/4 lg:w-1/4 lg:translate-x-0 bg-gray-800 text-white p-4 transition-transform',
@@ -103,6 +103,8 @@ export default defineComponent({
         const selectedModelFilter = ref('');
         const isMenuOpen = ref(false);
 
+        const isMobile = computed(() => window.innerWidth < 1024);
+
         const filteredEquipments = computed(() => {
             return props.equipments.filter((equipment) => {
                 return matchesSearch(equipment) && matchesState(equipment) && matchesModel(equipment);
@@ -162,6 +164,7 @@ export default defineComponent({
             getLastStateColor,
             toggleMenu,
             isMenuOpen,
+            isMobile,
             selectEquipment,
         };
     },

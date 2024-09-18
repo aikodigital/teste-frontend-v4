@@ -14,7 +14,7 @@ export interface Equipment {
    states: any;
    id: string;
    name: string;
-   model?: EquipmentModel;
+   model: EquipmentModel;
    position: Position;
    state: EquipmentState;
    stateHistory: {
@@ -64,7 +64,13 @@ export const useEquipmentStore = defineStore('equipment', {
          return this.states.find((equip) => equip.id === id);
       },
       getModel(id: string) {
-         return this.models.find((model) => model.id === id);
+         return (
+            this.models.find((model) => model.id === id) || {
+               id: '',
+               name: 'Desconhecido',
+               hourlyEarnings: [],
+            }
+         );
       },
       getPositionHistory(id: string) {
          const positionHistory = this.positionsHistories.find(

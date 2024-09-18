@@ -1,16 +1,20 @@
 <template>
-  <div class="p-8 bg-gray-950 w-full h-auto flex">
+  <div class="bg-gray-950 w-full h-auto flex">
     <EquipmentList :equipments="equipments" :selectedEquipment="selectedEquipment"
       :handleEquipmentClick="handleEquipmentClick" :states="states" :models="models" />
-    <div v-if="selectedEquipment" class="w-full">
+    <div v-if="selectedEquipment" class="w-full px-2 lg:w-3/4 absolute right-0  bg-gray-900 sm:px-4 md:px-5 pt-16">
       <EquipmentDetails :selectedEquipment="selectedEquipment" />
-      <EquipmentMap v-if="selectedEquipment" :key="selectedEquipment.id" ref="equipmentMap"
-        :initialPosition="mapPosition" :selectedEquipment="selectedEquipment"
-        :positionHistory="selectedEquipment.positionHistory" :view-path="viewPath" />
-      <button @click="toggleViewPath" class="btn mt-4 text-white bg-orange-500">
-        {{ viewPath ? 'Esconder' : 'Ver' }} o trajeto do equipamento
-      </button>
-      <EquipmentStateHistory :stateHistory="selectedEquipment.stateHistory" :chartData="chartData" />
+      <div class="pt-5">
+        <button @click="toggleViewPath" class="btn mt-4 text-white bg-green-500 font-bold mb-2 rounded-md
+        p-2">
+          {{ viewPath ? 'Esconder' : 'Ver' }} o trajeto do equipamento
+        </button>
+        <EquipmentMap v-if="selectedEquipment" :key="selectedEquipment.id" ref="equipmentMap"
+          :initialPosition="mapPosition" :selectedEquipment="selectedEquipment"
+          :positionHistory="selectedEquipment.positionHistory" :view-path="viewPath" />
+      </div>
+      <EquipmentStateHistory :stateHistory="selectedEquipment.stateHistory" :chartData="chartData"
+        :model="selectedEquipment.model" />
     </div>
   </div>
 </template>
@@ -68,6 +72,11 @@ export default {
     const equipmentMapRef = ref<EquipmentMapInstance | null>(null);
 
     const handleEquipmentClick = (equipment: Equipment) => {
+      if (!equipment.model) {
+        console.error('Modelo não encontrado para o equipamento', equipment);
+        return;
+      }
+
       const stateHistory =
         store.getStateHistory(equipment.id)?.states.map(({ date, equipmentStateId }) => {
           const state = store.states.find((state) => state.id === equipmentStateId);
@@ -81,8 +90,10 @@ export default {
           lon,
         })) || [];
 
+      const model = store.getModel(equipment.equipmentModelId);
+
       viewPath.value = false;
-      selectedEquipment.value = { ...equipment, stateHistory, positionHistory, state: states[states.length - 1], model: store.getModel(equipment.equipmentModelId) };
+      selectedEquipment.value = { ...equipment, stateHistory, positionHistory, state: states[states.length - 1], model };
       updateChartData();
 
       mapPosition.value = getEquipmentPosition(equipment.id) || { lat: 0, lon: 0 };
@@ -145,3 +156,22 @@ export default {
   },
 };
 </script>
+
+<style>
+*::-webkit-scrollbar {
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #252525;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #4a4a4a;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #cccccc;
+}
+</style>

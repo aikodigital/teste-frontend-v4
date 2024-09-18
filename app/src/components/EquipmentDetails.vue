@@ -1,5 +1,5 @@
 <template>
-    <div v-if="selectedEquipment" class="w-full max-w-4xl bg-gray-900 rounded-lg shadow-lg text-white space-y-4">
+    <div v-if="selectedEquipment" class="w-full max-w-4xl rounded-lg text-white space-y-4">
         <h2 class="text-white font-semibold text-lg md:text-2xl uppercase mb-3">Detalhes do Equipamento</h2>
 
         <div class="space-y-2">
