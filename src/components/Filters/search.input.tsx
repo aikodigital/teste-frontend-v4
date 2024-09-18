@@ -9,7 +9,13 @@ function SearchInput() {
     <div>
       <input
         type="text"
-        placeholder="Pesquise um modelo específico"
+        className={`
+          border rounded-lg
+          border-gray-300
+          focus:ring-blue-500
+          shadow-sm focus:outline-none focus:ring-2
+        `}
+        placeholder="Pesquise um modelo específico..."
         onChange={(e) => setSearch(e.target.value)}
       />
     </div>

@@ -2,6 +2,7 @@ import Equipments from '../challenge-info/data/equipment.json';
 import { PositionProps } from '../interfaces/EquipmentPositionProps.interface';
 
 export const formatEquipmentsData = (
+  search: string,
   equipmentsState: { equipmentId: string; currentState: string }[],
   equipmentsPosition: {
     equipmentId: string;
@@ -20,5 +21,9 @@ export const formatEquipmentsData = (
     return { ...item, currentState, currentPosition };
   });
 
-  return currentEquipments;
+  const equipmentsData = currentEquipments.filter((item) =>
+    item.name.includes(search.toUpperCase()),
+  );
+
+  return equipmentsData;
 };

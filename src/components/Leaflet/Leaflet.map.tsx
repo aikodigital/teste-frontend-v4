@@ -53,6 +53,7 @@ function LeafletMap() {
     const equipmentsState = getEquipmentsCurrentState();
     const equipmentsPosition = getEquipmentsCurrentPosition();
     const currentEquipments = formatEquipmentsData(
+      search,
       equipmentsState,
       equipmentsPosition,
     );
