@@ -10,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"; // Certifique-se de que o caminho está correto
 import {
-  BadgeDollarSign,
   MapPin,
   Wrench, // Substituí por Wrench
   Percent,

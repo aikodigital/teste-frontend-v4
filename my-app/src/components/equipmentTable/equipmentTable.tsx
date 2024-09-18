@@ -17,24 +17,44 @@ const containerStyle = {
 };
 
 // Definir os ícones exclusivos com tamanhos proporcionais
-const equipmentIcons = {
+interface EquipmentIcon {
+  url: string;
+  scaledSize: google.maps.Size;
+}
+
+const equipmentIcons: Record<
+  "Caminhão de carga" | "Harvester" | "Garra traçadora" | "default",
+  EquipmentIcon
+> = {
   "Caminhão de carga": {
     url: "/icons/truck.png",
-    scaledSize: new window.google.maps.Size(40, 40), // Ícone de caminhão com tamanho adequado
+    scaledSize: new window.google.maps.Size(40, 40),
   },
   Harvester: {
     url: "/icons/farm.png",
-    scaledSize: new window.google.maps.Size(40, 40), // Ícone de harvester com tamanho adequado
+    scaledSize: new window.google.maps.Size(40, 40),
   },
   "Garra traçadora": {
     url: "/icons/mechanic.png",
-    scaledSize: new window.google.maps.Size(40, 40), // Ícone de garra traçadora com tamanho adequado
+    scaledSize: new window.google.maps.Size(40, 40),
   },
   default: {
     url: "/icons/default.png",
-    scaledSize: new window.google.maps.Size(40, 40), // Tamanho padrão
+    scaledSize: new window.google.maps.Size(40, 40),
   },
 };
+
+// Interface para o equipamento selecionado
+interface SelectedEquipment {
+  id: string;
+  position: {
+    lat: number;
+    lon: number;
+  };
+  model: string;
+  state: string;
+  name: string;
+}
 
 const EquipmentTable = () => {
   const {
@@ -45,56 +65,49 @@ const EquipmentTable = () => {
     getEquipmentModel,
   } = useEquipmentStore();
 
-  // Estado para controlar o equipamento selecionado e o modal do mapa
-  const [selectedEquipment, setSelectedEquipment] = useState<any>(null);
-  const [showMapModal, setShowMapModal] = useState(false); // Controle do modal
-  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // Estado para controlar o centro do mapa
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<SelectedEquipment | null>(null);
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 });
 
-  // Carregar os dados dos equipamentos ao montar o componente
   useEffect(() => {
     loadEquipmentData().then(() => {
       console.log("Dados carregados:", equipment);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadEquipmentData]);
 
-  // Função para abrir o mapa quando clicar no botão
   const handleMapClick = (equipmentId: string) => {
     const position = getLatestPosition(equipmentId);
-    const equipmentItem = equipment.find((eq) => eq.id === equipmentId); // Buscar o equipamento correto
+    const equipmentItem = equipment.find((eq) => eq.id === equipmentId);
     if (position && equipmentItem) {
       const equipmentState = getLatestState(equipmentId);
-      const equipmentModel = getEquipmentModel(equipmentItem.equipmentModelId); // Usando equipmentModelId corretamente
+      const equipmentModel = getEquipmentModel(equipmentItem.equipmentModelId);
       setSelectedEquipment({
         id: equipmentId,
         position,
-        model: equipmentModel?.name || "Modelo Desconhecido", // Obtém o modelo do equipamento
+        model: equipmentModel?.name || "Modelo Desconhecido",
         state: equipmentState?.name || "Desconhecido",
-        name: equipmentItem.name || "Nome Desconhecido", // Obtém o nome do equipamento
+        name: equipmentItem.name || "Nome Desconhecido",
       });
 
-      // Centraliza o mapa na posição do equipamento
       setMapCenter({
         lat: position.lat,
         lng: position.lon,
       });
 
-      setShowMapModal(true); // Exibe o modal com o mapa
+      setShowMapModal(true);
     }
   };
 
-  // Função para fechar o modal do mapa
   const closeMapModal = () => {
     setShowMapModal(false);
   };
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center justify-center">
-      {" "}
-      {/* Centralizando layout */}
       <h1 className="text-2xl font-bold mb-4">Equipamentos</h1>
       <div className="overflow-x-auto w-full max-w-5xl">
-        {" "}
-        {/* Limitando a largura */}
         <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
           <thead>
             <tr className="bg-gray-100 text-left text-gray-800">
@@ -117,11 +130,8 @@ const EquipmentTable = () => {
               </tr>
             ) : (
               equipment.map((eq) => {
-                // Obter o modelo correspondente usando equipmentModelId
                 const equipmentModel = getEquipmentModel(eq.equipmentModelId);
-
-                // Calcula a produtividade com base nos dados (exemplo fictício)
-                const produtividade = (Math.random() * 100).toFixed(2); // Usa toFixed(2) para 2 casas decimais
+                const produtividade = (Math.random() * 100).toFixed(2);
 
                 return (
                   <tr key={eq.id} className="border-b text-gray-800">
@@ -154,7 +164,7 @@ const EquipmentTable = () => {
                           <TooltipTrigger asChild>
                             <Button
                               variant="outline"
-                              onClick={() => handleMapClick(eq.id)} // Chamando handleMapClick
+                              onClick={() => handleMapClick(eq.id)}
                             >
                               Ver no Mapa
                             </Button>
@@ -172,7 +182,6 @@ const EquipmentTable = () => {
           </tbody>
         </table>
       </div>
-      {/* Modal de Mapa */}
       {showMapModal && selectedEquipment && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 relative w-full max-w-xl">
@@ -183,8 +192,7 @@ const EquipmentTable = () => {
               Fechar
             </button>
             <h3 className="text-xl font-semibold mb-4">
-              {selectedEquipment.name} - {selectedEquipment.model}{" "}
-              {/* Mostrando nome e modelo */}
+              {selectedEquipment.name} - {selectedEquipment.model}
             </h3>
             <GoogleMap
               mapContainerStyle={containerStyle}
@@ -197,11 +205,10 @@ const EquipmentTable = () => {
                   lng: selectedEquipment.position.lon,
                 }}
                 icon={
-                  equipmentIcons[selectedEquipment.model] ||
-                  equipmentIcons.default
-                } // Usando ícones com tamanhos adequados
-                onClick={() => setSelectedEquipment(selectedEquipment)} // Exibe InfoWindow ao clicar
-                onMouseOver={() => setSelectedEquipment(selectedEquipment)} // Exibe InfoWindow ao passar o mouse
+                  equipmentIcons[
+                    selectedEquipment.model as keyof typeof equipmentIcons
+                  ] || equipmentIcons.default
+                }
               />
               {selectedEquipment && (
                 <InfoWindow
@@ -210,9 +217,6 @@ const EquipmentTable = () => {
                     lng: selectedEquipment.position.lon,
                   }}
                   onCloseClick={() => setSelectedEquipment(null)}
-                  options={{
-                    pixelOffset: new window.google.maps.Size(0, -40), // Desloca o InfoWindow 40px para cima
-                  }}
                 >
                   <div>
                     <h3>{selectedEquipment.name}</h3>

@@ -12,6 +12,23 @@ const initialCenter = {
   lng: -45.947756,
 };
 
+// Interface para o histórico de estados
+interface StateHistory {
+  date: string;
+  state: string;
+}
+
+// Interface para o equipamento selecionado
+interface SelectedEquipment {
+  id: string;
+  name: string;
+  type: string;
+  position: {
+    lat: number;
+    lon: number;
+  };
+}
+
 const MapComponent = () => {
   const {
     loadEquipmentData,
@@ -26,13 +43,14 @@ const MapComponent = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
 
-  const [selectedEquipment, setSelectedEquipment] = useState<any | null>(null); // Controle de equipamento selecionado
+  // Definir o estado com tipos específicos
+  const [selectedEquipment, setSelectedEquipment] = useState<SelectedEquipment | null>(null); // Controle de equipamento selecionado
   const [filters, setFilters] = useState({
     state: "Todos os Estados",
     model: "Todos os Modelos",
   });
   const [showModal, setShowModal] = useState(false); // Controle do modal
-  const [selectedHistory, setSelectedHistory] = useState([]); // Histórico do equipamento
+  const [selectedHistory, setSelectedHistory] = useState<StateHistory[]>([]); // Histórico do equipamento
 
   // Carrega os dados dos equipamentos
   useEffect(() => {
@@ -151,7 +169,7 @@ const MapComponent = () => {
             </button>
 
             <h2 className="font-bold text-lg mb-2">
-              Histórico de Estados - {selectedEquipment.model}
+              Histórico de Estados - {selectedEquipment.name}
             </h2>
             <p className="text-sm mb-4">Tipo: {selectedEquipment.type}</p>
 
