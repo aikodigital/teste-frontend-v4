@@ -1,0 +1,23 @@
+.equipment-list {
+  h3 {
+    font-size: 18px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      padding: 8px;
+      cursor: pointer;
+      &:hover {
+        background-color: #ddd;
+      }
+
+      &.selected {
+        background-color: #2ecc71;
+        color: white;
+      }
+    }
+  }
+}

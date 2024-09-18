@@ -1,0 +1,57 @@
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  position: relative;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  button {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #eee;
+  }
+
+  button.active {
+    background-color: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-direction: column;
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .filter-buttons {
+      max-height: none; 
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+}
