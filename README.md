@@ -16,6 +16,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Lint](https://eslint.org/)
 - [Leaflet](https://leafletjs.com/)
 - [Bootstrap](https://getbootstrap.com/)
+- [Sass](https://sass-lang.com/)
 
 ### Estrutura de Repositório
 
