@@ -1,0 +1,33 @@
+.homePage {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.mapContainer {
+  flex: 3;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.sidebar {
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+  overflow-y: hidden;
+}
+
+// Media query for mobile responsiveness
+@media (max-width: 768px) {
+  .homePage {
+    flex-direction: column;
+
+    .mapContainer,
+    .sidebar {
+      flex: 1;
+      height: 50vh;
+    }
+  }
+}

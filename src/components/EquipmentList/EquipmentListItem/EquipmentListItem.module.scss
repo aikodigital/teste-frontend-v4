@@ -1,0 +1,29 @@
+.equipment-list-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid;
+  margin-right: 10px;
+}
+
+.equipment-name {
+  font-size: 16px;
+}
