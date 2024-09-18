@@ -60,7 +60,6 @@ const MapView = ({ onSelectEquipment, filters }: MapViewProps) => {
     }
   };
 
-
   return (
     <MapContainer
       center={[-19.126536, -45.947756]}
