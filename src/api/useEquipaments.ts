@@ -25,8 +25,6 @@ export const useEquipments = () => {
     }));
   }, []);
 
-  console.log("filter", filter);
-
   const filtered = useMemo(() => {
     return all.filter((equipment) => {
       if (!filter.state && !filter.name) {

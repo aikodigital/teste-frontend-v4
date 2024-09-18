@@ -31,30 +31,11 @@ export type Indexs = {
   lastIndex: number;
   secondLastIndex: number;
 };
-export type LastEquipments = {
-  lastEquipment: EquipamentStates;
-  secondEquipment: EquipamentStates;
-  lastDate: Date;
-  secondLastDate: Date;
-};
-export type StatesLasEquipments = {
-  stateLastEquipment?: StateEquipment;
-  stateSecondEquipment?: StateEquipment;
-};
+
 export type StateEquipment = {
   id: string;
   name: string;
   color: string;
-};
-
-export type StatesEquipmentsResults = {
-  color?: string;
-  equipmentStateId: string;
-  hours: number;
-  name?: string;
-  value: number;
-  valueLastHours: number;
-  productivity: number;
 };
 
 //Equipment

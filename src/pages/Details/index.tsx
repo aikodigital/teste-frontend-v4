@@ -14,7 +14,6 @@ import { Timeline } from "./components/Timeline";
 import { Box, Card } from "@mui/material";
 import { CardDetails } from "../../components/Card";
 import { LatLngExpression } from "leaflet";
-import { getRandomColor } from "../../hooks/getRandomColor";
 
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
@@ -23,7 +22,6 @@ import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 const Details = () => {
   const { id } = useParams();
   const { equipment } = useEquipment(id);
-  console.log(equipment);
 
   const route: LatLngExpression[] = equipment.positions.map((pos) => [
     pos.lat,
@@ -125,7 +123,7 @@ const Details = () => {
 
             <Polyline
               positions={route}
-              color={getRandomColor()}
+              color="#FFA07A"
               weight={3}
               dashArray={[1, 5]}
               opacity={0.7}

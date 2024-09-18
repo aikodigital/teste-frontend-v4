@@ -8,11 +8,7 @@ import {
   EquipmentModel,
   EquipmentState,
   FormattedArrayPositions,
-  Indexs,
-  LastEquipments,
   Position,
-  StatesEquipmentsResults,
-  StatesLasEquipments,
   UpdateState,
 } from "../types";
 
@@ -37,7 +33,6 @@ export const useEquipment = (equipmentId: string | undefined) => {
       .totalMaintenance,
     totalStopped: getStates(equipmentId, equipmentModelID?.id).totalStopped,
     totalOperating: getStates(equipmentId, equipmentModelID?.id).totalOperating,
-    lastEquipments: getStateLastEquipments(equipmentId, equipmentModelID?.id),
     totalProfit: getStates(equipmentId, equipmentModelID?.id).totalProfit,
   };
   return {
@@ -132,80 +127,4 @@ const valuesEquipment = (statesResult: UpdateState[]) => {
     totalMaintenance,
     totalProfit: calc,
   };
-};
-const getStateLastEquipments = (
-  equipmentId?: string,
-  equipmentModelID?: string
-) => {
-  const equipamentStates: EquipamentStates[] =
-    stateHistory.find((state) => state.equipmentId === equipmentId)?.states ||
-    [];
-
-  const indexs: Indexs = {
-    lastIndex: equipamentStates.length - 1,
-    secondLastIndex: Number(equipamentStates.length - 1) - 1,
-  };
-
-  const lastEquipments: LastEquipments = {
-    lastEquipment: equipamentStates[indexs.lastIndex],
-    secondEquipment: equipamentStates[indexs.secondLastIndex],
-    lastDate: new Date(equipamentStates[indexs.lastIndex].date),
-    secondLastDate: new Date(equipamentStates[indexs.secondLastIndex].date),
-  };
-
-  const differenceInMilliseconds: number =
-    lastEquipments.lastDate.getTime() - lastEquipments.secondLastDate.getTime();
-  const differenceInHours: number = differenceInMilliseconds / (1000 * 60 * 60);
-
-  const statesLastEquipments: StatesLasEquipments = {
-    stateLastEquipment: states.find(
-      (state) => state.id === lastEquipments.lastEquipment.equipmentStateId
-    ),
-    stateSecondEquipment: states.find(
-      (state) => state.id === lastEquipments.secondEquipment.equipmentStateId
-    ),
-  };
-  const modelIndex = getModel(equipmentModelID);
-
-  const lastIndexsResults = {
-    lastIndexResult: modelIndex?.hourlyEarnings.find(
-      (e) =>
-        e.equipmentStateId === lastEquipments.lastEquipment.equipmentStateId
-    ),
-    secondIndexResult: modelIndex?.hourlyEarnings.find(
-      (e) =>
-        e.equipmentStateId === lastEquipments.secondEquipment.equipmentStateId
-    ),
-  };
-
-  const statesEquipmentsResuls: StatesEquipmentsResults[] = [];
-
-  if (
-    lastIndexsResults.lastIndexResult?.value &&
-    lastIndexsResults.secondIndexResult?.value
-  ) {
-    statesEquipmentsResuls.push({
-      ...lastIndexsResults.secondIndexResult,
-      name: statesLastEquipments.stateSecondEquipment?.name,
-      color: statesLastEquipments.stateSecondEquipment?.color,
-      valueLastHours:
-        lastIndexsResults.secondIndexResult?.value * differenceInHours,
-      hours: differenceInHours,
-      productivity:
-        ((lastIndexsResults.secondIndexResult.value * differenceInHours) / 24) *
-        100,
-    });
-  }
-
-  console.log(statesEquipmentsResuls);
-
-  return {
-    statesEquipmentsResuls,
-  };
-};
-const getModel = (equipmentModelId: string | undefined) => {
-  const model: EquipmentModel | undefined = models.find(
-    (model) => model.id === equipmentModelId
-  );
-  return model;
 };

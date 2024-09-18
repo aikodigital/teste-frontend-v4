@@ -10,8 +10,6 @@ import { Badge } from "../../../../components/Badge";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Timeline = ({ equipment }: any) => {
-  console.log("equipment no Timeline:", equipment);
-
   return (
     <Box
       minWidth="20%"
