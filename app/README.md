@@ -12,8 +12,6 @@ Esta aplicação foi desenvolvida como parte de um teste técnico e é um exempl
 - **Framework**: Vue.js foi escolhido para a construção da aplicação devido à sua simplicidade e capacidade de criar interfaces reativas.
 - **Gerenciamento de Estado**: Utilizei Pinia para gerenciar o estado da aplicação, garantindo que o estado global seja compartilhado e gerenciado de forma eficiente.
 - **Estilização**: A aplicação utiliza Tailwind CSS para estilização, promovendo um design mobile-first e responsivo. As cores são predominantemente escuras com elementos centralizados.
-- **Testes**: Cypress é utilizado para testes end-to-end, garantindo a qualidade e a funcionalidade da aplicação.
-
 
 - **Funcionalidades principais**:
   - **Filtragem**: Permite filtrar os dados da tabela por status, nome e modelo.
@@ -38,15 +36,5 @@ Esta aplicação foi desenvolvida como parte de um teste técnico e é um exempl
     npm run dev
     ```
    A aplicação estará disponível em [http://localhost:5173](http://localhost:5173).
-
-4. **Rodar Testes**:
-    ```bash
-    npx cypress open
-    ```
-   Ou para executar os testes de forma headless:
-    ```bash
-    npx cypress run
-    ```
----
 
 Para mais informações, consulte a documentação ou entre em contato.
