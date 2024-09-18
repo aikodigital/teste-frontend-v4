@@ -36,8 +36,8 @@ function App() {
   }, []);
 
   return (
-    <div className="App" style={{ position: 'fixed', height: '' }}>
-      <h1 style={{ position: 'fixed' }}>Equipamentos de Operação Florestal</h1>
+    <div className="App">
+      <h1>Equipamentos de Operação Florestal</h1>
       <Map equipmentPositions={equipmentPositions} />
     </div>
   );

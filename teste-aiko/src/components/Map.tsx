@@ -10,8 +10,7 @@ import equipmentData from '../data/equipment.json';
 import equipmentStateData from '../data/equipmentState.json';
 import equipmentStateHistoryData from '../data/equipmentStateHistory.json';
 import equipmentModelData from '../data/equipmentModel.json';
-import Sidebar from './Sidebar.tsx';
-
+import Sidebar from './Sidebar';
 // Definições de tipos para os dados
 interface Equipment {
     id: string;

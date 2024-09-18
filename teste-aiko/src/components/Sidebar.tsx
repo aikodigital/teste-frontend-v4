@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Select, { MultiValue, ActionMeta } from 'react-select';
 import './Sidebar.css';
 import { Equipment, EquipmentModel, EquipmentStateHistory, EquipmentState } from '../types';
-import Calculator from './calculator.tsx';
-import History from './HistoryPosition.tsx';
+import Calculator from './calculator';
+import History from './HistoryPosition';
 
 
 interface SidebarProps {
