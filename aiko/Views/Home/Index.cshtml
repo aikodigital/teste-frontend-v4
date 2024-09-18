@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Equipamentos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Menu de navegação -->
+    <nav>
+        <ul>
+            <li><a href="#" onclick="displayEquipmentPositions()">Posições dos Equipamentos</a></li>
+            <li><a href="#" onclick="displayEquipmentStates()">Estado Atual dos Equipamentos</a></li>
+            <li><a href="#" onclick="displayEquipmentStateHistory()">Histórico de Estados</a></li>
+        </ul>
+    </nav>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([-19.126536, -45.947756], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Dados do ViewBag
+        var equipments = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Equipments));
+        var equipmentPositions = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.EquipmentPositionHistories));
+        var equipmentStates = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.EquipmentStates));
+        var equipmentStateHistories = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.EquipmentStateHistories));
+
+        function clearMap() {
+            // Remove todos os marcadores existentes
+            if (map) {
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Marker) {
+                        map.removeLayer(layer);
+                    }
+                });
+            }
+        }
+
+        function displayEquipmentPositions() {
+            clearMap();
+
+            if (equipmentPositions && equipmentPositions.length > 0) {
+                equipmentPositions.forEach(function (equipment) {
+                    if (equipment.Positions && equipment.Positions.length > 0) {
+                        var latestPosition = equipment.Positions[equipment.Positions.length - 1];
+                        L.marker([latestPosition.Lat, latestPosition.Lon])
+                            .addTo(map)
+                            .bindPopup("Equipamento: " + equipment.EquipmentId)
+                            .openPopup();
+                    }
+                });
+            } else {
+                alert("Nenhuma posição de equipamento encontrada.");
+            }
+        }
+
+        function displayEquipmentStates() {
+            clearMap();
+
+            if (equipmentPositions && equipmentPositions.length > 0 && equipmentStates && equipmentStates.length > 0) {
+                equipmentPositions.forEach(function (equipmentPosition) {
+                    if (equipmentPosition.Positions && equipmentPosition.Positions.length > 0) {
+                        var latestPosition = equipmentPosition.Positions[equipmentPosition.Positions.length - 1];
+                        var equipmentStateHistory = equipmentStateHistories.find(function (history) {
+                            return history.EquipmentId === equipmentPosition.EquipmentId;
+                        });
+
+                        if (equipmentStateHistory && equipmentStateHistory.States && equipmentStateHistory.States.length > 0) {
+                            // Encontrar o estado mais recente
+                            var latestStateHistory = equipmentStateHistory.States[equipmentStateHistory.States.length - 1];
+                            var state = equipmentStates.find(function (s) {
+                                return s.Id === latestStateHistory.EquipmentStateId;
+                            });
+
+                            var stateText = state ? state.Name : "Desconhecido";
+                            var stateColor = state ? state.Color : "#cccccc"; 
+
+                            var equipment = equipments.find(function (e) {
+                                return e.Id === equipmentPosition.EquipmentId;
+                            });
+                            var equipmentName = equipment ? equipment.Name : "Desconhecido";
+
+                            // Adiciona um marcador com a cor do estado
+                            L.marker([latestPosition.Lat, latestPosition.Lon], {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: `<div style="background-color: ${stateColor}; width: 24px; height: 24px; border-radius: 50%;"></div>`,
+                                    iconSize: [24, 24]
+                                })
+                            })
+                                .addTo(map)
+                                .bindPopup("<div class='popup-content'><strong>Equipamento:</strong> " + equipmentName + "<br><strong>Estado:</strong> " + stateText + "</div>")
+                                .openPopup();
+                        } else {
+                            // Caso nao haja estado para o equipamento
+                            var equipment = equipments.find(function (e) {
+                                return e.Id === equipmentPosition.EquipmentId;
+                            });
+                            var equipmentName = equipment ? equipment.Name : "Desconhecido";
+
+                            L.marker([latestPosition.Lat, latestPosition.Lon], {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: `<div style="background-color: #cccccc; width: 24px; height: 24px; border-radius: 50%;"></div>`,
+                                    iconSize: [24, 24]
+                                })
+                            })
+                                .addTo(map)
+                                .bindPopup("<div class='popup-content'><strong>Equipamento:</strong> " + equipmentName + "<br><strong>Estado:</strong> Não disponível</div>")
+                                .openPopup();
+                        }
+                    }
+                });
+            } else {
+                alert("Nenhuma posição ou estado de equipamento encontrado.");
+            }
+        }
+
+        function displayEquipmentStateHistory() {
+            clearMap();
+
+            if (equipmentStateHistories && equipmentStateHistories.length > 0 && equipmentStates && equipmentStates.length > 0) {
+                equipmentStateHistories.forEach(function (history) {
+                    if (history.States && history.States.length > 0) {
+                        var latestHistory = history.States[history.States.length - 1];
+                        var state = equipmentStates.find(function (s) { return s.Id === latestHistory.EquipmentStateId; });
+                        var stateText = state ? state.Name : "Desconhecido";
+
+                        var equipment = equipments.find(function (e) { return e.Id === history.EquipmentId; });
+                        var equipmentName = equipment ? equipment.Name : "Desconhecido";
+
+                        var latestPosition = equipmentPositions.find(e => e.EquipmentId === history.EquipmentId)?.Positions.slice(-1)[0];
+
+                        if (latestPosition) {
+                            L.marker([latestPosition.Lat, latestPosition.Lon])
+                                .addTo(map)
+                                .bindPopup("<div class='popup-content'><strong>Equipamento:</strong> " + equipmentName + "<br><strong>Estado:</strong> " + stateText + "</div>")
+                                .openPopup();
+                        }
+                    }
+                });
+            } else {
+                alert("Nenhum histórico de estado encontrado.");
+            }
+        }
+    </script>
+
+</body>
+</html>
