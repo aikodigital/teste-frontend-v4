@@ -64,7 +64,7 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
                                 <h1>Histórico do Equipamento</h1>
                                 <p>
                                     Você está vendo o histórico de posições e estados de um
-                                    equipamento. Clique <a onClick={() => navigate(`/`)}>aqui</a> para voltar para a Lista de Equipamentos.
+                                    equipamento. Clique <a href={`/`}>aqui</a> para voltar para a Lista de Equipamentos.
                                 </p>
 
                                 <EquipmentStateHistorySection

@@ -1,8 +1,6 @@
 import React from 'react';
 import './header.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 import companyLogo from "../../assets/logo.png"
 
 const Header: React.FC = () => {
