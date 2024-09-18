@@ -54,7 +54,7 @@
 
             <div class="border-t-2 border-gray-600 pt-2">
                 <h2 class="text-2xl font-semibold mb-4">Equipamentos</h2>
-                <ul class="list-none text-gray-300 p-0 overflow-y-auto overflow-x-hidden">
+                <ul class="list-none text-gray-300 p-0 overflow-y-auto overflow-x-hidden max-h-96">
                     <li @click="selectEquipment(equipment)" v-for="equipment in filteredEquipments" :key="equipment.id"
                         :class="selectedEquipment?.name === equipment.name && 'bg-gray-700 translate-x-2'"
                         class="flex items-center cursor-pointer mb-1 hover:bg-gray-900 rounded-sm p-4 transition duration-200 ease-in-out">
