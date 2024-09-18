@@ -1,0 +1,58 @@
+{
+  "globals": {
+    "vi": true
+  },
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "standard"
+  ],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier", "import-helpers"],
+  "rules": {
+    "prettier/prettier": "error",
+    "brace-style": "off",
+    "multiline-ternary": "off",
+    "indent": "off",
+    "react/react-in-jsx-scope": "off",
+    "space-before-function-paren": "off",
+    "no-useless-constructor": "off",
+    "react/display-name": "off",
+    "no-undef": "off",
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          ["/utils/", "/services/"],
+          ["/components/", "/contexts/"],
+          "/public/",
+          "/styles/",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
