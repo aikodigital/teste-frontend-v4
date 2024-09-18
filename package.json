@@ -1,0 +1,47 @@
+{
+  "name": "quasar-project",
+  "version": "0.0.1",
+  "description": "A Quasar Project",
+  "productName": "Quasar App",
+  "author": "Silas Santos <silasribeiro11@gmail.com>",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.vue ./",
+    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
+    "build": "quasar build"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.12",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.15",
+    "axios": "^1.7.7",
+    "leaflet.markercluster": "^1.5.3",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate-2": "^2.0.24",
+    "quasar": "^2.16.11",
+    "vue": "^3.5.6",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^1.9.5",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "leaflet": "^1.9.4",
+    "postcss": "^8.4.47",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.4.11",
+    "vite-plugin-checker": "^0.7.2"
+  },
+  "engines": {
+    "node": "^20 || ^18 || ^16",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
