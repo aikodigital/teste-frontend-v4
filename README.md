@@ -8,6 +8,8 @@ O objetivo do projeto é tratar e exibir os dados de uma operação florestal.
 ## Para acessar o link da aplicação:
 [V4-AIKO-DANIEL](https://v4-aiko-danieldahers-projects.vercel.app/)
 
+OBS: o deploy foi feito na vercel, de forma gratuita, então é possível que o servidor precise de um tempo para iniciar (e consequentemente a página abrir)
+
 ## Como rodar a aplicação no computador:
 
 #### Seu computador precisa de Git (para versionamento do código), Node.js & npm (para executar a aplicação). Clique nos links, caso ainda não tenha instalado algum desses:
