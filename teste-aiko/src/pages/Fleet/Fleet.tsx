@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { Equipment } from "../../interfaces/Equipment";
+import { EquipmentInterface } from "../../interfaces/Equipment";
 
 export default function Fleet() {
   
@@ -13,7 +13,7 @@ export default function Fleet() {
   
   const fleet = useSelector((state: RootState) => {
     const regexp = new RegExp(state.search, 'i');
-    return state.fleet.filter((equipment: Equipment) => equipment.id.match(regexp));
+    return state.fleet.filter((equipment: EquipmentInterface) => equipment.id?.match(regexp));
   });
 
 
@@ -25,7 +25,7 @@ export default function Fleet() {
         </header>
 
         <div className={styles.fleet}>
-          {fleet?.map((equipment: Equipment) => (
+          {fleet?.map((equipment: EquipmentInterface) => (
             <div onClick={() => navigate(`/equipmentDetails/${equipment.id}`)} className={styles.item} key={uuidv4()}>
               <img src="src/assets/box-truck.png" alt="Truck" className={styles.image} />
               <div className={styles.info}>

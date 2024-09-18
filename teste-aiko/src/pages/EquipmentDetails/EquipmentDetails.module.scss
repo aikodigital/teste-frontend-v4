@@ -1,6 +1,32 @@
 .container {
+    
+    .card-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .card {
+        width: 500px;
+        height: 500px;
+        margin-top: 70px;
+        padding-top: 25px;
+        border: solid #000 1px;
+        border-radius: 15px;
+        background-color: #fff;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: start;
+        overflow: scroll;
+    }
 
     img {
-        height: 2rem;
+        height: 8rem;
     }
+
+    p {
+        margin-bottom: 10px;
+    }
+
 }

@@ -12,7 +12,7 @@ export default function Router() {
         <Route path='/' element={<MainPage />}>
           <Route index element={<Map/>} />
           <Route path='/fleet' element={<Fleet />} />
-          <Route path='/equipmentDetails/:equipmentId' element={<EquipmentDetails/>} />
+          <Route path='/equipmentDetails/:id' element={<EquipmentDetails/>} />
         </Route>
       </Routes>
     </BrowserRouter>

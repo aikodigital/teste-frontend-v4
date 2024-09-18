@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Equipments from '../../data/equipment.json';
-import { Equipment } from "../../interfaces/Equipment";
+import { EquipmentInterface } from "../../interfaces/Equipment";
 
-const initialState: Equipment[] = Equipments;
+const initialState: EquipmentInterface[] = Equipments;
 
 const fleetSlice = createSlice({
     name: 'fleet',
     initialState,
-    reducers: {
-       
-    }        
+    reducers: {},      
   });
 
-  export const {  } = fleetSlice.actions;
-  export default fleetSlice.reducer;
+export default fleetSlice.reducer;

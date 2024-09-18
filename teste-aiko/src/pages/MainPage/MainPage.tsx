@@ -1,5 +1,5 @@
 import styles from './MainPage.module.scss';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 
 export default function MainPage() {
