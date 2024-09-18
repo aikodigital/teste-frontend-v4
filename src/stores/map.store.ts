@@ -6,8 +6,10 @@ import L from 'leaflet'
 import router from '@/router'
 
 export const useMap = defineStore('useMap', () => {
-  const southwestEquipment: Ref<Position> = ref({} as Position)
-  const northeastEquipment: Ref<Position> = ref({} as Position)
+  const southEquipment: Ref<Position> = ref({} as Position)
+  const westEquipment: Ref<Position> = ref({} as Position)
+  const northEquipment: Ref<Position> = ref({} as Position)
+  const eastEquipment: Ref<Position> = ref({} as Position)
 
   const equipmentStore = useEquipment()
 
@@ -21,33 +23,39 @@ export const useMap = defineStore('useMap', () => {
     findExtremeMarkers()
 
     return L.latLngBounds([
-      [southwestEquipment.value.lat, southwestEquipment.value.lon],
-      [northeastEquipment.value.lat, northeastEquipment.value.lon]
+      [westEquipment.value.lat, southEquipment.value.lon],
+      [eastEquipment.value.lat, northEquipment.value.lon]
     ])
   })
 
   function findExtremeMarkers() {
-    let southwest = equipmentStore.equipments[0].position
-    let northeast = equipmentStore.equipments[0].position
+    let south = equipmentStore.equipments[0].position
+    let west = equipmentStore.equipments[0].position
+    let north = equipmentStore.equipments[0].position
+    let east = equipmentStore.equipments[0].position
 
     equipmentStore.equipments.forEach((equipment) => {
-      if (
-        equipment.position.lat < southwest.lat ||
-        (equipment.position.lat === southwest.lat && equipment.position.lon < southwest.lon)
-      ) {
-        southwest = equipment.position
+      if (equipment.position.lat > north.lat) {
+        north = equipment.position
       }
 
-      if (
-        equipment.position.lat > northeast.lat ||
-        (equipment.position.lat === northeast.lat && equipment.position.lon > northeast.lon)
-      ) {
-        northeast = equipment.position
+      if (equipment.position.lat < south.lat) {
+        south = equipment.position
+      }
+
+      if (equipment.position.lon > east.lon) {
+        east = equipment.position
+      }
+
+      if (equipment.position.lon < west.lon) {
+        west = equipment.position
       }
     })
 
-    southwestEquipment.value = southwest
-    northeastEquipment.value = northeast
+    southEquipment.value = south
+    northEquipment.value = north
+    westEquipment.value = west
+    eastEquipment.value = east
   }
 
   function updateMap() {
@@ -59,9 +67,6 @@ export const useMap = defineStore('useMap', () => {
   return {
     copyright,
     getExtremeBounds,
-    northeastEquipment,
-    southwestEquipment,
-    findExtremeMarkers,
     updateMap
   }
 })

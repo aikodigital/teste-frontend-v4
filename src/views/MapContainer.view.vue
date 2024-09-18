@@ -68,7 +68,7 @@ const markAllEquipments = () => {
       .on('click', () => equipmentStore.selectEquipment(equipment.equipmentId))
   })
 
-  map.fitBounds(mapStore.getExtremeBounds)
+  map.fitBounds(mapStore.getExtremeBounds).setView(mapStore.getExtremeBounds.getCenter(), 11)
 }
 
 onMounted(() => {
