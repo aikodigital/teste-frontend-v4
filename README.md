@@ -19,46 +19,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ### Estrutura de Repositório
 
-Esta seção descreve a forma como o repositório foi organizado, assim como o conteúdo dos principais arquivos.
-
-### Estrutura Geral
-
-O repositório está organizado da seguinte forma:
-
-src/
-│
-
-├── api/
-
-├── assets/
-
-├── components/
-
-│   ├── EquipmentFilters/
-
-│   ├── EquipmentStateHistory/
-
-│   ├── Header/
-
-│   ├── MapComponent/
-
-│   └── SkeletonPage/
-
-├── contexts/
-
-├── data/
-
-├── pages/
-
-│   ├── DetailsPage.tsx
-
-│   └── HomePage.tsx
-
-├── utils/
-
-└── App.css
-
-Abaixo, segue a descrição das pastas e arquivos:
+Abaixo, segue a descrição das principais pastas e arquivos presentes no repositório:
 
 #### `api/`
 - **api.ts**: Centraliza a comunicação com APIs externas. Este arquivo simula a chamada de uma API.
