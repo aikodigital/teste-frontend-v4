@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# Teste Frontend V4
+Boas vindas ao Frontend V4 da empresa Aiko, onde você pode visualizar no mapa onde está seu equipamento florestal. Além disso, também consegue ver o status atual e todo o histórico daquele item.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Objetivos:
 
-## Available Scripts
+O objetivo do projeto é tratar e exibir os dados de uma operação florestal.
 
-In the project directory, you can run:
+## Para acessar o link da aplicação:
+[V4-AIKO-DANIEL] (https://v4-aiko-danieldahers-projects.vercel.app/)
 
-### `npm start`
+## Como rodar a aplicação no computador:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Seu computador precisa de Git (para versionamento do código), Node.js & npm (para executar a aplicação). Clique nos links, caso ainda não tenha instalado algum desses:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ - [ ] [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+ - [ ] [Node.js e npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-### `npm test`
+Agora sim estamos prontos para instalar o projeto.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalando a aplicação:
 
-### `npm run build`
+1. Primeiro, abra um novo terminal e clone o repositório utilizando o comando 
+`git clone git@github.com:DanielDaher/teste-frontend-v4.git`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Em seguida, digite `cd teste-frontend-v4` para entrar no diretório (pasta) do projeto, que acabou de ser criada.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Utilize o comando `git checkout teste/daniel-daher` para acessar a branch com o código correto.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Execute `npm install` para instalar as dependências necessárias.
 
-### `npm run eject`
+5. Ao término da etapa anterior, rode no terminal `npm start`. Isto pode demorar alguns minutos, aguarde até que o terminal informe que compilou com sucesso. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+6. E agora é só desfrutar do site!
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Funcionalidades da aplicação
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Esta aplicação consiste em uma tela que exibe três botões de filtro, um input e um mapa.
 
-## Learn More
+O mapa exibe a localização dos equipamentos usados em uma operação florestal. Clicando nos ícones de cada veículo, é possível ver seu status atual ('operando', 'parado' ou 'em manutenção') e o histórico geral.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Ao clicar nos filtros, é possível exibir apenas os equipamentos que, atualmente, possuem o status escolhido. Clicando novamente no mesmo botão, o filtro é desativado e o mapa volta a exibir todos os equipamentos.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+O input serve para pesquisar pelos nomes dos veículos ('CA-0002', por exemplo).
