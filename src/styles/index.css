@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("mapView.css");
+@import url("modal.css");
+
+:root {
+  --color-white-1: #ffffff;
+  --color-white-2: #f5f5f5;
+  --color-gray-1: #f9f9f9;
+  --color-gray-2: #ccc;
+  --color-gray-3: #a7a7a7;
+  --color-gray-4: #9c9c9c;
+  --color-gray-5: #333333;
+  --color-blue: #003184;
+  --color-green: #00c100;
+
+  --color-operando: #2ecc71;
+  --color-parado: #f1c40f;
+  --color-manutencao: #e74c3c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+/* Estilo global */
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: var(--color-white-2);
+  color: var(var(--color-gray-5));
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--color-blue), var(--color-green));
+  color: var(--color-white-1);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.header p {
+  margin: 10px 0 0;
+  font-size: 1.2rem;
+}
+
+/* Layout Principal */
+.content {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 1;
+  background-color: var(--color-white-1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+
+  height: calc(-250px + 100vh) !important;
+  overflow-y: auto;
+}
+
+.infos-title,
+.infos-title-margin {
+  color: var(--color-blue);
+}
+
+.infos-summary {
+  margin-top: 20px;
+}
+
+.infos-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.infos-title-margin {
+  margin: 20px 0;
+}
+
+.infos-content {
+  display: flex;
+  align-items: center;
+}
+
+.infos-summary-width {
+  width: 50%;
+}
+
+/* Informações contidas na coluna "Status dos Equipamentos" */
+.icon-operando {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-operando);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.icon-parado {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-parado);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.icon-manutencao {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-manutencao);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.icon-padrao {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-gray-5);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* Alterar o css da scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-white-2);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-3);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-4);
+}
+
+/* Copyright do rodapé */
+.copyright {
+  padding-left: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Estilo Responsivo */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2.2rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    margin-right: 0;
+    margin-bottom: 20px;
+    overflow-y: visible;
+  }
+
+  .infos-content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+  }
+}
