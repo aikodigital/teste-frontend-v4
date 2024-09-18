@@ -65,18 +65,15 @@ Optou-se por utilizar **Pug** para simplificar a sintaxe de marcação do HTML e
 ### 1. Instalação do Projeto
 
 Clone o repositório:
-```bash
 git clone https://github.com/lucaswd21/teste-frontend-v4
 cd https://github.com/lucaswd21/teste-frontend-v4
 
 ## Instale as dependências:
 
-```bash
 npm install --force
 
 ## Execute o projeto em modo desenvolvimento:
 
-```bash
 npm run dev
 
 Configure as variáveis de ambiente: Certifique-se de que você possui uma chave da API do Google Maps. No arquivo nuxt.config.ts, ajuste o api-key com sua chave do Google Maps.
@@ -84,7 +81,6 @@ Configure as variáveis de ambiente: Certifique-se de que você possui uma chave
 ### 2. Teste
 
 Para rodar os testes unitários com o Jest, use o comando:
-```bash
 npm run test:unit
 
 Certifique-se de que o Jest está corretamente configurado, e que o Pinia está sendo usado no modo de teste (createTestingPinia).
@@ -92,7 +88,6 @@ Certifique-se de que o Jest está corretamente configurado, e que o Pinia está 
 ### 3. Build
 
 Para gerar uma build de produção:
-```bash
 npm run build
 
 ## Funcionalidades Extras
