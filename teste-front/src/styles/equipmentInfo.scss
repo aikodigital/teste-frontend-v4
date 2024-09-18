@@ -1,0 +1,126 @@
+.equipment-info {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+  
+      h3 {
+        font-size: 22px;
+        color: #333;
+        font-weight: 600;
+        margin: 0;
+      }
+  
+      .state-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+    }
+  
+    .info-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+  
+      .info-item {
+        font-size: 18px;
+        color: #666;
+  
+        strong {
+          color: #333;
+          margin-right: 8px;
+        }
+  
+        .earnings {
+          color: #27ae60;
+          font-weight: bold;
+          font-size: 18px;
+        }
+  
+        .productivity {
+          color: #3498db;
+          font-weight: bold;
+          font-size: 18px;
+        }
+  
+        .total-earnings {
+          color: #f39c12;
+          font-weight: bold;
+          font-size: 20px;
+        }
+      }
+    }
+  
+    @media (max-width: 768px) {
+      padding: 16px;
+  
+      .info-header {
+        h3 {
+          font-size: 20px;
+        }
+  
+        .state-badge {
+          font-size: 12px;
+          padding: 6px 12px;
+        }
+      }
+  
+      .info-details {
+        .info-item {
+          font-size: 16px;
+  
+          .earnings,
+          .productivity,
+          .total-earnings {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  
+    @media (max-width: 480px) {
+      padding: 12px;
+  
+      .info-header {
+        h3 {
+          font-size: 18px;
+        }
+  
+        .state-badge {
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+      }
+  
+      .info-details {
+        .info-item {
+          font-size: 14px;
+  
+          .earnings,
+          .productivity,
+          .total-earnings {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  
