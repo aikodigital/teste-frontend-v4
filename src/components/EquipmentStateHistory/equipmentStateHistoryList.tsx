@@ -54,7 +54,6 @@ const EquipmentStateHistoryList: React.FC<EquipmentStateHistoryListProps> = ({
                 <strong style={{ color: stateInfo.color }}>{stateInfo.name}</strong>
               </span>
               <span className="badge" style={{ backgroundColor: stateInfo.color }}>
-                {/* Cor do estado */}
               </span>
               <span>{new Date(state.date).toLocaleString()}</span>
             </li>

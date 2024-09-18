@@ -60,19 +60,11 @@ const SkeletonPage: React.FC<SkeletonPageProps> = ({ selectedEquipment }) => {
                 <div className="row full-height">
                     <div className="col-md-6 card-container p-4">
                         {selectedEquipment ? (
-                            <>
-                                <h1>Histórico do Equipamento</h1>
-                                <p>
-                                    Você está vendo o histórico de posições e estados de um
-                                    equipamento. Clique <a href={`/`}>aqui</a> para voltar para a Lista de Equipamentos.
-                                </p>
-
-                                <EquipmentStateHistorySection
-                                    equipmentId={selectedEquipment}
-                                    stateHistory={equipmentStatesHistory}
-                                    stateInfoList={equipmentStatesInfoList}
-                                />
-                            </>
+                            <EquipmentStateHistorySection
+                                equipmentId={selectedEquipment}
+                                stateHistory={equipmentStatesHistory}
+                                stateInfoList={equipmentStatesInfoList}
+                            />
                         ) : (
                             <>
                                 <h1>Lista de equipamentos</h1>
