@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import equipmentData from '../data/equipment.json';
@@ -54,11 +55,10 @@ export default function Equipamentos() {
 
   useEffect(() => {
     if (selectedEquipment) {
-      // Limpa o histórico anterior ao selecionar um novo equipamento
+
       setEquipmentHistory([]);
       setEquipmentPositions([]);
 
-      // Carrega o histórico de estados
       const equipmentHistoryData = equipmentStateHistory.find(e => e.equipmentId === selectedEquipment);
       if (equipmentHistoryData) {
         const history = equipmentHistoryData.states.map(state => {
@@ -72,22 +72,19 @@ export default function Equipamentos() {
         setEquipmentHistory(history);
       }
 
-      // Carrega o histórico de posições
       const equipmentPositionsData = equipmentPositionHistory.find(e => e.equipmentId === selectedEquipment);
       if (equipmentPositionsData) {
         const validPositions = equipmentPositionsData.positions.map(position => ({
           lat: position.lat,
-          lng: position.lon, // Mapeia corretamente 'lon' para 'lng'
-        })).filter(position => !isNaN(position.lat) && !isNaN(position.lng)); // Filtra posições inválidas
-        
-        // Atualiza apenas as posições válidas do equipamento atual
+          lng: position.lon,
+        })).filter(position => !isNaN(position.lat) && !isNaN(position.lng));
         setEquipmentPositions(validPositions);
       }
     }
   }, [selectedEquipment]);
 
   const handleClickEquipment = (equipmentId) => {
-    setSelectedEquipment(equipmentId); // Define o novo equipamento selecionado
+    setSelectedEquipment(equipmentId);
   };
 
   const getEquipmentName = (equipmentId) => {
@@ -122,15 +119,12 @@ export default function Equipamentos() {
 
       {selectedEquipment && (
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Histórico de estados */}
           <div>
             <h2 className="text-2xl font-bold mb-4">
               Histórico de Estados: {getEquipmentName(selectedEquipment)}
             </h2>
             <EquipmentHistory history={equipmentHistory} />
           </div>
-
-          {/* Mapa com o histórico de posições */}
           <div>
             <h2 className="text-2xl font-bold mb-4">Mapa do Trajeto</h2>
             {isLoaded ? (
@@ -142,7 +136,6 @@ export default function Equipamentos() {
                 {equipmentPositions.map((position, index) => (
                   <Marker key={index} position={position} />
                 ))}
-                {/* Renderiza as polylines somente se houver mais de 1 posição */}
                 {equipmentPositions.length > 1 && (
                   <Polyline
                     path={equipmentPositions}

@@ -1,3 +1,4 @@
+import React from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import EquipmentsLocation from '../components/EquipmentsLocation';
 import EquipamentState from '../components/EquipamentState';
