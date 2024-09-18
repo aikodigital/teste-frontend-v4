@@ -1,207 +1,125 @@
-# Teste Frontend V4
+# Documentação da Aplicação: Gestão de Equipamentos Florestais
 
-![Aiko](img/aiko.png)
+## Descrição Geral
+A aplicação "Gestão de Equipamentos Florestais" foi desenvolvida para monitorar equipamentos em uma operação florestal. Os dados coletados incluem a posição geográfica dos equipamentos e o estado de operação, que podem ser "Operando", "Parado" ou "Manutenção". A aplicação permite aos gestores visualizar a localização dos equipamentos em tempo real, bem como acessar o histórico de estados e posições de cada equipamento.
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+## Decisões Técnicas Tomadas
 
-## O Desafio
+### Framework
+A aplicação foi desenvolvida utilizando **Nuxt 3**, um framework poderoso baseado no **Vue.js**, que facilita a criação de aplicações frontend modernas com uma estrutura de pastas eficiente, renderização do lado do servidor (SSR), e uma ótima performance.
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+### Bibliotecas e Ferramentas
+- **Vuetify**: Para a criação de componentes de UI responsivos e compatíveis com o Material Design.
+- **Pinia**: Para o gerenciamento de estado da aplicação de maneira eficiente e simples, substituindo o Vuex.
+- **Google Maps API**: Para a exibição do mapa e dos marcadores que representam os equipamentos.
+- **Jest**: Para testes unitários, garantindo que os principais componentes e funcionalidades da aplicação sejam testados.
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+### Estilo e Layout
+Optou-se por utilizar **Pug** para simplificar a sintaxe de marcação do HTML e facilitar a leitura dos arquivos `.vue`. Também foi utilizado **SCSS** para personalizar o estilo da aplicação de forma mais eficiente, respeitando as boas práticas de design responsivo.
 
-## Requisitos
+## Componentes Desenvolvidos
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+### 1. `Index.vue`
+**Responsabilidade**: Página principal que contém o mapa e os filtros para visualização dos equipamentos.
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+**Descrição**:
+- Exibe filtros para filtrar equipamentos por estado ou modelo.
+- Renderiza o mapa com marcadores dos equipamentos e atualiza conforme os filtros aplicados.
+- Implementa a pesquisa de equipamentos e faz a renderização dos ícones customizados no mapa com base no modelo de equipamento.
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+**Funcionalidades**:
+- Exibe a lista de equipamentos e suas posições mais recentes no mapa.
+- Ao clicar em um equipamento, exibe o modal com o histórico de estados do equipamento.
+- Exibe a rota percorrida por um equipamento específico ao clicar no marcador.
+- Permite a pesquisa por nome de equipamento e a filtragem por estado e modelo.
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+### 2. `EquipmentHistoryDialog.vue`
+**Responsabilidade**: Modal para exibição do histórico de estados de um equipamento.
 
-## Dados
+**Descrição**:
+- Exibe uma lista paginada dos estados que o equipamento passou, incluindo data e estado.
+- Calcula e exibe a produtividade do equipamento com base nas horas operacionais.
+- Exibe o total de ganhos acumulados por um equipamento com base no modelo e estado em que ele se encontrava.
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+**Funcionalidades**:
+- Paginação do histórico de estados.
+- Cálculo de produtividade e ganhos.
+- Pode ser fechado para retornar à visualização do mapa.
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+### 3. `main.js`
+**Responsabilidade**: Store central da aplicação gerenciada pelo Pinia.
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+**Descrição**:
+- Gerencia o estado global da aplicação, incluindo dados dos equipamentos, posições, estados e históricos.
+- Fornece métodos para acessar e manipular os dados da aplicação, como histórico de estados, produtividade e ganhos por equipamento.
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+**Principais métodos**:
+- **loadData**: Carrega os dados iniciais dos arquivos JSON.
+- **getEquipmentState**: Retorna o estado atual de um equipamento.
+- **getEquipmentProductivity**: Calcula a produtividade de um equipamento.
+- **getEquipmentEarnings**: Calcula o ganho total acumulado de um equipamento.
+- **getEquipmentPositionHistory**: Retorna o histórico de posições de um equipamento.
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+## Instruções de Uso
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+### 1. Instalação do Projeto
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+Clone o repositório:
+git clone https://github.com/lucaswd21/teste-frontend-v4
+cd https://github.com/lucaswd21/teste-frontend-v4
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+## Instale as dependências:
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+npm install --force
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+## Execute o projeto em modo desenvolvimento:
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+npm run dev
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+Configure as variáveis de ambiente: Certifique-se de que você possui uma chave da API do Google Maps. No arquivo nuxt.config.ts, ajuste o api-key com sua chave do Google Maps.
 
+### 2. Teste
 
-## O que é permitido
+Para rodar os testes unitários com o Jest, use o comando:
+npm run test:unit
 
-* Vue, React e Angular.
+Certifique-se de que o Jest está corretamente configurado, e que o Pinia está sendo usado no modo de teste (createTestingPinia).
 
-* Typescript.
+### 3. Build
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+Para gerar uma build de produção:
+npm run build
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+## Funcionalidades Extras
 
-* Template engines (Pug, Ejs, etc).
+### 1. Pesquisa por Equipamento
+Permite ao usuário pesquisar um equipamento pelo nome. A pesquisa é dinâmica, ou seja, enquanto o usuário digita, o mapa é atualizado automaticamente com os resultados filtrados.
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+### 2. Cálculo de Produtividade
+A produtividade de um equipamento é calculada com base nas horas em que ele esteve "Operando" em relação ao tempo total. Esse cálculo é exibido no modal de histórico de estados.
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+### 3. Cálculo de Ganho por Equipamento
+O ganho de um equipamento é calculado com base no tempo em que ele esteve em diferentes estados ("Operando", "Manutenção", "Parado") e no valor que o equipamento gera por hora em cada um desses estados.
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+### 4. Diferenciação Visual de Equipamentos
+Os equipamentos são diferenciados visualmente por meio de ícones personalizados no mapa, com base no modelo de equipamento.
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
+### 5. Histórico de Posições
+Ao clicar em um marcador no mapa, a rota percorrida pelo equipamento é exibida com uma linha no mapa, e os marcadores de cada ponto de registro de posição são mostrados no mapa.
 
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
+---
 
-## O que não é permitido
+## Decisões de Design
 
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
+### Filtros Dinâmicos
+Foram implementados filtros de estado e modelo para ajudar os gestores a visualizar os equipamentos de maneira mais segmentada e eficiente.
 
-## Recomendações
+### Mapas Interativos
+A **Google Maps API** foi utilizada para permitir uma interação mais fluida com o mapa, permitindo cliques em marcadores e a visualização de detalhes dos equipamentos diretamente na interface.
 
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
+### Uso de Pug
+Foi utilizado o **Pug** como engine de template para simplificar o HTML, melhorar a legibilidade do código e garantir uma estrutura mais concisa.
 
-## Extras
+### UI Responsiva com Vuetify
+Utilizou-se o **Vuetify** para garantir uma UI responsiva e moderna, garantindo boa usabilidade em dispositivos móveis e desktops.
 
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-* Relizar o fork e clonar esse repositório para sua máquina.
-  
-* Criar uma branch com o nome de `teste/[NOME]`.
-  * `[NOME]`: Seu nome.
-  * Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-  
-* Faça um commit da sua branch com a implementação do teste.
-  
-* Realize o pull request da sua branch nesse repositório.

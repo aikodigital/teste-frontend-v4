@@ -1,0 +1,44 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint . --ext .js,.vue",
+    "lint:fix": "eslint . --ext .js,.vue --fix",
+    "test:unit": "jest --watch"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "@nuxt/scripts": "^0.9.2",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
+    "@pinia/nuxt": "^0.5.4",
+    "@pinia/testing": "^0.1.5",
+    "nuxt": "^3.13.0",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^4.0.1",
+    "valibot": "^0.42.0",
+    "vue": "latest",
+    "vue-router": "latest",
+    "vuetify-nuxt-module": "^0.18.3"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/vue3-jest": "^27.0.0",
+    "babel": "^6.23.0",
+    "babel-jest": "^27.5.1",
+    "eslint": "^9.10.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "jest": "^27.5.1",
+    "jest-transform-stub": "^2.0.0",
+    "pug": "^3.0.3",
+    "pug-plain-loader": "^1.1.0",
+    "ts-jest": "^27.1.5",
+    "typescript": "^4.9.5"
+  }
+}
