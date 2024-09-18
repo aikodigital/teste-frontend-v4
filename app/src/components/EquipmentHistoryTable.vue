@@ -2,7 +2,7 @@
     <div>
         <div class="mb-4">
             <select v-model="selectedStatus"
-                class="w-full p-1.5 rounded-md border border-gray-600 bg-gray-800 text-gray-100">
+                class="w-full p-2 rounded-md border border-gray-600 bg-gray-800 text-gray-100">
                 <option value="">Todos os Status</option>
                 <option v-for="status in uniqueStatuses" :key="status" :value="status">
                     {{ status }}
@@ -14,33 +14,33 @@
             <table class="min-w-full bg-gray-700 border-separate border-spacing-0">
                 <thead class="bg-blue-900 text-gray-100">
                     <tr>
-                        <th class="py-2 px-3 text-center border-b border-gray-600">Data</th>
-                        <th class="py-2 px-3 text-center border-b border-gray-600">Horário de Atualização</th>
-                        <th class="py-2 px-3 text-center border-b border-gray-600">Status</th>
-                        <th class="py-2 px-3 text-center border-b border-gray-600">Horas no Estado</th>
+                        <th class="py-2 px-2 text-left border-b border-gray-600 sm:text-center">Data</th>
+                        <th class="py-2 px-2 text-left border-b border-gray-600 sm:text-center">Horário de Atualização
+                        </th>
+                        <th class="py-2 px-2 text-left border-b border-gray-600 sm:text-center">Status</th>
+                        <th class="py-2 px-2 text-left border-b border-gray-600 sm:text-center">Horas no Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(state, index) in paginatedStates" :key="index" class="text-gray-100">
-                        <td class="py-1.5 px-3 border-b border-gray-600 text-center">{{ formattedDate(state.date) }}
-                        </td>
-                        <td class="py-1.5 px-3 border-b border-gray-600 text-center">{{ formattedHours(state.date) }}
-                        </td>
-                        <td class="py-1.5 px-3 border-b border-gray-600 text-center">{{ state.name }}</td>
-                        <td class="py-1.5 px-3 border-b border-gray-600 text-center">{{ state.hours }} horas</td>
+                        <td class="py-1 px-2 border-b border-gray-600 text-center text-sm">{{ formattedDate(state.date)
+                            }}</td>
+                        <td class="py-1 px-2 border-b border-gray-600 text-center">{{ formattedHours(state.date) }}</td>
+                        <td class="py-1 px-2 border-b border-gray-600 text-center">{{ state.name }}</td>
+                        <td class="py-1 px-2 border-b border-gray-600 text-center">{{ state.hours }} horas</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="mt-4 flex justify-center items-center gap-5">
+        <div class="mt-4 flex justify-center items-center gap-4">
             <button :disabled="currentPage === 1" @click="currentPage--"
-                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
+                class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
                 Anterior
             </button>
             <span class="text-gray-100">Página {{ currentPage }} de {{ totalPages }}</span>
             <button :disabled="currentPage === totalPages" @click="currentPage++"
-                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
+                class="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
                 Próxima
             </button>
         </div>
@@ -123,11 +123,22 @@ table {
 
 th,
 td {
-    padding: 8px;
+    padding: 6px;
     border: 1px solid #444;
 }
 
 thead {
     background-color: #1e3a8a;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 0.875rem;
+    }
+
+    th,
+    td {
+        padding: 4px;
+    }
 }
 </style>
