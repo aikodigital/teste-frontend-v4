@@ -15,14 +15,16 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Lint](https://eslint.org/)
 - [Leaflet](https://leafletjs.com/)
+- [Bootstrap](https://getbootstrap.com/)
 
-# Estrutura de Repositório
+### Estrutura de Repositório
 
 Esta seção descreve a forma como o repositório foi organizado, assim como o conteúdo dos principais arquivos.
 
-## Estrutura Geral
+### Estrutura Geral
 
-```bash
+O repositório está organizado da seguinte forma:
+
 src/
 │
 ├── api/
@@ -41,7 +43,7 @@ src/
 ├── utils/
 └── App.css
 
-### Descrição das Pastas e Arquivos
+Abaixo, segue a descrição das pastas e arquivos:
 
 #### `api/`
 - **api.ts**: Centraliza a comunicação com APIs externas. Este arquivo simula a chamada de uma API.
@@ -94,9 +96,5 @@ $ npm start
 
 # O servidor front-end iniciará em http://localhost:3000
 ```
-
-### 🎲 Sobre o desenvolvimento do projeto
-
-
 
 Desenvolvido por Victor Hugo Martins 🦸
