@@ -25,13 +25,13 @@ Deixo aqui minhas considerações e obseravções quanto ao desenvolvimento apli
 
 ### Tela Home
 
-![TelaHome](img/tela_home_aiko.png)
+![TelaHome](public/img/tela_home_aiko.png)
 
 A tela Home foi feita para auxiliar o usuário a navegar pelo framework, verificando os menus laterais e as escolhas possíveis de se fazer
 
 ### Tela Mapa de Equipamentos
 
-![TelaMapaEquipamentos](img/tela_mapa_aiko.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko.png)
 
 A tela Mapa de equipamentos é o local onde é focado a maior parte das funcionalidades do projeto. nela, é possível localizar os pontos dos equipamentos cadastrados na pasta "data" e realizar as seguintes funcionalidades:
 
@@ -41,11 +41,11 @@ A tela Mapa de equipamentos é o local onde é focado a maior parte das funciona
 
 Seguem os prints abaixo:
 
-![TelaMapaEquipamentos](img/tela_mapa_aiko_2.png)
-![TelaMapaEquipamentos](img/tela_mapa_aiko_3.png)
-![TelaMapaEquipamentos](img/tela_mapa_aiko_4.png)
-![TelaMapaEquipamentos](img/tela_mapa_aiko_5.png)
-![TelaMapaEquipamentos](img/tela_mapa_aiko_6.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko_2.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko_3.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko_4.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko_5.png)
+![TelaMapaEquipamentos](public/img/tela_mapa_aiko_6.png)
 
 ## Passos para rodar o código
 
