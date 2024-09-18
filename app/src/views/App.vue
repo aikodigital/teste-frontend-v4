@@ -5,8 +5,7 @@
     <div v-if="selectedEquipment" class="w-full px-2 lg:w-3/4 absolute right-0  bg-gray-900 sm:px-4 md:px-5 pt-16">
       <EquipmentDetails :selectedEquipment="selectedEquipment" />
       <div class="pt-5">
-        <button @click="toggleViewPath" class="btn mt-4 text-white bg-green-500 font-bold mb-2 rounded-md
-        p-2">
+        <button @click="toggleViewPath" class="mt-4 text-white bg-green-500 font-bold mb-2 rounded-lg p-2 px-4">
           {{ viewPath ? 'Esconder' : 'Ver' }} o trajeto do equipamento
         </button>
         <EquipmentMap v-if="selectedEquipment" :key="selectedEquipment.id" ref="equipmentMap"

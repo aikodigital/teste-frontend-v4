@@ -46,7 +46,7 @@
 
                 <div class="mb-4">
                     <button @click="clearFilters"
-                        class="px-4 py-2 bg-gray-600 text-white rounded-sm hover:bg-gray-700 focus:outline-none ">
+                        class="mt-4 text-white bg-green-500 font-bold mb-2 rounded-lg p-2 px-4 hover:bg-green-700 focus:outline-none transition-colors">
                         Limpar Filtros
                     </button>
                 </div>
