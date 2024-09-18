@@ -1,0 +1,26 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "leaflet": "^1.9.4",
+    "nuxt": "^3.13.0",
+    "nuxt-leaflet": "^0.0.27",
+    "typescript": "^5.6.2",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@mdi/font": "^7.4.47",
+    "vite-plugin-vuetify": "^2.0.4",
+    "vuetify": "^3.7.1"
+  }
+}
