@@ -29,7 +29,6 @@ export default function Map() {
   }, [isLoaded]);
 
   useEffect(() => {
-    // Filtrar equipamentos com base no estado selecionado
     if (selectedState) {
       const filtered = equipmentsLocal.filter((equipment) => {
         const latestState = getLatestState(equipment.equipmentId);
@@ -43,11 +42,8 @@ export default function Map() {
 
   const getLatestState = (equipmentId) => {
     const history = equipmentStateHistory.find(e => e.equipmentId === equipmentId);
-
     if (!history || !history.states.length) return null;
-
     const sortedStates = history.states.sort((a, b) => new Date(b.date) - new Date(a.date))[0];
-
     return equipmentState.find(state => state.id === sortedStates.equipmentStateId);
   };
 
@@ -82,7 +78,6 @@ export default function Map() {
     if (!markers) return null;
     return filteredEquipmentsLocal.map((equip, index) => {
       const equipmentPosition = Equipment.find(e => e.id === equip.equipmentId);
-
       if (!equipmentPosition) {
         console.error(`Equipamento com id ${equip.equipmentId} não encontrado`);
         return null;
@@ -105,10 +100,10 @@ export default function Map() {
                 <h3>{equipmentPosition.name}</h3>
                 <EquipamentState equipmentId={selectedEquipment.id} />
                 <EquipmentsModel equipmentModelId={equipmentPosition.equipmentModelId} />
-                <h4>Histórico de estados</h4>
+                <h4 className="text-lg font-bold">Histórico de estados</h4>
                 <ul>
                   {equipmentHistory.map((state, index) => (
-                    <li key={index} className='bg-opacity-70 p-2 rounded text-white' style={{ backgroundColor: state.stateColor }}>
+                    <li key={index} className="bg-opacity-70 p-2 rounded text-white" style={{ backgroundColor: state.stateColor }}>
                       <strong>{state.stateName}</strong>
                       <p>{new Date(state.date).toLocaleDateString()}</p>
                     </li>
@@ -122,20 +117,19 @@ export default function Map() {
     });
   };
 
-  const inicialPosition = equipmentsLocal.length > 0 ? { lat: equipmentsLocal[0].lat, lng: equipmentsLocal[0].lng } : { lat: 0, lng: 0 }
+  const inicialPosition = equipmentsLocal.length > 0 ? { lat: equipmentsLocal[0].lat, lng: equipmentsLocal[0].lng } : { lat: 0, lng: 0 };
 
   return (
-    <main className='relative h-screen'>
-      {/* Adicione o seletor de estado */}
-      <div className='absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-white p-4 rounded shadow-lg'>
-        <label htmlFor='stateFilter' className='mr-2'>Filtrar por estado:</label>
+    <main className="relative h-screen">
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 bg-white p-4 rounded shadow-lg">
+        <label htmlFor="stateFilter" className="mr-2">Filtrar por estado:</label>
         <select
-          id='stateFilter'
+          id="stateFilter"
           value={selectedState}
           onChange={(e) => setSelectedState(e.target.value)}
-          className='border rounded p-1'
+          className="border rounded p-1"
         >
-          <option value=''>Todos</option>
+          <option value="">Todos</option>
           {equipmentState.map((state) => (
             <option key={state.id} value={state.id}>
               {state.name}
