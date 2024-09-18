@@ -6,7 +6,7 @@ type Props = {
   name?: string;
   totalValue: number;
   bg: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const CardDetails = ({ name, totalValue, bg, children }: Props) => (
@@ -39,7 +39,7 @@ export const CardDetails = ({ name, totalValue, bg, children }: Props) => (
         </Typography>
         <Box display="flex" alignItems="center">
           <Typography color="#fff" fontSize={21}>
-            {totalValue}R$
+            R$ {totalValue}
           </Typography>
           {totalValue > 0 ? (
             <TrendingUpOutlinedIcon
