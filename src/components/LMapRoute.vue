@@ -64,82 +64,131 @@ export default {
     }
   },
   methods: {
-  loadMarkersFromJson(equipmentId, selectedDate) {
-    this.loading = true;
-    this.markers = [];
+    loadMarkersFromJson(equipmentId, selectedDate) {
+      this.loading = true;
+      this.markers = [];
 
-    // Filtrar equipamento e data, se disponível
-    const equipment = positionHistory.find(
-      (eq) => eq.equipmentId === equipmentId
-    );
+      // Filtrar equipamento e data, se disponível
+      const equipment = positionHistory.find(
+        (eq) => eq.equipmentId === equipmentId
+      );
 
-    if (equipment) {
-      const filteredPositions = selectedDate
-        ? equipment.positions.filter(
-            (position) =>
-              new Date(position.date).toLocaleDateString("pt-BR") ===
-              selectedDate
-          )
-        : equipment.positions;
+      if (equipment) {
+        const filteredPositions = selectedDate
+          ? equipment.positions.filter(
+              (position) =>
+                new Date(position.date).toLocaleDateString("pt-BR") ===
+                selectedDate
+            )
+          : equipment.positions;
 
-      filteredPositions.forEach((position) => {
-        const formattedDate = new Date(position.date).toLocaleDateString(
-          "pt-BR"
-        );
-        this.markers.push({
-          latitude: position.lat,
-          longitude: position.lon,
-          descricao: `Data: ${formattedDate}`,
+        filteredPositions.forEach((position) => {
+          const formattedDate = new Date(position.date).toLocaleDateString(
+            "pt-BR"
+          );
+          this.markers.push({
+            latitude: position.lat,
+            longitude: position.lon,
+            descricao: `Data: ${formattedDate}`,
+          });
         });
+
+        // Adiciona a rota somente se o mapa estiver pronto
+        if (this.map) {
+          this.addRoute();
+        }
+      } else {
+        this.loading = false;
+      }
+    },
+
+    createMapLayer() {
+      // Inicialize o mapa localmente
+      const map = L.map("mapContainer").setView([0, 0], 2);
+
+      L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      this.map = map; // Armazena o mapa localmente
+
+      map.whenReady(() => {
+        console.log("Mapa carregado com sucesso!");
+        this.setMarkers(map); // Certifique-se de que o mapa está pronto antes de adicionar marcadores
+      });
+    },
+
+    addRoute() {
+      if (!this.map || this.markers.length === 0) {
+        this.loading = false; // Finaliza o loading se não houver marcadores
+        return;
+      }
+
+      const waypoints = this.markers.map((marker) =>
+        L.latLng(marker.latitude, marker.longitude)
+      );
+
+      // Remove o controle de rota anterior, se existir
+      if (this.routeControl) {
+        this.map.removeControl(this.routeControl);
+      }
+
+      // Adiciona a nova rota e cria marcadores com popups
+      this.routeControl = L.Routing.control({
+        waypoints,
+        createMarker: (i, waypoint) => {
+          const color =
+            i === 0 ? "green" : i === waypoints.length - 1 ? "red" : "darkblue";
+          const number = i + 1; // Número no marcador
+
+          // Criar o marcador com o número centralizado
+          const icon = L.divIcon({
+            className: "custom-icon",
+            html: `<div style="background-color: ${color}; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px; font-size: 14px; font-weight: bold;">${number}</div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+          });
+
+          // Criar o marcador
+          const marker = L.marker(waypoint.latLng, { icon });
+
+          // Adicionar o popup com a data, latitude e longitude
+          const { descricao, latitude, longitude } = this.markers[i];
+          marker.bindPopup(`
+            <div>
+              <p><strong>Data:</strong> ${descricao}</p>
+              <p><strong>Latitude:</strong> ${latitude}</p>
+              <p><strong>Longitude:</strong> ${longitude}</p>
+            </div>
+          `);
+
+          return marker;
+        },
+        routeWhileDragging: false,
+      }).addTo(this.map);
+
+      this.routeControl.on("routesfound", () => {
+        // Finaliza o loading após a rota ser traçada
+        this.loading = false;
       });
 
-      // Adiciona a rota somente se o mapa estiver pronto
-      if (this.map) {
-        this.addRoute();
-      }
-    } else {
-      this.loading = false;
-    }
-  },
+      this.routeControl.on("routingerror", () => {
+        // Finaliza o loading em caso de erro
+        this.loading = false;
+      });
+    },
 
-  createMapLayer() {
-    // Inicialize o mapa localmente
-    const map = L.map("mapContainer").setView([0, 0], 2);
+    setMarkers() {
+      const bounds = [];
 
-    L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    this.map = map; // Armazena o mapa localmente
-
-    map.whenReady(() => {
-      console.log("Mapa carregado com sucesso!");
-      this.setMarkers(map); // Certifique-se de que o mapa está pronto antes de adicionar marcadores
-    });
-  },
-
-  addRoute() {
-    if (!this.map || this.markers.length === 0) {
-      this.loading = false; // Finaliza o loading se não houver marcadores
-      return;
-    }
-
-    const waypoints = this.markers.map((marker) =>
-      L.latLng(marker.latitude, marker.longitude)
-    );
-
-    // Remove o controle de rota anterior, se existir
-    if (this.routeControl) {
-      this.map.removeControl(this.routeControl);
-    }
-
-    // Adiciona a nova rota e cria marcadores com popups
-    this.routeControl = L.Routing.control({
-      waypoints,
-      createMarker: (i, waypoint) => {
+      this.markers.forEach((markerData, i) => {
         const color =
-          i === 0 ? "green" : i === waypoints.length - 1 ? "red" : "darkblue";
+          i === 0
+            ? "green"
+            : i === this.markers.length - 1
+            ? "red"
+            : "darkblue";
         const number = i + 1; // Número no marcador
 
         // Criar o marcador com o número centralizado
@@ -150,63 +199,26 @@ export default {
           iconAnchor: [15, 30],
         });
 
-        // Criar o marcador
-        const marker = L.marker(waypoint.latLng, { icon });
+        const marker = L.marker([markerData.latitude, markerData.longitude], {
+          icon,
+        }).bindPopup(`
+          <div>
+            <p><strong>Data:</strong> ${markerData.descricao}</p>
+            <p><strong>Latitude:</strong> ${markerData.latitude}</p>
+            <p><strong>Longitude:</strong> ${markerData.longitude}</p>
+          </div>
+        `);
 
-        // Adicionar o popup com a data e descrição do ponto
-        marker.bindPopup(this.markers[i].descricao);
+        marker.addTo(this.map);
 
-        return marker;
-      },
-      routeWhileDragging: false,
-    }).addTo(this.map);
-
-    this.routeControl.on("routesfound", () => {
-      // Finaliza o loading após a rota ser traçada
-      this.loading = false;
-    });
-
-    this.routeControl.on("routingerror", () => {
-      // Finaliza o loading em caso de erro
-      this.loading = false;
-    });
-  },
-
-  setMarkers() {
-    const bounds = [];
-
-    this.markers.forEach((markerData, i) => {
-      const color =
-        i === 0
-          ? "green"
-          : i === this.markers.length - 1
-          ? "red"
-          : "darkblue";
-      const number = i + 1; // Número no marcador
-
-      // Criar o marcador com o número centralizado
-      const icon = L.divIcon({
-        className: "custom-icon",
-        html: `<div style="background-color: ${color}; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px; font-size: 14px; font-weight: bold;">${number}</div>`,
-        iconSize: [30, 30],
-        iconAnchor: [15, 30],
+        bounds.push([markerData.latitude, markerData.longitude]);
       });
 
-      const marker = L.marker([markerData.latitude, markerData.longitude], {
-        icon,
-      }).bindPopup(markerData.descricao);
-
-      marker.addTo(this.map);
-
-      bounds.push([markerData.latitude, markerData.longitude]);
-    });
-
-    if (this.map && bounds.length > 0) {
-      this.map.fitBounds(bounds);
-    }
+      if (this.map && bounds.length > 0) {
+        this.map.fitBounds(bounds);
+      }
+    },
   },
-}
-
 };
 </script>
 
