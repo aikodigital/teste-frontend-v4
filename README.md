@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Teste Frontend V4
 
 ![Aiko](img/aiko.png)
@@ -205,3 +206,12 @@ Para realizar a entrega do teste você deve:
 * Faça um commit da sua branch com a implementação do teste.
   
 * Realize o pull request da sua branch nesse repositório.
+=======
+Descrição do Teste<br>
+Foi implementado um sistema de mapa interativo que permite:
+
+Visualizar posições de equipamentos em um mapa utilizando react-leaflet.
+Clicar nos equipamentos para abrir um Sidebar com detalhes e histórico do equipamento.
+Abrir modais que exibem o histórico de estados e posições do equipamento selecionado.
+Implementações realizadas utilizando React, TypeScript e Tailwind CSS
+>>>>>>> afb10b5304299ec01e9880c186348b3675712987
