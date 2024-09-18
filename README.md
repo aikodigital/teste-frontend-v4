@@ -37,25 +37,6 @@ Siga os passos abaixo para rodar o projeto localmente.
     npm start
 
 ## Estrutura de pastas
-├── src
-│   ├── components
-│   │   ├── Sidebar
-│   │   │   ├── Sidebar.tsx
-│   │   │   └── Sidebar.styles.scss
-│   │   ├── Leaflet
-│   │   │   ├── Leaflet.tsx
-│   │   └── Modal
-│   │       ├── Modal.tsx
-│   ├── context
-│   │   └── ContextApi.tsx
-│   ├── data
-│   │   ├── equipment.json
-│   │   ├── equipmentModel.json
-│   │   ├── equipmentPositionHistory.json
-│   │   └── equipmentState.json
-│   └── App.tsx
-├── public
-│   └── index.html
-└── package.json
+<img width="350" alt="Captura de Tela 2024-09-18 às 10 23 59 AM" src="https://github.com/user-attachments/assets/2f5e80c9-7d7e-4100-be3e-bdf33994e36a">
 
 
