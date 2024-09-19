@@ -79,7 +79,9 @@ const EquipmentTable = () => {
 
   const handleMapClick = (equipmentId: string) => {
     const position = getLatestPosition(equipmentId);
-    const equipmentItem = equipment.find((eq) => eq.id === equipmentId);
+    const equipmentItem = equipment.find(
+      (eq: { id: string }) => eq.id === equipmentId
+    );
     if (position && equipmentItem) {
       const equipmentState = getLatestState(equipmentId);
       const equipmentModel = getEquipmentModel(equipmentItem.equipmentModelId);
@@ -152,7 +154,7 @@ const EquipmentTable = () => {
                         className={`px-2 py-1 rounded text-white ${
                           getLatestState(eq.id)?.name === "Operando"
                             ? "bg-green-500"
-                            : "bg-red-500"
+                            : "bg-red-600"
                         }`}
                       >
                         {getLatestState(eq.id)?.name || "Desconhecido"}
