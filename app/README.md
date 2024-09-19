@@ -26,7 +26,7 @@ Dada a natureza focada em front-end do teste, optei por seguir pela segunda opç
 - [x] Tratamento de dados _mockados_ nos arquivos .json
 - [x] Exibir as últimas posições registradas
 - [x] Exibir os últimos estados registrados
-- [ ] Exibir o histórico de estados de cada equipamento
+- [x] Exibir o histórico de estados de cada equipamento
 - [ ] Exibir rota traçada a partir das posições de cada equipamento
 - [ ] Filtrar exibição dos equipamentos por estado atual e/ou modelo
 - [ ] Pesquisar equipamento por nome
