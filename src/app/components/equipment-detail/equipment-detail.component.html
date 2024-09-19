@@ -1,0 +1,16 @@
+<div class="equipment-detail">
+  <h2>Equipment Details</h2>
+
+  <div class="detail-card" *ngIf="equipment">
+    <h3>{{ equipment.name }}</h3>
+    <p>ID: {{ equipmentId }}</p>
+  </div>
+
+  <h3>State History</h3>
+  <div class="history-list">
+    <div class="history-item" *ngFor="let state of stateHistory">
+      <span class="date">{{ state.date | date:'short' }}</span>
+      <span class="state">{{ state.equipmentStateId }}</span>
+    </div>
+  </div>
+</div>

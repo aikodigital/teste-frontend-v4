@@ -1,0 +1,9 @@
+<div class="equipment-list">
+  <h2>Equipment List</h2>
+  <div class="equipment-grid">
+    <div class="equipment-card" *ngFor="let equipment of equipments" (click)="navigateToDetails(equipment.id)">
+      <h3>{{ equipment.name }}</h3>
+      <p>ID: {{ equipment.id }}</p>
+    </div>
+  </div>
+</div>

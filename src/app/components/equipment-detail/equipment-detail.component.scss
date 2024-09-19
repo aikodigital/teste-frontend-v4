@@ -1,0 +1,54 @@
+.equipment-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    p {
+      margin-bottom: 0;
+      color: #6c757d;
+    }
+  }
+
+  .history-list {
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #dee2e6;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .date {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      .state {
+        font-weight: bold;
+        color: #28a745;
+      }
+    }
+  }
+}
