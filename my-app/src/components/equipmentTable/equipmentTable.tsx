@@ -9,6 +9,7 @@ import {
   TooltipContent,
 } from "../ui/tooltip";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
+import { Equipment, EquipmentModel, EquipmentState } from "@/types"; // Importando os tipos necessários
 
 // Definir o tamanho e estilo do mapa
 const containerStyle = {
@@ -79,9 +80,7 @@ const EquipmentTable = () => {
 
   const handleMapClick = (equipmentId: string) => {
     const position = getLatestPosition(equipmentId);
-    const equipmentItem = equipment.find(
-      (eq: { id: string }) => eq.id === equipmentId
-    );
+    const equipmentItem = equipment.find((eq: Equipment) => eq.id === equipmentId);
     if (position && equipmentItem) {
       const equipmentState = getLatestState(equipmentId);
       const equipmentModel = getEquipmentModel(equipmentItem.equipmentModelId);
@@ -131,7 +130,7 @@ const EquipmentTable = () => {
                 </td>
               </tr>
             ) : (
-              equipment.map((eq) => {
+              equipment.map((eq: Equipment) => {
                 const equipmentModel = getEquipmentModel(eq.equipmentModelId);
                 const produtividade = (Math.random() * 100).toFixed(2);
 
