@@ -1,27 +1,62 @@
-# ForestryEquipmentTracker
+# Forestry Equipment Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.4.
+Este projeto é um sistema de rastreamento e monitoramento de equipamentos florestais. Ele utiliza uma interface de mapa interativa para visualizar a posição dos equipamentos em tempo real e exibe informações detalhadas sobre o estado atual e o histórico de cada equipamento.
 
-## Development server
+## Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Mapa Interativo**: Mostra a localização atual de cada equipamento florestal.
+- **Histórico de Posições**: Visualize a posição anterior de cada equipamento.
+- **Estado dos Equipamentos**: Exibe o estado atual de cada equipamento, como "Operando", "Parado", ou "Manutenção".
+- **Histórico de Estados**: Consulte o histórico de estados de cada equipamento.
+- **Estilo Responsivo**: A interface é totalmente responsiva e funciona bem em diferentes tamanhos de tela.
 
-## Code scaffolding
+## Tecnologias Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Angular**: Frontend da aplicação.
+- **Leaflet**: Biblioteca JavaScript para mapas interativos.
+- **SCSS**: Estilização personalizada e responsiva.
+- **RxJS**: Para o gerenciamento de dados reativos.
 
-## Build
+## Estrutura dos Dados
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Os dados estão localizados na pasta `data/` e são carregados dinamicamente a partir dos seguintes arquivos JSON:
 
-## Running unit tests
+- **equipment.json**: Lista de todos os equipamentos.
+- **equipmentModel.json**: Modelos de equipamentos e seus valores por hora.
+- **equipmentPositionHistory.json**: Histórico de posições dos equipamentos.
+- **equipmentState.json**: Estados possíveis dos equipamentos.
+- **equipmentStateHistory.json**: Histórico de estados dos equipamentos.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Como Executar o Projeto
 
-## Running end-to-end tests
+Siga os passos abaixo para configurar e rodar o projeto localmente:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Pré-requisitos
 
-## Further help
+Você precisará ter o [Node.js](https://nodejs.org/) instalado em sua máquina para rodar a aplicação.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Passo a Passo
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+Navegue até o diretório do projeto:
+
+bash
+Copy code
+cd seu-repositorio
+Instale as dependências:
+
+bash
+Copy code
+npm install
+Rode a aplicação:
+
+bash
+Copy code
+ng serve
+Acesse a aplicação no navegador:
+
+arduino
+Copy code
+http://localhost:4200
