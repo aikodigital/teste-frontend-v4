@@ -1,28 +1,54 @@
-import { Equipment, EquipmentData, PositionData } from "@/@types";
+import {
+  Equipment,
+  EquipmentData,
+  EquipmentState,
+  PositionData,
+  StatesHistoryData,
+} from "@/@types";
 
-export function structureData(
-  equipmentsData: EquipmentData[],
-  positionsData: PositionData[]
+import statesData from "@/data/equipmentState.json";
+
+export function structureEquipmentData(
+  equipments: EquipmentData[],
+  equipmentsPositions: PositionData[],
+  equipmentsStates: StatesHistoryData[]
 ): Equipment[] {
   const structuredEquipments = [];
 
-  for (const equipment of equipmentsData) {
-    const equipmentPositions = positionsData.find((equipmentPosition) => {
-      if (equipment.id === equipmentPosition.equipmentId)
-        return equipmentPosition;
-    });
+  for (const equipment of equipments) {
+    const equipmentPositions = equipmentsPositions.find(
+      (equipmentPosition) => equipment.id === equipmentPosition.equipmentId
+    );
+
+    const structuredEquipmentStates = equipmentsStates
+      .find((equipmentState) => equipment.id === equipmentState.equipmentId)
+      ?.states.map((state) => {
+        const structuredState = statesData.find(
+          (stateData) => state.equipmentStateId === stateData.id
+        );
+        if (!structuredState) return;
+        return {
+          name: structuredState.name,
+          color: structuredState.color,
+          date: state.date,
+        };
+      })
+      .filter((equipment) => !!equipment) as EquipmentState[];
+
+    const lastItemFromEquipmentsStates =
+      structuredEquipmentStates[structuredEquipmentStates?.length - 1];
+
+    const lastItemFromEquipmentPositions =
+      equipmentPositions?.positions[equipmentPositions?.positions.length - 1];
 
     structuredEquipments.push({
       id: equipment.id,
       name: equipment.name,
-      currentPosition:
-        equipmentPositions?.positions[equipmentPositions?.positions.length - 1],
-      positions: equipmentPositions?.positions,
+      currentPosition: lastItemFromEquipmentPositions,
+      historyPositions: equipmentPositions?.positions,
+      currentState: lastItemFromEquipmentsStates,
+      historyStates: structuredEquipmentStates,
     });
-    console.log(
-      equipmentPositions?.positions[0],
-      equipmentPositions?.positions[equipmentPositions?.positions.length - 1]
-    );
   }
 
   return structuredEquipments;

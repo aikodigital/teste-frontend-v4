@@ -7,9 +7,10 @@ import { MapContainer, Marker, TileLayer, Tooltip } from "react-leaflet";
 
 type MapProps = {
   equipments: Equipment[];
+  handleClickEquipment: (equipment: Equipment) => void;
 };
 
-export default function Map({ equipments }: MapProps) {
+export default function Map({ equipments, handleClickEquipment }: MapProps) {
   const icon = new Icon({
     iconUrl: "/icons/caminhao-de-carga.png",
     iconSize: [24, 24],
@@ -36,8 +37,21 @@ export default function Map({ equipments }: MapProps) {
                 equipment.currentPosition.lat,
                 equipment.currentPosition.lon,
               ]}
+              eventHandlers={{
+                click: () => handleClickEquipment(equipment),
+              }}
             >
-              <Tooltip></Tooltip>
+              <Tooltip>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: equipment.currentState?.color }}
+                    />
+                    {equipment.currentState?.name}
+                  </div>
+                </div>
+              </Tooltip>
             </Marker>
           )
       )}

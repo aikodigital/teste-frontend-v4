@@ -4,7 +4,7 @@ export type EquipmentData = {
   name: string;
 };
 
-export type Position = {
+type Position = {
   date: string;
   lat: number;
   lon: number;
@@ -15,9 +15,30 @@ export type PositionData = {
   positions: Position[];
 };
 
+export type StatesHistoryData = {
+  equipmentId: string;
+  states: {
+    date: string;
+    equipmentStateId: string;
+  }[];
+};
+
+/* STRUCTERED EQUIPMENT TYPES
+========================================= */
+
+type EquipmentPosition = Position;
+
+export type EquipmentState = {
+  date: string;
+  name: "Operando" | "Parado" | "Manutenção";
+  color: string;
+};
+
 export type Equipment = {
   id: string;
   name: string;
-  currentPosition?: Position;
-  positions?: Position[];
+  currentPosition?: EquipmentPosition;
+  historyPositions?: EquipmentPosition[];
+  currentState?: EquipmentState;
+  historyStates?: EquipmentState[];
 };
