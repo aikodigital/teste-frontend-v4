@@ -1,1 +1,21 @@
-<div id="map"></div>
+<div class="map-container">
+  <div id="map" class="map"></div>
+
+  <!-- Exibe a barra lateral apenas quando houver um equipamento selecionado -->
+  <div *ngIf="selectedEquipment" class="equipment-details">
+    <h2>{{ selectedEquipment.name }}</h2>
+    <p><strong>Equipment ID:</strong> {{ selectedEquipment.id }}</p>
+
+    <h3>State History</h3>
+    <ul class="state-history-list">
+      <li *ngFor="let state of selectedStateHistory">
+        <span class="state-item">
+          <span class="state-name" [ngStyle]="{ 'color': getStateColor(state.equipmentStateId) }">
+            {{ getStateName(state.equipmentStateId) }}
+          </span>
+          <span class="state-date">{{ state.date | date:'medium' }}</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

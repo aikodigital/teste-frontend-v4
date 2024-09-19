@@ -6,18 +6,12 @@ import { StateHistory } from '../models/state-history';
   providedIn: 'root',
 })
 export class MapService {
-  // Returns the latest position of the equipment
   getLatestPosition(positionHistory: PositionHistory): { lat: number; lon: number; date: string } | null {
-    if (!positionHistory.positions.length) return null;
-    return positionHistory.positions[positionHistory.positions.length - 1];
+    return positionHistory.positions.length ? positionHistory.positions.slice(-1)[0] : null;
   }
 
-  // Returns the latest state of the equipment
-  getEquipmentLatestState(
-    equipmentId: string,
-    statesHistory: StateHistory[]
-  ): { equipmentStateId: string; date: string } | null {
+  getLatestState(equipmentId: string, statesHistory: StateHistory[]): { equipmentStateId: string; date: string } | null {
     const history = statesHistory.find(h => h.equipmentId === equipmentId);
-    return history ? history.states[history.states.length - 1] : null;
+    return history?.states.slice(-1)[0] ?? null;
   }
 }

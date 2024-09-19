@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 
@@ -11,16 +11,19 @@ interface State {
 @Component({
   selector: 'app-equipment-detail',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './equipment-detail.component.html',
-  styleUrls: ['./equipment-detail.component.scss'],
-  imports: [CommonModule]
+  styleUrls: ['./equipment-detail.component.scss']
 })
 export class EquipmentDetailComponent implements OnInit {
   equipmentId: string | null = null;
   equipment: any = null;
   stateHistory: State[] = [];
 
-  constructor(private route: ActivatedRoute, private dataService: DataService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {
     this.equipmentId = this.route.snapshot.paramMap.get('id');
