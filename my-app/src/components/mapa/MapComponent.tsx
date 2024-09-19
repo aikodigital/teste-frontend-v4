@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import useEquipmentStore from "@/store/useEquipmentStore";
+import {
+  Equipment,
+  EquipmentState,
+  EquipmentModel,
+  EquipmentPositionEntry,
+  SelectedEquipment,
+  StateHistory,
+} from "@/types"; // Importando todos os tipos necessários
 
 const containerStyle = {
   width: "100%",
@@ -12,23 +20,6 @@ const initialCenter = {
   lng: -45.947756,
 };
 
-// Interface para o histórico de estados
-interface StateHistory {
-  date: string;
-  state: string;
-}
-
-// Interface para o equipamento selecionado
-interface SelectedEquipment {
-  id: string;
-  name: string;
-  type: string;
-  position: {
-    lat: number;
-    lon: number;
-  };
-}
-
 const MapComponent = () => {
   const {
     loadEquipmentData,
@@ -39,12 +30,14 @@ const MapComponent = () => {
     getEquipmentModel,
   } = useEquipmentStore();
 
+  // Carrega a API do Google Maps, verificando se a chave está presente
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "", // Forçando string para evitar erro de tipo
   });
 
   // Definir o estado com tipos específicos
-  const [selectedEquipment, setSelectedEquipment] = useState<SelectedEquipment | null>(null); // Controle de equipamento selecionado
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<SelectedEquipment | null>(null); // Controle de equipamento selecionado
   const [filters, setFilters] = useState({
     state: "Todos os Estados",
     model: "Todos os Modelos",
@@ -58,20 +51,28 @@ const MapComponent = () => {
   }, [loadEquipmentData]);
 
   // Converte `lon` para `lng` e organiza os dados para o mapa
-  const equipmentWithPositions = equipment.map((eq) => {
+  const equipmentWithPositions = equipment.map((eq: Equipment) => {
     const position = getLatestPosition(eq.id);
     const state = getLatestState(eq.id);
     const model =
       getEquipmentModel(eq.equipmentModelId)?.name || "Modelo Desconhecido";
     if (position) {
-      position.lng = position.lon; // Ajusta a propriedade lon para lng
+      // Convertendo `lon` para `lng` ao criar uma nova propriedade `lng`
+      return {
+        ...eq,
+        position: {
+          ...position,
+          lng: position.lon, // Convertendo `lon` para `lng`
+        },
+        state,
+        model, // Adicionando a propriedade `model`
+      };
     }
-
-    return { ...eq, position, state, model };
+    return { ...eq, position: undefined, state, model };
   });
 
   // Filtra os equipamentos com base nos filtros aplicados
-  const filteredEquipment = equipmentWithPositions.filter((eq) => {
+  const filteredEquipment = equipmentWithPositions.filter((eq: Equipment) => {
     const matchesState =
       filters.state === "Todos os Estados" || eq.state?.name === filters.state;
     const matchesModel =
@@ -81,7 +82,9 @@ const MapComponent = () => {
 
   const handleMarkerClick = (equipmentId: string) => {
     const selectedPosition = getLatestPosition(equipmentId);
-    const equipmentData = equipment.find((eq) => eq.id === equipmentId); // Encontre o equipamento pelo ID
+    const equipmentData = equipment.find(
+      (eq: Equipment) => eq.id === equipmentId
+    ); // Tipagem explícita
 
     if (equipmentData) {
       const equipmentModel = getEquipmentModel(equipmentData.equipmentModelId); // Obtenha o modelo do equipamento
@@ -146,11 +149,13 @@ const MapComponent = () => {
         zoom={8}
       >
         {filteredEquipment.map(
-          (eq) =>
-            eq.position && (
+          (eq: Equipment) =>
+            eq.position &&
+            typeof eq.position.lat === "number" && // Verificando se `lat` é um número
+            typeof eq.position.lng === "number" && ( // Verificando se `lng` é um número
               <Marker
                 key={eq.id}
-                position={{ lat: eq.position.lat, lng: eq.position.lng }}
+                position={{ lat: eq.position.lat, lng: eq.position.lng }} // Usando `lng` após conversão
                 onClick={() => handleMarkerClick(eq.id)}
               />
             )
