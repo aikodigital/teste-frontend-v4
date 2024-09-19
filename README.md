@@ -23,7 +23,7 @@ Sistema de rastreamento de equipamentos florestais que exibe a posição, estado
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/skuzu7/antonio-carlos-junior.git
    ```
 2. Instale as dependências:
    ```bash
