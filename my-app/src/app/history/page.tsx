@@ -1,17 +1,16 @@
-"use client"
+import dynamic from "next/dynamic";
 
-import React from "react";
-import EquipmentTable from "../../components/equipmentTable/equipmentTable"; // Certifique-se de ajustar o caminho conforme necessário
+const EquipmentTable = dynamic(() => import("../../components/equipmentTable/equipmentTable"), {
+  ssr: false, // Desabilita a renderização do lado do servidor
+});
 
-const HomePage = () => {
+const HistoryPage = () => {
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center my-8">Histórico de Serviços</h1>
-      {/* Aqui você importa e usa o componente EquipmentTable */}
+      <h1>Histórico</h1>
       <EquipmentTable />
     </div>
   );
 };
 
-export default HomePage;
-
+export default HistoryPage;

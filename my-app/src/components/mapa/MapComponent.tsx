@@ -21,6 +21,14 @@ const initialCenter = {
 };
 
 const MapComponent = () => {
+  // Definir estado para verificar se estamos no cliente
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // Isso garante que estamos no lado do cliente
+    setIsClient(true);
+  }, []);
+
   const {
     loadEquipmentData,
     equipment,
@@ -49,6 +57,11 @@ const MapComponent = () => {
   useEffect(() => {
     loadEquipmentData();
   }, [loadEquipmentData]);
+
+  // Se não estamos no cliente ou o mapa não foi carregado, retorna um placeholder
+  if (!isClient || !isLoaded) {
+    return <div>Carregando o mapa...</div>;
+  }
 
   // Converte `lon` para `lng` e organiza os dados para o mapa
   const equipmentWithPositions = equipment.map((eq: Equipment) => {
@@ -109,10 +122,6 @@ const MapComponent = () => {
   };
 
   const closeModal = () => setShowModal(false);
-
-  if (!isLoaded) {
-    return <div>Carregando o mapa...</div>;
-  }
 
   return (
     <div>
