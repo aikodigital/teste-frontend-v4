@@ -1,8 +1,16 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter, Routes } from '@angular/router';
+import { MapComponent } from './components/map/map.component';
+import { EquipmentListComponent } from './components/equipment-list/equipment-list.component';
+import { EquipmentDetailComponent } from './components/equipment-detail/equipment-detail.component';
 
-import { routes } from './app.routes';
+export const routes: Routes = [
+  { path: '', redirectTo: '/map', pathMatch: 'full' },
+  { path: 'map', component: MapComponent },
+  { path: 'equipment', component: EquipmentListComponent },
+  { path: 'equipment/:id', component: EquipmentDetailComponent }
+];
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
+  providers: [provideRouter(routes)]
 };

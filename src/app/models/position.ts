@@ -1,7 +1,7 @@
 export interface Position {
-  date: string;
   lat: number;
   lon: number;
+  date: string;
 }
 
 export interface PositionHistory {

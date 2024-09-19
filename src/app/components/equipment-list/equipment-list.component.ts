@@ -23,6 +23,6 @@ export class EquipmentListComponent implements OnInit {
   }
 
   navigateToDetails(id: string): void {
-    this.router.navigate(['/equipment', id]);  // Navega para a página de detalhes do equipamento
+    this.router.navigate(['/equipment', id]);
   }
 }

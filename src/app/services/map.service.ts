@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { PositionHistory } from '../models/position';
-import { EquipmentStateHistory } from '../models/state-history';
+import { StateHistory } from '../models/state-history';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MapService {
-
-  // Retorna a última posição do equipamento
-  getLatestPosition(positionData: PositionHistory): { lat: number; lon: number } | undefined {
-    return positionData.positions.slice(-1)[0];
+  // Returns the latest position of the equipment
+  getLatestPosition(positionHistory: PositionHistory): { lat: number; lon: number; date: string } | null {
+    if (!positionHistory.positions.length) return null;
+    return positionHistory.positions[positionHistory.positions.length - 1];
   }
 
-  // Retorna o estado mais recente do equipamento
-  getEquipmentLatestState(equipmentId: string, equipmentStatesHistory: EquipmentStateHistory[]): string {
-    const equipmentHistory = equipmentStatesHistory.find(s => s.equipmentId === equipmentId);
-    if (equipmentHistory && equipmentHistory.states.length > 0) {
-      const latestState = equipmentHistory.states.slice(-1)[0]; // Pega o estado mais recente
-      return latestState.equipmentStateId;
-    }
-    return 'Desconhecido';
+  // Returns the latest state of the equipment
+  getEquipmentLatestState(
+    equipmentId: string,
+    statesHistory: StateHistory[]
+  ): { equipmentStateId: string; date: string } | null {
+    const history = statesHistory.find(h => h.equipmentId === equipmentId);
+    return history ? history.states[history.states.length - 1] : null;
   }
 }

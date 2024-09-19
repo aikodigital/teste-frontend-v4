@@ -1,11 +1,31 @@
-/* app.component.scss */
-nav {
-  padding: 1rem;
-  background-color: #f0f0f0;
-  margin-bottom: 20px;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-nav {
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: start;
+
   a {
-    margin-right: 10px;
+    color: white;
     text-decoration: none;
-    color: #333;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover, &.active {
+      background-color: #555;
+    }
   }
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
 }

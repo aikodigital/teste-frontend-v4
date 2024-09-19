@@ -1,9 +1,9 @@
-<nav style="padding: 10px; background-color: #f0f0f0;">
-  <a routerLink="/" style="margin-right: 20px;">Home</a>
-  <a routerLink="/map" style="margin-right: 20px;">Map View</a>
-  <a routerLink="/equipment">Equipment List</a>
+<nav class="main-nav">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  <a routerLink="/map" routerLinkActive="active">Map View</a>
+  <a routerLink="/equipment" routerLinkActive="active">Equipment List</a>
 </nav>
 
-<div style="padding: 20px;">
+<main>
   <router-outlet></router-outlet>
-</div>
+</main>

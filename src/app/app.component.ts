@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  imports: [CommonModule, RouterModule],
 })
 export class AppComponent {
-  title = 'My Angular Leaflet App';
+  navActive = false;
+
+  toggleNavbar() {
+    this.navActive = !this.navActive;
+  }
 }

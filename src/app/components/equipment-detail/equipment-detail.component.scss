@@ -1,0 +1,47 @@
+.equipment-detail {
+  padding: 20px;
+
+  h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .detail-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0 0 10px;
+    }
+
+    p {
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  .history-list {
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .date {
+        color: #666;
+      }
+
+      .state {
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+}

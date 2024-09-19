@@ -25,18 +25,23 @@ export class EquipmentDetailComponent implements OnInit {
   ngOnInit(): void {
     this.equipmentId = this.route.snapshot.paramMap.get('id');
     if (this.equipmentId) {
-      // Carrega os dados do equipamento
-      this.dataService.equipmentsSignal.subscribe(data => {
-        this.equipment = data.find(e => e.id === this.equipmentId);
-      });
-
-      // Carrega o histórico de estados
-      this.dataService.equipmentStateHistorySignal.subscribe(data => {
-        const equipmentHistory = data.find(h => h.equipmentId === this.equipmentId);
-        if (equipmentHistory) {
-          this.stateHistory = equipmentHistory.states;
-        }
-      });
+      this.loadEquipmentData();
+      this.loadStateHistory();
     }
+  }
+
+  private loadEquipmentData(): void {
+    this.dataService.equipmentsSignal.subscribe(data => {
+      this.equipment = data.find(e => e.id === this.equipmentId);
+    });
+  }
+
+  private loadStateHistory(): void {
+    this.dataService.equipmentStateHistorySignal.subscribe(data => {
+      const equipmentHistory = data.find(h => h.equipmentId === this.equipmentId);
+      if (equipmentHistory) {
+        this.stateHistory = equipmentHistory.states;
+      }
+    });
   }
 }
