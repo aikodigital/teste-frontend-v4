@@ -3,9 +3,10 @@
   --light-gray-2: rgba(84, 84, 84, 0.65);
 
   --dark-gray-1: rgba(103, 102, 102, 0.12);
-  --dark-gray-2: rgba(60, 60, 60, 0.12);
+  --dark-gray-2: rgb(72, 72, 72);
   
   --indigo-blue: #2c3e50;
+  --indigo-dark-blue: #1b2734;
 }
 
 *,

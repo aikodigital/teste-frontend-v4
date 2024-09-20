@@ -5,7 +5,7 @@
                 v-if="latestPositions.length > 0"
                 ref="map"
                 v-model:zoom="zoom"
-                :center="mapCenter"
+                :center="[latestPositions[0].lat, latestPositions[0].lon]"
                 :use-global-leaflet="false"
             >
                 <l-tile-layer
@@ -17,11 +17,14 @@
                 <l-marker
                     v-for="(position, index) in latestPositions"
                     :key="index"
-                    :lat-lng="[position?.lat, position?.lon]"
+                    :lat-lng="[position.lat, position.lon]"
+                    :icon="getCustomIcon(position.color)"
+                    @mouseover="showPopup"
+                    @mouseout="showPopup"
+                    @click="openStateHistory(position)"
                 >
-                    <l-popup>
-                        Equipamento ID: {{ position?.equipmentId }}<br />
-                        Última posição: {{ position?.date }}
+                    <l-popup ref="popups" v-if="position">
+                        <PopUp :position="position" />
                     </l-popup>
                 </l-marker>
             </l-map>
@@ -36,69 +39,70 @@
 import { ref, computed, onMounted } from "vue";
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+import * as L from "leaflet";
+import PopUp from "./PopUp.vue";
+import { useStateHistoryStore } from "@/stores/stateHistory.ts";
+import { useApiStore } from "@/stores/api.ts";
+import { type LatestEquipmentInfo } from "@/types/types";
 
-interface Position {
-    date: string;
-    lat: number;
-    lon: number;
-}
+import greenIconUrl from "@/assets/marker-icon-green.png";
+import redIconUrl from "@/assets/marker-icon-red.png";
+import yellowIconUrl from "@/assets/marker-icon-yellow.png";
+import blueIconUrl from "@/assets/marker-icon-blue.png";
 
-interface EquipmentPosition {
-    equipmentId: string;
-    positions: Position[];
-}
+const stateHistoryStore = useStateHistoryStore();
+const apiStore = useApiStore();
 
 const zoom = ref<number>(10);
-const positionsData = ref<EquipmentPosition[]>([]);
 
 const latestPositions = computed(() => {
-    if (positionsData.value.length > 0) {
-        return positionsData.value.map((equipment: EquipmentPosition) => {
-            const latestPosition = getLatestPosition(equipment);
-            if (latestPosition) {
-                return {
-                    ...latestPosition,
-                    equipmentId: equipment.equipmentId,
-                };
-            }
-            return null;
-        });
+    if (apiStore.latestEquipmentInfo.length > 0) {
+        return apiStore.latestEquipmentInfo;
     } else {
         return [];
     }
 });
 
-const mapCenter = computed(() => {
-    if (latestPositions.value.length > 0) {
-        return latestPositions.value[0];
-    } else {
-        return [];
-    }
-});
-
-const getLatestPosition = (equipment: EquipmentPosition) => {
-    if (equipment.positions && equipment.positions.length > 0) {
-        return equipment.positions.reduce((latest, current) => {
-            return new Date(current.date) > new Date(latest.date)
-                ? current
-                : latest;
-        }, equipment.positions[0]);
-    }
-    return null;
+const showPopup = (e: L.LeafletMouseEvent) => {
+    e.target.togglePopup();
 };
 
-const fetchPositionHistory = async () => {
-    try {
-        // Simulando uma requisição a uma API no backend.
-        const response = await fetch("/data/equipmentPositionHistory.json");
-        positionsData.value = await response.json();
-    } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+const openStateHistory = async (equipment: LatestEquipmentInfo) => {
+    stateHistoryStore.setStateHistoryView(!stateHistoryStore.showStateHistory);
+
+    await stateHistoryStore.fetchStateHistory(equipment.equipmentId);
+};
+
+const getCustomIcon = (color: string) => {
+    let iconUrl = getIconUrlByColor(color);
+    return L.icon({
+        iconUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png", // Sombra do ícone
+        shadowSize: [41, 41],
+        shadowAnchor: [12, 41],
+    });
+};
+
+const getIconUrlByColor = (color: string) => {
+    switch (color) {
+        case "#e74c3c":
+            return redIconUrl;
+        case "#f1c40f":
+            return yellowIconUrl;
+        case "#2ecc71":
+            return greenIconUrl;
+        default:
+            return blueIconUrl;
     }
 };
 
 onMounted(async () => {
-    fetchPositionHistory();
+    await apiStore.fetchAllData();
+    apiStore.getLatestPositionsHistory();
 });
 </script>
 
@@ -112,7 +116,8 @@ onMounted(async () => {
     background-color: var(--light-gray-1);
     border-radius: 30px;
     height: 80vh;
-    width: 70vw;
+    width: 60vw;
+    box-shadow: 0 8px 6px -6px rgb(0, 0, 0);
 }
 
 .map-area {

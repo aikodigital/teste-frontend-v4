@@ -3,9 +3,10 @@
 #app {
   margin: 0 auto;
   width: 100vw;
-  padding: 3rem;
+  height: 100vh;
   font-weight: normal;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 }
