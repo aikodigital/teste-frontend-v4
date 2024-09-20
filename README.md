@@ -7,6 +7,10 @@ Este projeto é uma aplicação web desenvolvida para gerenciar e monitorar equi
 
 A aplicação permite visualizar os dados dos equipamentos no mapa, incluindo suas posições mais recentes e estado atual. Também é possível acessar o histórico de estados, visualizar os modelos de equipamentos, calcular ganhos por hora e contar quantos equipamentos estão em determinados estados, como "Operando", "Manutenção" e "Parado".
 
+# Imagens do projeto
+![Exemplo Interno](public/images/interface1.png)
+
+
 ## 🔧 Tecnologias Utilizadas
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
