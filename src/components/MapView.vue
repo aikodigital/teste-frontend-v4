@@ -41,8 +41,9 @@ import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import * as L from "leaflet";
 import PopUp from "./PopUp.vue";
-import { useStateHistoryStore } from "@/stores/stateHistory.ts";
-import { useApiStore } from "@/stores/api.ts";
+import { useApiStore } from "@/stores/api";
+import { usePositionHistoryStore } from "@/stores/positionHistory";
+import { useStateHistoryStore } from "@/stores/stateHistory";
 import { type LatestEquipmentInfo } from "@/types/types";
 
 import greenIconUrl from "@/assets/marker-icon-green.png";
@@ -50,15 +51,16 @@ import redIconUrl from "@/assets/marker-icon-red.png";
 import yellowIconUrl from "@/assets/marker-icon-yellow.png";
 import blueIconUrl from "@/assets/marker-icon-blue.png";
 
-const stateHistoryStore = useStateHistoryStore();
 const apiStore = useApiStore();
+const positionHistory = usePositionHistoryStore();
+const stateHistoryStore = useStateHistoryStore();
 
 const zoom = ref<number>(11);
 const lastEquipmentId = ref<string | null>(null);
 
 const latestPositions = computed(() => {
-    if (apiStore.latestEquipmentInfo.length > 0) {
-        return apiStore.latestEquipmentInfo;
+    if (positionHistory.latestEquipmentInfo.length > 0) {
+        return positionHistory.latestEquipmentInfo;
     } else {
         return [];
     }
@@ -106,7 +108,7 @@ const getIconUrlByColor = (color: string) => {
 
 onMounted(async () => {
     await apiStore.fetchAllData();
-    apiStore.getLatestPositionsHistory();
+    positionHistory.getLatestPositionsHistory();
 });
 </script>
 

@@ -6,7 +6,6 @@ import {
     type EquipmentPositionHistory,
     type EquipmentState,
     type EquipmentStateHistory,
-    type LatestEquipmentInfo
 } from "@/types/types";
 
 export const useApiStore = defineStore('api', () => {
@@ -16,7 +15,6 @@ export const useApiStore = defineStore('api', () => {
     const equipmentsModel = ref<EquipmentModel[]>([]);
     const equipmentStateHistory = ref<EquipmentStateHistory[]>([]);
     const equipmentState = ref<EquipmentState[]>([]);
-    const latestEquipmentInfo = ref<LatestEquipmentInfo[]>([]);
 
     const fetchPositionHistory = async () => {
         try {
@@ -76,95 +74,6 @@ export const useApiStore = defineStore('api', () => {
         await fetchStateHistory();
         await fetchState();
     }
-
-    const getLatestPosition = (equipment: EquipmentPositionHistory) => {
-        if (equipment.positions && equipment.positions.length > 0) {
-            return equipment.positions.reduce((latest, current) => {
-                return new Date(current.date) > new Date(latest.date)
-                    ? current
-                    : latest;
-            }, equipment.positions[0]);
-        }
-        return null;
-    };
-
-    const getLatestPositionsHistory = () => {
-        if (
-            equipmentPositionHistory.value.length > 0 &&
-            equipments.value.length > 0 &&
-            equipmentStateHistory.value.length > 0 &&
-            equipmentState.value.length > 0
-        ) {
-            latestEquipmentInfo.value = equipmentPositionHistory.value
-                .reduce((acc: LatestEquipmentInfo[], equipment: EquipmentPositionHistory) => {
-                    const latestPosition = getLatestPosition(equipment);
-    
-                    if (!latestPosition) return acc;
-    
-                    const equipmentInfo = equipments.value.find(
-                        (eq) => eq.id === equipment.equipmentId
-                    );
-    
-                    if (!equipmentInfo) return acc;
-    
-                    const stateHistory = equipmentStateHistory.value.find(
-                        (state) => state.equipmentId === equipment.equipmentId
-                    );
-   
-                    const latestState = stateHistory
-                        ? stateHistory.states.reduce((latest, current) =>
-                              new Date(current.date) > new Date(latest.date)
-                                  ? current
-                                  : latest
-                          )
-                        : null;
-    
-                    const currentStateId = latestState
-                        ? latestState.equipmentStateId
-                        : "ID do Estado Desconhecido";
-    
-                    const stateInfo = equipmentState.value.find(
-                        (state) => state.id === currentStateId
-                    );
-    
-                    const currentStateName = stateInfo
-                        ? stateInfo.name
-                        : "Estado Desconhecido";
-    
-                    const color = stateInfo ? stateInfo.color : "blue";
-    
-                    const equipmentModel = equipmentsModel.value.find(
-                        (model) => model.id === equipmentInfo.equipmentModelId
-                    );
-    
-                    const equipmentModelName = equipmentModel
-                        ? equipmentModel.name
-                        : "Modelo Desconhecido";
-    
-                    const hourlyEarnings = equipmentModel?.hourlyEarnings.find(
-                        (earning) => earning.equipmentStateId === currentStateId
-                    );
-    
-                    const value = hourlyEarnings ? hourlyEarnings.value : 0;
-    
-                    acc.push({
-                        ...latestPosition,
-                        equipmentId: equipment.equipmentId,
-                        equipmentName: equipmentInfo.name,
-                        currentStateId,
-                        currentStateName,
-                        color,
-                        equipmentModelId: equipmentInfo.equipmentModelId,
-                        equipmentModelName,
-                        value,
-                    });
-    
-                    return acc;
-                }, []);
-        } else {
-            latestEquipmentInfo.value = [];
-        }
-    };
     
     return {
         equipmentPositionHistory,
@@ -172,14 +81,11 @@ export const useApiStore = defineStore('api', () => {
         equipmentsModel,
         equipmentStateHistory,
         equipmentState,
-        latestEquipmentInfo,
 
         fetchPositionHistory,
         fetchEquipments,
         fetchEquipmentsModel,
         fetchStateHistory,
         fetchAllData,
-
-        getLatestPositionsHistory
     }
 });
