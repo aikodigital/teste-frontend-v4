@@ -18,6 +18,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - **Tailwind CSS**: Framework utilitário para estilização, facilitando a criação de interfaces modernas e responsivas.
 - **Shadcn UI**: Biblioteca de componentes UI que utiliza Tailwind CSS para construir interfaces customizáveis.
 - **@react-google-maps/api**: Biblioteca para integração do Google Maps com React, usada para exibir a localização dos equipamentos.
+- **Jest**: Framework de testes utilizado para automatizar e validar o comportamento da aplicação, garantindo a qualidade e a consistência do código.
 
 ## 🚀 Funcionalidades Implementadas
 
@@ -107,13 +108,28 @@ Para rodar o projeto localmente, siga os passos abaixo:
 
 ## 🗂️ Estrutura de Pastas
 
-- **/data**: Contém os arquivos JSON com os dados dos equipamentos, modelos, estados e históricos.
-- **/src**: Diretório principal do código-fonte da aplicação.
-  - **/components**: Componentes reutilizáveis da interface.
-  - **/pages**: Páginas da aplicação.
-  - **/store**: Arquivos relacionados ao gerenciamento de estado com Zustand.
-  - **/styles**: Arquivos de estilo (CSS).
-  - **/types**: Definições de tipos TypeScript utilizados no projeto.
+- **/app**: Contém a estrutura principal da aplicação, incluindo layouts e configuração de páginas.
+  - **/fonts**: Armazena fontes utilizadas na aplicação.
+  - **/history**: Armazena componentes ou módulos relacionados ao histórico da aplicação.
+  - **favicon.ico**: Ícone utilizado na aba do navegador.
+  - **head.tsx**: Componente que define metadados e informações da `head` HTML.
+  - **HomePage.test.tsx**: Testes unitários relacionados à página inicial.
+  - **layout.tsx**: Componente de layout que organiza a estrutura visual da aplicação.
+  - **page.tsx**: Página principal da aplicação.
+- **/components**: Contém componentes reutilizáveis da interface.
+- **/lib**: Funções utilitárias e módulos auxiliares utilizados na aplicação.
+- **/store**: Gerenciamento de estado da aplicação utilizando Zustand.
+- **/styles**: Arquivos de estilo (CSS).
+  - **input.css**: Arquivo de entrada para configuração de estilos Tailwind.
+  - **output.css**: Arquivo de saída gerado pelo Tailwind com os estilos processados.
+- **/types.ts**: Definições de tipos TypeScript utilizadas no projeto.
+- **.env**: Arquivo de configuração de variáveis de ambiente.
+- **.eslintrc.json**: Configuração de linting para garantir a padronização do código.
+- **.gitignore**: Arquivo que especifica quais arquivos e pastas devem ser ignorados pelo Git.
+- **components.json**: Configurações relacionadas aos componentes do projeto.
+- **jest.config.js**: Configurações para testes com Jest.
+- **next-env.d.ts**: Tipos TypeScript para Next.js.
+- **next.config.mjs**: Configurações específicas do Next.js.
 
 ## 🤝 Contribuição
 
