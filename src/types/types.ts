@@ -34,7 +34,7 @@ interface EquipmentState {
 
 interface EquipmentStateHistory {
     equipmentId: string;
-    states: State[];
+    states: State[] | [];
 }
 
 interface State {
@@ -61,7 +61,7 @@ interface StateHistoryData {
     equipmentName?: string;
     equipmentModelId?: string;
     equipmentModelName?: string;
-    states?: StateData[];
+    states?: StateData[] | [];
 }
 
 interface StateData {
@@ -78,6 +78,7 @@ export type {
     EquipmentState,
     EquipmentStateHistory,
     State,
+    StateData,
 
     LatestEquipmentInfo,
     StateHistoryData,

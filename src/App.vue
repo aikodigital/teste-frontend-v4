@@ -10,7 +10,7 @@
 import HeaderApp from "./components/HeaderApp.vue";
 import MapView from "./components/MapView.vue";
 import StateHistory from "./components/StateHistory.vue";
-import { useStateHistoryStore } from "@/stores/stateHistory.ts";
+import { useStateHistoryStore } from "@/stores/stateHistory";
 
 const stateHistoryStore = useStateHistoryStore();
 </script>

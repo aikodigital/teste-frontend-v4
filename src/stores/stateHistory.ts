@@ -1,11 +1,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useApiStore } from "@/stores/api";
-import { type StateHistoryData, type State } from "@/types/types";
+import { type StateHistoryData, type StateData } from "@/types/types";
 
 export const useStateHistoryStore = defineStore('stateHistory', () => {
     const showStateHistory = ref<boolean>(false);
-    const stateHistoryData = ref<StateHistoryData>([]);
+    const stateHistoryData = ref<StateHistoryData>({});
     const apiStore = useApiStore();
 
     const setStateHistoryView = (status: boolean) => {
@@ -13,7 +13,7 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
     };
 
     const resetStateHistoryData = () => {
-        stateHistoryData.value = [];
+        stateHistoryData.value = {};
     }
 
     const mapEquipmentData = () => {
@@ -29,8 +29,8 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
         });
     };
 
-    const addStateNames = (oldStates: State[]) => {
-        return oldStates.map((stateEntry: State) => {
+    const addStateNames = (oldStates: StateData[]) => {
+        return oldStates.map((stateEntry: StateData) => {
             const stateInfo = apiStore.equipmentState.find(state => state.id === stateEntry.equipmentStateId);
             return {
                 ...stateEntry,
@@ -42,20 +42,20 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
     const getStateHistory = async (equipmentId: string) => {
         const equipmentMaping = mapEquipmentData();
         const equipmentInfo = equipmentMaping.find(equipment => equipment.equipmentId === equipmentId);
-        const equipmentStateHistory: StateHistoryData = apiStore.equipmentStateHistory.find(
+        const equipmentStateHistory = apiStore.equipmentStateHistory.find(
             equipment => equipment.equipmentId == equipmentId
-        );
+        ) as StateHistoryData | undefined;
 
         if (equipmentStateHistory) {
             equipmentStateHistory['equipmentName'] = equipmentInfo ? equipmentInfo.equipmentName : "Nome do equipamento desconhecido";
             equipmentStateHistory['equipmentModelId'] = equipmentInfo ? equipmentInfo.equipmentModelId : "ID do modelo desconhecido";
             equipmentStateHistory['equipmentModelName'] = equipmentInfo ? equipmentInfo.equipmentModelName : "Nome do modelo desconhecido";
 
-            equipmentStateHistory.states = addStateNames(equipmentStateHistory.states);
+            equipmentStateHistory.states = equipmentStateHistory.states ? addStateNames(equipmentStateHistory.states) : [];
 
             stateHistoryData.value = equipmentStateHistory;
         } else {
-            stateHistoryData.value = [];
+            stateHistoryData.value = {};
         }
     };
 
