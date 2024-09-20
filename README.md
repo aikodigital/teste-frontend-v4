@@ -144,5 +144,5 @@ Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](L
 Para mais informações, entre em contato com o desenvolvedor:
 
 - **Nome:** Lucas Silvestre
-- **Email:** seu-email@example.com
-- **LinkedIn:** [Seu LinkedIn](https://www.linkedin.com/in/seu-perfil)
+- **Email:** lucassilvestreadv@gmail.com  
+- **LinkedIn:** [Seu LinkedIn](https://www.linkedin.com/in/lucassilvestreee/)
