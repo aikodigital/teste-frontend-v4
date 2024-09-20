@@ -29,33 +29,26 @@
 <script script setup lang="ts">
 import { computed } from "vue";
 import { useStateHistoryStore } from "@/stores/stateHistory";
+import { formatDate } from "@/utils/utils"
 
 const stateHistoryStore = useStateHistoryStore();
 
 const sortedStates = computed(() => {
-    return [...stateHistoryStore.stateHistoryData.states].sort((a, b) => {
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        return dateB.getTime() - dateA.getTime();
-    });
+    const states = stateHistoryStore.stateHistoryData.states;
+    
+    if (states && Array.isArray(states)) {
+        return [...states].sort((a, b) => {
+            const dateA = new Date(a.date || 0);
+            const dateB = new Date(b.date || 0);
+            return dateB.getTime() - dateA.getTime();
+        });
+    }
+    return [];
 });
 
 const close = () => {
     stateHistoryStore.setStateHistoryView(false);
     stateHistoryStore.resetStateHistoryData();
-};
-
-const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    return `${day}/${month}/${year} às ${hours}:${minutes}`;
 };
 </script>
 
