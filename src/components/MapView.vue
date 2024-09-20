@@ -53,7 +53,8 @@ import blueIconUrl from "@/assets/marker-icon-blue.png";
 const stateHistoryStore = useStateHistoryStore();
 const apiStore = useApiStore();
 
-const zoom = ref<number>(10);
+const zoom = ref<number>(11);
+const lastEquipmentId = ref<string | null>(null);
 
 const latestPositions = computed(() => {
     if (apiStore.latestEquipmentInfo.length > 0) {
@@ -68,9 +69,12 @@ const showPopup = (e: L.LeafletMouseEvent) => {
 };
 
 const openStateHistory = async (equipment: LatestEquipmentInfo) => {
-    stateHistoryStore.setStateHistoryView(!stateHistoryStore.showStateHistory);
+    if (lastEquipmentId.value === equipment.equipmentId || lastEquipmentId.value === null) {
+        stateHistoryStore.setStateHistoryView(!stateHistoryStore.showStateHistory);
+    }
+    lastEquipmentId.value = equipment.equipmentId;
 
-    await stateHistoryStore.fetchStateHistory(equipment.equipmentId);
+    await stateHistoryStore.getStateHistory(equipment.equipmentId);
 };
 
 const getCustomIcon = (color: string) => {

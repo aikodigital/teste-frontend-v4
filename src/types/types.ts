@@ -56,10 +56,18 @@ interface LatestEquipmentInfo {
     value: number;
 }
 
+interface StateHistoryData {
+    equipmentId?: string;
+    equipmentName?: string;
+    equipmentModelId?: string;
+    equipmentModelName?: string;
+    states?: StateData[];
+}
+
 interface StateData {
-    equipmentId: string;
-    equipmentName: string;
-    states: State[];
+    date?: string;
+    equipmentStateId?: string;
+    equipmentStateName?: string;
 }
 
 export type { 
@@ -72,5 +80,5 @@ export type {
     State,
 
     LatestEquipmentInfo,
-    StateData,
+    StateHistoryData,
  }
