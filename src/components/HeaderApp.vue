@@ -1,9 +1,16 @@
 <template>
     <div class="header-area">
-        <img src="@/assets/aiko.png" alt="Company logo">
-        <h1>Localizador de Equipamentos</h1>
+        <div class="header-text">
+            <img src="@/assets/aiko.png" alt="Company logo">
+            <h1>Localizador de Equipamentos</h1>
+        </div>
+        <SearchInput @updateSearch="$emit('updateSearch', $event)" />
     </div>
 </template>
+
+<script setup lang="ts">
+import SearchInput from './SearchInput.vue';
+</script>
 
 <style scoped>
 .header-area {
@@ -12,6 +19,7 @@
     left: 0;
 
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0 30px;
 
@@ -19,6 +27,14 @@
     box-shadow: 0 8px 6px -6px rgb(0, 0, 0);
     width: 100vw;
     height: 70px;
+}
+
+.header-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    height: 100%;
 }
 
 img {

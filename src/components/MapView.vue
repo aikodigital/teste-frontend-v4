@@ -2,10 +2,10 @@
     <div class="map-container">
         <div class="map-area">
             <l-map
-                v-if="latestPositions.length > 0"
+                v-if="searchedLatestPositions.length > 0"
                 ref="map"
                 v-model:zoom="zoom"
-                :center="[latestPositions[0].lat, latestPositions[0].lon]"
+                :center="[searchedLatestPositions[0].lat, searchedLatestPositions[0].lon]"
                 :use-global-leaflet="false"
             >
                 <l-tile-layer
@@ -15,7 +15,7 @@
                 ></l-tile-layer>
 
                 <l-marker
-                    v-for="(position, index) in latestPositions"
+                    v-for="(position, index) in searchedLatestPositions"
                     :key="index"
                     :lat-lng="[position.lat, position.lon]"
                     :icon="getCustomIcon(position.color)"
@@ -55,8 +55,27 @@ const apiStore = useApiStore();
 const positionHistory = usePositionHistoryStore();
 const stateHistoryStore = useStateHistoryStore();
 
-const zoom = ref<number>(11);
+const zoom = ref<number>(10);
 const lastEquipmentId = ref<string | null>(null);
+
+const props = defineProps<{
+    search: string;
+}>();
+
+const searchedLatestPositions = computed(() => {
+    if (props.search && props.search !== "") {
+        return latestPositions.value.filter((position) => {
+            const searchTerm = props.search.toLowerCase();
+            return (
+                position.equipmentName.toLowerCase().includes(searchTerm) ||
+                position.equipmentModelName.toLowerCase().includes(searchTerm) ||
+                position.currentStateName.toLowerCase().includes(searchTerm)
+            );
+        });
+    } else {
+        return latestPositions.value;
+    }
+});
 
 const latestPositions = computed(() => {
     if (positionHistory.latestEquipmentInfo.length > 0) {
