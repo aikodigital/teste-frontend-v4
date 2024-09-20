@@ -145,4 +145,4 @@ Para mais informações, entre em contato com o desenvolvedor:
 
 - **Nome:** Lucas Silvestre
 - **Email:** lucassilvestreadv@gmail.com  
-- **LinkedIn:** [Seu LinkedIn](https://www.linkedin.com/in/lucassilvestreee/)
+- **LinkedIn:** [lucassilvestreee](https://www.linkedin.com/in/lucassilvestreee/)
