@@ -55,7 +55,7 @@ const close = () => {
 <style scoped>
 .history-area {
     height: 80vh;
-    width: 30vw;
+    width: 26vw;
     background-color: var(--indigo-dark-blue);
     color: white;
     border-radius: 30px 0 0 30px;

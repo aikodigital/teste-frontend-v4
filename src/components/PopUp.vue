@@ -13,7 +13,7 @@
             <span class="data">{{ props.position?.currentStateName }}</span>
         </div>
         <div class="item-list">
-            <span class="label">Data da última posição: </span>
+            <span class="label">Data:</span>
             <span class="data">{{ formatDate(props.position?.date) }}</span> 
         </div>
     </div>
@@ -35,7 +35,7 @@ const props = defineProps({
 .popup-area {
     display: flex;
     flex-direction: column;
-    height: 200px;
+    height: fit-content;
     width: fit-content;
 }
 
@@ -46,9 +46,11 @@ const props = defineProps({
 
 .label {
     font-weight: bold;
+    font-size: 16px;
 }
 
 .data {
     margin-left: 5px;
+    font-size: 16px;
 }
 </style>

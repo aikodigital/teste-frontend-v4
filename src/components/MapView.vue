@@ -1,35 +1,23 @@
 <template>
     <div class="map-container">
         <div class="map-area">
-            <l-map
-                v-if="searchedLatestPositions.length > 0"
-                ref="map"
-                v-model:zoom="zoom"
-                :center="[searchedLatestPositions[0].lat, searchedLatestPositions[0].lon]"
-                :use-global-leaflet="false"
-            >
-                <l-tile-layer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    layer-type="base"
-                    name="OpenStreetMap"
-                ></l-tile-layer>
+            <l-map v-if="searchedLatestPositions.length > 0" ref="map" v-model:zoom="zoom"
+                :center="[searchedLatestPositions[0].lat, searchedLatestPositions[0].lon]" :use-global-leaflet="false">
+                <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base"
+                    name="OpenStreetMap"></l-tile-layer>
 
-                <l-marker
-                    v-for="(position, index) in searchedLatestPositions"
-                    :key="index"
-                    :lat-lng="[position.lat, position.lon]"
-                    :icon="getCustomIcon(position.color)"
-                    @mouseover="showPopup"
-                    @mouseout="showPopup"
-                    @click="openStateHistory(position)"
-                >
+                <l-marker v-for="(position, index) in searchedLatestPositions" :key="index"
+                    :lat-lng="[position.lat, position.lon]" :icon="getCustomIcon(position.color)" @mouseover="showPopup"
+                    @mouseout="showPopup" @click="openStateHistory(position)">
                     <l-popup ref="popups" v-if="position">
                         <PopUp :position="position" />
                     </l-popup>
                 </l-marker>
             </l-map>
-            <div v-else>
-                Não foi possível localizar as últimas posições dos equipamentos.
+            <div v-else class="no-data-box">
+                <div class="no-data">
+                    <h2>Nenhum equipamento encontrado.</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -59,17 +47,22 @@ const zoom = ref<number>(10);
 const lastEquipmentId = ref<string | null>(null);
 
 const props = defineProps<{
-    search: string;
+    search: string[];
+    filter: string[];
 }>();
 
 const searchedLatestPositions = computed(() => {
-    if (props.search && props.search !== "") {
+    if (props.search.length > 0 || props.filter.length > 0) {
         return latestPositions.value.filter((position) => {
-            const searchTerm = props.search.toLowerCase();
-            return (
+            const searchTerms = props.filter.length > 0 ? props.filter.map(term => term.toLowerCase()) : props.search.map(term => term.toLowerCase());
+
+            return searchTerms.some(searchTerm =>
+                position.equipmentId.toLowerCase().includes(searchTerm) ||
                 position.equipmentName.toLowerCase().includes(searchTerm) ||
+                position.equipmentModelId.toLowerCase().includes(searchTerm) ||
                 position.equipmentModelName.toLowerCase().includes(searchTerm) ||
-                position.currentStateName.toLowerCase().includes(searchTerm)
+                position.currentStateName.toLowerCase().includes(searchTerm) ||
+                position.date.toLowerCase().includes(searchTerm)
             );
         });
     } else {
@@ -106,7 +99,7 @@ const getCustomIcon = (color: string) => {
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
         shadowUrl:
-            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png", // Sombra do ícone
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png",
         shadowSize: [41, 41],
         shadowAnchor: [12, 41],
     });
@@ -148,5 +141,32 @@ onMounted(async () => {
 .map-area {
     height: 100%;
     width: 800px;
+}
+
+h2 {
+    font-weight: bold;
+    color: white;
+}
+
+.no-data-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.no-data {
+    width: 80%;
+    height: 15%;
+    font-size: 18px;
+    background-color: rgb(137, 26, 26);
+    border-radius: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 </style>

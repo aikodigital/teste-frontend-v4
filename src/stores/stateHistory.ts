@@ -39,7 +39,7 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
         })
     };
 
-    const getStateHistory = async (equipmentId: string) => {
+    const getStateHistory = (equipmentId: string) => {
         const equipmentMaping = mapEquipmentData();
         const equipmentInfo = equipmentMaping.find(equipment => equipment.equipmentId === equipmentId);
         const equipmentStateHistory = apiStore.equipmentStateHistory.find(

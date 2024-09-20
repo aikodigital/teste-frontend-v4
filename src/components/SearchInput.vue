@@ -1,6 +1,6 @@
 <template>
     <input class="search-input" type="text" v-model="search"
-        placeholder="Filtre por nome, modelo ou estado...">
+        placeholder="Filtre por ID, nome, modelo, estado ou data...">
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,9 @@ const search = ref<string>("");
 const emit = defineEmits(['updateSearch']);
 
 watch(search, (newValue) => {
-    emit('updateSearch', newValue);
+    const searched = newValue.trim().split(",");
+
+    emit('updateSearch', searched);
 });
 </script>
 

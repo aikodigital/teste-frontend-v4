@@ -86,6 +86,7 @@ export const useApiStore = defineStore('api', () => {
         fetchEquipments,
         fetchEquipmentsModel,
         fetchStateHistory,
+        fetchState,
         fetchAllData,
     }
 });
