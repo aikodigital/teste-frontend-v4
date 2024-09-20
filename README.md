@@ -9,6 +9,10 @@ A aplicação permite visualizar os dados dos equipamentos no mapa, incluindo su
 
 # Imagens do projeto
 <img src="my-app/public/images/interface1.png" alt="Exemplo de Imagem" width="300" />
+<img src="my-app/public/images/interface2.png" alt="Exemplo de Imagem" width="300" />
+<img src="my-app/public/images/interface3.png" alt="Exemplo de Imagem" width="300" />
+<img src="my-app/public/images/interface4.png" alt="Exemplo de Imagem" width="300" />
+
 
 ## 🔧 Tecnologias Utilizadas
 
