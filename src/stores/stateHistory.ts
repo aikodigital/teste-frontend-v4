@@ -39,6 +39,33 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
         })
     };
 
+    const calculateProductivity = (states: StateData[]) => {
+        if (states.length < 2) return { productivity: 0, lastState: "Último estado desconhecido" };
+
+        const sortedStates = states.sort((a, b) => {
+            const dateA = new Date(a.date || 0).getTime();
+            const dateB = new Date(b.date || 0).getTime();
+            return dateB - dateA;
+        });
+
+        const lastState = sortedStates[0];
+        const penultimateState = sortedStates[1];
+
+        if (lastState.equipmentStateName === "Operando") {
+            const lastDate = new Date(lastState.date || 0);
+            const penultimateDate = new Date(penultimateState.date || 0);
+
+            const diffInMs = lastDate.getTime() - penultimateDate.getTime();
+            const diffInHours = diffInMs / (1000 * 60 * 60);
+
+            const productivity = (diffInHours / 24) * 100;
+
+            return { productivity: productivity, lastState: "Operando" };
+        }
+
+        return { productivity: 0, lastState: "Último estado desconhecido" };
+    };   
+
     const getStateHistory = (equipmentId: string) => {
         const equipmentMaping = mapEquipmentData();
         const equipmentInfo = equipmentMaping.find(equipment => equipment.equipmentId === equipmentId);
@@ -52,6 +79,13 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
             equipmentStateHistory['equipmentModelName'] = equipmentInfo ? equipmentInfo.equipmentModelName : "Nome do modelo desconhecido";
 
             equipmentStateHistory.states = equipmentStateHistory.states ? addStateNames(equipmentStateHistory.states) : [];
+
+            const { productivity, lastState } = equipmentStateHistory.states
+                ? calculateProductivity(equipmentStateHistory.states)
+                : { productivity: 0, lastState: "Último estado desconhecido"  }
+
+            equipmentStateHistory['productivity'] = productivity;
+            equipmentStateHistory['lastState'] = lastState;
 
             stateHistoryData.value = equipmentStateHistory;
         } else {

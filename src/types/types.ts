@@ -61,6 +61,8 @@ interface StateHistoryData {
     equipmentName?: string;
     equipmentModelId?: string;
     equipmentModelName?: string;
+    productivity?: number;
+    lastState?: string;
     states?: StateData[] | [];
 }
 
