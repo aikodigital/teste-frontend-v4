@@ -40,7 +40,7 @@ import yellowIconUrl from "@/assets/marker-icon-yellow.png";
 import blueIconUrl from "@/assets/marker-icon-blue.png";
 
 const apiStore = useApiStore();
-const positionHistory = usePositionHistoryStore();
+const positionHistoryStore = usePositionHistoryStore();
 const stateHistoryStore = useStateHistoryStore();
 
 const zoom = ref<number>(10);
@@ -71,8 +71,8 @@ const searchedLatestPositions = computed(() => {
 });
 
 const latestPositions = computed(() => {
-    if (positionHistory.latestEquipmentInfo.length > 0) {
-        return positionHistory.latestEquipmentInfo;
+    if (positionHistoryStore.latestEquipmentInfo.length > 0) {
+        return positionHistoryStore.latestEquipmentInfo;
     } else {
         return [];
     }
@@ -82,13 +82,13 @@ const showPopup = (e: L.LeafletMouseEvent) => {
     e.target.togglePopup();
 };
 
-const openStateHistory = async (equipment: LatestEquipmentInfo) => {
+const openStateHistory = (equipment: LatestEquipmentInfo) => {
     if (lastEquipmentId.value === equipment.equipmentId || lastEquipmentId.value === null) {
         stateHistoryStore.setStateHistoryView(!stateHistoryStore.showStateHistory);
     }
     lastEquipmentId.value = equipment.equipmentId;
 
-    await stateHistoryStore.getStateHistory(equipment.equipmentId);
+    stateHistoryStore.getStateHistory(equipment.equipmentId);
 };
 
 const getCustomIcon = (color: string) => {
@@ -120,7 +120,7 @@ const getIconUrlByColor = (color: string) => {
 
 onMounted(async () => {
     await apiStore.fetchAllData();
-    positionHistory.getLatestPositionsHistory();
+    positionHistoryStore.getLatestPositionsHistory();
 });
 </script>
 

@@ -6,7 +6,7 @@
         <h2>{{ stateHistoryStore.stateHistoryData.equipmentName }}</h2>
         <h3>{{ stateHistoryStore.stateHistoryData.equipmentModelName }}</h3>
         <h3 v-if="stateHistoryStore.stateHistoryData.lastState === 'Operando'">
-            Produtividade de {{ stateHistoryStore.stateHistoryData.productivity?.toFixed(2) }} %
+            Produtividade de {{ stateHistoryStore.stateHistoryData.productivity?.toFixed(2) }}%
         </h3>
         <div class="table-area">
             <table>

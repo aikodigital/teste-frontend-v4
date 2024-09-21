@@ -4,16 +4,16 @@
 
         <h3>Estados:</h3>
         <div class="list-item" v-for="(state, index) in apiStore.equipmentState.map(m => m.name)" :key="index">
-            <input type="checkbox" @change="handleSelect(state)"
+            <input id="state" type="checkbox" @change="handleSelect(state)"
                 :checked="selectedFilters.includes(state)">
-            <label>{{ state }}</label>
+            <label for="state">{{ state }}</label>
         </div>
 
         <h3>Modelos:</h3>
         <div class="list-item" v-for="(model, index) in apiStore.equipmentsModel.map(m => m.name)" :key="index">
-            <input type="checkbox" @change="handleSelect(model)"
+            <input id="model" type="checkbox" @change="handleSelect(model)"
                 :checked="selectedFilters.includes(model)">
-            <label>{{ model }}</label>
+            <label for="model">{{ model }}</label>
         </div>
     </div>
 </template>
