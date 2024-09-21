@@ -101,6 +101,7 @@ export const usePositionHistoryStore = defineStore('positionHistory', () => {
 
     return {
         latestEquipmentInfo,
+        getLatestPosition,
         getLatestPositionsHistory
     }
 });

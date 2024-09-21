@@ -93,5 +93,14 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
         }
     };
 
-    return { showStateHistory, setStateHistoryView, getStateHistory, stateHistoryData, resetStateHistoryData };
+    return {
+        showStateHistory,
+        stateHistoryData,
+        setStateHistoryView,
+        resetStateHistoryData,
+        mapEquipmentData,
+        addStateNames,
+        calculateProductivity,
+        getStateHistory,
+    };
 });
