@@ -16,10 +16,8 @@ interface SearchProps {
 }
 
 export default function SearchResults({ searchParams }: SearchProps) {
-  // Se searchParams ou q não existirem, query será uma string vazia
   const { q: query = '' } = searchParams || {}
 
-  // Verificação para evitar erro ao usar .toLowerCase()
   const filteredEquipment = equipment.filter((eq) =>
     eq.name?.toLowerCase().includes(query.toLowerCase()),
   )
