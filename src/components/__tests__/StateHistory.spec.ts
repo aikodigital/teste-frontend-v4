@@ -20,6 +20,14 @@ vi.mock("@/stores/stateHistory", () => ({
     useStateHistoryStore: () => stateHistoryStore
 }));
 
+vi.mock("@/stores/positionHistory", () => ({
+    usePositionHistoryStore: vi.fn(() => ({
+      getLatestPositionsHistory: vi.fn(),
+      latestEquipmentInfo: [],
+      resetPositionHistoryData: vi.fn(),
+    })),
+  }));
+
 describe("StateHistory.vue", () => {
     beforeEach(() => {
         stateHistoryStore = {

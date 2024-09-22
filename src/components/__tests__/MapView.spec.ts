@@ -81,6 +81,7 @@ vi.mock("@/stores/positionHistory", () => ({
   usePositionHistoryStore: vi.fn(() => ({
     getLatestPositionsHistory: vi.fn(),
     latestEquipmentInfo: [],
+    equipmentPositionHistoryInfo: vi.fn(),
   })),
 }));
 
