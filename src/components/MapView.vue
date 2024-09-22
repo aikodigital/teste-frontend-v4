@@ -7,8 +7,8 @@
                     name="OpenStreetMap"></l-tile-layer>
 
                 <l-marker v-for="(position, index) in searchedLatestPositions" :key="index"
-                    :lat-lng="[position.lat, position.lon]" :icon="getCustomIcon(position.color)" @mouseover="showPopup"
-                    @mouseout="showPopup" @click="openStateHistory(position)">
+                    :lat-lng="[position.lat, position.lon]" :icon="getCustomIcon(position.color, position.equipmentModelName)"
+                    @mouseover="showPopup" @mouseout="showPopup" @click="openStateHistory(position)">
                     <l-popup ref="popups" v-if="position">
                         <PopUp :position="position" />
                     </l-popup>
@@ -34,10 +34,19 @@ import { usePositionHistoryStore } from "@/stores/positionHistory";
 import { useStateHistoryStore } from "@/stores/stateHistory";
 import { type LatestEquipmentInfo } from "@/types/types";
 
-import greenIconUrl from "@/assets/marker-icon-green.png";
-import redIconUrl from "@/assets/marker-icon-red.png";
-import yellowIconUrl from "@/assets/marker-icon-yellow.png";
 import blueIconUrl from "@/assets/marker-icon-blue.png";
+
+import greenClaw from "@/assets/marker-icon-green-g.png";
+import redClaw from "@/assets/marker-icon-red-g.png";
+import yellowClaw from "@/assets/marker-icon-yellow-g.png";
+
+import greenTruck from "@/assets/marker-icon-green-c.png";
+import redTruck from "@/assets/marker-icon-red-c.png";
+import yellowTruck from "@/assets/marker-icon-yellow-c.png";
+
+import greenHarvester from "@/assets/marker-icon-green-h.png";
+import yellowHarvester from "@/assets/marker-icon-red-h.png";
+import redHarvester from "@/assets/marker-icon-yellow-h.png";
 
 const apiStore = useApiStore();
 const positionHistoryStore = usePositionHistoryStore();
@@ -91,11 +100,11 @@ const openStateHistory = (equipment: LatestEquipmentInfo) => {
     stateHistoryStore.getStateHistory(equipment.equipmentId);
 };
 
-const getCustomIcon = (color: string) => {
-    let iconUrl = getIconUrlByColor(color);
+const getCustomIcon = (color: string, model: string) => {
+    let iconUrl = getIconUrlByColor(color, model);
     return L.icon({
         iconUrl,
-        iconSize: [25, 41],
+        iconSize: [40, 40],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
         shadowUrl:
@@ -105,17 +114,20 @@ const getCustomIcon = (color: string) => {
     });
 };
 
-const getIconUrlByColor = (color: string) => {
-    switch (color) {
-        case "#e74c3c":
-            return redIconUrl;
-        case "#f1c40f":
-            return yellowIconUrl;
-        case "#2ecc71":
-            return greenIconUrl;
-        default:
-            return blueIconUrl;
-    }
+const getIconUrlByColor = (color: string, model: string) => {
+    if (color === "#e74c3c" && model === "Caminhão de carga") return redTruck;
+    if (color === "#2ecc71" && model === "Caminhão de carga") return greenTruck;
+    if (color === "#f1c40f" && model === "Caminhão de carga") return yellowTruck;
+
+    if (color === "#e74c3c" && model === "Harvester") return redHarvester;
+    if (color === "#2ecc71" && model === "Harvester") return greenHarvester;
+    if (color === "#f1c40f" && model === "Harvester") return yellowHarvester;
+
+    if (color === "#e74c3c" && model === "Garra traçadora") return redClaw;
+    if (color === "#2ecc71" && model === "Garra traçadora") return greenClaw;
+    if (color === "#f1c40f" && model === "Garra traçadora") return yellowClaw;
+    
+    return blueIconUrl;
 };
 
 onMounted(async () => {
