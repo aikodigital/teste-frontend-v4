@@ -14,7 +14,7 @@ export const useStateHistoryStore = defineStore('stateHistory', () => {
 
     const resetStateHistoryData = () => {
         stateHistoryData.value = {};
-    }
+    };
 
     const mapEquipmentData = () => {
         return apiStore.equipments.map(equipment => {

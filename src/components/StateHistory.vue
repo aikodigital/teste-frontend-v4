@@ -8,6 +8,7 @@
         <h3 v-if="stateHistoryStore.stateHistoryData.lastState === 'Operando'">
             Produtividade de {{ stateHistoryStore.stateHistoryData.productivity?.toFixed(2) }}%
         </h3>
+        <button @click="getPositionHistory()">Exibir histórico de posições</button>
         <div class="table-area">
             <table>
                 <thead>
@@ -32,9 +33,11 @@
 <script script setup lang="ts">
 import { computed } from "vue";
 import { useStateHistoryStore } from "@/stores/stateHistory";
+import { usePositionHistoryStore } from "@/stores/positionHistory";
 import { formatDate } from "@/utils/utils"
 
 const stateHistoryStore = useStateHistoryStore();
+const positionHistoryStore = usePositionHistoryStore();
 
 const sortedStates = computed(() => {
     const states = stateHistoryStore.stateHistoryData.states;
@@ -52,7 +55,14 @@ const sortedStates = computed(() => {
 const close = () => {
     stateHistoryStore.setStateHistoryView(false);
     stateHistoryStore.resetStateHistoryData();
+    positionHistoryStore.resetPositionHistoryData();
+    positionHistoryStore.getLatestPositionsHistory();
 };
+
+const getPositionHistory = () => {
+    const equipmentData = stateHistoryStore.stateHistoryData;
+    positionHistoryStore.getPositionHistory(equipmentData);
+}
 </script>
 
 <style scoped>
@@ -79,7 +89,7 @@ const close = () => {
 }
 
 .table-area {
-    max-height: 80%;
+    max-height: 70%;
     margin-top: 15px;
     overflow: auto;
 }
@@ -110,5 +120,14 @@ tr:nth-child(odd) {
 tr:hover {
     background-color: var(--light-gray-1);
     color: black;
+}
+
+button {
+    background-color: var(--indigo-light-1-blue);
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border: 0;
+    padding: 3px;
 }
 </style>

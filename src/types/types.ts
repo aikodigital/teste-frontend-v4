@@ -72,6 +72,15 @@ interface StateData {
     equipmentStateName?: string;
 }
 
+interface PositionHistory {
+    equipmentStateId: string | undefined;
+    color: string | undefined;
+    currentStateName: string | undefined;
+    date: string;
+    lat: number;
+    lon: number;
+}
+
 export type { 
     Equipment,
     EquipmentModel,
@@ -84,4 +93,5 @@ export type {
 
     LatestEquipmentInfo,
     StateHistoryData,
+    PositionHistory
  }

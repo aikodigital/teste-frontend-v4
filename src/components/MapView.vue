@@ -7,8 +7,9 @@
                     name="OpenStreetMap"></l-tile-layer>
 
                 <l-marker v-for="(position, index) in searchedLatestPositions" :key="index"
-                    :lat-lng="[position.lat, position.lon]" :icon="getCustomIcon(position.color, position.equipmentModelName)"
-                    @mouseover="showPopup" @mouseout="showPopup" @click="openStateHistory(position)">
+                    :lat-lng="[position.lat, position.lon]"
+                    :icon="getCustomIcon(position.color, position.equipmentModelName)" @mouseover="showPopup"
+                    @mouseout="showPopup" @click="openStateHistory(position)">
                     <l-popup ref="popups" v-if="position">
                         <PopUp :position="position" />
                     </l-popup>
@@ -19,6 +20,11 @@
                     <h2>Nenhum equipamento encontrado.</h2>
                 </div>
             </div>
+        </div>
+        <div v-if="positionHistoryStore.equipmentPositionHistoryInfo.length > 0 && !stateHistoryStore.showStateHistory"
+            class="clean-btn"
+            @click="clean">
+            <img style="height: 80%;" src="@/assets/clean.png" alt="Clean icon">
         </div>
     </div>
 </template>
@@ -82,6 +88,8 @@ const searchedLatestPositions = computed(() => {
 const latestPositions = computed(() => {
     if (positionHistoryStore.latestEquipmentInfo.length > 0) {
         return positionHistoryStore.latestEquipmentInfo;
+    } else if (positionHistoryStore.equipmentPositionHistoryInfo.length > 0) {
+        return positionHistoryStore.equipmentPositionHistoryInfo;
     } else {
         return [];
     }
@@ -126,8 +134,13 @@ const getIconUrlByColor = (color: string, model: string) => {
     if (color === "#e74c3c" && model === "Garra traçadora") return redClaw;
     if (color === "#2ecc71" && model === "Garra traçadora") return greenClaw;
     if (color === "#f1c40f" && model === "Garra traçadora") return yellowClaw;
-    
+
     return blueIconUrl;
+};
+
+const clean = () => {
+    positionHistoryStore.resetPositionHistoryData();
+    positionHistoryStore.getLatestPositionsHistory();
 };
 
 onMounted(async () => {
@@ -148,6 +161,7 @@ onMounted(async () => {
     height: 80vh;
     width: 60vw;
     box-shadow: 0 8px 6px -6px rgb(0, 0, 0);
+    position: relative;
 }
 
 .map-area {
@@ -179,6 +193,25 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
+.clean-btn {
+    background-color: rgb(137, 26, 26);
+    cursor: pointer;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    border: 0;
+    
+    position: absolute;
+    top: 10px;
+    right: 5px;
+
+    height: 45px;
+    width: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
