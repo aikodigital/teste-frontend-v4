@@ -109,24 +109,24 @@ export const usePositionHistoryStore = defineStore('positionHistory', () => {
     };
 
     const mergePositionsWithStates = (positions: Position[], states: StateData[]) => {
-        return positions
-            .map((position: Position) => {
-                const matchingState = states.find(state => state.date === position.date);
-
-                let color;
-                let stateName;
-
-                if (matchingState) {
-                    const state = apiStore.equipmentState.find(state => state.id === matchingState.equipmentStateId);
-                    color = state ? state.color : "";
-                    stateName = state ? state.name : "";
-                }
-
-                return matchingState
-                    ? { ...position, equipmentStateId: matchingState.equipmentStateId, color: color, currentStateName: stateName }
-                    : null;
-            })
-            .filter(item => item !== null);
+        return positions.reduce((acc: PositionHistory[], position: Position) => {
+            const matchingState = states.find(state => state.date === position.date);
+    
+            if (matchingState) {
+                const state = apiStore.equipmentState.find(state => state.id === matchingState.equipmentStateId);
+                const color = state ? state.color : "";
+                const stateName = state ? state.name : "";
+    
+                acc.push({
+                    ...position,
+                    equipmentStateId: matchingState.equipmentStateId,
+                    color: color,
+                    currentStateName: stateName
+                });
+            }
+    
+            return acc;
+        }, []);
     };
 
     const getPositionHistory = (equipmentData: StateHistoryData) => {
