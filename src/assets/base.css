@@ -1,0 +1,48 @@
+:root {
+  --light-gray-1: #f2efe9;
+  --light-gray-2: #b6cadf;
+
+  --dark-gray-1: rgba(103, 102, 102, 0.12);
+  --dark-gray-2: rgb(72, 72, 72);
+  
+  --indigo-blue: #2c3e50;
+  --indigo-light-1-blue: #396188;
+  --indigo-light-2-blue: #2b4661;
+  --indigo-light-3-blue: #243649;
+  --indigo-dark-blue: #1b2734;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--indigo-blue);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
