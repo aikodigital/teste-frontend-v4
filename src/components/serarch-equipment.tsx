@@ -14,7 +14,7 @@ export const SearchEquipment = () => {
       return
     }
 
-    router.push(`/search?query=${encodeURIComponent(searchTerm)}`)
+    router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
   }
 
   return (
