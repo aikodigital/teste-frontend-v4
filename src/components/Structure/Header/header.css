@@ -1,0 +1,6 @@
+.header {
+    background-color: var(--roxo1);
+    color: var(--cinza-claro);
+    padding: 15px;
+    border-bottom: 2px solid var(--cinza-escuro);
+}

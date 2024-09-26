@@ -11,13 +11,18 @@ const config: webpack.Configuration = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          'style-loader', // Adiciona CSS ao DOM
+          'css-loader',   // Interpreta @import e url() como import/require
+          'postcss-loader', // Processa CSS com PostCSS
+          'sass-loader',   // Compila Sass para CSS
+        ],
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.scss'],
   },
 };
 
