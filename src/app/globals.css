@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-container {
+  height: 60vw;
+  max-height: 600px;
+  width: 100vw;
+  z-index: 0;
+ 
+
+}
+
+.slick-slide>div{
+  margin: 0 6px;
+}
+
+.slick-prev:before, .slick-next:before, .slick-dots li.slick-active button:before, .slick-dots li button:before {
+  
+  color: #10B981 !important;
+  
+  
+}
+
+@layer base{
+  body {
+      @apply dark:bg-bgdark bg-bglight dark:text-textdark text-textlight font-Roboto
+      
+  }
+
+}
