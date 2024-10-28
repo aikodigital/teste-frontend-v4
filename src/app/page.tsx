@@ -1,8 +1,7 @@
 import { ModelSelect } from '@/components/model-selected'
-
+import ContainerMap from '@/components/container-map'
 import { StatusSelect } from '@/components/status-select'
 import CarouselEquipments from '@/components/carousel-equipment'
-import ContainerMap from '@/components/container-map'
 
 export default function Home() {
   return (
