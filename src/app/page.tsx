@@ -1,7 +1,8 @@
 import { ModelSelect } from '@/components/model-selected'
-import Highlight from '@/components/highlight'
+
 import { StatusSelect } from '@/components/status-select'
 import CarouselEquipments from '@/components/carousel-equipment'
+import ContainerMap from '@/components/container-map'
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         <StatusSelect />
       </div>
 
-      <Highlight />
+      <ContainerMap />
       <CarouselEquipments />
     </div>
   )

@@ -91,7 +91,6 @@ export function getcalculateEquipmentEarningsByDay(
   )
   if (!model) return 'Modelo de equipamento não encontrado'
 
-  // Função auxiliar para obter o valor por hora baseado no estado
   const getHourlyEarnings = (stateId: string) => {
     const earningsData = model.hourlyEarnings.find(
       (earning) => earning.equipmentStateId === stateId,
