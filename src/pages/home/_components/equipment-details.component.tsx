@@ -25,7 +25,7 @@ export function EquipmentDetailsComponent() {
               <strong>Modelo:</strong> {selectedEquipment.model}
             </p>
             <p>
-              <strong>Status atual:</strong> {selectedEquipment.state.name}
+              <strong>Estado atual:</strong> {selectedEquipment.state.name}
             </p>
 
             <EquipmentHistory equipmentId={selectedEquipment.id} />

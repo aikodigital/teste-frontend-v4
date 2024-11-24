@@ -3,29 +3,23 @@ import {
   Equipment,
   EquipmentState,
   EquipmentStateHistory,
-  EquipmentPositionHistory,
   EquipmentModel,
 } from "@/types/equipment.type";
 
 import {
   fetchEquipment,
   fetchEquipmentModel,
-  fetchEquipmentPositionHistory,
   fetchEquipmentState,
   fetchEquipmentStateHistory,
 } from "./use-equipment.hook";
 
 interface EquipmentHistoryEntry {
   date: string;
-  type: "state" | "position";
+  type: "state"; // Alterado para apenas "state"
   state?: {
     id: string;
     name: string;
     color: string;
-  };
-  position?: {
-    lat: number;
-    lon: number;
   };
 }
 
@@ -33,7 +27,7 @@ interface EquipmentWithHistory {
   id: string;
   name: string;
   model: string;
-  history: EquipmentHistoryEntry[];
+  history: EquipmentHistoryEntry[]; // Apenas histórico de estado
 }
 
 export function useEquipmentHistory(equipmentId: string) {
@@ -51,19 +45,16 @@ export function useEquipmentHistory(equipmentId: string) {
           equipmentModels,
           equipmentStates,
           equipmentStateHistories,
-          equipmentPositionHistories,
         ]: [
           Equipment[],
           EquipmentModel[],
           EquipmentState[],
           EquipmentStateHistory[],
-          EquipmentPositionHistory[],
         ] = await Promise.all([
           fetchEquipment(),
           fetchEquipmentModel(),
           fetchEquipmentState(),
           fetchEquipmentStateHistory(),
-          fetchEquipmentPositionHistory(),
         ]);
 
         // Encontrar o equipamento pelo ID
@@ -78,51 +69,38 @@ export function useEquipmentHistory(equipmentId: string) {
             (model) => model.id === equipment.equipmentModelId,
           )?.name || "Unknown";
 
-        // Histórico de posições
-        const positionHistory =
-          equipmentPositionHistories.find(
-            (history) => history.equipmentId === equipment.id,
-          )?.positions || [];
-
         // Histórico de estados
         const stateHistory =
           equipmentStateHistories.find(
             (history) => history.equipmentId === equipment.id,
           )?.states || [];
 
-        // Combinar posições e estados por data
-        const combinedEntries: EquipmentHistoryEntry[] = [
-          ...positionHistory.map((entry) => ({
-            date: entry.date,
-            type: "position" as const,
-            position: {
-              lat: entry.lat,
-              lon: entry.lon,
-            },
-          })),
-          ...stateHistory.map((entry) => {
+        // Criar as entradas do histórico de estado
+        const stateEntries: EquipmentHistoryEntry[] = stateHistory.map(
+          (entry) => {
             const stateDetails = equipmentStates.find(
               (state) => state.id === entry.equipmentStateId,
             );
             return {
               date: entry.date,
-              type: "state" as const,
+              type: "state", // Apenas estado
               state: {
                 id: stateDetails?.id || "",
                 name: stateDetails?.name || "Unknown",
                 color: stateDetails?.color || "gray",
               },
             };
-          }),
-        ].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          },
         );
 
+        // Definir os dados finais
         setHistoryData({
           id: equipment.id,
           name: equipment.name,
           model,
-          history: combinedEntries,
+          history: stateEntries.sort(
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          ),
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error loading data");

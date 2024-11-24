@@ -37,7 +37,7 @@ export function Map({ equipments }: IMapProps) {
       center={positionDefault}
       zoom={13}
       zoomControl={false}
-      className="z-10" // Ajuste para o mapa ficar atrás do Sheet
+      className="z-10"
     >
       <ZoomControl position="topright" />
       <TileLayer
@@ -64,16 +64,16 @@ export function Map({ equipments }: IMapProps) {
           <Popup>
             <div className="flex flex-col items-start">
               <span>
-                <strong>Name:</strong> {equipment.name}
+                <strong>Nome:</strong> {equipment.name}
               </span>
               <span>
-                <strong>Model:</strong> {equipment.model}
+                <strong>Modelo:</strong> {equipment.model}
               </span>
               <span>
-                <strong>Status:</strong> {equipment.state.name}
+                <strong>Estado:</strong> {equipment.state.name}
               </span>
               <span>
-                <strong>Position:</strong> [{equipment.position.lat},{" "}
+                <strong>Posição:</strong> [{equipment.position.lat},{" "}
                 {equipment.position.lon}]
               </span>
             </div>
