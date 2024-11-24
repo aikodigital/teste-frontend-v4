@@ -6,9 +6,16 @@ import {
   fetchEquipmentState,
   fetchEquipmentStateHistory,
 } from "./use-equipment.hook";
+import {
+  Equipment,
+  EquipmentModel,
+  EquipmentPositionHistory,
+  EquipmentState,
+  EquipmentStateHistory,
+} from "@/types/equipment.type";
 
 export function useEquipmentData() {
-  const [processedData, setProcessedData] = useState<any[]>([]);
+  const [processedData, setProcessedData] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,35 +36,40 @@ export function useEquipmentData() {
           fetchEquipmentPositionHistory(),
         ]);
 
-        const combinedData = equipments.map((equipment: any) => {
-          // Equipment model
+        const combinedData = equipments.map((equipment: Equipment) => {
           const model = equipmentModels.find(
-            (model: any) => model.id === equipment.equipmentModelId
+            (model: EquipmentModel) => model.id === equipment.equipmentModelId,
           );
 
-          // Last position
           const positionHistory = equipmentPositionHistory.find(
-            (position: any) => position.equipmentId === equipment.id
+            (position: EquipmentPositionHistory) =>
+              position.equipmentId === equipment.id,
           );
           const latestPosition = positionHistory?.positions?.reduce(
-            (latest: any, current: any) =>
+            (
+              latest: { date: string; equipmentStateId: string },
+              current: { date: string; equipmentStateId: string },
+            ) =>
               new Date(current.date) > new Date(latest.date) ? current : latest,
-            positionHistory?.positions[0]
+            positionHistory?.positions[0],
           );
 
-          // Last state
           const stateHistory = equipmentStateHistory.find(
-            (state: any) => state.equipmentId === equipment.id
+            (state: EquipmentStateHistory) =>
+              state.equipmentId === equipment.id,
           );
           const latestState = stateHistory?.states?.reduce(
-            (latest: any, current: any) =>
+            (
+              latest: { date: string; equipmentStateId: string },
+              current: { date: string; equipmentStateId: string },
+            ) =>
               new Date(current.date) > new Date(latest.date) ? current : latest,
-            stateHistory?.states[0]
+            stateHistory?.states[0],
           );
 
-          // state most recently status
           const stateDetails = equipmentStates.find(
-            (state: any) => state.id === latestState?.equipmentStateId
+            (state: EquipmentState) =>
+              state.id === latestState?.equipmentStateId,
           );
 
           return {

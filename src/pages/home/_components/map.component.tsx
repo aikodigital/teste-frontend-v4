@@ -7,7 +7,6 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { DivIcon, LatLngExpression } from "leaflet";
-import { useState } from "react";
 import { useEquipmentStore } from "@/stores/equipment.store";
 
 interface EquipmentProps {

@@ -3,7 +3,6 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { EquipmentHistory } from "./equipment-history.component";

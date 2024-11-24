@@ -38,7 +38,7 @@ interface EquipmentWithHistory {
 
 export function useEquipmentHistory(equipmentId: string) {
   const [historyData, setHistoryData] = useState<EquipmentWithHistory | null>(
-    null
+    null,
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +57,7 @@ export function useEquipmentHistory(equipmentId: string) {
           EquipmentModel[],
           EquipmentState[],
           EquipmentStateHistory[],
-          EquipmentPositionHistory[]
+          EquipmentPositionHistory[],
         ] = await Promise.all([
           fetchEquipment(),
           fetchEquipmentModel(),
@@ -75,19 +75,19 @@ export function useEquipmentHistory(equipmentId: string) {
         // Modelo do equipamento
         const model =
           equipmentModels.find(
-            (model) => model.id === equipment.equipmentModelId
+            (model) => model.id === equipment.equipmentModelId,
           )?.name || "Unknown";
 
         // Histórico de posições
         const positionHistory =
           equipmentPositionHistories.find(
-            (history) => history.equipmentId === equipment.id
+            (history) => history.equipmentId === equipment.id,
           )?.positions || [];
 
         // Histórico de estados
         const stateHistory =
           equipmentStateHistories.find(
-            (history) => history.equipmentId === equipment.id
+            (history) => history.equipmentId === equipment.id,
           )?.states || [];
 
         // Combinar posições e estados por data
@@ -102,7 +102,7 @@ export function useEquipmentHistory(equipmentId: string) {
           })),
           ...stateHistory.map((entry) => {
             const stateDetails = equipmentStates.find(
-              (state) => state.id === entry.equipmentStateId
+              (state) => state.id === entry.equipmentStateId,
             );
             return {
               date: entry.date,
@@ -115,7 +115,7 @@ export function useEquipmentHistory(equipmentId: string) {
             };
           }),
         ].sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         );
 
         setHistoryData({
