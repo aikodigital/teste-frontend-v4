@@ -13,11 +13,27 @@ import {
   EquipmentState,
   EquipmentStateHistory,
 } from "@/types/equipment.type";
+import { useEquipmentMapStore } from "@/stores/equipment-map.store";
+
+export interface ProcessedEquipment {
+  id: string;
+  name: string;
+  model: string | undefined;
+  position: { lat: number; lon: number };
+  state: {
+    id: string | undefined;
+    name: string | undefined;
+    color: string | undefined;
+  };
+}
 
 export function useEquipmentData() {
-  const [processedData, setProcessedData] = useState([]);
+  const [processedData, setProcessedData] = useState<ProcessedEquipment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { selectedState, selectedModel, data, setData } =
+    useEquipmentMapStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,8 +113,27 @@ export function useEquipmentData() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    let filtered = [...processedData];
+
+    // Filtrando com base nos filtros da store
+    if (selectedState) {
+      filtered = filtered.filter(
+        (equipment) => equipment.state?.name === selectedState,
+      );
+    }
+
+    if (selectedModel) {
+      filtered = filtered.filter(
+        (equipment) => equipment.model === selectedModel,
+      );
+    }
+
+    setData(filtered);
+  }, [selectedState, selectedModel, processedData]);
+
   return {
-    data: processedData,
+    data: data,
     loading,
     error,
   };

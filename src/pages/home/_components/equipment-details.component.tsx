@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -15,6 +16,7 @@ export function EquipmentDetailsComponent() {
       <SheetContent side={"right"} className="z-50 bg-white">
         <SheetHeader>
           <SheetTitle>Detalhes do Equipamento</SheetTitle>
+          <SheetDescription>Veja o histórico abaixo</SheetDescription>
         </SheetHeader>
         {selectedEquipment && (
           <div className="mt-10 flex flex-col items-start">

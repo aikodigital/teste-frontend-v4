@@ -1,17 +1,10 @@
+import { ProcessedEquipment } from "@/hooks/use-equipment-data.hook";
 import { create } from "zustand";
 
-interface EquipmentProps {
-  id: string;
-  name: string;
-  model: string;
-  position: { lat: number; lon: number };
-  state: { name: string; color: string };
-}
-
 interface EquipmentStore {
-  selectedEquipment: EquipmentProps | null;
+  selectedEquipment: ProcessedEquipment | null;
   isSheetOpen: boolean;
-  openSheet: (equipment: EquipmentProps) => void;
+  openSheet: (equipment: ProcessedEquipment) => void;
   closeSheet: () => void;
 }
 

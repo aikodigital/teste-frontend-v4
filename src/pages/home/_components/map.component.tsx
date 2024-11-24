@@ -8,22 +8,12 @@ import {
 import "leaflet/dist/leaflet.css";
 import { DivIcon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
+import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
 
-interface EquipmentProps {
-  id: string;
-  name: string;
-  model: string;
-  position: { lat: number; lon: number };
-  state: { name: string; color: string };
-}
-
-interface IMapProps {
-  equipments: EquipmentProps[];
-}
-
-export function Map({ equipments }: IMapProps) {
+export function Map() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
   const openSheet = useEquipmentStore((state) => state.openSheet);
+  const { data } = useEquipmentData();
 
   const createCustomIcon = (color: string) => {
     return new DivIcon({
@@ -44,11 +34,11 @@ export function Map({ equipments }: IMapProps) {
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {equipments.map((equipment, eqIndex) => (
+      {data.map((equipment, eqIndex) => (
         <Marker
           key={`${eqIndex}-${equipment.id}`}
           position={[equipment.position.lat, equipment.position.lon]}
-          icon={createCustomIcon(equipment.state.color)}
+          icon={createCustomIcon(equipment.state.color!)}
           eventHandlers={{
             mouseover: (e) => {
               const marker = e.target;
