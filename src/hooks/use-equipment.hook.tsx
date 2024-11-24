@@ -1,17 +1,29 @@
-import { fetchEquipments } from "@/services/equipment.service";
-import { Equipment } from "@/types/response.types";
-import { useEffect, useState } from "react";
+export async function fetchEquipment() {
+  const response = await fetch("/data/equipment.json");
+  const data = await response.json();
+  return data;
+}
 
-export function useEquipment() {
-  const [equipment, setEquipment] = useState<Equipment[]>([]);
-  const [equipmentLoading, setEquipmentLoading] = useState(true);
+export async function fetchEquipmentState() {
+  const response = await fetch("/data/equipment-state.json");
+  const data = await response.json();
+  return data;
+}
 
-  useEffect(() => {
-    fetchEquipments()
-      .then(setEquipment)
-      .finally(() => setEquipmentLoading(false))
-      .catch(console.error);
-  }, []);
+export async function fetchEquipmentStateHistory() {
+  const response = await fetch("/data/equipment-state-history.json");
+  const data = await response.json();
+  return data;
+}
 
-  return { equipment, equipmentLoading };
+export async function fetchEquipmentPositionHistory() {
+  const response = await fetch("/data/equipment-position-history.json");
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchEquipmentModel() {
+  const response = await fetch("/data/equipment-model.json");
+  const data = await response.json();
+  return data;
 }
