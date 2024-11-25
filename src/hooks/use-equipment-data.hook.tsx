@@ -28,16 +28,18 @@ export interface ProcessedEquipment {
 }
 
 export function useEquipmentData() {
-  const [processedData, setProcessedData] = useState<ProcessedEquipment[]>([]);
+  const [allData, setAllData] = useState<ProcessedEquipment[]>([]);
+  const [filteredData, setFilteredData] = useState<ProcessedEquipment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { selectedState, selectedModel, data, setData } =
+  const { selectedState, selectedModel, search, searchData, setSearchData } =
     useEquipmentMapStore();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch e processamento dos dados
         const [
           equipments,
           equipmentModels,
@@ -101,7 +103,8 @@ export function useEquipmentData() {
           };
         });
 
-        setProcessedData(combinedData);
+        setAllData(combinedData);
+        setFilteredData(combinedData);
       } catch (err) {
         setError("Error when loading the data");
         console.error(err);
@@ -114,9 +117,8 @@ export function useEquipmentData() {
   }, []);
 
   useEffect(() => {
-    let filtered = [...processedData];
+    let filtered = [...allData];
 
-    // Filtrando com base nos filtros da store
     if (selectedState) {
       filtered = filtered.filter(
         (equipment) => equipment.state?.name === selectedState,
@@ -129,11 +131,23 @@ export function useEquipmentData() {
       );
     }
 
-    setData(filtered);
-  }, [selectedState, selectedModel, processedData]);
+    setFilteredData(filtered);
+  }, [selectedState, selectedModel, allData]);
+
+  useEffect(() => {
+    if (search) {
+      const searched = allData.filter((equipment) =>
+        equipment.name.toLowerCase().includes(search.toLowerCase()),
+      );
+      setSearchData(searched);
+    } else {
+      setSearchData([]); // Limpa o resultado da busca quando o campo está vazio
+    }
+  }, [search, allData]);
 
   return {
-    data: data,
+    data: filteredData,
+    searchData,
     loading,
     error,
   };

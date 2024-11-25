@@ -8,8 +8,8 @@ import {
 import "leaflet/dist/leaflet.css";
 import { icon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
-import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
 import { StatusBadge } from "./status-badge.component";
+import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
 
 export function Map() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
@@ -17,7 +17,6 @@ export function Map() {
   const { data } = useEquipmentData();
 
   const createCustomIcon = (model: string) => {
-    console.log(model);
     const image =
       model == "Harvester"
         ? "/icons/harvester.png"

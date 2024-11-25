@@ -7,8 +7,11 @@ interface EquipmentMapStore {
   setSelectedState: (state: string | undefined) => void;
   setSelectedModel: (model: string | undefined) => void;
 
-  data: ProcessedEquipment[];
-  setData: (data: ProcessedEquipment[]) => void;
+  searchData: ProcessedEquipment[];
+  setSearchData: (data: ProcessedEquipment[]) => void;
+
+  search: string;
+  setSearch: (value: string) => void;
 }
 
 export const useEquipmentMapStore = create<EquipmentMapStore>((set) => ({
@@ -19,6 +22,9 @@ export const useEquipmentMapStore = create<EquipmentMapStore>((set) => ({
   setSelectedModel: (model: string | undefined) =>
     set({ selectedModel: model }),
 
-  data: [],
-  setData: (data: ProcessedEquipment[]) => set({ data }),
+  searchData: [],
+  setSearchData: (data: ProcessedEquipment[]) => set({ searchData: data }),
+
+  search: "",
+  setSearch: (value) => set({ search: value }),
 }));

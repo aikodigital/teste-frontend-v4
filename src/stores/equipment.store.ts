@@ -6,6 +6,8 @@ interface EquipmentStore {
   isSheetOpen: boolean;
   openSheet: (equipment: ProcessedEquipment) => void;
   closeSheet: () => void;
+  isSearching: boolean;
+  setSearching: (searching: boolean) => void;
 }
 
 export const useEquipmentStore = create<EquipmentStore>((set) => ({
@@ -21,4 +23,7 @@ export const useEquipmentStore = create<EquipmentStore>((set) => ({
       selectedEquipment: null,
       isSheetOpen: false,
     }),
+
+  isSearching: false,
+  setSearching: (searching) => set({ isSearching: searching }),
 }));

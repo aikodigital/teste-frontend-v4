@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -11,13 +9,13 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "./ui/menubar";
-import { Input } from "./ui/input";
 import { LogOutIcon } from "lucide-react";
 import { MenubarGroup } from "@radix-ui/react-menubar";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
+import { useEquipmentStore } from "@/stores/equipment.store";
 
 export function AppBarComponent() {
-  const [searchIsOpened, setSearchIsOpened] = useState<boolean>(false);
+  const { setSearching } = useEquipmentStore();
   const { selectedState, setSelectedState, selectedModel, setSelectedModel } =
     useEquipmentMapStore();
 
@@ -105,26 +103,11 @@ export function AppBarComponent() {
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger onClick={() => setSearchIsOpened(true)}>
+          <MenubarTrigger onClick={() => setSearching(true)}>
             Pesquisar
           </MenubarTrigger>
         </MenubarMenu>
       </Menubar>
-
-      <Dialog
-        open={searchIsOpened}
-        onOpenChange={() => setSearchIsOpened(!searchIsOpened)}
-      >
-        <DialogContent className="w-1/2 max-w-1/2">
-          <DialogHeader>
-            <DialogTitle>Pesquise</DialogTitle>
-          </DialogHeader>
-          <Input placeholder="Digite aqui" />
-          {/* <span className="my-10 flex items-center justify-center text-sm text-neutral-500">
-            Nenhum resultado
-          </span> */}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
