@@ -33,14 +33,8 @@ export class EquipmentMapComponent implements AfterViewInit {
 
     leaflet
       .tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution:
-          'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        attribution: 'Produção Florestal',
       })
       .addTo(this.map);
-
-    leaflet
-      .marker([-12.968771962612362, -38.459164029077826])
-      .addTo(this.map)
-      .bindPopup('A pretty CSS popup.<br> Easily customizable.');
   }
 }

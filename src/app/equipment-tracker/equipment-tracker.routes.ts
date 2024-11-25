@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { EquipmentTrackerComponent } from './equipment-tracker.component';
 
-export const routes: Routes = [
+export const equipmentTrackerRoutes: Routes = [
   {
     path: '',
     component: EquipmentTrackerComponent,

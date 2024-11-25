@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": ["leaflet"],
             "outputPath": "dist/teste-bruno-souza",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -35,7 +36,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss", "./node_modules/leaflet/dist/leaflet.css"],
+            "styles": ["src/styles.scss", "node_modules/leaflet/dist/leaflet.css"],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -94,7 +95,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "node_modules/leaflet/dist/leaflet.css"],
             "scripts": []
           }
         },
