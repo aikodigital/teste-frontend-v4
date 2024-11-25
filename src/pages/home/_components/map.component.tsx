@@ -35,7 +35,7 @@ export function Map() {
   return (
     <MapContainer
       center={positionDefault}
-      zoom={13}
+      zoom={11}
       zoomControl={false}
       className="z-10"
     >
