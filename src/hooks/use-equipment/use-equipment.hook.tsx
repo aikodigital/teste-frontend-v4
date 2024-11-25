@@ -1,7 +1,15 @@
+import { Equipment, EquipmentModel } from "@/types/equipment.type";
+
 export async function fetchEquipment() {
   const response = await fetch("/data/equipment.json");
   const data = await response.json();
   return data;
+}
+
+export async function fetchEquipmentById(id: string) {
+  const response = await fetch("/data/equipment.json");
+  const data: Equipment[] = await response.json();
+  return data.find((equipment) => equipment.id === id);
 }
 
 export async function fetchEquipmentState() {
@@ -26,4 +34,10 @@ export async function fetchEquipmentModel() {
   const response = await fetch("/data/equipment-model.json");
   const data = await response.json();
   return data;
+}
+
+export async function fetchEquipmentModelById(id: string) {
+  const response = await fetch("/data/equipment-model.json");
+  const data: EquipmentModel[] = await response.json();
+  return data.find((model) => model.id === id);
 }

@@ -11,7 +11,7 @@ import {
   fetchEquipmentModel,
   fetchEquipmentState,
   fetchEquipmentStateHistory,
-} from "./use-equipment.hook";
+} from "./use-equipment/use-equipment.hook";
 
 interface EquipmentHistoryEntry {
   date: string;

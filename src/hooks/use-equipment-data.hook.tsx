@@ -5,7 +5,7 @@ import {
   fetchEquipmentPositionHistory,
   fetchEquipmentState,
   fetchEquipmentStateHistory,
-} from "./use-equipment.hook";
+} from "./use-equipment/use-equipment.hook";
 import {
   Equipment,
   EquipmentModel,
