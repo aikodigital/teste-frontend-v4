@@ -56,13 +56,13 @@ export function DialogSearch() {
                 </div>
               ))
             ) : (
-              <div>No results found</div>
+              <div className="my-5 flex w-full items-center justify-center">
+                Nenhum resultado encontrado
+              </div>
             )}
           </div>
         ) : (
-          <div>
-            <p>Nenhuma pesquisa</p>
-          </div>
+          <div className="h-10"></div>
         )}
       </DialogContent>
     </Dialog>
