@@ -1,0 +1,101 @@
+<div class="h-screen w-screen">
+  <header
+    class="h-[72px] w-full border-b border-gray-200 flex justify-between items-center px-8"
+  >
+    <div>
+      <img
+        ngSrc="/img/aiko.png"
+        width="64"
+        height="64"
+        priority="true"
+        alt="Aiko"
+      />
+    </div>
+    <div>
+      <label
+        class="bg-gray-50 flex items-center border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 h-[42px] w-full px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        for="search"
+      >
+        <lucide-angular size="18" [img]="icons.Search"></lucide-angular>
+        <input
+          type="text"
+          id="search"
+          class="bg-transparent border-0 h-full focus:ring-0 text-sm"
+          placeholder="Encontre um equipamento"
+        />
+      </label>
+    </div>
+  </header>
+  <div class="h-[calc(100%-72px)] flex">
+    <aside
+      class="h-full w-[378px] border-r border-gray-200 px-8 pt-4 flex flex-col gap-6"
+    >
+      <h2 class="text-xl font-bold">Equipamentos</h2>
+
+      <div
+        class="max-w-sm relative p-6 flex items-center gap-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <div class="absolute left-0 top-0 w-full">
+          <span
+            class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+            >Operando</span
+          >
+        </div>
+        <div>
+          <img
+            class="w-[72px] h-[72px] rounded-full border border-gray-200"
+            src=""
+            alt=""
+          />
+        </div>
+        <div>
+          <h5
+            class="text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            HV-1001
+          </h5>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
+            Modelo: Harverster
+          </p>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
+            Ultima posição: 24/11/2024
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="max-w-sm relative p-6 flex items-center gap-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <div class="absolute left-0 top-0 w-full">
+          <span
+            class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+            >Operando</span
+          >
+        </div>
+        <div>
+          <img
+            class="w-[72px] h-[72px] rounded-full border border-gray-200"
+            src=""
+            alt=""
+          />
+        </div>
+        <div>
+          <h5
+            class="text-lg font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            HV-1001
+          </h5>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
+            Modelo: Harverster
+          </p>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
+            Ultima posição: 24/11/2024
+          </p>
+        </div>
+      </div>
+    </aside>
+    <main class="h-full">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
