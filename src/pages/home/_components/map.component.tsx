@@ -6,19 +6,30 @@ import {
   ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { DivIcon, LatLngExpression } from "leaflet";
+import { icon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
+import { StatusBadge } from "./status-badge.component";
 
 export function Map() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
   const openSheet = useEquipmentStore((state) => state.openSheet);
   const { data } = useEquipmentData();
 
-  const createCustomIcon = (color: string) => {
-    return new DivIcon({
-      className: "custom-icon",
-      html: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
+  const createCustomIcon = (model: string) => {
+    console.log(model);
+    const image =
+      model == "Harvester"
+        ? "/icons/harvester.png"
+        : model == "Garra traçadora"
+          ? "/icons/garra-tracadora.png"
+          : "/icons/caminhao-de-carga.png";
+
+    return icon({
+      iconUrl: image,
+      iconSize: [50, 50],
+      iconAnchor: [15, 15], // point of the image that will be aligned with the marker position
+      popupAnchor: [0, -15], // Where the popup will be displayed, in relation to the icon
     });
   };
 
@@ -38,7 +49,7 @@ export function Map() {
         <Marker
           key={`${eqIndex}-${equipment.id}`}
           position={[equipment.position.lat, equipment.position.lon]}
-          icon={createCustomIcon(equipment.state.color!)}
+          icon={createCustomIcon(equipment.model ?? "Caminhão de carga")}
           eventHandlers={{
             mouseover: (e) => {
               const marker = e.target;
@@ -52,15 +63,19 @@ export function Map() {
           }}
         >
           <Popup>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start gap-4">
               <span>
                 <strong>Nome:</strong> {equipment.name}
               </span>
               <span>
                 <strong>Modelo:</strong> {equipment.model}
               </span>
-              <span>
-                <strong>Estado:</strong> {equipment.state.name}
+              <span className="flex flex-row gap-4 items-center">
+                <strong>Estado:</strong>{" "}
+                <StatusBadge
+                  text={equipment.state.name ?? "unknown"}
+                  color={equipment.state.color ?? "#dedede"}
+                />
               </span>
               <span>
                 <strong>Posição:</strong> [{equipment.position.lat},{" "}
