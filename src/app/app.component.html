@@ -1,15 +1,7 @@
 <div class="h-screen w-screen">
-  <header
-    class="h-[72px] w-full border-b border-gray-200 flex justify-between items-center px-8"
-  >
+  <header class="h-[72px] w-full border-b border-gray-200 flex justify-between items-center px-8">
     <div>
-      <img
-        ngSrc="/img/aiko.png"
-        width="64"
-        height="64"
-        priority="true"
-        alt="Aiko"
-      />
+      <img ngSrc="/img/aiko.png" width="64" height="64" priority="true" alt="Aiko" />
     </div>
     <div>
       <label
@@ -27,9 +19,7 @@
     </div>
   </header>
   <div class="h-[calc(100%-72px)] flex">
-    <aside
-      class="h-full w-[378px] border-r border-gray-200 px-8 pt-4 flex flex-col gap-6"
-    >
+    <aside class="h-full min-w-[378px] w-[378px] border-r border-gray-200 px-8 pt-4 flex flex-col gap-6">
       <h2 class="text-xl font-bold">Equipamentos</h2>
 
       <div
@@ -38,28 +28,17 @@
         <div class="absolute left-0 top-0 w-full">
           <span
             class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
-            >Operando</span
           >
+            Operando
+          </span>
         </div>
         <div>
-          <img
-            class="w-[72px] h-[72px] rounded-full border border-gray-200"
-            src=""
-            alt=""
-          />
+          <img class="min-w-[72px] w-[72px] h-[72px] rounded-full border border-gray-200" src="" alt="" />
         </div>
         <div>
-          <h5
-            class="text-lg font-bold tracking-tight text-gray-900 dark:text-white"
-          >
-            HV-1001
-          </h5>
-          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-            Modelo: Harverster
-          </p>
-          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-            Ultima posição: 24/11/2024
-          </p>
+          <h5 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">HV-1001</h5>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Modelo: Harverster</p>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Ultima posição: 24/11/2024</p>
         </div>
       </div>
 
@@ -69,32 +48,21 @@
         <div class="absolute left-0 top-0 w-full">
           <span
             class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
-            >Operando</span
           >
+            Operando
+          </span>
         </div>
         <div>
-          <img
-            class="w-[72px] h-[72px] rounded-full border border-gray-200"
-            src=""
-            alt=""
-          />
+          <img class="min-w-[72px] w-[72px] h-[72px] rounded-full border border-gray-200" src="" alt="" />
         </div>
         <div>
-          <h5
-            class="text-lg font-bold tracking-tight text-gray-900 dark:text-white"
-          >
-            HV-1001
-          </h5>
-          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-            Modelo: Harverster
-          </p>
-          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-            Ultima posição: 24/11/2024
-          </p>
+          <h5 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">HV-1001</h5>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Modelo: Harverster</p>
+          <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Ultima posição: 24/11/2024</p>
         </div>
       </div>
     </aside>
-    <main class="h-full">
+    <main class="h-full w-full">
       <router-outlet></router-outlet>
     </main>
   </div>
