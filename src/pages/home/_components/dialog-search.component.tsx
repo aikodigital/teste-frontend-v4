@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +11,7 @@ import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
 
 export function DialogSearch() {
-  const { isSearching, setSearching } = useEquipmentStore();
+  const { isSearching, setSearching, openSheet } = useEquipmentStore();
   const { search, setSearch } = useEquipmentMapStore();
   const { searchData } = useEquipmentData();
   console.log(searchData);
@@ -30,8 +31,28 @@ export function DialogSearch() {
           <div>
             {searchData.length > 0 ? (
               searchData.map((item) => (
-                <div key={item.id}>
-                  {item.name} - {item.model}
+                <div
+                  key={item.id}
+                  className="w-full justify-between flex items-center my-4"
+                >
+                  <div className="flex flex-row items-center justify-start">
+                    <div
+                      className="w-3 h-3 rounded-full mr-3"
+                      style={{ backgroundColor: item.state.color }}
+                    />
+                    {item.name} - {item.model}
+                  </div>
+
+                  <Button
+                    variant={"ghost"}
+                    className="text-neutral-900"
+                    onClick={() => {
+                      setSearching(false);
+                      openSheet(item);
+                    }}
+                  >
+                    Ver histórico
+                  </Button>
                 </div>
               ))
             ) : (
