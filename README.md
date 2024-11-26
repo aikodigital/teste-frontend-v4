@@ -125,24 +125,24 @@ permitindo decisões rápidas e baseadas em dados.
 
 ## Estrutura do projeto
 
-```bash
-public/
-  data/                       -> dados em json
-src/
-  components/                 -> componentes globais
-    ui/                       -> componentes do shadcn
-  hooks/                      -> hooks da aplicação
-  lib/                        -> utils do shadcn
-  pages/                      -> arquivos públicos
-    home/
-      components/             -> componentes usados na home
-      home.page.tsx
-  stores/                     -> estados usando zustand
-  types/                      -> types ou interfaces utilizadas
-  utils/                      -> funções utilitárias
-  layout.tsx                  -> layout principal
-  main.tsx
-```
+| Diretório/Arquivo              | Descrição                      |
+| ------------------------------ | ------------------------------ |
+| `public/`                      |                                |
+| `public/data/`                 | Dados em JSON                  |
+| `src/`                         |                                |
+| `src/components/`              | Componentes globais            |
+| `src/components/ui/`           | Componentes do Shadcn          |
+| `src/hooks/`                   | Hooks da aplicação             |
+| `src/lib/`                     | Utils do Shadcn                |
+| `src/pages/`                   | Arquivos públicos              |
+| `src/pages/home/`              |                                |
+| `src/pages/home/components/`   | Componentes usados na home     |
+| `src/pages/home/home.page.tsx` | Página inicial                 |
+| `src/stores/`                  | Estados usando Zustand         |
+| `src/types/`                   | Types ou interfaces utilizadas |
+| `src/utils/`                   | Funções utilitárias            |
+| `src/layout.tsx`               | Layout principal               |
+| `src/main.tsx`                 | Arquivo principal              |
 
 <!-- ## Testes
 
