@@ -1,3 +1,15 @@
+export interface ProcessedEquipment {
+  id: string;
+  name: string;
+  model: string | undefined;
+  position: { lat: number; lon: number };
+  state: {
+    id: string | undefined;
+    name: string | undefined;
+    color: string | undefined;
+  };
+}
+
 export interface Equipment {
   id: string;
   equipmentModelId: string;

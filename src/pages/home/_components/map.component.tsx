@@ -9,12 +9,14 @@ import "leaflet/dist/leaflet.css";
 import { icon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { StatusBadge } from "./status-badge.component";
-import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
+import { useAllData } from "@/hooks/use-all-data/use-all-data.hook";
+import { useFilteredEquipmentData } from "@/hooks/use-filtered-data/use-filtered-data.hook";
 
 export function Map() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
   const openSheet = useEquipmentStore((state) => state.openSheet);
-  const { data } = useEquipmentData();
+  const { allData } = useAllData();
+  const { filteredData } = useFilteredEquipmentData(allData);
 
   const createCustomIcon = (model: string) => {
     const image =
@@ -44,7 +46,7 @@ export function Map() {
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {data.map((equipment, eqIndex) => (
+      {filteredData.map((equipment, eqIndex) => (
         <Marker
           key={`${eqIndex}-${equipment.id}`}
           position={[equipment.position.lat, equipment.position.lon]}

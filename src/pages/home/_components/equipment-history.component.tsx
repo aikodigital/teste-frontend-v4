@@ -1,9 +1,13 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEquipmentHistory } from "@/hooks/use-equipment-history.hook";
+import { useEquipmentHistory } from "@/hooks/use-equipment-history/use-equipment-history.hook";
 import { StatusBadge } from "./status-badge.component";
+import { useEquipmentStore } from "@/stores/equipment.store";
 
-export function EquipmentHistory({ equipmentId }: { equipmentId: string }) {
-  const { data, loading, error } = useEquipmentHistory(equipmentId);
+export function EquipmentHistory() {
+  const { selectedEquipment } = useEquipmentStore();
+  const { data, loading, error } = useEquipmentHistory(
+    selectedEquipment?.id ?? "",
+  );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;

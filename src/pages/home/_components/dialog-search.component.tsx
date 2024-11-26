@@ -6,15 +6,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useEquipmentData } from "@/hooks/use-equipment-data.hook";
+import { useAllData } from "@/hooks/use-all-data/use-all-data.hook";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
 
 export function DialogSearch() {
   const { isSearching, setSearching, openSheet } = useEquipmentStore();
   const { search, setSearch } = useEquipmentMapStore();
-  const { searchData } = useEquipmentData();
-  console.log(searchData);
+  const { allData } = useAllData();
+
+  const filteredData = allData.filter(
+    (item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.model?.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <Dialog open={isSearching} onOpenChange={() => setSearching(!isSearching)}>
@@ -29,8 +34,8 @@ export function DialogSearch() {
         />
         {search ? (
           <div>
-            {searchData.length > 0 ? (
-              searchData.map((item) => (
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
                 <div
                   key={item.id}
                   className="w-full justify-between flex items-center my-4"

@@ -1,4 +1,4 @@
-import { ProcessedEquipment } from "@/hooks/use-equipment-data.hook";
+import { ProcessedEquipment } from "@/types/equipment.type";
 import { create } from "zustand";
 
 interface EquipmentMapStore {

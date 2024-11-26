@@ -1,45 +1,22 @@
 import { useEffect, useState } from "react";
 import {
-  fetchEquipment,
-  fetchEquipmentModel,
-  fetchEquipmentPositionHistory,
-  fetchEquipmentState,
-  fetchEquipmentStateHistory,
-} from "./use-equipment/use-equipment.hook";
-import {
   Equipment,
   EquipmentModel,
   EquipmentPositionHistory,
   EquipmentState,
   EquipmentStateHistory,
+  ProcessedEquipment,
 } from "@/types/equipment.type";
-import { useEquipmentMapStore } from "@/stores/equipment-map.store";
+import { fetchData } from "@/utils/fetch-data";
 
-export interface ProcessedEquipment {
-  id: string;
-  name: string;
-  model: string | undefined;
-  position: { lat: number; lon: number };
-  state: {
-    id: string | undefined;
-    name: string | undefined;
-    color: string | undefined;
-  };
-}
-
-export function useEquipmentData() {
+export function useAllData() {
   const [allData, setAllData] = useState<ProcessedEquipment[]>([]);
-  const [filteredData, setFilteredData] = useState<ProcessedEquipment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { selectedState, selectedModel, search, searchData, setSearchData } =
-    useEquipmentMapStore();
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       try {
-        // Fetch e processamento dos dados
         const [
           equipments,
           equipmentModels,
@@ -47,35 +24,46 @@ export function useEquipmentData() {
           equipmentStateHistory,
           equipmentPositionHistory,
         ] = await Promise.all([
-          fetchEquipment(),
-          fetchEquipmentModel(),
-          fetchEquipmentState(),
-          fetchEquipmentStateHistory(),
-          fetchEquipmentPositionHistory(),
+          fetchData<Equipment[]>("/data/equipment.json"),
+          fetchData<EquipmentModel[]>("/data/equipment-model.json"),
+          fetchData<EquipmentState[]>("/data/equipment-state.json"),
+          fetchData<EquipmentStateHistory[]>(
+            "/data/equipment-state-history.json",
+          ),
+          fetchData<EquipmentPositionHistory[]>(
+            "/data/equipment-position-history.json",
+          ),
         ]);
 
-        const combinedData = equipments.map((equipment: Equipment) => {
+        const data = equipments.map((equipment: Equipment) => {
+          // Encontrar o modelo do equipamento
           const model = equipmentModels.find(
             (model: EquipmentModel) => model.id === equipment.equipmentModelId,
           );
 
+          // Encontrar o histórico de posições do equipamento
           const positionHistory = equipmentPositionHistory.find(
             (position: EquipmentPositionHistory) =>
               position.equipmentId === equipment.id,
           );
+
+          // Determinar a posição mais recente
           const latestPosition = positionHistory?.positions?.reduce(
             (
-              latest: { date: string; equipmentStateId: string },
-              current: { date: string; equipmentStateId: string },
+              latest: { date: string; lat: number; lon: number },
+              current: { date: string; lat: number; lon: number },
             ) =>
               new Date(current.date) > new Date(latest.date) ? current : latest,
             positionHistory?.positions[0],
           );
 
+          // Encontrar o histórico de estados do equipamento
           const stateHistory = equipmentStateHistory.find(
             (state: EquipmentStateHistory) =>
               state.equipmentId === equipment.id,
           );
+
+          // Determinar o estado mais recente
           const latestState = stateHistory?.states?.reduce(
             (
               latest: { date: string; equipmentStateId: string },
@@ -85,16 +73,21 @@ export function useEquipmentData() {
             stateHistory?.states[0],
           );
 
+          // Detalhes do estado mais recente
           const stateDetails = equipmentStates.find(
             (state: EquipmentState) =>
               state.id === latestState?.equipmentStateId,
           );
 
+          // Retornar os dados combinados
           return {
             id: equipment.id,
             name: equipment.name,
             model: model?.name,
-            position: latestPosition,
+            position: {
+              lat: latestPosition?.lat || 0,
+              lon: latestPosition?.lon || 0,
+            },
             state: {
               id: stateDetails?.id,
               name: stateDetails?.name,
@@ -103,52 +96,16 @@ export function useEquipmentData() {
           };
         });
 
-        setAllData(combinedData);
-        setFilteredData(combinedData);
+        setAllData(data);
       } catch (err) {
-        setError("Error when loading the data");
-        console.error(err);
+        setError("Failed to load equipment data. " + err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchAllData();
   }, []);
 
-  useEffect(() => {
-    let filtered = [...allData];
-
-    if (selectedState) {
-      filtered = filtered.filter(
-        (equipment) => equipment.state?.name === selectedState,
-      );
-    }
-
-    if (selectedModel) {
-      filtered = filtered.filter(
-        (equipment) => equipment.model === selectedModel,
-      );
-    }
-
-    setFilteredData(filtered);
-  }, [selectedState, selectedModel, allData]);
-
-  useEffect(() => {
-    if (search) {
-      const searched = allData.filter((equipment) =>
-        equipment.name.toLowerCase().includes(search.toLowerCase()),
-      );
-      setSearchData(searched);
-    } else {
-      setSearchData([]); // Limpa o resultado da busca quando o campo está vazio
-    }
-  }, [search, allData]);
-
-  return {
-    data: filteredData,
-    searchData,
-    loading,
-    error,
-  };
+  return { allData, loading, error };
 }
