@@ -20,6 +20,7 @@ permitindo decisões rápidas e baseadas em dados.
 ## Decisões de Desenvolvimento
 
 - **Framework Frontend**: Utilizamos React com TypeScript devido à sua popularidade, tipagem estática e suporte para bibliotecas modernas.
+- **Biblioteca para mapa**: Utilizado o Leaflet, pois é uma biblioteca amplamente utilizada no React devido a sua simplicidade e flexibilidade. Além disso, é fácil de usar, personalizável e um ótimo desempenho.
 - **Gerenciamento de Estado**: Zustand foi escolhido pela simplicidade.
 - **Biblioteca de Testes**: Foi escolhido o Vitest por sua performance e compatibilidade com o ambiente Vite.
 - **Design**: Tailwind CSS para estilização, permitindo um desenvolvimento rápido e responsivo e o Shadcn para acelerar no processo de desenvolvimento de alguns componentes.
@@ -127,35 +128,45 @@ permitindo decisões rápidas e baseadas em dados.
 
 | Diretório/Arquivo              | Descrição                      |
 | ------------------------------ | ------------------------------ |
-| `public/`                      |                                |
+| `public/`                      | Arquivos públicos              |
 | `public/data/`                 | Dados em JSON                  |
-| `src/`                         |                                |
 | `src/components/`              | Componentes globais            |
 | `src/components/ui/`           | Componentes do Shadcn          |
 | `src/hooks/`                   | Hooks da aplicação             |
 | `src/lib/`                     | Utils do Shadcn                |
-| `src/pages/`                   | Arquivos públicos              |
-| `src/pages/home/`              |                                |
+| `src/pages/`                   | Páginas da aplicação           |
 | `src/pages/home/components/`   | Componentes usados na home     |
-| `src/pages/home/home.page.tsx` | Página inicial                 |
+| `src/pages/home/home.page.tsx` | Página inicial Home            |
 | `src/stores/`                  | Estados usando Zustand         |
 | `src/types/`                   | Types ou interfaces utilizadas |
 | `src/utils/`                   | Funções utilitárias            |
 | `src/layout.tsx`               | Layout principal               |
 | `src/main.tsx`                 | Arquivo principal              |
 
-<!-- ## Testes
+## Testes
 
 ### Como Rodar os Testes
+
 Execute o comando:
+
 ```bash
 pnpm test
 ```
+
+Ou execute o comando abaixo para cobertura de testes:
+
+```bash
+pnpm test:cov
+```
+
 ### Caso de Testes Implementados
 
-- Validação de filtros
 - Busca por todos os dados
-- Trazer equipamento por id -->
+- Busca por dados a partir de um id
+- Validando erro caso o id não exista
+- Validando erro caso a requisição não aconteça
+- Busca por histórico de dados do equipamento
+- Validando erro caso o id não exista para retornar histórico
 
 ## Melhorias
 

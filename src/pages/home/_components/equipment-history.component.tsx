@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEquipmentHistory } from "@/hooks/use-equipment-history/use-equipment-history.hook";
 import { StatusBadge } from "./status-badge.component";
 import { useEquipmentStore } from "@/stores/equipment.store";
+import { useEquipmentHistory } from "@/hooks/use-equipment-history.hook";
 
 export function EquipmentHistory() {
   const { selectedEquipment } = useEquipmentStore();

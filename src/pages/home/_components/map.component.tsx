@@ -9,8 +9,8 @@ import "leaflet/dist/leaflet.css";
 import { icon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { StatusBadge } from "./status-badge.component";
-import { useAllData } from "@/hooks/use-all-data/use-all-data.hook";
-import { useFilteredEquipmentData } from "@/hooks/use-filtered-data/use-filtered-data.hook";
+import { useAllData } from "@/hooks/use-all-data.hook";
+import { useFilteredEquipmentData } from "@/hooks/use-filtered-data.hook";
 
 export function Map() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];

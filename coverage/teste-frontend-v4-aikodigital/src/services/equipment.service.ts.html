@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for teste-frontend-v4-aikodigital/src/hooks/use-mobile.tsx</title>
+    <title>Code coverage report for teste-frontend-v4-aikodigital/src/services/equipment.service.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">teste-frontend-v4-aikodigital/src/hooks</a> use-mobile.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">teste-frontend-v4-aikodigital/src/services</a> equipment.service.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -84,48 +84,66 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import * as React from "react";</span></span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { fetchData } from "@/utils/fetch-data";<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+import {
+  Equipment,
+  EquipmentModel,
+  EquipmentState,
+  EquipmentStateHistory,
+  EquipmentPositionHistory,
+} from "@/types/equipment.type";
 &nbsp;
-<span class="cstat-no" title="statement not covered" >const MOBILE_BREAKPOINT = 768;</span>
+<span class="cstat-no" title="statement not covered" >export const EquipmentService = {</span>
+<span class="cstat-no" title="statement not covered" >  getEquipments: (): Promise&lt;Equipment[]&gt; =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    fetchData&lt;Equipment[]&gt;("/data/equipment.json"),</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export function useIsMobile() {</span>
-<span class="cstat-no" title="statement not covered" >  const [isMobile, setIsMobile] = React.useState&lt;boolean | undefined&gt;(</span>
-<span class="cstat-no" title="statement not covered" >    undefined,</span>
-<span class="cstat-no" title="statement not covered" >  );</span>
+<span class="cstat-no" title="statement not covered" >  getEquipmentModels: (): Promise&lt;EquipmentModel[]&gt; =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    fetchData&lt;EquipmentModel[]&gt;("/data/equipment-model.json"),</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  React.useEffect(() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);</span>
-<span class="cstat-no" title="statement not covered" >    const onChange = () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT);</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >    mql.addEventListener("change", onChange);</span>
-<span class="cstat-no" title="statement not covered" >    setIsMobile(window.innerWidth &lt; MOBILE_BREAKPOINT);</span>
-<span class="cstat-no" title="statement not covered" >    return () =&gt; mql.removeEventListener("change", onChange);</span>
-<span class="cstat-no" title="statement not covered" >  }, []);</span>
+<span class="cstat-no" title="statement not covered" >  getEquipmentStates: (): Promise&lt;EquipmentState[]&gt; =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    fetchData&lt;EquipmentState[]&gt;("/data/equipment-state.json"),</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return !!isMobile;</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >  getEquipmentStateHistory: (): Promise&lt;EquipmentStateHistory[]&gt; =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    fetchData&lt;EquipmentStateHistory[]&gt;("/data/equipment-state-history.json"),</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  getEquipmentPositionHistory: (): Promise&lt;EquipmentPositionHistory[]&gt; =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    fetchData&lt;EquipmentPositionHistory[]&gt;(</span>
+<span class="cstat-no" title="statement not covered" >      "/data/equipment-position-history.json",</span>
+<span class="cstat-no" title="statement not covered" >    ),</span>
+<span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
