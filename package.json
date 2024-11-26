@@ -8,7 +8,7 @@
     "lint": "ng lint",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "api": "node dist/teste-bruno-souza/server/server.mjs"
+    "start:ssr": "node dist/teste-bruno-souza/server/server.mjs"
   },
   "private": true,
   "dependencies": {

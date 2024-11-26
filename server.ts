@@ -45,10 +45,7 @@ export function app(): express.Express {
 function run(): void {
   const port = process.env['PORT'] || 4000;
 
-  // Start up the Node server
   const server = app();
-
-  // server.use('/api/equipments', equipmentRoutes);
 
   server.listen(port, () => {
     console.log(`Server listening on http://localhost:${port}`);
