@@ -43,7 +43,7 @@ export function EquipmentDetailsComponent() {
               </p>
             </div>
 
-            <EquipmentHistory equipmentId={selectedEquipment.id} />
+            <EquipmentHistory />
           </div>
         )}
       </SheetContent>
