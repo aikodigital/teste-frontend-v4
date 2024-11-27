@@ -1,11 +1,11 @@
 <div
-  class="max-w-sm relative p-6 flex items-center gap-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+  class="max-w-sm relative p-4 flex items-center gap-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
 >
   <div class="absolute left-0 top-0 w-full">
     <span
       class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
     >
-      {{ status() }}
+      {{ state() }}
     </span>
   </div>
   <div>
@@ -19,7 +19,6 @@
   </div>
   <div>
     <h5 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ name() }}</h5>
-    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">modelo: {{ model() }}</p>
-    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">posição: {{ lastPosition() }}</p>
+    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">{{ model() }}</p>
   </div>
 </div>
