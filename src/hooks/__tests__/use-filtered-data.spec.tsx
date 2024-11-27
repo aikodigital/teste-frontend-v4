@@ -114,4 +114,20 @@ describe("use filtered data", () => {
       },
     ]);
   });
+
+  it("must return the data searched by somethind", () => {
+    const mockUseEquipmentMapStore = useEquipmentMapStore as unknown as Mock;
+    mockUseEquipmentMapStore.mockReturnValue({
+      selectedState: null,
+      selectedModel: null,
+      search: "Equi",
+    });
+
+    const { result } = renderHook(() =>
+      useFilteredEquipmentData(mockEquipment),
+    );
+
+    expect(result.current.filteredData).toEqual(mockEquipment);
+    expect(result.current.searchResults).toEqual(mockEquipment);
+  });
 });
