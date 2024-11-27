@@ -8,7 +8,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import { icon, LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
-import { StatusBadge } from "./status-badge.component";
+import { StatusBadge } from "../../../components/status-badge.component";
 import { useAllData } from "@/hooks/use-all-data.hook";
 import { useFilteredEquipmentData } from "@/hooks/use-filtered-data.hook";
 

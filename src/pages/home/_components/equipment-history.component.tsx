@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { StatusBadge } from "./status-badge.component";
+import { StatusBadge } from "../../../components/status-badge.component";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { useEquipmentHistory } from "@/hooks/use-equipment-history.hook";
 

@@ -51,10 +51,9 @@ export function MapRouteComponent({ positionHistory, model }: MapRouteProps) {
         <Polyline
           positions={routeCoordinates}
           color="#8c8c8c"
-          lineJoin="bevel"
+          lineJoin="round"
           weight={2}
           dashArray="5, 10"
-          className="polyline-border"
         />
       )}
 

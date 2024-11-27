@@ -1,46 +1,69 @@
-import { EquipmentModel, EquipmentStateHistory } from "@/types/equipment.type";
+import {
+  EquipmentModel,
+  EquipmentState,
+  EquipmentStateHistory,
+} from "@/types/equipment.type";
 
-export function calculateEquipmentEarnings(
-  model: EquipmentModel | undefined,
-  stateHistory: EquipmentStateHistory | undefined,
-): {
+export interface ICalculateEarnings {
   totalEarnings: number;
   hoursWorked: number;
   hoursMaintenance: number;
   hoursIdle: number;
-} {
+  prices: {
+    workingPrice: number;
+    stopPrice: number;
+    maintenancePrice: number;
+  };
+}
+export async function calculateEquipmentEarnings(
+  model: EquipmentModel | undefined,
+  stateHistory: EquipmentStateHistory | undefined,
+  equipmentStates: EquipmentState[],
+): Promise<ICalculateEarnings> {
   let totalEarnings = 0;
   let hoursWorked = 0;
   let hoursMaintenance = 0;
   let hoursIdle = 0;
+  let workingPrice = 0;
+  let stopPrice = 0;
+  let maintenancePrice = 0;
 
-  // Verificação inicial de dados válidos
   if (
     !model ||
     !model.hourlyEarnings?.length ||
     !stateHistory ||
     !stateHistory.states?.length
   ) {
-    return { totalEarnings, hoursWorked, hoursMaintenance, hoursIdle };
+    return {
+      totalEarnings,
+      hoursWorked,
+      hoursMaintenance,
+      hoursIdle,
+      prices: {
+        workingPrice,
+        stopPrice,
+        maintenancePrice,
+      },
+    };
   }
 
-  // Cria uma cópia ordenada dos estados para evitar modificar o original
+  // Creates an orderly copy of the states to avoid modifying the original
   const sortedStates = [...stateHistory.states].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
-  // Itera pelos estados calculando diferenças
+  // Itra by states calculating differences
   for (let i = 1; i < sortedStates.length; i++) {
     const prevState = sortedStates[i - 1];
     const currentState = sortedStates[i];
     const prevDate = new Date(prevState.date).getTime();
     const currentDate = new Date(currentState.date).getTime();
 
-    // Calcula a diferença de tempo em horas
+    // Calculates time difference in hours
     const timeDiffInHours = (currentDate - prevDate) / (1000 * 60 * 60);
-    if (timeDiffInHours <= 0) continue; // Ignora diferenças inválidas
+    if (timeDiffInHours <= 0) continue;
 
-    // Encontra os ganhos associados ao estado anterior
+    // Finds the gains associated with the previous state
     const earningsForState = model.hourlyEarnings.find(
       (earning) => earning.equipmentStateId === prevState.equipmentStateId,
     );
@@ -49,16 +72,35 @@ export function calculateEquipmentEarnings(
       const stateValue = earningsForState.value;
       totalEarnings += stateValue * timeDiffInHours;
 
-      // Categoriza as horas
-      if (stateValue > 0) {
-        hoursWorked += timeDiffInHours;
-      } else if (stateValue < 0) {
-        hoursMaintenance += timeDiffInHours;
-      } else {
-        hoursIdle += timeDiffInHours;
-      }
+      equipmentStates.forEach((state) => {
+        if (earningsForState.equipmentStateId === state.id) {
+          if (state.name === "Operando") {
+            hoursWorked += timeDiffInHours;
+            workingPrice = earningsForState.value;
+          }
+          if (state.name === "Parado") {
+            hoursIdle += timeDiffInHours;
+            stopPrice = earningsForState.value;
+          }
+
+          if (state.name === "Manutenção") {
+            hoursMaintenance += timeDiffInHours;
+            maintenancePrice = earningsForState.value;
+          }
+        }
+      });
     }
   }
 
-  return { totalEarnings, hoursWorked, hoursMaintenance, hoursIdle };
+  return {
+    totalEarnings,
+    hoursWorked,
+    hoursMaintenance,
+    hoursIdle,
+    prices: {
+      workingPrice,
+      stopPrice,
+      maintenancePrice,
+    },
+  };
 }
