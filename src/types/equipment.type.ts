@@ -10,6 +10,7 @@ export interface ProcessedEquipment {
   };
   equipmentModel: EquipmentModel | undefined;
   stateHistory: EquipmentStateHistory | undefined;
+  positionHistory: EquipmentPositionHistory | undefined;
 }
 
 export interface Equipment {
