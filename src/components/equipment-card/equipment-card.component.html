@@ -3,7 +3,8 @@
 >
   <div class="absolute left-0 top-0 w-full">
     <span
-      class="absolute left-[50%] translate-x-[-50%] top-[-12px] bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+      class="absolute text-white left-[50%] translate-x-[-50%] top-[-12px] text-xs font-bold me-2 px-2.5 py-0.5 rounded-full"
+      [style]="'background-color: ' + stateColor()"
     >
       {{ state() }}
     </span>

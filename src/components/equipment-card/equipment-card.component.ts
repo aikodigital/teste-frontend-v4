@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, InputSignal } from '@angular/core';
+import clsx from 'clsx';
 
 @Component({
   selector: 'app-equipment-card',
@@ -14,4 +15,5 @@ export class EquipmentCardComponent {
   model: InputSignal<string> = input<string>('');
   image: InputSignal<string> = input<string>('');
   state: InputSignal<string> = input<string>('');
+  stateColor: InputSignal<string> = input<string>('');
 }

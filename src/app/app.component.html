@@ -26,6 +26,7 @@
       @for (data of data$ | async; track $index) {
         <app-equipment-card
           [state]="data.currentState?.name || ''"
+          [stateColor]="data.currentState?.color || ''"
           [model]="data.model?.name || ''"
           [name]="data.equipment.name"
         ></app-equipment-card>
