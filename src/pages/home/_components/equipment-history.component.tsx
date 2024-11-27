@@ -18,28 +18,30 @@ export function EquipmentHistory() {
   if (error) return <p>{error}</p>;
 
   return (
-    <ScrollArea className="w-full h-[60vh] mt-5">
+    <ScrollArea className="w-full h-full mt-5">
       <ul className="flex flex-col gap-4">
         {data.history.map((entry, index) => (
           <li key={index}>
             <span className="flex flex-row items-center justify-between">
-              <StatusBadge
-                text={entry.state?.name ?? "unknown"}
-                color={entry.state?.color ?? "#dedede"}
-              />
-
               <p className="text-neutral-600 text-sm italic mr-5">
                 {new Date(entry.date).toLocaleString("pt-BR", {
-                  weekday: "short",
+                  weekday: "long",
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
                   hour: "2-digit",
                   minute: "2-digit",
                   second: "2-digit",
-                  timeZone: "UTC", // Usando o UTC explicitamente
+                  timeZone: "UTC",
                 })}
               </p>
+
+              <span className="mr-4">
+                <StatusBadge
+                  text={entry.state?.name ?? "unknown"}
+                  color={entry.state?.color ?? "#dedede"}
+                />
+              </span>
             </span>
           </li>
         ))}

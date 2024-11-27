@@ -10,7 +10,7 @@ import { useAllData } from "@/hooks/use-all-data.hook";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
 
-export function DialogSearch() {
+export function DialogSearchComponent() {
   const { isSearching, setSearching, openSheet } = useEquipmentStore();
   const { search, setSearch } = useEquipmentMapStore();
   const { allData } = useAllData();

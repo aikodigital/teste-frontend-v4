@@ -12,7 +12,7 @@ import { StatusBadge } from "./status-badge.component";
 import { useAllData } from "@/hooks/use-all-data.hook";
 import { useFilteredEquipmentData } from "@/hooks/use-filtered-data.hook";
 
-export function Map() {
+export function MapComponent() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
   const openSheet = useEquipmentStore((state) => state.openSheet);
   const { allData } = useAllData();

@@ -8,6 +8,8 @@ export interface ProcessedEquipment {
     name: string | undefined;
     color: string | undefined;
   };
+  equipmentModel: EquipmentModel | undefined;
+  stateHistory: EquipmentStateHistory | undefined;
 }
 
 export interface Equipment {

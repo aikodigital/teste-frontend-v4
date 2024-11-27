@@ -1,4 +1,3 @@
-// src/hooks/useAllData.ts
 import { useEffect, useState } from "react";
 import { EquipmentService } from "@/services/equipment.service";
 import { processEquipmentData } from "@/adapters/equipment.adapter";
@@ -23,7 +22,6 @@ function fetchAndProcessData() {
 }
 
 export function useAllData(id?: string) {
-  // id opcional
   const [allData, setAllData] = useState<ProcessedEquipment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

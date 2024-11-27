@@ -30,6 +30,31 @@ export function getLatestState(
   );
 }
 
+// export function calculateHoursWorked(
+//   stateHistory: EquipmentStateHistory,
+// ): number {
+//   let totalHours = 0;
+
+//   // Order States History by date
+//   stateHistory.states.sort(
+//     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+//   );
+
+//   // Calculate the difference of hours between consecutive states
+//   for (let i = 1; i < stateHistory.states.length; i++) {
+//     const prevState = stateHistory.states[i - 1];
+//     const currentState = stateHistory.states[i];
+
+//     const prevDate = new Date(prevState.date).getTime();
+//     const currentDate = new Date(currentState.date).getTime();
+
+//     const timeDiff = currentDate - prevDate;
+//     totalHours += timeDiff / (1000 * 60 * 60);
+//   }
+
+//   return totalHours;
+// }
+
 export function processEquipmentData(
   equipments: Equipment[],
   equipmentModels: EquipmentModel[],
@@ -71,6 +96,8 @@ export function processEquipmentData(
         name: latestState?.name,
         color: latestState?.color,
       },
+      equipmentModel: model,
+      stateHistory,
     };
   });
 }
