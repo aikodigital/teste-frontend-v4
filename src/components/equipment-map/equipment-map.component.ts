@@ -42,7 +42,13 @@ export class EquipmentMapComponent implements AfterViewInit {
         .addTo(this.map);
 
       equipment.positions.forEach((position) => {
-        leaflet.marker([position.lat, position.lon]).addTo(this.map).bindPopup(`
+        const icon = leaflet.icon({
+          iconUrl: '/imgs/equipments/CA.svg',
+          popupAnchor: [3, -76],
+          iconAnchor: [18, 60],
+        });
+
+        leaflet.marker([position.lat, position.lon], { icon }).addTo(this.map).bindPopup(`
             <div class="flex flex-col">
               <div><span class="font-bold">Latidude:</span> ${position.lat}</div>
               <div><span class="font-bold">Longitude:</span> ${position.lon}</div>
