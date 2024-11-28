@@ -49,3 +49,13 @@ export interface EquipmentModel {
     value: number;
   }>;
 }
+
+// Maintenance
+export interface MaintenanceModel {
+  id: string;
+  name: string;
+  position: {
+    lat: number;
+    lon: number;
+  };
+}

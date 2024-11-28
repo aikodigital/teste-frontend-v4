@@ -6,33 +6,20 @@ import {
   ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { icon, LatLngExpression } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { useEquipmentStore } from "@/stores/equipment.store";
 import { StatusBadge } from "../../../components/status-badge.component";
 import { useAllData } from "@/hooks/use-all-data.hook";
 import { useFilteredEquipmentData } from "@/hooks/use-filtered-data.hook";
+import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
+import { createCustomIcon, createPostIcon } from "@/utils/create-map-icons";
 
 export function MapComponent() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];
   const openSheet = useEquipmentStore((state) => state.openSheet);
   const { allData } = useAllData();
   const { filteredData } = useFilteredEquipmentData(allData);
-
-  const createCustomIcon = (model: string) => {
-    const image =
-      model == "Harvester"
-        ? "/icons/harvester.png"
-        : model == "Garra traçadora"
-          ? "/icons/garra-tracadora.png"
-          : "/icons/caminhao-de-carga.png";
-
-    return icon({
-      iconUrl: image,
-      iconSize: [50, 50],
-      iconAnchor: [15, 15], // point of the image that will be aligned with the marker position
-      popupAnchor: [0, -15], // Where the popup will be displayed, in relation to the icon
-    });
-  };
+  const { maintenances } = useMaintenanceData();
 
   return (
     <MapContainer
@@ -85,6 +72,34 @@ export function MapComponent() {
                 {equipment.position.lon}]
               </span>
             </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      {maintenances.map((post, postIndex) => (
+        <Marker
+          key={`${postIndex}-${post.id}`}
+          position={[post.position.lat, post.position.lon]}
+          icon={createPostIcon()}
+          eventHandlers={{
+            mouseover: (e) => {
+              const marker = e.target;
+              marker.openPopup();
+            },
+            mouseout: (e) => {
+              const marker = e.target;
+              marker.closePopup();
+            },
+          }}
+        >
+          <Popup>
+            <p>
+              <strong>Nome:</strong> {post.name}
+            </p>
+            <p>
+              <strong>Posição:</strong> [{post.position.lat},{" "}
+              {post.position.lon}]
+            </p>
           </Popup>
         </Marker>
       ))}

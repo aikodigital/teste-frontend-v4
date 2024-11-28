@@ -40,8 +40,5 @@ export function useAllData(id?: string) {
       .finally(() => setLoading(false));
   }, [id]);
 
-  console.log("allData");
-  console.log(allData);
-
   return { allData, loading, error };
 }

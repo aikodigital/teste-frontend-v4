@@ -1,14 +1,23 @@
-import { MapContainer, Marker, Polyline, TileLayer } from "react-leaflet";
+import {
+  MapContainer,
+  Marker,
+  Polyline,
+  Popup,
+  TileLayer,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { icon, LatLngExpression } from "leaflet";
 import { EquipmentPositionHistory } from "@/types/equipment.type";
+import { createPostIcon } from "@/utils/create-map-icons";
+import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
 
 interface MapRouteProps {
   positionHistory: EquipmentPositionHistory | undefined;
   model: string;
 }
-export function MapRouteComponent({ positionHistory, model }: MapRouteProps) {
+export function MapRouteComponent({ positionHistory }: MapRouteProps) {
   if (!positionHistory) return null;
+  const { maintenances } = useMaintenanceData();
 
   const positionDefault: LatLngExpression =
     positionHistory.positions.length > 0
@@ -19,17 +28,15 @@ export function MapRouteComponent({ positionHistory, model }: MapRouteProps) {
     (position) => [position.lat, position.lon],
   );
 
-  const createCustomIcon = (model: string) => {
-    const image =
-      model == "Harvester"
-        ? "/icons/harvester.png"
-        : model == "Garra traçadora"
-          ? "/icons/garra-tracadora.png"
-          : "/icons/caminhao-de-carga.png";
+  const createCustomIcon = (type: "init" | "current") => {
+    const iconMarker =
+      type === "current"
+        ? "/icons/current-location.png"
+        : "/icons/init-location.png";
 
     return icon({
-      iconUrl: image,
-      iconSize: [50, 50],
+      iconUrl: iconMarker,
+      iconSize: [30, 30],
       iconAnchor: [15, 15], // point of the image that will be aligned with the marker position
       popupAnchor: [0, -15], // Where the popup will be displayed, in relation to the icon
     });
@@ -62,16 +69,44 @@ export function MapRouteComponent({ positionHistory, model }: MapRouteProps) {
           <Marker
             position={routeCoordinates[0]}
             title="Início"
-            icon={createCustomIcon(model ?? "Caminhão de carga")}
+            icon={createCustomIcon("init")}
           />
 
           <Marker
             position={routeCoordinates[routeCoordinates.length - 1]}
             title="Fim"
-            icon={createCustomIcon(model ?? "Caminhão de carga")}
+            icon={createCustomIcon("current")}
           />
         </>
       )}
+
+      {maintenances.map((post, postIndex) => (
+        <Marker
+          key={`${postIndex}-${post.id}`}
+          position={[post.position.lat, post.position.lon]}
+          icon={createPostIcon()}
+          eventHandlers={{
+            mouseover: (e) => {
+              const marker = e.target;
+              marker.openPopup();
+            },
+            mouseout: (e) => {
+              const marker = e.target;
+              marker.closePopup();
+            },
+          }}
+        >
+          <Popup>
+            <p>
+              <strong>Nome:</strong> {post.name}
+            </p>
+            <p>
+              <strong>Posição:</strong> [{post.position.lat},{" "}
+              {post.position.lon}]
+            </p>
+          </Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 }

@@ -5,6 +5,7 @@ import {
   EquipmentState,
   EquipmentStateHistory,
   EquipmentPositionHistory,
+  MaintenanceModel,
 } from "@/types/equipment.type";
 
 export const EquipmentService = {
@@ -24,4 +25,7 @@ export const EquipmentService = {
     fetchData<EquipmentPositionHistory[]>(
       "/data/equipment-position-history.json",
     ),
+
+  getMaintenanceModels: (): Promise<MaintenanceModel[]> =>
+    fetchData<MaintenanceModel[]>("/data/maintenance-position.json"),
 };
