@@ -13,13 +13,12 @@ import { EquipmentStateHistory } from '../models/equipment-state-history';
 import { StateService } from '../services/state.service';
 import { State } from '../models/state';
 
-type DataType = {
+interface DataType {
   equipment: Equipment;
   state: EquipmentStateHistory | undefined;
   model: EquipmentModel | undefined;
-} & {
   currentState?: State;
-};
+}
 
 @Component({
   selector: 'app-root',
@@ -34,7 +33,7 @@ export class AppComponent implements OnInit {
 
   data$: Observable<DataType[]>;
 
-  selectedEquipments: string[] = [];
+  selectedEquipment = '';
 
   constructor(
     private equipmentService: EquipmentService,
@@ -49,13 +48,13 @@ export class AppComponent implements OnInit {
     this.listEquipments();
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.selectedEquipments = params['equipment'] || [];
+      this.selectedEquipment = params['equipment'] || '';
     });
   }
 
-  checkSelectedEquipment(id: string): boolean {
-    return this.selectedEquipments.some((equipment) => equipment === id);
-  }
+  // checkSelectedEquipment(id: string): boolean {
+  //   return this.selectedEquipments.some((equipment) => equipment === id);
+  // }
 
   listEquipments(): void {
     this.data$ = this.equipmentService.list().pipe(
@@ -91,15 +90,13 @@ export class AppComponent implements OnInit {
   }
 
   selectEquipment(id: string): void {
-    if (this.selectedEquipments.includes(id)) {
-      this.selectedEquipments = this.selectedEquipments.filter((equipment) => equipment !== id);
-    } else {
-      this.selectedEquipments = [...this.selectedEquipments, id];
-    }
-    this.navigateTo(this.selectedEquipments);
+    this.selectedEquipment = id;
+    this.navigateTo(id);
   }
 
-  navigateTo(equipments: string[]): void {
-    this.router.navigate(['equipment-tracker'], { queryParams: { equipments } });
+  navigateTo(equipment: string): void {
+    this.router.navigate(['equipment-tracker'], {
+      queryParams: { equipment },
+    });
   }
 }

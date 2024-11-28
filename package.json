@@ -23,6 +23,7 @@
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.1",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
     "express": "^4.18.2",
     "flowbite": "^2.5.2",
     "leaflet": "^1.9.4",

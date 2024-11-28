@@ -1,5 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, effect, input, InputSignal } from '@angular/core';
 import * as leaflet from 'leaflet';
+import { EquipmentPositionHistory } from '../../models/equipment-position-history';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-equipment-map',
@@ -10,21 +12,57 @@ import * as leaflet from 'leaflet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentMapComponent implements AfterViewInit {
-  icons!: [
-    {
-      iconUrl: 'caminho/para/sua/imagem.png';
-      iconSize: [50, 50];
-      iconAnchor: [25, 50];
-      popupAnchor: [0, -50];
-    },
-  ];
+  equipmentLocations: InputSignal<EquipmentPositionHistory> = input<EquipmentPositionHistory>(
+    {} as EquipmentPositionHistory
+  );
 
   map!: leaflet.Map;
+
+  constructor() {
+    effect(() => {
+      const equipment = this.equipmentLocations();
+
+      this.map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker || layer instanceof leaflet.Polyline) {
+          this.map.removeLayer(layer);
+        }
+      });
+
+      const coordinates = equipment.positions.map((position) => {
+        return [position.lat, position.lon] as [number, number];
+      });
+
+      leaflet
+        .polyline(coordinates, {
+          color: '#fff',
+          weight: 3,
+          opacity: 0.5,
+          dashArray: [10, 10],
+        })
+        .addTo(this.map);
+
+      equipment.positions.forEach((position) => {
+        leaflet.marker([position.lat, position.lon]).addTo(this.map).bindPopup(`
+            <div class="flex flex-col">
+              <div><span class="font-bold">Latidude:</span> ${position.lat}</div>
+              <div><span class="font-bold">Longitude:</span> ${position.lon}</div>
+              <div><span class="font-bold">Data:</span> ${dayjs(position.date).format('DD/MM/YYYY HH:mm:ss')}</div>
+            </div>
+        `);
+      });
+
+      if (equipment && equipment.positions.length) {
+        this.map.panTo(new leaflet.LatLng(equipment.positions[0].lat, equipment.positions[0].lon));
+      }
+
+      this.map.invalidateSize();
+    });
+  }
 
   initMap(): void {
     this.map = leaflet.map('map', {
       center: [-12.968771962612362, -38.459164029077826],
-      zoom: 18,
+      zoom: 12,
     });
   }
 
