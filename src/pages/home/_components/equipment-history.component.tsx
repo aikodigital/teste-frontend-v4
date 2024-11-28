@@ -9,6 +9,7 @@ export function EquipmentHistory() {
     selectedEquipment?.id ?? "",
   );
 
+  // --> Must be treated in a better way
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -16,6 +17,7 @@ export function EquipmentHistory() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
+  // <-- -------------------------------
 
   return (
     <ScrollArea className="w-full h-full mt-5">

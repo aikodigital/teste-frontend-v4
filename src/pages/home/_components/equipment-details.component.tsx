@@ -16,9 +16,16 @@ import { MapRouteComponent } from "./map-route.component";
 import { EquipmentService } from "@/services/equipment.service";
 import { useEffect, useState } from "react";
 import { EquipmentState } from "@/types/equipment.type";
+import { InfoIcon } from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export function EquipmentDetailsComponent() {
   const { selectedEquipment, isSheetOpen, closeSheet } = useEquipmentStore();
+
   const [states, setStates] = useState<EquipmentState[]>([]);
   const [earningsAndHours, setEarningsAndHours] = useState<ICalculateEarnings>({
     totalEarnings: 0,
@@ -52,6 +59,17 @@ export function EquipmentDetailsComponent() {
     setEarningsAndHours(earnings);
   }
 
+  function getProductivePercentage(): string {
+    const total =
+      earningsAndHours.hoursWorked +
+      earningsAndHours.hoursMaintenance +
+      earningsAndHours.hoursIdle;
+
+    const percentage = (earningsAndHours.hoursWorked / total) * 100;
+
+    return `~${percentage.toFixed(2)}%`;
+  }
+
   return (
     <Sheet open={isSheetOpen} onOpenChange={closeSheet}>
       <SheetHeader>
@@ -62,25 +80,50 @@ export function EquipmentDetailsComponent() {
         {selectedEquipment && (
           <div className="flex flex-col items-center justify-center mt-5">
             <div className="flex flex-row items-center justify-between w-full border-b-2 border-b-neutral-300 pb-3">
-              <div className="flex flex-col items-start justify-start w-full text-sm">
-                <p>
-                  <strong>Nome:</strong> {selectedEquipment.name}
-                </p>
-                <p>
-                  <strong>Modelo:</strong> {selectedEquipment.model}
-                </p>
-                <span className="flex flex-row items-center gap-3">
-                  <strong>Estado atual:</strong>{" "}
-                  <StatusBadge
-                    text={selectedEquipment.state.name ?? ""}
-                    color={selectedEquipment.state.color ?? "#dedede"}
-                  />
-                </span>
-                <div className="w-full flex items-center gap-5 mt-2">
+              <div className="flex flex-col items-start justify-start w-full text-sm gap-2">
+                <div className="w-full flex items-center gap-3">
+                  <p>
+                    <strong>Nome:</strong> {selectedEquipment.name}
+                  </p>
+                  <p>
+                    <strong>Modelo:</strong>{" "}
+                    {selectedEquipment.equipmentModel?.name}
+                  </p>
+                  <span className="flex flex-row items-center gap-3">
+                    <strong>Estado atual:</strong>{" "}
+                    <StatusBadge
+                      text={selectedEquipment.state.name ?? ""}
+                      color={selectedEquipment.state.color ?? "#dedede"}
+                    />
+                  </span>
+                </div>
+                <div className="w-full flex items-center gap-3">
                   <p>
                     <strong>Ganho: </strong> R${" "}
                     {earningsAndHours.totalEarnings.toFixed(2)}
                   </p>
+                  <span className="flex items-center">
+                    <p>
+                      <strong>Produtividade: </strong>
+                      {getProductivePercentage()}
+                    </p>
+                    <HoverCard>
+                      <HoverCardTrigger
+                        asChild
+                        className="ml-1 hover:cursor-pointer"
+                      >
+                        <InfoIcon size={15} />
+                      </HoverCardTrigger>
+                      <HoverCardContent>
+                        <p>
+                          Porcentagem de produtividade baseada no total de horas
+                          e horas trabalhadas
+                        </p>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </span>
+                </div>
+                <div className="w-full flex items-center gap-3">
                   <p>
                     <strong className="mr-1">
                       Horas trabalhadas{" "}
@@ -115,9 +158,10 @@ export function EquipmentDetailsComponent() {
               </div>
               <img
                 src={
-                  selectedEquipment.model == "Harvester"
+                  selectedEquipment.equipmentModel?.name == "Harvester"
                     ? "/icons/harvester.png"
-                    : selectedEquipment.model == "Garra traçadora"
+                    : selectedEquipment.equipmentModel?.name ==
+                        "Garra traçadora"
                       ? "/icons/garra-tracadora.png"
                       : "/icons/caminhao-de-carga.png"
                 }
@@ -132,7 +176,10 @@ export function EquipmentDetailsComponent() {
                 <div className="w-full h-[68vh]">
                   <MapRouteComponent
                     positionHistory={selectedEquipment.positionHistory}
-                    model={selectedEquipment.model ?? "Caminhão de carga"}
+                    model={
+                      selectedEquipment.equipmentModel?.name ??
+                      "Caminhão de carga"
+                    }
                   />
                 </div>
               </div>
