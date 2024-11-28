@@ -1,6 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { LucideAngularModule, Search } from 'lucide-angular';
 import { EquipmentService } from '../services/equipment.service';
 import { EquipmentCardComponent } from '../components/equipment-card/equipment-card.component';
@@ -34,18 +34,30 @@ export class AppComponent implements OnInit {
 
   data$: Observable<DataType[]>;
 
+  selectedEquipments: string[] = [];
+
   constructor(
     private equipmentService: EquipmentService,
     private equipmentModelService: EquipmentModelService,
     private equipmentStateHistoryService: EquipmentStateHistoryService,
-    private stateService: StateService
+    private stateService: StateService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.listEquipments();
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.selectedEquipments = params['equipment'] || [];
+    });
   }
 
-  listEquipments() {
+  checkSelectedEquipment(id: string): boolean {
+    return this.selectedEquipments.some((equipment) => equipment === id);
+  }
+
+  listEquipments(): void {
     this.data$ = this.equipmentService.list().pipe(
       mergeMap((equipments) => {
         return forkJoin(
@@ -76,5 +88,18 @@ export class AppComponent implements OnInit {
         );
       })
     );
+  }
+
+  selectEquipment(id: string): void {
+    if (this.selectedEquipments.includes(id)) {
+      this.selectedEquipments = this.selectedEquipments.filter((equipment) => equipment !== id);
+    } else {
+      this.selectedEquipments = [...this.selectedEquipments, id];
+    }
+    this.navigateTo(this.selectedEquipments);
+  }
+
+  navigateTo(equipments: string[]): void {
+    this.router.navigate(['equipment-tracker'], { queryParams: { equipments } });
   }
 }

@@ -1,9 +1,7 @@
-<div
-  class="max-w-sm relative p-4 flex items-center gap-4 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
->
+<button [class]="getSelectedStateClass" type="button">
   <div class="absolute left-0 top-0 w-full">
     <span
-      class="absolute text-white left-[50%] translate-x-[-50%] top-[-12px] text-xs font-bold me-2 px-2.5 py-0.5 rounded-full"
+      class="absolute text-white left-[50%] translate-x-[-50%] top-[-10px] text-xs font-bold me-2 px-2.5 py-0.5 rounded-full"
       [style]="'background-color: ' + stateColor()"
     >
       {{ state() }}
@@ -11,15 +9,15 @@
   </div>
   <div>
     <img
-      class="min-w-[72px] w-[72px] h-[72px] flex items-center justify-center text-sm rounded-full border border-gray-200"
+      class="min-w-[64px] w-[64px] h-[64px] flex items-center justify-center text-sm rounded-full border border-gray-200"
       [src]="image()"
       alt="Equipment image"
-      width="72"
-      height="72"
+      width="64"
+      height="64"
     />
   </div>
   <div>
-    <h5 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ name() }}</h5>
+    <h5 class="text-md font-bold tracking-tight text-gray-900 dark:text-white">{{ name() }}</h5>
     <p class="font-normal text-sm text-gray-700 dark:text-gray-400">{{ model() }}</p>
   </div>
-</div>
+</button>

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { EquipmentMapComponent } from '../../components/equipment-map/equipment-map.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-equipment-tracker',
@@ -9,4 +10,12 @@ import { EquipmentMapComponent } from '../../components/equipment-map/equipment-
   styleUrl: './equipment-tracker.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EquipmentTrackerComponent {}
+export class EquipmentTrackerComponent implements OnInit {
+  constructor(private activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      console.log(params['equipment']);
+    });
+  }
+}

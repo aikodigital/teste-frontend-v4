@@ -25,10 +25,12 @@
       <h2 class="text-xl font-bold">Equipamentos</h2>
       @for (data of data$ | async; track $index) {
         <app-equipment-card
+          (click)="selectEquipment(data.equipment.id)"
           [state]="data.currentState?.name || ''"
           [stateColor]="data.currentState?.color || ''"
           [model]="data.model?.name || ''"
           [name]="data.equipment.name"
+          [selected]="checkSelectedEquipment(data.equipment.id)"
         ></app-equipment-card>
       }
     </aside>
