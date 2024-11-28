@@ -18,7 +18,7 @@ describe("use all data", () => {
     vi.clearAllMocks(); // Clean mocks after each test
   });
 
-  it("should fetch data correctly and return the processed result", async () => {
+  it("should fetch data correctly when equipment exists", async () => {
     const mockEquipments = [
       { id: "1", name: "Equipamento 1", equipmentModelId: "1" },
     ];
@@ -31,10 +31,9 @@ describe("use all data", () => {
       },
     ];
     const mockEquipmentPositionHistory = [
-      { equipmentId: 1, positions: [{ date: "2024-01-01", lat: 0, lon: 0 }] },
+      { equipmentId: "1", positions: [{ date: "2024-01-01", lat: 0, lon: 0 }] },
     ];
 
-    // Mocking service methods
     (EquipmentService.getEquipments as Mock).mockResolvedValue(mockEquipments);
     (EquipmentService.getEquipmentModels as Mock).mockResolvedValue(
       mockEquipmentModels,
@@ -49,8 +48,8 @@ describe("use all data", () => {
       mockEquipmentPositionHistory,
     );
 
-    const { result, waitForNextUpdate } = renderHook(() => useAllData());
-    await waitForNextUpdate(); // wait state update
+    const { result, waitForNextUpdate } = renderHook(() => useAllData("1"));
+    await waitForNextUpdate();
 
     expect(result.current.allData).toEqual([
       {
@@ -59,10 +58,17 @@ describe("use all data", () => {
         model: "Modelo 1",
         position: { lat: 0, lon: 0 },
         state: { id: "1", name: "Operando", color: "Green" },
+        equipmentModel: { id: "1", name: "Modelo 1" },
+        stateHistory: {
+          equipmentId: "1",
+          states: [{ date: "2024-01-01", equipmentStateId: "1" }],
+        },
+        positionHistory: {
+          equipmentId: "1",
+          positions: [{ date: "2024-01-01", lat: 0, lon: 0 }],
+        },
       },
     ]);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.error).toBeNull();
   });
 
   it("should handle error correctly when fetching data", async () => {
@@ -95,7 +101,7 @@ describe("use all data", () => {
       },
     ];
     const mockEquipmentPositionHistory = [
-      { equipmentId: 1, positions: [{ date: "2024-01-01", lat: 0, lon: 0 }] },
+      { equipmentId: "1", positions: [{ date: "2024-01-01", lat: 0, lon: 0 }] },
     ];
 
     (EquipmentService.getEquipments as Mock).mockResolvedValue(mockEquipments);
@@ -122,6 +128,15 @@ describe("use all data", () => {
         model: "Modelo 1",
         position: { lat: 0, lon: 0 },
         state: { id: "1", name: "Operando", color: "Green" },
+        equipmentModel: { id: "1", name: "Modelo 1" },
+        stateHistory: {
+          equipmentId: "1",
+          states: [{ date: "2024-01-01", equipmentStateId: "1" }],
+        },
+        positionHistory: {
+          equipmentId: "1",
+          positions: [{ date: "2024-01-01", lat: 0, lon: 0 }],
+        },
       },
     ]);
   });

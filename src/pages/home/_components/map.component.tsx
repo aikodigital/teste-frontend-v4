@@ -50,7 +50,9 @@ export function MapComponent() {
         <Marker
           key={`${eqIndex}-${equipment.id}`}
           position={[equipment.position.lat, equipment.position.lon]}
-          icon={createCustomIcon(equipment.model ?? "Caminhão de carga")}
+          icon={createCustomIcon(
+            equipment.equipmentModel?.name ?? "Caminhão de carga",
+          )}
           eventHandlers={{
             mouseover: (e) => {
               const marker = e.target;
@@ -69,7 +71,7 @@ export function MapComponent() {
                 <strong>Nome:</strong> {equipment.name}
               </span>
               <span>
-                <strong>Modelo:</strong> {equipment.model}
+                <strong>Modelo:</strong> {equipment.equipmentModel?.name}
               </span>
               <span className="flex flex-row gap-4 items-center">
                 <strong>Estado:</strong>{" "}

@@ -162,11 +162,16 @@ pnpm test:cov
 ### Caso de Testes Implementados
 
 - Busca por todos os dados
-- Busca por dados a partir de um id
-- Validando erro caso o id não exista
-- Validando erro caso a requisição não aconteça
+- Retornar erro quando houver erro em buscar dados
+- Busca dado por id
+- Retornar erro quando busca por id não encontrar nenhum dado
 - Busca por histórico de dados do equipamento
-- Validando erro caso o id não exista para retornar histórico
+- Retornar erro quando busca por id não encontrar nenhum dado para trazer histórico
+- Retornar erro quando busca por dados falhar
+- Retornar todos os dados quando não existir filtro
+- Retornar dados filtrados por estado
+- Retornar dados filtrados por nome
+- Retornar dados filtrados por qualquer termo
 
 ## Melhorias
 

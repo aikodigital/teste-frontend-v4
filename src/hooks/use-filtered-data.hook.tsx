@@ -14,7 +14,7 @@ export function useFilteredEquipmentData(allData: ProcessedEquipment[]) {
     }
 
     if (selectedModel) {
-      data = data.filter((item) => item.model === selectedModel);
+      data = data.filter((item) => item.equipmentModel?.name === selectedModel);
     }
 
     setFilteredData(data);
@@ -28,6 +28,8 @@ export function useFilteredEquipmentData(allData: ProcessedEquipment[]) {
     }
     return [];
   }, [search, allData]);
+
+  console.log(filteredData);
 
   return { filteredData, searchResults };
 }

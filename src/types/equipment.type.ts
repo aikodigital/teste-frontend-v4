@@ -1,7 +1,6 @@
 export interface ProcessedEquipment {
   id: string;
   name: string;
-  model: string | undefined;
   position: { lat: number; lon: number };
   state: {
     id: string | undefined;
