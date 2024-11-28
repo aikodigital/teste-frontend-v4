@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
-import { EquipmentMapComponent } from '../../components/equipment-map/equipment-map.component';
+import { EquipmentMapComponent } from './ui/equipment-map/equipment-map.component';
 import { ActivatedRoute } from '@angular/router';
 import { EquipmentPositionHistoryService } from '../../services/equipment-position-history.service';
 import { EquipmentPositionHistory } from '../../models/equipment-position-history';
