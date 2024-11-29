@@ -27,6 +27,15 @@ export function findNearestMaintenance(
   equipmentPosition: { lat: number; lon: number },
   maintenances: MaintenanceModel[],
 ) {
+  if (
+    equipmentPosition.lat < -90 ||
+    equipmentPosition.lat > 90 ||
+    equipmentPosition.lon < -180 ||
+    equipmentPosition.lon > 180
+  ) {
+    return null;
+  }
+
   if (maintenances.length === 0) return null;
 
   return maintenances.reduce((closest, current) => {

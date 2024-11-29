@@ -1,4 +1,4 @@
-import { fetchData } from "@/utils/fetch-data";
+import { fetchData } from "@/utils/fetch-data.util";
 import {
   Equipment,
   EquipmentModel,

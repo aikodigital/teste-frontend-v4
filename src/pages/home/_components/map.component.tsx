@@ -12,7 +12,10 @@ import { StatusBadge } from "../../../components/status-badge.component";
 import { useAllData } from "@/hooks/use-all-data.hook";
 import { useFilteredEquipmentData } from "@/hooks/use-filtered-data.hook";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
-import { createCustomIcon, createPostIcon } from "@/utils/create-map-icons";
+import {
+  createCustomIcon,
+  createPostIcon,
+} from "@/utils/create-map-icons.util";
 
 export function MapComponent() {
   const positionDefault: LatLngExpression = [-19.264235, -46.092436];

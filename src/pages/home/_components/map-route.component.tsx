@@ -8,7 +8,10 @@ import {
 import "leaflet/dist/leaflet.css";
 import { LatLngExpression } from "leaflet";
 import { EquipmentPositionHistory } from "@/types/equipment.type";
-import { createCustomIcon, createPostIcon } from "@/utils/create-map-icons";
+import {
+  createCustomIcon,
+  createPostIcon,
+} from "@/utils/create-map-icons.util";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
 
 interface MapRouteProps {

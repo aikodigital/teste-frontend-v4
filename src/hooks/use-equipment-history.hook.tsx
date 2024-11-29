@@ -6,7 +6,7 @@ import {
   EquipmentModel,
   EquipmentPositionHistory,
 } from "@/types/equipment.type";
-import { fetchData } from "@/utils/fetch-data";
+import { fetchData } from "@/utils/fetch-data.util";
 
 interface EquipmentHistoryEntry {
   date: string;

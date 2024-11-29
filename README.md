@@ -130,6 +130,7 @@ permitindo decisões rápidas e baseadas em dados.
 | ------------------------------ | ------------------------------ |
 | `public/`                      | Arquivos públicos              |
 | `public/data/`                 | Dados em JSON                  |
+| `public/icons/`                | Icones utilizados              |
 | `src/components/`              | Componentes globais            |
 | `src/components/ui/`           | Componentes do Shadcn          |
 | `src/hooks/`                   | Hooks da aplicação             |
@@ -161,20 +162,33 @@ pnpm test:cov
 
 ### Caso de Testes Implementados
 
-- Busca por todos os dados
-- Retornar erro quando houver erro em buscar dados
-- Busca dado por id
-- Retornar erro quando busca por id não encontrar nenhum dado
-- Busca por histórico de dados do equipamento
-- Retornar erro quando busca por id não encontrar nenhum dado para trazer histórico
-- Retornar erro quando busca por dados falhar
-- Retornar todos os dados quando não existir filtro
-- Retornar dados filtrados por estado
-- Retornar dados filtrados por nome
-- Retornar dados filtrados por qualquer termo
+- **Todos os dados:**
+  - Busca dados.
+  - Rrro em buscar dados.
+  - Busca por id.
+  - Busca por id não encontrar nenhum dado.
+  - Busca por histórico de dados do equipamento.
+- **Filtrar equipamentos:**
+
+  - Falhar ao filtrar dados.
+  - Trazer todos os dados se não existir filtro.
+  - Filtrar por estado.
+  - Filtrar por nome.
+  - Filtrar por qualquer termo.
+
+- **Cálculo de postos de manutenção:**
+  - Distância correta entra dois pontos.
+  - Pontos com posições iguais.
+  - Posto de manunteção mais próximo.
+  - Posto de manutenção não disponível.
+  - Posição inválida.
 
 ## Melhorias
 
-- [ ] Exibir histórico de rota do equipamento no mapa.
-- [ ] Adicionar autenticação para usuários.
-- [ ] Criar gráficos de histórico de posições.
+- **Exibir a rota pelas estradas.**
+  - Encontrar uma melhor forma de fazer isso.
+- **Adicionar autenticação para usuários.**
+  - Autenticação por tipo de usuário é interessante, pois pode facilitar para gestores e até mesmo funcionários.
+- **Criar Dashboard.**
+  - Ajuda na tomada de decisções.
+  - Pode ser com base no desempenho do usuário, quantidade de lucro total, média de equipamentos precisando de manutenção ou outras informações.

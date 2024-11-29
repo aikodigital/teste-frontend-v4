@@ -11,7 +11,7 @@ import { StatusBadge } from "../../../components/status-badge.component";
 import {
   calculateEquipmentEarnings,
   ICalculateEarnings,
-} from "@/utils/calculate-earnings";
+} from "@/utils/calculate-earnings.util";
 import { MapRouteComponent } from "./map-route.component";
 import { EquipmentService } from "@/services/equipment.service";
 import { useEffect, useMemo, useState } from "react";
@@ -23,7 +23,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
-import { findNearestMaintenance } from "@/utils/calculate-maintenances";
+import { findNearestMaintenance } from "@/utils/calculate-maintenances.util";
 
 export function EquipmentDetailsComponent() {
   const { selectedEquipment, isSheetOpen, closeSheet } = useEquipmentStore();

@@ -1,9 +1,9 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, describe, expect, it, Mock, vi } from "vitest";
-import { fetchData } from "@/utils/fetch-data";
+import { fetchData } from "@/utils/fetch-data.util";
 import { useEquipmentHistory } from "../use-equipment-history.hook";
 
-vi.mock("@/utils/fetch-data", () => ({
+vi.mock("@/utils/fetch-data.util", () => ({
   fetchData: vi.fn(),
 }));
 
