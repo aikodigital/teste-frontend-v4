@@ -21,6 +21,7 @@ permitindo decisões rápidas e baseadas em dados.
 
 - **Framework Frontend**: Utilizamos React com TypeScript devido à sua popularidade, tipagem estática e suporte para bibliotecas modernas.
 - **Biblioteca para mapa**: Utilizado o Leaflet, pois é uma biblioteca amplamente utilizada no React devido a sua simplicidade e flexibilidade. Além disso, é fácil de usar, personalizável e um ótimo desempenho.
+- **Biblioteca para rotas no mapa**: Utilizado o Leaflet Routing Machine.
 - **Gerenciamento de Estado**: Zustand foi escolhido pela simplicidade.
 - **Biblioteca de Testes**: Foi escolhido o Jest por sua ampla utilização e maturidade.
 - **Design**: Tailwind CSS para estilização, permitindo um desenvolvimento rápido e responsivo e o Shadcn para acelerar no processo de desenvolvimento de alguns componentes.

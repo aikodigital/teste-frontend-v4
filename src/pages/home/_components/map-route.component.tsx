@@ -1,18 +1,13 @@
-import {
-  MapContainer,
-  Marker,
-  Polyline,
-  Popup,
-  TileLayer,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
+import { LatLngExpression, LatLngLiteral } from "leaflet";
 import { EquipmentPositionHistory } from "@/types/equipment.type";
 import {
   createCustomIcon,
   createPostIcon,
 } from "@/utils/create-map-icons.util";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
+import RoutingMachine from "./routing-control.component";
 
 interface MapRouteProps {
   positionHistory: EquipmentPositionHistory | undefined;
@@ -27,8 +22,8 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
       ? [positionHistory.positions[0].lat, positionHistory.positions[0].lon]
       : [-19.264235, -46.092436];
 
-  const routeCoordinates: LatLngExpression[] = positionHistory.positions.map(
-    (position) => [position.lat, position.lon],
+  const routeCoordinates: LatLngLiteral[] = positionHistory.positions.map(
+    (position) => ({ lat: position.lat, lng: position.lon }),
   );
 
   return (
@@ -43,14 +38,14 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {routeCoordinates.length > 1 && (
+      {/* {routeCoordinates.length > 1 && (
         <Polyline
           positions={routeCoordinates}
           color="#d0d0d0"
           lineJoin="round"
           weight={2}
         />
-      )}
+      )} */}
 
       {routeCoordinates.length > 0 && (
         <>
@@ -74,6 +69,8 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
           </Marker>
         </>
       )}
+
+      <RoutingMachine allPositions={routeCoordinates} />
 
       {maintenances.map((post, postIndex) => (
         <Marker

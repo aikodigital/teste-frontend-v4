@@ -44,6 +44,9 @@ importers:
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
+      leaflet-routing-machine:
+        specifier: ^3.2.12
+        version: 3.2.12
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@18.3.1)
@@ -93,6 +96,9 @@ importers:
       '@types/leaflet':
         specifier: ^1.9.14
         version: 1.9.14
+      '@types/leaflet-routing-machine':
+        specifier: ^3.2.8
+        version: 3.2.8
       '@types/node':
         specifier: ^22.9.3
         version: 22.9.3
@@ -652,6 +658,13 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@mapbox/corslite@0.0.7':
+    resolution: {integrity: sha512-w/uS474VFjmqQ7fFWIMZINQM1BAQxDLuoJaZZIPES1BmeYpCtlh9MtbFxKGGDAsfvut8/HircIsVvEYRjQ+iMg==}
+
+  '@mapbox/polyline@0.2.0':
+    resolution: {integrity: sha512-GCddO0iw6AzOQqZgBmjEQI9Pgo40/yRgkTkikGctE01kNBN0ThWYuAnTD+hRWrAWMV6QJ0rNm4m8DAsaAXE7Pg==}
+    hasBin: true
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1241,6 +1254,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/leaflet-routing-machine@3.2.8':
+    resolution: {integrity: sha512-v2pJDv/nqbB769SsytHemhLkqwjVor9UdWvZ1l6Y2SEaXNt1yDwVrktc4sCT8/4n7npuEb8VP+UAk8xrPePqSQ==}
 
   '@types/leaflet@1.9.14':
     resolution: {integrity: sha512-sx2q6MDJaajwhKeVgPSvqXd8rhNJSTA3tMidQGduZn9S6WBYxDkCpSpV5xXEmSg7Cgdk/5vJGhVF1kMYLzauBg==}
@@ -2533,6 +2549,9 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
 
+  leaflet-routing-machine@3.2.12:
+    resolution: {integrity: sha512-HLde58G1YtD9xSIzZavJ6BPABZaV1hHeGst8ouhzuxmSC3s32NVtADT+njbIUMW1maHRCrsgTk/E4hz5QH7FrA==}
+
   leaflet@1.9.4:
     resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
 
@@ -2720,6 +2739,9 @@ packages:
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
+
+  osrm-text-instructions@0.13.4:
+    resolution: {integrity: sha512-ge4ZTIetMQKAHKq2MwWf83ntzdJN20ndRKRaVNoZ3SkDkBNO99Qddz7r6+hrVx38I+ih6Rk5T1yslczAB6Q9Pg==}
 
   p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
@@ -4099,6 +4121,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@mapbox/corslite@0.0.7': {}
+
+  '@mapbox/polyline@0.2.0': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -4652,6 +4678,10 @@ snapshots:
       parse5: 7.2.1
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/leaflet-routing-machine@3.2.8':
+    dependencies:
+      '@types/leaflet': 1.9.14
 
   '@types/leaflet@1.9.14':
     dependencies:
@@ -6348,6 +6378,12 @@ snapshots:
 
   kleur@3.0.3: {}
 
+  leaflet-routing-machine@3.2.12:
+    dependencies:
+      '@mapbox/corslite': 0.0.7
+      '@mapbox/polyline': 0.2.0
+      osrm-text-instructions: 0.13.4
+
   leaflet@1.9.4: {}
 
   leven@3.1.0: {}
@@ -6512,6 +6548,8 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
+
+  osrm-text-instructions@0.13.4: {}
 
   p-limit@2.3.0:
     dependencies:

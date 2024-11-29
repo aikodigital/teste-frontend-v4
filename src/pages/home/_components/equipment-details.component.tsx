@@ -12,7 +12,6 @@ import {
   calculateEquipmentEarnings,
   ICalculateEarnings,
 } from "@/utils/calculate-earnings.util";
-import { MapRouteComponent } from "./map-route.component";
 import { EquipmentService } from "@/services/equipment.service";
 import { useEffect, useMemo, useState } from "react";
 import { EquipmentState } from "@/types/equipment.type";
@@ -24,6 +23,8 @@ import {
 } from "@/components/ui/hover-card";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
 import { findNearestMaintenance } from "@/utils/calculate-maintenances.util";
+// import { MapRouteOlComponent } from "../map-route.component";
+import { MapRouteComponent } from "./map-route.component";
 
 export function EquipmentDetailsComponent() {
   const { selectedEquipment, isSheetOpen, closeSheet } = useEquipmentStore();
@@ -199,6 +200,13 @@ export function EquipmentDetailsComponent() {
                       "Caminhão de carga"
                     }
                   />
+                  {/* <MapRouteOlComponent
+                    positionHistory={selectedEquipment.positionHistory}
+                    model={
+                      selectedEquipment.equipmentModel?.name ??
+                      "Caminhão de carga"
+                    }
+                  /> */}
                 </div>
               </div>
               <div className="col-span-1 flex flex-col items-start gap-3">

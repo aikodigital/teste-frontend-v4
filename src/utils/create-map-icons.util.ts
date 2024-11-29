@@ -32,6 +32,24 @@ export function createCustomIcon({
   });
 }
 
+export function createCustomOlIcon({ model, typeMarker }: CreateCustomProps) {
+  let image = "";
+
+  if (model) {
+    image =
+      model == "Harvester"
+        ? "/icons/harvester.png"
+        : model == "Garra traçadora"
+          ? "/icons/garra-tracadora.png"
+          : "/icons/caminhao-de-carga.png";
+  }
+
+  if (typeMarker) {
+    image = typeMarker === "current" ? "/icons/current.png" : "/icons/init.png";
+  }
+  return image;
+}
+
 export function createPostIcon() {
   return icon({
     iconUrl: "/icons/maintenance.png",

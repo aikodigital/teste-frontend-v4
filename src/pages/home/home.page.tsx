@@ -1,6 +1,6 @@
-import { MapComponent } from "./_components/map.component";
 import { EquipmentDetailsComponent } from "./_components/equipment-details.component";
 import { DialogSearchComponent } from "./_components/dialog-search.component";
+import { MapComponent } from "./_components/map.component";
 
 export default function HomePage() {
   return (
