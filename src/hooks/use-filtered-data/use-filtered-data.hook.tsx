@@ -29,7 +29,5 @@ export function useFilteredEquipmentData(allData: ProcessedEquipment[]) {
     return [];
   }, [search, allData]);
 
-  console.log(filteredData);
-
   return { filteredData, searchResults };
 }

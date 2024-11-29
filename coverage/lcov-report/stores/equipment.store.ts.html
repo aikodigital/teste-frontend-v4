@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for stores/equipment-map.store.ts</title>
+    <title>Code coverage report for stores/equipment.store.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">stores</a> equipment-map.store.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">stores</a> equipment.store.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">79.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>23/29</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">79.31% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>23/29</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -92,8 +92,7 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -109,15 +108,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -126,32 +124,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ProcessedEquipment } from "@/types/equipment.type";
 import { create } from "zustand";
 &nbsp;
-interface EquipmentMapStore {
-  selectedState: string | undefined;
-  selectedModel: string | undefined;
-  setSelectedState: (state: string | undefined) =&gt; void;
-  setSelectedModel: (model: string | undefined) =&gt; void;
-&nbsp;
-  searchData: ProcessedEquipment[];
-  setSearchData: (data: ProcessedEquipment[]) =&gt; void;
-&nbsp;
-  search: string;
-  setSearch: (value: string) =&gt; void;
+interface EquipmentStore {
+  selectedEquipment: ProcessedEquipment | null;
+  isSheetOpen: boolean;
+  openSheet: (equipment: ProcessedEquipment) =&gt; void;
+  closeSheet: () =&gt; void;
+  isSearching: boolean;
+  setSearching: (searching: boolean) =&gt; void;
 }
 &nbsp;
-export const useEquipmentMapStore = create&lt;EquipmentMapStore&gt;((set) =&gt; ({
-  selectedState: undefined,
-  selectedModel: undefined,
-  setSelectedState: <span class="fstat-no" title="function not covered" >(state: string | undefined) =&gt;</span>
-    set({ selectedState: state }),
-  setSelectedModel: <span class="fstat-no" title="function not covered" >(model: string | undefined) =&gt;</span>
-    set({ selectedModel: model }),
+export const useEquipmentStore = create&lt;EquipmentStore&gt;((set) =&gt; ({
+  selectedEquipment: null,
+  isSheetOpen: false,
+  openSheet: <span class="fstat-no" title="function not covered" >(equipment) =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    set({</span>
+<span class="cstat-no" title="statement not covered" >      selectedEquipment: equipment,</span>
+<span class="cstat-no" title="statement not covered" >      isSheetOpen: true,</span>
+    }),
+  closeSheet: <span class="fstat-no" title="function not covered" >() =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    set({</span>
+<span class="cstat-no" title="statement not covered" >      selectedEquipment: null,</span>
+<span class="cstat-no" title="statement not covered" >      isSheetOpen: false,</span>
+    }),
 &nbsp;
-  searchData: [],
-  setSearchData: <span class="fstat-no" title="function not covered" >(data: ProcessedEquipment[]) =&gt; set({ searchData: data }),</span>
-&nbsp;
-  search: "",
-  setSearch: <span class="fstat-no" title="function not covered" >(value) =&gt; set({ search: value }),</span>
+  isSearching: false,
+  setSearching: <span class="fstat-no" title="function not covered" >(searching) =&gt; set({ isSearching: searching }),</span>
 }));
 &nbsp;</pre></td></tr></table></pre>
 
@@ -160,7 +157,7 @@ export const useEquipmentMapStore = create&lt;EquipmentMapStore&gt;((set) =&gt; 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-11-29T16:54:30.606Z
+                at 2024-11-29T20:28:13.159Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -18,7 +18,7 @@ export function DialogSearchComponent() {
   const filteredData = allData.filter(
     (item) =>
       item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.model?.toLowerCase().includes(search.toLowerCase()),
+      item.equipmentModel?.name?.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -45,7 +45,7 @@ export function DialogSearchComponent() {
                       className="w-3 h-3 rounded-full mr-3"
                       style={{ backgroundColor: item.state.color }}
                     />
-                    {item.name} - {item.model}
+                    {item.name} - {item.equipmentModel?.name}
                   </div>
 
                   <Button
