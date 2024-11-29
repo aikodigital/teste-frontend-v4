@@ -163,11 +163,13 @@ pnpm test:cov
 ### Caso de Testes Implementados
 
 - **Todos os dados:**
+
   - Busca dados.
   - Rrro em buscar dados.
   - Busca por id.
   - Busca por id não encontrar nenhum dado.
   - Busca por histórico de dados do equipamento.
+
 - **Filtrar equipamentos:**
 
   - Falhar ao filtrar dados.
@@ -176,7 +178,14 @@ pnpm test:cov
   - Filtrar por nome.
   - Filtrar por qualquer termo.
 
+- **Adapter:**
+
+  - Retornar última posição baseada nos dados
+  - Retornar último estado basedo nos dados
+  - Processar dados de equipamento
+
 - **Cálculo de postos de manutenção:**
+
   - Distância correta entra dois pontos.
   - Pontos com posições iguais.
   - Posto de manunteção mais próximo.

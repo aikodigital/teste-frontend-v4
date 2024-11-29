@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useAllData } from "@/hooks/use-all-data.hook";
+import { useAllData } from "@/hooks/use-all-data/use-all-data.hook";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
 

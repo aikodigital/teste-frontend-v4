@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { AppBarComponent } from "./components/appbar.component";
+import { AppBarComponent } from "./components/appbar/appbar.component";
 
 type LayoutProps = {
   children: ReactNode;
