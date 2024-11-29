@@ -14,7 +14,7 @@ import {
 } from "@/utils/calculate-earnings";
 import { MapRouteComponent } from "./map-route.component";
 import { EquipmentService } from "@/services/equipment.service";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EquipmentState } from "@/types/equipment.type";
 import { InfoIcon } from "lucide-react";
 import {
@@ -22,10 +22,12 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
+import { findNearestMaintenance } from "@/utils/calculate-maintenances";
 
 export function EquipmentDetailsComponent() {
   const { selectedEquipment, isSheetOpen, closeSheet } = useEquipmentStore();
-
+  const { maintenances } = useMaintenanceData();
   const [states, setStates] = useState<EquipmentState[]>([]);
   const [earningsAndHours, setEarningsAndHours] = useState<ICalculateEarnings>({
     totalEarnings: 0,
@@ -48,7 +50,6 @@ export function EquipmentDetailsComponent() {
     const states = await EquipmentService.getEquipmentStates();
     setStates(states);
   }
-
   async function getEarnings() {
     const earnings = await calculateEquipmentEarnings(
       selectedEquipment?.equipmentModel,
@@ -58,6 +59,15 @@ export function EquipmentDetailsComponent() {
 
     setEarningsAndHours(earnings);
   }
+  const nearestMaintenance = useMemo(() => {
+    return findNearestMaintenance(
+      {
+        lat: selectedEquipment?.position.lat ?? 0,
+        lon: selectedEquipment?.position.lon ?? 0,
+      },
+      maintenances,
+    );
+  }, [selectedEquipment, maintenances]);
 
   function getProductivePercentage(): string {
     const total =
@@ -153,6 +163,14 @@ export function EquipmentDetailsComponent() {
                       </span>
                     </strong>
                     {earningsAndHours.hoursIdle}h
+                  </p>
+                </div>
+                <div className="w-full flex items-center gap-3">
+                  <p>
+                    <strong className="mr-1">
+                      Posto de manutenção mais próximo:
+                    </strong>
+                    {nearestMaintenance?.name}
                   </p>
                 </div>
               </div>

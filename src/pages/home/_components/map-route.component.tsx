@@ -6,9 +6,9 @@ import {
   TileLayer,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { icon, LatLngExpression } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { EquipmentPositionHistory } from "@/types/equipment.type";
-import { createPostIcon } from "@/utils/create-map-icons";
+import { createCustomIcon, createPostIcon } from "@/utils/create-map-icons";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
 
 interface MapRouteProps {
@@ -28,20 +28,6 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
     (position) => [position.lat, position.lon],
   );
 
-  const createCustomIcon = (type: "init" | "current") => {
-    const iconMarker =
-      type === "current"
-        ? "/icons/current-location.png"
-        : "/icons/init-location.png";
-
-    return icon({
-      iconUrl: iconMarker,
-      iconSize: [30, 30],
-      iconAnchor: [15, 15], // point of the image that will be aligned with the marker position
-      popupAnchor: [0, -15], // Where the popup will be displayed, in relation to the icon
-    });
-  };
-
   return (
     <MapContainer
       center={positionDefault}
@@ -57,10 +43,9 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
       {routeCoordinates.length > 1 && (
         <Polyline
           positions={routeCoordinates}
-          color="#8c8c8c"
+          color="#d0d0d0"
           lineJoin="round"
           weight={2}
-          dashArray="5, 10"
         />
       )}
 
@@ -68,15 +53,22 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
         <>
           <Marker
             position={routeCoordinates[0]}
-            title="Início"
-            icon={createCustomIcon("init")}
-          />
+            icon={createCustomIcon({ typeMarker: "init", size: 20 })}
+          >
+            <Popup>
+              <p>Partida</p>
+            </Popup>
+          </Marker>
 
           <Marker
             position={routeCoordinates[routeCoordinates.length - 1]}
-            title="Fim"
-            icon={createCustomIcon("current")}
-          />
+            icon={createCustomIcon({ typeMarker: "current", size: 35 })}
+            autoPan={true}
+          >
+            <Popup>
+              <p>Equipamento está aqui</p>
+            </Popup>
+          </Marker>
         </>
       )}
 

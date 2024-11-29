@@ -37,9 +37,9 @@ export function MapComponent() {
         <Marker
           key={`${eqIndex}-${equipment.id}`}
           position={[equipment.position.lat, equipment.position.lon]}
-          icon={createCustomIcon(
-            equipment.equipmentModel?.name ?? "Caminhão de carga",
-          )}
+          icon={createCustomIcon({
+            model: equipment.equipmentModel?.name ?? "Caminhão de carga",
+          })}
           eventHandlers={{
             mouseover: (e) => {
               const marker = e.target;
