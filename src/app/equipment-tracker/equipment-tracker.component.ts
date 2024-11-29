@@ -4,14 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EquipmentPositionHistoryService } from '../../services/equipment-position-history.service';
 import { EquipmentPositionHistory } from '../../models/equipment-position-history';
 import { CommonModule } from '@angular/common';
-import { forkJoin, mergeMap, of } from 'rxjs';
 import { EquipmentService } from '../../services/equipment.service';
-import { Equipment } from '../../models/equipment';
-
-interface IEquipmentDataType {
-  equipmentHistory: EquipmentPositionHistory | undefined;
-  equipment: Equipment | undefined;
-}
 
 @Component({
   selector: 'app-equipment-tracker',
@@ -23,7 +16,9 @@ interface IEquipmentDataType {
   providers: [EquipmentPositionHistoryService, EquipmentService],
 })
 export class EquipmentTrackerComponent implements OnInit {
-  equipment: WritableSignal<IEquipmentDataType | undefined> = signal<IEquipmentDataType | undefined>(undefined);
+  equipments: WritableSignal<EquipmentPositionHistory[] | undefined> = signal<EquipmentPositionHistory[] | undefined>(
+    undefined
+  );
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -33,28 +28,16 @@ export class EquipmentTrackerComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (params['equipment']) {
-        this.listEquipments(params['equipment']);
+      if (!params['equipments']) {
+        return;
       }
+      this.listEquipments(params['equipments']);
     });
   }
 
-  listEquipments(id: string): void {
-    this.equipmentPositionHistoryService
-      .findByEquipmentId(id)
-      .pipe(
-        mergeMap((equipment) => {
-          return forkJoin({
-            equipmentHistory: of(equipment),
-            equipment: this.equipmentService.find(equipment?.equipmentId || ''),
-          });
-        })
-      )
-      .subscribe((data) => {
-        this.equipment.set({
-          equipmentHistory: data.equipmentHistory,
-          equipment: data.equipment,
-        });
-      });
+  listEquipments(id: string[]): void {
+    this.equipmentPositionHistoryService.findEquipmentsByIds(id).subscribe((data) => {
+      this.equipments.set(data);
+    });
   }
 }

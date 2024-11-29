@@ -30,7 +30,7 @@
           [stateColor]="data.currentState?.color || ''"
           [model]="data.model?.name || ''"
           [name]="data.equipment.name"
-          [selected]="data.equipment.id === selectedEquipment"
+          [selected]="selectedEquipments.includes(data.equipment.id)"
         ></app-equipment-card>
       }
     </aside>

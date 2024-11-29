@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   data$: Observable<DataType[]>;
 
-  selectedEquipment = '';
+  selectedEquipments: string[] = [];
 
   constructor(
     private equipmentService: EquipmentService,
@@ -48,13 +48,9 @@ export class AppComponent implements OnInit {
     this.listEquipments();
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.selectedEquipment = params['equipment'] || '';
+      this.selectedEquipments = params['equipments'] || [];
     });
   }
-
-  // checkSelectedEquipment(id: string): boolean {
-  //   return this.selectedEquipments.some((equipment) => equipment === id);
-  // }
 
   listEquipments(): void {
     this.data$ = this.equipmentService.list().pipe(
@@ -90,13 +86,18 @@ export class AppComponent implements OnInit {
   }
 
   selectEquipment(id: string): void {
-    this.selectedEquipment = id;
-    this.navigateTo(id);
+    if (this.selectedEquipments.includes(id)) {
+      this.selectedEquipments = this.selectedEquipments.filter((equipment) => equipment !== id);
+    } else {
+      this.selectedEquipments.push(id);
+    }
+
+    this.navigateTo(this.selectedEquipments);
   }
 
-  navigateTo(equipment: string): void {
+  navigateTo(equipments: string[]): void {
     this.router.navigate(['equipment-tracker'], {
-      queryParams: { equipment },
+      queryParams: { equipments },
     });
   }
 }
