@@ -2,6 +2,12 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, effect, input, Input
 import * as leaflet from 'leaflet';
 import { EquipmentPositionHistory } from '../../../../models/equipment-position-history';
 import dayjs from 'dayjs';
+import { Equipment } from '../../../../models/equipment';
+
+interface IEquipmentDataType {
+  equipmentHistory: EquipmentPositionHistory | undefined;
+  equipment: Equipment | undefined;
+}
 
 @Component({
   selector: 'app-equipment-map',
@@ -12,29 +18,29 @@ import dayjs from 'dayjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentMapComponent implements AfterViewInit {
-  equipmentLocations: InputSignal<EquipmentPositionHistory> = input<EquipmentPositionHistory>(
-    {} as EquipmentPositionHistory
-  );
+  equipment: InputSignal<IEquipmentDataType | undefined> = input<IEquipmentDataType | undefined>(undefined);
 
   map: leaflet.Map;
 
   constructor() {
     effect(() => {
-      const equipment = this.equipmentLocations();
+      const equipment = this.equipment();
 
-      this.clearMap();
-      this.loadEquipmentPositions(equipment);
-      this.loadPolylines(equipment);
-      this.centerMap(equipment);
+      if (equipment) {
+        this.clearMap();
+        this.loadEquipmentPositions(equipment);
+        this.loadPolylines(equipment);
+        this.centerMap(equipment);
 
-      // Reload the map
-      this.map.invalidateSize();
+        // Reload the map
+        this.map.invalidateSize();
+      }
     });
   }
 
-  centerMap(equipment: EquipmentPositionHistory): void {
-    if (equipment && equipment.positions.length) {
-      this.map.panTo(new leaflet.LatLng(equipment.positions[0].lat, equipment.positions[0].lon));
+  centerMap({ equipmentHistory }: IEquipmentDataType): void {
+    if (equipmentHistory && equipmentHistory.positions.length) {
+      this.map.panTo(new leaflet.LatLng(equipmentHistory.positions[0].lat, equipmentHistory.positions[0].lon));
     }
   }
 
@@ -46,25 +52,33 @@ export class EquipmentMapComponent implements AfterViewInit {
     });
   }
 
-  loadPolylines(equipment: EquipmentPositionHistory): void {
-    const coordinates = equipment.positions.map((position) => {
+  loadPolylines({ equipmentHistory }: IEquipmentDataType): void {
+    const coordinates = equipmentHistory?.positions.map((position) => {
       return [position.lat, position.lon] as [number, number];
     });
 
-    leaflet
-      .polyline(coordinates, {
-        color: '#fff',
-        weight: 3,
-        opacity: 0.5,
-        dashArray: [10, 10],
-      })
-      .addTo(this.map);
+    if (coordinates) {
+      leaflet
+        .polyline(coordinates, {
+          color: '#fff',
+          weight: 3,
+          opacity: 0.5,
+          dashArray: [10, 10],
+        })
+        .addTo(this.map);
+    }
   }
 
-  loadEquipmentPositions(equipment: EquipmentPositionHistory): void {
-    equipment.positions.forEach((position) => {
+  loadEquipmentPositions({ equipment, equipmentHistory }: IEquipmentDataType): void {
+    let acronym = equipment?.name.split('-')[0];
+
+    if (!acronym) {
+      acronym = 'CA';
+    }
+
+    equipmentHistory?.positions.forEach((position) => {
       const icon = leaflet.icon({
-        iconUrl: '/imgs/equipments/CA.svg',
+        iconUrl: `/imgs/equipments/${acronym}.svg`,
         popupAnchor: [3, -76],
         iconAnchor: [18, 60],
       });
