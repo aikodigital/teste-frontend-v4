@@ -23,8 +23,8 @@ import {
 } from "@/components/ui/hover-card";
 import { useMaintenanceData } from "@/hooks/use-maintenance.hook";
 import { findNearestMaintenance } from "@/utils/calculate-maintenances.util";
-// import { MapRouteOlComponent } from "../map-route.component";
 import { MapRouteComponent } from "./map-route.component";
+import { getIconByModel } from "@/utils/create-map-icons.util";
 
 export function EquipmentDetailsComponent() {
   const { selectedEquipment, isSheetOpen, closeSheet } = useEquipmentStore();
@@ -176,14 +176,9 @@ export function EquipmentDetailsComponent() {
                 </div>
               </div>
               <img
-                src={
-                  selectedEquipment.equipmentModel?.name == "Harvester"
-                    ? "/icons/harvester.png"
-                    : selectedEquipment.equipmentModel?.name ==
-                        "Garra traçadora"
-                      ? "/icons/garra-tracadora.png"
-                      : "/icons/caminhao-de-carga.png"
-                }
+                src={getIconByModel({
+                  model: selectedEquipment.equipmentModel,
+                })}
                 alt="Equipment"
                 className="w-24 h-24 -mt-2"
               />
@@ -200,13 +195,6 @@ export function EquipmentDetailsComponent() {
                       "Caminhão de carga"
                     }
                   />
-                  {/* <MapRouteOlComponent
-                    positionHistory={selectedEquipment.positionHistory}
-                    model={
-                      selectedEquipment.equipmentModel?.name ??
-                      "Caminhão de carga"
-                    }
-                  /> */}
                 </div>
               </div>
               <div className="col-span-1 flex flex-col items-start gap-3">

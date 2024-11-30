@@ -36,13 +36,13 @@ const RoutingMachine = ({ allPositions }: RoutineMachineProps) => {
 
     routingControl.addTo(map);
 
-    // Cleanup para evitar múltiplas instâncias
+    // Cleanup to avoid multiple instances
     return () => {
       map.removeControl(routingControl);
     };
   }, [allPositions, map]);
 
-  return null; // Este componente apenas adiciona o controle ao mapa
+  return null;
 };
 
 export default RoutingMachine;

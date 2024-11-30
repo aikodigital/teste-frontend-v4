@@ -91,14 +91,14 @@ describe("maintenances", () => {
     ];
 
     const closest = findNearestMaintenance(equipment, equidistantMaintenances);
-    expect(closest?.name).toBe("0123"); // Ou outra regra que defina como desempatar
+    expect(closest?.name).toBe("0123");
   });
 
   it("should handle invalid latitude or longitude values", () => {
     const equipment = { lat: 91, lon: 181 }; // Valores inválidos
     const closest = findNearestMaintenance(equipment, maintenances);
 
-    expect(closest).toBeNull(); // Ou outro comportamento esperado para entradas inválidas
+    expect(closest).toBeNull();
   });
 
   it("should calculate very small distances accurately", () => {
@@ -111,7 +111,7 @@ describe("maintenances", () => {
       point2.lat,
       point2.lon,
     );
-    expect(distance).toBeCloseTo(0.00015297, 5); // Distância em km
+    expect(distance).toBeCloseTo(0.00015297, 5);
   });
 
   it("should handle points in opposite hemispheres", () => {
@@ -124,6 +124,6 @@ describe("maintenances", () => {
       point2.lat,
       point2.lon,
     );
-    expect(distance).toBeGreaterThan(0); // Valor exato dependerá das coordenadas
+    expect(distance).toBeGreaterThan(0);
   });
 });

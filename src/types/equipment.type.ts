@@ -50,7 +50,6 @@ export interface EquipmentModel {
   }>;
 }
 
-// Maintenance
 export interface MaintenanceModel {
   id: string;
   name: string;

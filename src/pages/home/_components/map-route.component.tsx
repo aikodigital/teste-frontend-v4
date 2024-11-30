@@ -38,15 +38,6 @@ export function MapRouteComponent({ positionHistory }: MapRouteProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* {routeCoordinates.length > 1 && (
-        <Polyline
-          positions={routeCoordinates}
-          color="#d0d0d0"
-          lineJoin="round"
-          weight={2}
-        />
-      )} */}
-
       {routeCoordinates.length > 0 && (
         <>
           <Marker
