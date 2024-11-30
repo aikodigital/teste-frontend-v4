@@ -1,10 +1,10 @@
 @if (equipment() && equipment().id) {
   <div class="flex items-center h-full px-32 gap-8 overflow-x-auto w-[calc(100%-378px)]">
-    <div class="flex mr-[110px] flex-col justify-center z-10">
+    <div class="flex mr-[110px] items-center relative flex-col justify-center z-10">
       <app-equipment-bottom
         [image]="'/imgs/equipments/' + equipment().name.split('-')[0] + '.jpg'"
       ></app-equipment-bottom>
-      <p class="font-bold">{{ equipment().name }}</p>
+      <p class="font-bold absolute text-center bottom-[-32px]">{{ equipment().name }}</p>
     </div>
 
     <div class="relative flex gap-8">
