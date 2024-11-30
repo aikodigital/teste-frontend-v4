@@ -42,14 +42,18 @@ export class AppComponent implements OnInit {
     private stateService: StateService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const equipments = params.getAll('equipments');
+
+      if (equipments?.length) {
+        this.selectedEquipments = equipments;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.listEquipments();
-
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.selectedEquipments = params['equipments'] || [];
-    });
   }
 
   listEquipments(): void {
@@ -85,19 +89,28 @@ export class AppComponent implements OnInit {
     );
   }
 
-  selectEquipment(id: string): void {
-    if (this.selectedEquipments.includes(id)) {
-      this.selectedEquipments = this.selectedEquipments.filter((equipment) => equipment !== id);
-    } else {
-      this.selectedEquipments.push(id);
-    }
-
-    this.navigateTo(this.selectedEquipments);
+  checkEquipmentSelected(id: string): boolean {
+    return !!this.selectedEquipments.find((equipment) => equipment === id);
   }
 
-  navigateTo(equipments: string[]): void {
-    this.router.navigate(['equipment-tracker'], {
-      queryParams: { equipments },
-    });
+  selectEquipment(id: string): void {
+    const equipments = this.selectedEquipments.includes(id)
+      ? this.selectedEquipments.filter((equipment) => equipment !== id)
+      : [...this.selectedEquipments, id];
+
+    this.selectedEquipments = [];
+    this.selectedEquipments = equipments;
+
+    this.navigateTo(equipments);
+  }
+
+  async navigateTo(equipments: string[]): Promise<void> {
+    if (equipments.length) {
+      await this.router.navigate(['equipment-tracker'], {
+        queryParams: { equipments },
+      });
+    } else {
+      await this.router.navigate(['equipment-tracker']);
+    }
   }
 }

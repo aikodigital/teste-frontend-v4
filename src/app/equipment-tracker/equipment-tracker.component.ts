@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
 import { EquipmentMapComponent } from './ui/equipment-map/equipment-map.component';
 import { ActivatedRoute } from '@angular/router';
 import { EquipmentPositionHistoryService } from '../../services/equipment-position-history.service';
@@ -15,28 +15,28 @@ import { EquipmentService } from '../../services/equipment.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [EquipmentPositionHistoryService, EquipmentService],
 })
-export class EquipmentTrackerComponent implements OnInit {
+export class EquipmentTrackerComponent {
   equipments: WritableSignal<EquipmentPositionHistory[] | undefined> = signal<EquipmentPositionHistory[] | undefined>(
     undefined
   );
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private equipmentPositionHistoryService: EquipmentPositionHistoryService,
-    private equipmentService: EquipmentService
-  ) {}
+    private equipmentPositionHistoryService: EquipmentPositionHistoryService
+  ) {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const equipments = params.getAll('equipments');
 
-  ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      if (!params['equipments']) {
-        return;
+      if (equipments?.length) {
+        this.listEquipments(equipments);
+      } else {
+        this.equipments.set([]);
       }
-      this.listEquipments(params['equipments']);
     });
   }
 
-  listEquipments(id: string[]): void {
-    this.equipmentPositionHistoryService.findEquipmentsByIds(id).subscribe((data) => {
+  listEquipments(ids: string[]): void {
+    this.equipmentPositionHistoryService.findEquipmentsByIds(ids).subscribe((data) => {
       this.equipments.set(data);
     });
   }

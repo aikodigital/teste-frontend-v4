@@ -106,7 +106,7 @@ export class EquipmentMapComponent implements AfterViewInit {
   initMap(): void {
     this.map = leaflet.map('map', {
       center: [-12.968771962612362, -38.459164029077826],
-      zoom: 12,
+      zoom: 10,
     });
   }
 
