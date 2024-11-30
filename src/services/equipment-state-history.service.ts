@@ -13,6 +13,16 @@ export class EquipmentStateHistoryService {
     return this.httpClient.get<EquipmentStateHistory[]>(this.path);
   }
 
+  listByEquipmentIds(equipmentIds: string[]): Observable<EquipmentStateHistory[]> {
+    return this.httpClient.get<EquipmentStateHistory[]>(this.path).pipe(
+      map((equipmentStateHistory) => {
+        return equipmentStateHistory.filter((equipmentStateHistory) =>
+          equipmentIds.includes(equipmentStateHistory.equipmentId)
+        );
+      })
+    );
+  }
+
   findByEquipmentId(equipmentId: string): Observable<EquipmentStateHistory | undefined> {
     return this.httpClient.get<EquipmentStateHistory[]>(this.path).pipe(
       map((equipmentStateHistory) => {

@@ -13,6 +13,12 @@ export class StateService {
     return this.httpClient.get<State[]>(this.path);
   }
 
+  listByIds(ids: string[]): Observable<State[]> {
+    return this.httpClient
+      .get<State[]>(this.path)
+      .pipe(map((states) => states.filter((state) => ids.includes(state.id))));
+  }
+
   find(id: string): Observable<State | undefined> {
     return this.httpClient.get<State[]>(this.path).pipe(map((states) => states.find((state) => state.id === id)));
   }

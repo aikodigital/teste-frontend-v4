@@ -17,4 +17,14 @@ export class EquipmentModelService {
       })
     );
   }
+
+  listModelsByEquipmentIds(equipmentModelIds: string[]): Observable<EquipmentModel[]> {
+    return this.httpClient.get<EquipmentModel[]>(this.path).pipe(
+      map((equipmentModels) =>
+        equipmentModels.filter((equipmentModel) => {
+          return equipmentModelIds.includes(equipmentModel.id);
+        })
+      )
+    );
+  }
 }

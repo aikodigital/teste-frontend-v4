@@ -18,4 +18,10 @@ export class EquipmentService {
       .get<Equipment[]>(this.path)
       .pipe(map((equipments) => equipments.find((equipment) => equipment.id === id)));
   }
+
+  listByIds(ids: string[]): Observable<Equipment[]> {
+    return this.httpClient
+      .get<Equipment[]>(this.path)
+      .pipe(map((equipments) => equipments.filter((equipment) => ids.includes(equipment.id))));
+  }
 }

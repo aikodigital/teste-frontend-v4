@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, effect, input, InputSignal } from '@angular/core';
 import * as leaflet from 'leaflet';
-import { EquipmentPositionHistory } from '../../../../models/equipment-position-history';
 import dayjs from 'dayjs';
+import { Equipment } from '../../../../models/equipment';
 
 @Component({
   selector: 'app-equipment-map',
@@ -12,9 +12,7 @@ import dayjs from 'dayjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentMapComponent implements AfterViewInit {
-  equipments: InputSignal<EquipmentPositionHistory[] | undefined> = input<EquipmentPositionHistory[] | undefined>(
-    undefined
-  );
+  equipments: InputSignal<Equipment[]> = input<Equipment[]>([]);
 
   map: leaflet.Map;
 
@@ -34,9 +32,14 @@ export class EquipmentMapComponent implements AfterViewInit {
     });
   }
 
-  centerMap(equipmentHistory: EquipmentPositionHistory[]): void {
-    if (equipmentHistory.length) {
-      this.map.panTo(new leaflet.LatLng(equipmentHistory[0].positions[0].lat, equipmentHistory[0].positions[0].lon));
+  centerMap(equipments: Equipment[]): void {
+    if (equipments.length) {
+      equipments.forEach((equipment) => {
+        if (equipment.positions?.length) {
+          const lastPosition = equipment.positions[equipment.positions.length - 1];
+          this.map.panTo(new leaflet.LatLng(lastPosition.lat, lastPosition.lon));
+        }
+      });
     }
   }
 
@@ -48,10 +51,10 @@ export class EquipmentMapComponent implements AfterViewInit {
     });
   }
 
-  loadPolylines(equipmentHistory: EquipmentPositionHistory[]): void {
-    equipmentHistory.forEach((equipmentHistory) => {
-      if (equipmentHistory?.positions.length) {
-        const position = equipmentHistory.positions[equipmentHistory.positions.length - 1];
+  loadPolylines(equipment: Equipment[]): void {
+    equipment.forEach((equipment) => {
+      if (equipment?.positions?.length) {
+        const position = equipment.positions[equipment.positions.length - 1];
         const coordinates = [[position.lat, position.lon] as [number, number]];
 
         if (coordinates) {
@@ -68,38 +71,42 @@ export class EquipmentMapComponent implements AfterViewInit {
     });
   }
 
-  loadEquipmentPositions(equipmentHistory: EquipmentPositionHistory[]): void {
-    // let acronym = equipment?.name.split('-')[0];
+  loadEquipmentPositions(equipment: Equipment[]): void {
+    equipment.forEach((equipment) => {
+      let acronym = equipment.name.split('-')[0];
 
-    // if (!acronym) {
-    //   acronym = 'CA';
-    // }
-
-    equipmentHistory.forEach((equipment) => {
-      if (equipment?.positions.length) {
-        const position = equipment.positions[equipment.positions.length - 1];
-
-        const icon = leaflet.icon({
-          iconUrl: `/svgs/equipments/CA.svg`,
-          popupAnchor: [3, -76],
-          iconAnchor: [18, 60],
-        });
-
-        leaflet.marker([position.lat, position.lon], { icon }).addTo(this.map).bindPopup(`
-            <div class="flex flex-col">
-              <div><span class="font-bold">CA-0001</span></div>
-              <div><span class="font-bold">Latidude:</span> ${position.lat}</div>
-              <div><span class="font-bold">Longitude:</span> ${position.lon}</div>
-              <div><span class="font-bold">Data:</span> ${dayjs(position.date).format('DD/MM/YYYY HH:mm:ss')}</div>
-              <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
-              <div><span class="font-bold">Status:</span> <span class="font-bold text-green-500">Operando</span></div>
-            </div>
-        `);
+      if (!acronym) {
+        acronym = 'CA';
       }
 
-      // equipment?.positions.forEach((position) => {
+      if (!equipment.states?.length) {
+        return;
+      }
 
-      // });
+      if (!equipment?.positions?.length) {
+        return;
+      }
+
+      const lastPosition = equipment.positions[equipment.positions.length - 1];
+      const lastState = equipment.states[equipment.states.length - 1];
+
+      const icon = leaflet.icon({
+        iconUrl: `/svgs/equipments/${acronym}.svg`,
+        popupAnchor: [3, -76],
+        iconAnchor: [18, 60],
+      });
+
+      leaflet.marker([lastPosition.lat, lastPosition.lon], { icon }).addTo(this.map).bindPopup(`
+            <div class="flex flex-col">
+              <div><span class="font-bold">${equipment.name}</span></div>
+              <div><span class="font-bold">${equipment.equipmentModel?.name}</span></div>
+              <div><span class="font-bold">Latidude:</span> ${lastPosition.lat}</div>
+              <div><span class="font-bold">Longitude:</span> ${lastPosition.lon}</div>
+              <div><span class="font-bold">Data:</span> ${dayjs(lastPosition.date).format('DD/MM/YYYY HH:mm:ss')}</div>
+              <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+              <div><span class="font-bold">Status:</span> <span style="color: ${lastState?.state?.color}" class="font-bold">${lastState?.state?.name}</span></div>
+            </div>
+        `);
     });
   }
 
