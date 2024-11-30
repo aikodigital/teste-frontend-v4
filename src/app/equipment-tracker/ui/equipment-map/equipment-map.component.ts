@@ -80,7 +80,7 @@ export class EquipmentMapComponent implements AfterViewInit {
         const position = equipment.positions[equipment.positions.length - 1];
 
         const icon = leaflet.icon({
-          iconUrl: `/imgs/equipments/CA.svg`,
+          iconUrl: `/svgs/equipments/CA.svg`,
           popupAnchor: [3, -76],
           iconAnchor: [18, 60],
         });

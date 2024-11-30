@@ -31,6 +31,7 @@
           [model]="data.model?.name || ''"
           [name]="data.equipment.name"
           [selected]="checkEquipmentSelected(data.equipment.id)"
+          [image]="'/imgs/equipments/' + data.equipment.name.split('-')[0] + '.jpg'"
         ></app-equipment-card>
       }
     </aside>
