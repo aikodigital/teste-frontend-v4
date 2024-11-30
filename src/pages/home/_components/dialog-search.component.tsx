@@ -23,7 +23,7 @@ export function DialogSearchComponent() {
 
   return (
     <Dialog open={isSearching} onOpenChange={() => setSearching(!isSearching)}>
-      <DialogContent className="w-1/2 max-w-1/2">
+      <DialogContent className="w-[90%] max-w-[90%] md:w-1/2 md:max-w-1/2">
         <DialogHeader>
           <DialogTitle>Pesquise</DialogTitle>
         </DialogHeader>

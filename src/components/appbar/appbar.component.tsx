@@ -21,7 +21,7 @@ export function AppBarComponent() {
 
   return (
     <div className="w-full">
-      <Menubar className="rounded-none">
+      <Menubar className={`rounded-none h-7`}>
         <MenubarMenu>
           <MenubarTrigger>Menu</MenubarTrigger>
           <MenubarContent>
@@ -107,6 +107,29 @@ export function AppBarComponent() {
             Pesquisar
           </MenubarTrigger>
         </MenubarMenu>
+        {/* <MenubarMenu> IMPLEMENTAR DEPOIS
+          <MenubarTrigger>Tema</MenubarTrigger>
+          <MenubarContent>
+            <MenubarGroup>
+              <MenubarCheckboxItem
+                checked={!isDarkTheme}
+                onCheckedChange={() => {
+                  toggleTheme(false);
+                }}
+              >
+                Claro
+              </MenubarCheckboxItem>
+              <MenubarCheckboxItem
+                checked={isDarkTheme}
+                onCheckedChange={() => {
+                  toggleTheme(true);
+                }}
+              >
+                Escuro
+              </MenubarCheckboxItem>
+            </MenubarGroup>
+          </MenubarContent>
+        </MenubarMenu> */}
       </Menubar>
     </div>
   );

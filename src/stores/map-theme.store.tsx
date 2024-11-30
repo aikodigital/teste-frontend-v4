@@ -1,9 +1,15 @@
-import { createContext, useState, ReactNode, useContext } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 
 interface MapContextType {
   isDarkTheme: boolean;
-  toggleTheme: () => void;
-  tileUrl: string;
+  toggleTheme: (value: boolean) => void;
+  mapUrl: string;
 }
 
 export const MapContext = createContext<MapContextType | undefined>(undefined);
@@ -14,15 +20,22 @@ interface MapProviderProps {
 
 export const MapProvider = ({ children }: MapProviderProps) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [mapUrl, setMapUrl] = useState(
+    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  );
 
-  const toggleTheme = () => setIsDarkTheme((prev) => !prev);
+  const toggleTheme = () => setIsDarkTheme((value) => !value);
 
-  const tileUrl = isDarkTheme
-    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  useEffect(() => {
+    const mapUrl = isDarkTheme
+      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
+
+    setMapUrl(mapUrl);
+  }, [isDarkTheme]);
 
   return (
-    <MapContext.Provider value={{ isDarkTheme, toggleTheme, tileUrl }}>
+    <MapContext.Provider value={{ isDarkTheme, toggleTheme, mapUrl }}>
       {children}
     </MapContext.Provider>
   );
