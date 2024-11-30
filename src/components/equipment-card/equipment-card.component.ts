@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, InputSignal } from '@angular/core';
 import { clsx } from 'clsx';
+import { EquipmentBottomComponent } from '../equipment-bottom/equipment-bottom.component';
 
 @Component({
   selector: 'app-equipment-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EquipmentBottomComponent],
   templateUrl: './equipment-card.component.html',
   styleUrl: './equipment-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,15 +7,7 @@
       {{ state() }}
     </span>
   </div>
-  <div>
-    <img
-      class="min-w-[64px] w-[64px] h-[64px] flex items-center justify-center text-sm rounded-full border object-cover border-gray-200"
-      [src]="image()"
-      alt="Equipment image"
-      width="64"
-      height="64"
-    />
-  </div>
+  <app-equipment-bottom [image]="image()"></app-equipment-bottom>
   <div>
     <h5 class="text-md text-start font-bold tracking-tight text-gray-900 dark:text-white">{{ name() }}</h5>
     <p class="font-normal text-start text-sm text-gray-700 dark:text-gray-400">{{ model() }}</p>

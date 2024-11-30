@@ -9,11 +9,12 @@ import { EquipmentModelService } from '../../services/equipment-model.service';
 import { EquipmentStateHistoryService } from '../../services/equipment-state-history.service';
 import { StateService } from '../../services/state.service';
 import { EquipmentState } from '../../models/equipment-state';
+import { EquipmentHistoryComponent } from './ui/equipment-history/equipment-history.component';
 
 @Component({
   selector: 'app-equipment-tracker',
   standalone: true,
-  imports: [EquipmentMapComponent, CommonModule],
+  imports: [EquipmentMapComponent, CommonModule, EquipmentHistoryComponent],
   templateUrl: './equipment-tracker.component.html',
   styleUrl: './equipment-tracker.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +28,8 @@ import { EquipmentState } from '../../models/equipment-state';
 })
 export class EquipmentTrackerComponent {
   equipments: WritableSignal<Equipment[] | undefined> = signal<Equipment[] | undefined>(undefined);
+
+  equipment: Equipment;
 
   constructor(
     private activatedRoute: ActivatedRoute,

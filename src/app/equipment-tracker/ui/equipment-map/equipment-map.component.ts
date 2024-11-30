@@ -1,7 +1,17 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, effect, input, InputSignal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import * as leaflet from 'leaflet';
 import dayjs from 'dayjs';
 import { Equipment } from '../../../../models/equipment';
+import { EquipmentPosition } from '../../../../models/equipment-position';
 
 @Component({
   selector: 'app-equipment-map',
@@ -14,7 +24,11 @@ import { Equipment } from '../../../../models/equipment';
 export class EquipmentMapComponent implements AfterViewInit {
   equipments: InputSignal<Equipment[]> = input<Equipment[]>([]);
 
+  equipmentEvent: OutputEmitterRef<Equipment> = output<Equipment>();
+
   map: leaflet.Map;
+
+  historyMarkers: leaflet.LayerGroup;
 
   constructor() {
     effect(() => {
@@ -71,8 +85,8 @@ export class EquipmentMapComponent implements AfterViewInit {
     });
   }
 
-  loadEquipmentPositions(equipment: Equipment[]): void {
-    equipment.forEach((equipment) => {
+  loadEquipmentPositions(equipments: Equipment[]): void {
+    equipments.forEach((equipment) => {
       let acronym = equipment.name.split('-')[0];
 
       if (!acronym) {
@@ -96,7 +110,11 @@ export class EquipmentMapComponent implements AfterViewInit {
         iconAnchor: [18, 60],
       });
 
-      leaflet.marker([lastPosition.lat, lastPosition.lon], { icon }).addTo(this.map).bindPopup(`
+      leaflet
+        .marker([lastPosition.lat, lastPosition.lon], { icon })
+        .addTo(this.map)
+        .bindPopup(
+          `
             <div class="flex flex-col">
               <div><span class="font-bold">${equipment.name}</span></div>
               <div><span class="font-bold">${equipment.equipmentModel?.name}</span></div>
@@ -106,8 +124,35 @@ export class EquipmentMapComponent implements AfterViewInit {
               <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
               <div><span class="font-bold">Status:</span> <span style="color: ${lastState?.state?.color}" class="font-bold">${lastState?.state?.name}</span></div>
             </div>
-        `);
+        `
+        )
+        .on('click', () => {
+          // this.historyMarkers.clearLayers();
+          // equipment.positions && this.loadEquipmentsPositionHistory(equipment.positions);
+          this.equipmentEvent.emit(equipment);
+        });
     });
+  }
+
+  loadEquipmentsPositionHistory(position: EquipmentPosition[]): void {
+    position.forEach((position) => {
+      leaflet.marker([position.lat, position.lon]).addTo(this.historyMarkers);
+    });
+
+    // leaflet.marker([position.lat, position.lon]).addTo(this.map);
+    // .bindPopup(
+    //   `
+    //       <div class="flex flex-col">
+    //         <div><span class="font-bold">${equipment.name}</span></div>
+    //         <div><span class="font-bold">${equipment.equipmentModel?.name}</span></div>
+    //         <div><span class="font-bold">Latidude:</span> ${lastPosition.lat}</div>
+    //         <div><span class="font-bold">Longitude:</span> ${lastPosition.lon}</div>
+    //         <div><span class="font-bold">Data:</span> ${dayjs(lastPosition.date).format('DD/MM/YYYY HH:mm:ss')}</div>
+    //         <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+    //         <div><span class="font-bold">Status:</span> <span style="color: ${lastState?.state?.color}" class="font-bold">${lastState?.state?.name}</span></div>
+    //       </div>
+    //   `
+    // );
   }
 
   initMap(): void {
@@ -115,6 +160,10 @@ export class EquipmentMapComponent implements AfterViewInit {
       center: [-12.968771962612362, -38.459164029077826],
       zoom: 10,
     });
+
+    this.historyMarkers = leaflet.layerGroup();
+
+    this.historyMarkers.addTo(this.map);
   }
 
   ngAfterViewInit(): void {
