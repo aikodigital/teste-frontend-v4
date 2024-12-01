@@ -33,8 +33,11 @@ export function useEquipmentHistory(equipmentId: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!equipmentId) return;
+
     const fetchAllData = async () => {
       try {
+        setLoading(true); // Inicia o carregamento quando a requisição começar
         const [
           equipments,
           equipmentModels,
@@ -100,7 +103,7 @@ export function useEquipmentHistory(equipmentId: string) {
       }
     };
 
-    if (equipmentId) fetchAllData();
+    fetchAllData();
   }, [equipmentId]);
 
   return {
