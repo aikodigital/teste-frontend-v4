@@ -16,8 +16,12 @@ const RoutingMachine = ({ allPositions }: RoutineMachineProps) => {
       L.latLng(position.lat, position.lng),
     );
 
+    const plan = L.Routing.plan(waypoints, {
+      createMarker: () => false,
+    });
+
     const routingControl = L.Routing.control({
-      waypoints,
+      plan,
       summaryTemplate: "",
       lineOptions: {
         styles: [
@@ -30,7 +34,6 @@ const RoutingMachine = ({ allPositions }: RoutineMachineProps) => {
         extendToWaypoints: true,
         missingRouteTolerance: 10,
       },
-      createMarker: () => null,
       show: false,
     });
 
