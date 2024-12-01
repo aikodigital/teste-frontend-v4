@@ -10,6 +10,7 @@ import { EquipmentStateHistoryService } from '../../services/equipment-state-his
 import { StateService } from '../../services/state.service';
 import { EquipmentState } from '../../models/equipment-state';
 import { EquipmentHistoryComponent } from './ui/equipment-history/equipment-history.component';
+import { forkJoin, switchMap, map } from 'rxjs';
 
 @Component({
   selector: 'app-equipment-tracker',
@@ -51,47 +52,49 @@ export class EquipmentTrackerComponent {
   }
 
   listEquipments(ids: string[]): void {
-    this.equipmentService.listByIds(ids).subscribe((equipmentsResponse) => {
-      this.equipmentPositionHistoryService.findEquipmentsByIds(ids).subscribe((positionHistoryResponse) => {
-        this.equipmentStateHistoryService.listByEquipmentIds(ids).subscribe((stateHistoryResponse) => {
-          this.equipmentModelService
-            .listModelsByEquipmentIds(equipmentsResponse.map((equipment) => equipment.equipmentModelId))
-            .subscribe((equipmentModels) => {
-              const states = stateHistoryResponse.flatMap((state) =>
-                state.states.map((state) => state.equipmentStateId)
-              );
+    forkJoin({
+      equipments: this.equipmentService.listByIds(ids),
+      positionHistories: this.equipmentPositionHistoryService.findEquipmentsByIds(ids),
+      stateHistories: this.equipmentStateHistoryService.listByEquipmentIds(ids),
+    })
+      .pipe(
+        switchMap(({ equipments, positionHistories, stateHistories }) => {
+          const modelIds = equipments.map((equipment) => equipment.equipmentModelId);
+          const stateIds = stateHistories.flatMap((history) => history.states.map((state) => state.equipmentStateId));
 
-              this.stateService.listByIds(states).subscribe((stateResponse) => {
-                const equipments = equipmentsResponse.map((equipment) => {
-                  const positionHistory = positionHistoryResponse.find(
-                    (history) => history.equipmentId === equipment.id
-                  );
-                  const model = equipmentModels.find((model) => model.id === equipment.equipmentModelId);
-                  const stateHistory = stateHistoryResponse.find((state) => state.equipmentId === equipment.id);
-                  const states = stateHistory?.states.map((state) => {
-                    const currentState = stateResponse.find(
-                      (stateResponse) => state.equipmentStateId === stateResponse.id
-                    );
+          return forkJoin({
+            equipmentModels: this.equipmentModelService.listModelsByEquipmentIds(modelIds),
+            states: this.stateService.listByIds(stateIds),
+          }).pipe(
+            map(({ equipmentModels, states }) => {
+              return equipments.map((equipment) => {
+                const positionHistory = positionHistories.find((history) => history.equipmentId === equipment.id);
+                const model = equipmentModels.find((model) => model.id === equipment.equipmentModelId);
+                const stateHistory = stateHistories.find((history) => history.equipmentId === equipment.id);
 
-                    return {
-                      ...state,
-                      state: currentState,
-                    } as EquipmentState;
-                  });
+                const equipmentStates = stateHistory?.states.map((state) => ({
+                  ...state,
+                  state: states.find((stateResponse) => state.equipmentStateId === stateResponse.id),
+                })) as EquipmentState[];
 
-                  return (equipment = {
-                    ...equipment,
-                    positions: positionHistory?.positions,
-                    equipmentModel: model,
-                    states: states,
-                  });
-                });
-
-                this.equipments.set(equipments);
+                return {
+                  ...equipment,
+                  positions: positionHistory?.positions,
+                  equipmentModel: model,
+                  states: equipmentStates,
+                };
               });
-            });
-        });
+            })
+          );
+        })
+      )
+      .subscribe({
+        next: (enrichedEquipments) => {
+          this.equipments.set(enrichedEquipments);
+        },
+        error: (error) => {
+          console.error('Error fetching equipment details', error);
+        },
       });
-    });
   }
 }

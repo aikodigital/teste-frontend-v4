@@ -19,6 +19,10 @@ export class EquipmentPositionHistoryService {
     );
   }
 
+  list(): Observable<EquipmentPositionHistory[]> {
+    return this.httpClient.get<EquipmentPositionHistory[]>(this.path);
+  }
+
   findByEquipmentId(equipmentId: string): Observable<EquipmentPositionHistory | undefined> {
     return this.httpClient.get<EquipmentPositionHistory[]>(this.path).pipe(
       map((equipmentPositionHistory) => {
