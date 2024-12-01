@@ -5,6 +5,7 @@ import Layout from "./layout.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/home.page.tsx";
 import DashboardPage from "./pages/dashboard/dashboard.page.tsx";
+import { Analytics } from "@vercel/analytics/react";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,5 +18,6 @@ createRoot(document.getElementById("root")!).render(
         </Routes>
       </Layout>
     </BrowserRouter>
+    <Analytics />
   </StrictMode>,
 );
