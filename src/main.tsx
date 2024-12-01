@@ -11,6 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Layout>
         <Routes>
+          <Route path="*" element={<HomePage />} />
           <Route path={"/"} element={<HomePage />} />
           <Route path={"/dashboard"} element={<DashboardPage />} />
         </Routes>
