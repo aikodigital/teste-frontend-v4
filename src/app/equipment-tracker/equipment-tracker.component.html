@@ -1,12 +1,12 @@
 <div class="w-full h-full">
   @defer {
     @if (equipments(); as equipments) {
-      <div class="h-[calc(100%-262px)] w-full">
+      <div class="h-[calc(100%-184px)] w-full">
         <app-equipment-map (equipmentEvent)="equipment = $event" [equipments]="equipments"></app-equipment-map>
       </div>
     }
   }
-  <div class="h-[262px] w-full">
+  <div class="h-[184px] w-full">
     <app-equipment-history [equipment]="equipment"></app-equipment-history>
   </div>
 </div>

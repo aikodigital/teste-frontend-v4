@@ -3,8 +3,8 @@ import { EquipmentBottomComponent } from '../../../../components/equipment-botto
 import { Equipment } from '../../../../models/equipment';
 import { CircleOff, LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
-import { EquipmentPosition } from '../../../../models/equipment-position';
 import dayjs from 'dayjs';
+import { EquipmentState } from '../../../../models/equipment-state';
 
 @Component({
   selector: 'app-equipment-history',
@@ -21,8 +21,8 @@ export class EquipmentHistoryComponent {
     empty: CircleOff,
   };
 
-  getEquipmentPositionDescrescent(positions: EquipmentPosition[]): EquipmentPosition[] {
-    return positions.sort((a, b) => {
+  getEquipmentStateDescrescent(states: EquipmentState[]): EquipmentState[] {
+    return states.sort((a, b) => {
       return dayjs(b.date).unix() - dayjs(a.date).unix();
     });
   }

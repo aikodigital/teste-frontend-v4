@@ -1,55 +1,52 @@
-@if (equipment() && equipment().id) {
-  <div class="flex items-center h-full px-32 gap-8 overflow-x-auto w-[calc(100%-378px)]">
-    <div class="flex mr-[110px] items-center relative flex-col justify-center z-10">
-      <app-equipment-bottom
-        [image]="'/imgs/equipments/' + equipment().name.split('-')[0] + '.jpg'"
-      ></app-equipment-bottom>
-      <p class="font-bold absolute text-center bottom-[-32px]">{{ equipment().name }}</p>
-    </div>
+<ng-container>
+  @if (equipment() && equipment().id) {
+    <div class="flex items-center px-32 gap-8 overflow-x-auto h-full flex-1 w-[calc(100%-378px)]">
+      <div class="flex mr-[110px] items-center relative flex-col justify-center z-10">
+        <app-equipment-bottom
+          [image]="'/imgs/equipments/' + equipment().name.split('-')[0] + '.jpg'"
+        ></app-equipment-bottom>
+        <!-- <p class="font-bold absolute text-center bottom-[-32px]">{{ equipment().name }}</p> -->
+      </div>
 
-    <div class="relative flex gap-8">
-      @if (equipment().positions; as positions) {
-        @for (position of getEquipmentPositionDescrescent(positions); track $index; let even = $even) {
-          <div class="flex flex-col justify-center items-center w-[320px] z-10">
-            <div class="w-full min-h-full flex flex-col justify-center">
+      <div class="relative flex gap-8">
+        @if (equipment().states; as statesHistory) {
+          @for (stateHistory of getEquipmentStateDescrescent(statesHistory); track $index; let even = $even) {
+            <div class="flex flex-col justify-center items-center w-[320px] z-10">
+              <!-- <div class="w-full min-h-full flex flex-col justify-center">
               @if (even) {
                 <span>
-                  <p class="text-center text-sm">Latitude: {{ position.lat }}</p>
-                </span>
-                <span>
-                  <p class="text-center text-sm">Longitude: {{ position.lon }}</p>
-                </span>
-                <span>
-                  <p class="text-center font-bold">Data: {{ position.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+                  <p class="text-center text-sm font-bold">Estado: {{ stateHistory.state.name }}</p>
                 </span>
               }
             </div>
-            <div class="flex w-3 min-w-3 min-h-3 bg-blue-600 rounded-full"></div>
+            <div class="flex w-3 min-w-3 min-h-3 bg-blue-600 rounded-full">stateHistory.state.name</div>
             <div class="w-full min-h-full flex flex-col justify-center">
               @if (!even) {
                 <span>
-                  <p class="text-center font-bold">Data: {{ position.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
-                </span>
-                <span>
-                  <p class="text-center text-sm">Latitude: {{ position.lat }}</p>
-                </span>
-                <span>
-                  <p class="text-center text-sm">Longitude: {{ position.lon }}</p>
+                  <p class="text-center text-sm font-bold">Estado: {{ stateHistory.state.name }}</p>
                 </span>
               }
-            </div>
-          </div>
-        }
-      }
+            </div> -->
 
-      <div class="absolute left-[-160px] flex items-center h-full w-full">
-        <hr class="w-full bg-red-500 border" />
+              <span
+                class="text-xs font-bold text-white me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-blue-400 border"
+                [ngStyle]="{ 'background-color': stateHistory.state.color, 'border-color': stateHistory.state.color }"
+              >
+                {{ stateHistory.state.name }}
+              </span>
+            </div>
+          }
+        }
+
+        <div class="absolute left-[-160px] flex items-center h-full w-full">
+          <hr class="w-full bg-red-500 border" />
+        </div>
       </div>
     </div>
-  </div>
-} @else {
-  <div class="h-full w-full text-dark flex items-center justify-center gap-4">
-    <lucide-angular size="24" [img]="icons.empty"></lucide-angular>
-    <p class="font-bold">Nenhum equipamento selecionado</p>
-  </div>
-}
+  } @else {
+    <div class="h-full w-full text-dark flex items-center justify-center gap-4">
+      <lucide-angular size="24" [img]="icons.empty"></lucide-angular>
+      <p class="font-bold">Nenhum equipamento selecionado</p>
+    </div>
+  }
+</ng-container>
