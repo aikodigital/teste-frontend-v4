@@ -10,7 +10,6 @@ import {
 import { MenubarGroup } from "@radix-ui/react-menubar";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
-import { Link } from "react-router-dom";
 
 export function AppBarComponent() {
   const { setSearching } = useEquipmentStore();
@@ -22,12 +21,7 @@ export function AppBarComponent() {
       <Menubar className={`rounded-none h-12 md:h-7`}>
         <MenubarMenu>
           <MenubarTrigger asChild className="hover:cursor-pointer">
-            <Link to="/">Mapa</Link>
-          </MenubarTrigger>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger asChild className="hover:cursor-pointer">
-            <Link to="/dashboard">Dashboard</Link>
+            <a href="/dashboard">Dashboard</a>
           </MenubarTrigger>
         </MenubarMenu>
         <MenubarMenu>

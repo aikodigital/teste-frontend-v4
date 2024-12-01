@@ -51,7 +51,7 @@ export function EquipmentBarChart({ data }: IEquipmentBarChart) {
               />
               <Bar
                 dataKey="quantity"
-                fill="#333333"
+                fill="hsl(142.1, 76.2%, 36.3%)"
                 label={{ position: "top", fontSize: 18 }}
                 radius={[4, 4, 4, 4]}
               />
