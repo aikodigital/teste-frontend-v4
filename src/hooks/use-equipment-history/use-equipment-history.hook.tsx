@@ -8,7 +8,7 @@ import {
 } from "@/types/equipment.type";
 import { fetchData } from "@/utils/fetch-data.util";
 
-interface EquipmentHistoryEntry {
+export interface EquipmentHistoryEntry {
   date: string;
   type: "state";
   state?: {
@@ -18,7 +18,7 @@ interface EquipmentHistoryEntry {
   };
 }
 
-interface EquipmentWithHistory {
+export interface EquipmentWithHistory {
   id: string;
   name: string;
   model: string;

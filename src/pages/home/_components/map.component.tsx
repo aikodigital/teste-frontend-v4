@@ -34,7 +34,7 @@ export function MapComponent() {
       <ZoomControl position="topright" />
       <TileLayer
         attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-        url={"https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"}
+        url={"https://tile.openstreetmap.org/{z}/{x}/{y}.png"}
       />
       {filteredData.map((equipment, eqIndex) => (
         <Marker
@@ -56,7 +56,7 @@ export function MapComponent() {
           }}
         >
           <Popup>
-            <div className="flex flex-col items-start gap-4">
+            <div className={`flex flex-col items-start gap-4`}>
               <span>
                 <strong>Nome:</strong> {equipment.name}
               </span>

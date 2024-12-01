@@ -7,11 +7,13 @@ describe("app bar component", () => {
   it("should render the menu", () => {
     render(<AppBarComponent />);
 
-    const menu = screen.getByText("Menu");
+    const map = screen.getByText("Mapa");
+    const dashboard = screen.getByText("Dashboard");
     const filter = screen.getByText("Filtrar");
     const search = screen.getByText("Pesquisar");
 
-    expect(menu).toBeInTheDocument();
+    expect(map).toBeInTheDocument();
+    expect(dashboard).toBeInTheDocument();
     expect(filter).toBeInTheDocument();
     expect(search).toBeInTheDocument();
   });

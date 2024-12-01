@@ -2,17 +2,15 @@ import {
   Menubar,
   MenubarCheckboxItem,
   MenubarContent,
-  MenubarItem,
   MenubarLabel,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "../ui/menubar";
-import { LogOutIcon } from "lucide-react";
 import { MenubarGroup } from "@radix-ui/react-menubar";
 import { useEquipmentMapStore } from "@/stores/equipment-map.store";
 import { useEquipmentStore } from "@/stores/equipment.store";
+import { Link } from "react-router-dom";
 
 export function AppBarComponent() {
   const { setSearching } = useEquipmentStore();
@@ -21,20 +19,21 @@ export function AppBarComponent() {
 
   return (
     <div className="w-full">
-      <Menubar className={`rounded-none h-7`}>
+      <Menubar className={`rounded-none h-12 md:h-7`}>
         <MenubarMenu>
-          <MenubarTrigger>Menu</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem>
-              Sair{" "}
-              <MenubarShortcut>
-                <LogOutIcon size={14} />
-              </MenubarShortcut>
-            </MenubarItem>
-          </MenubarContent>
+          <MenubarTrigger asChild className="hover:cursor-pointer">
+            <Link to="/">Mapa</Link>
+          </MenubarTrigger>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger>Filtrar</MenubarTrigger>
+          <MenubarTrigger asChild className="hover:cursor-pointer">
+            <Link to="/dashboard">Dashboard</Link>
+          </MenubarTrigger>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger className="hover:cursor-pointer">
+            Filtrar
+          </MenubarTrigger>
           <MenubarContent>
             <MenubarCheckboxItem
               checked={selectedModel == undefined && selectedState == undefined}
@@ -103,33 +102,13 @@ export function AppBarComponent() {
           </MenubarContent>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger onClick={() => setSearching(true)}>
+          <MenubarTrigger
+            onClick={() => setSearching(true)}
+            className="hover:cursor-pointer"
+          >
             Pesquisar
           </MenubarTrigger>
         </MenubarMenu>
-        {/* <MenubarMenu> IMPLEMENTAR DEPOIS
-          <MenubarTrigger>Tema</MenubarTrigger>
-          <MenubarContent>
-            <MenubarGroup>
-              <MenubarCheckboxItem
-                checked={!isDarkTheme}
-                onCheckedChange={() => {
-                  toggleTheme(false);
-                }}
-              >
-                Claro
-              </MenubarCheckboxItem>
-              <MenubarCheckboxItem
-                checked={isDarkTheme}
-                onCheckedChange={() => {
-                  toggleTheme(true);
-                }}
-              >
-                Escuro
-              </MenubarCheckboxItem>
-            </MenubarGroup>
-          </MenubarContent>
-        </MenubarMenu> */}
       </Menubar>
     </div>
   );

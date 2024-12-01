@@ -3,3 +3,9 @@ export enum EquipmentsEnum {
   TRUCK = "Caminhão de carga",
   TRACERS = "Garra traçadora",
 }
+
+export enum EquipmentsStatesEnum {
+  OPERATING = "Operando",
+  STOPPED = "Parado",
+  MAINTENANCE = "Manutenção",
+}
