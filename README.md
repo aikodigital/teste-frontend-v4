@@ -187,6 +187,8 @@ pnpm test
   - Posto de manunteção mais próximo.
   - Posto de manutenção não disponível.
   - Posição inválida.
+ 
+Também foi implementado teste no componente de navegação.
 
 ## Melhorias
 
