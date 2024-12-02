@@ -1,13 +1,4 @@
-<style>
-  .center {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    flex-direction: column;
-  }
-</style>
-
-<div class="center">
+<div style="display: flex; align-items: center; flex-direction: column;" class="center">
   <img width="248px" src="/github_images/aiko.png" />
 
 ### Projeto Teste Frontend V4
@@ -18,7 +9,7 @@ Desenvolvido por Bruno Souza
 
 ## Sobre o projeto
 
-<div class="center">
+<div >
 <img style="width: 100%" src="/github_images/cover.jpg" />
 </div>
 
