@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { EquipmentService } from '../services/equipment.service';
 import { EquipmentCardComponent } from '../components/equipment-card/equipment-card.component';
@@ -27,7 +27,22 @@ import { EquipmentPositionHistoryService } from '../services/equipment-position-
   ],
 })
 export class AppComponent implements OnInit {
-  equipments: WritableSignal<Equipment[] | undefined> = signal<Equipment[] | undefined>(undefined);
+  equipments = signal<Equipment[]>([]);
+
+  filteredEquipments = computed<Equipment[]>(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const equipments = this.equipments();
+
+    if (!term) {
+      return equipments;
+    }
+
+    return equipments.filter((equipment) => {
+      return equipment.name.toLowerCase().includes(term.toLowerCase());
+    });
+  });
+
+  searchTerm = signal<string>('');
 
   selectedEquipments: string[] = [];
 
@@ -94,8 +109,8 @@ export class AppComponent implements OnInit {
         next: (equipments) => {
           this.equipments.set(equipments);
         },
-        error: (error) => {
-          console.error('Error fetching equipment details', error);
+        error: () => {
+          this.equipments.set([]);
         },
       });
   }
@@ -118,6 +133,17 @@ export class AppComponent implements OnInit {
     this.selectedEquipments = equipments;
 
     this.navigateTo(equipments);
+  }
+
+  search(value: string): void {
+    this.searchTerm.set(value);
+  }
+
+  getEquipmentImage(name: string): string {
+    if (name && name.includes('-')) {
+      return '/imgs/equipments/' + name.split('-')[0] + '.jpg';
+    }
+    return '/imgs/default-equipment.jpg';
   }
 
   async navigateTo(equipments: string[]): Promise<void> {

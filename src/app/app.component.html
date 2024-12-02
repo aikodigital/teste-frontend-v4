@@ -8,11 +8,11 @@
     <aside
       class="h-full min-w-[378px] w-[378px] border-r border-gray-200 px-8 py-4 flex flex-col gap-6 overflow-y-auto"
     >
-      <app-search></app-search>
+      <app-search (searchChange)="search($event)"></app-search>
 
       <h2 class="text-xl font-bold">Equipamentos</h2>
-      @if (equipments(); as equipments) {
-        @for (equipment of equipments; track $index) {
+      @if (filteredEquipments().length) {
+        @for (equipment of filteredEquipments(); track equipment.id) {
           <app-equipment-card
             (click)="selectEquipment(equipment.id)"
             [model]="equipment.equipmentModel?.name || ''"
@@ -20,7 +20,7 @@
             [stateColor]="getLastEquipmentState(equipment).state.color"
             [name]="equipment.name"
             [selected]="checkEquipmentSelected(equipment.id)"
-            [image]="'/imgs/equipments/' + equipment.name.split('-')[0] + '.jpg'"
+            [image]="getEquipmentImage(equipment.name)"
           ></app-equipment-card>
         }
       }

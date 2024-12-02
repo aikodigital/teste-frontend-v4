@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output, OutputEmitterRef } from '@angular/core';
 import { LucideAngularModule, Search } from 'lucide-angular';
 
 @Component({
@@ -10,5 +10,12 @@ import { LucideAngularModule, Search } from 'lucide-angular';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {
+  searchChange: OutputEmitterRef<string> = output<string>();
+
   icons = { Search };
+
+  search(event: Event): void {
+    const htmlElementRef = event.target as HTMLInputElement;
+    this.searchChange.emit(htmlElementRef.value);
+  }
 }

@@ -28,7 +28,7 @@ import { forkJoin, switchMap, map } from 'rxjs';
   ],
 })
 export class EquipmentTrackerComponent {
-  equipments: WritableSignal<Equipment[] | undefined> = signal<Equipment[] | undefined>(undefined);
+  equipments: WritableSignal<Equipment[]> = signal<Equipment[]>([]);
 
   equipment: Equipment;
 
@@ -89,11 +89,11 @@ export class EquipmentTrackerComponent {
         })
       )
       .subscribe({
-        next: (enrichedEquipments) => {
-          this.equipments.set(enrichedEquipments);
+        next: (equipments) => {
+          this.equipments.set(equipments);
         },
-        error: (error) => {
-          console.error('Error fetching equipment details', error);
+        error: () => {
+          this.equipments.set([]);
         },
       });
   }
