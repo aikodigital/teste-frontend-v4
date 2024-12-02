@@ -1,9 +1,9 @@
-<div style="display: flex; width: 100%; align-items: center; flex-direction: column;" class="center">
-  <img width="248px" src="/github_images/aiko.png" />
+<p align="center"></p>
 
-### Projeto Teste Frontend V4
-
-Desenvolvido por Bruno Souza
+<p align="center">
+<img width="248px" src="/github_images/aiko.png" />
+</p> 
+<p align="center" style="font-weight: bold">Projeto Teste Frontend V4</p>
 
 </div>
 
