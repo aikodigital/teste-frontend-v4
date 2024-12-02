@@ -1,0 +1,15 @@
+<button [class]="getSelectedStateClass" type="button">
+  <div class="absolute left-0 top-0 w-full">
+    <span
+      class="absolute text-white left-[50%] translate-x-[-50%] top-[-10px] text-xs font-bold me-2 px-2.5 py-0.5 rounded-full"
+      [style]="'background-color: ' + stateColor()"
+    >
+      {{ state() }}
+    </span>
+  </div>
+  <app-equipment-bottom [image]="image()"></app-equipment-bottom>
+  <div>
+    <h5 class="text-md text-start font-bold tracking-tight text-gray-900 dark:text-white">{{ name() }}</h5>
+    <p class="font-normal text-start text-sm text-gray-700 dark:text-gray-400">{{ model() }}</p>
+  </div>
+</button>
