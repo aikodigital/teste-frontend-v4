@@ -32,6 +32,8 @@ A solução visa proporcionar uma interface intuitiva e funcional para o control
 - Flowbite: Biblioteca de componentes baseada em Tailwind
 - Lucide: Biblioteca de ícones
 - Dayjs: Biblioteca para lidar com datas
+- Eslint: Para padronização de código
+- Prettier: Para formatação de código
 
 ### Iniciar o projeto
 

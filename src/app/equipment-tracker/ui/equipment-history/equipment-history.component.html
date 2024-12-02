@@ -12,27 +12,16 @@
         @if (equipment().states; as statesHistory) {
           @for (stateHistory of getEquipmentStateDescrescent(statesHistory); track $index; let even = $even) {
             <div class="flex flex-col justify-center items-center w-[320px] z-10">
-              <!-- <div class="w-full min-h-full flex flex-col justify-center">
-              @if (even) {
-                <span>
-                  <p class="text-center text-sm font-bold">Estado: {{ stateHistory.state.name }}</p>
-                </span>
-              }
-            </div>
-            <div class="flex w-3 min-w-3 min-h-3 bg-blue-600 rounded-full">stateHistory.state.name</div>
-            <div class="w-full min-h-full flex flex-col justify-center">
-              @if (!even) {
-                <span>
-                  <p class="text-center text-sm font-bold">Estado: {{ stateHistory.state.name }}</p>
-                </span>
-              }
-            </div> -->
-
+              <span class="absolute font-bold top-[-32px]">
+                {{ stateHistory.date | date: 'dd/MM/yyyy HH:mm:ss' }}
+              </span>
               <span
-                class="text-xs font-bold text-white me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-blue-400 border"
+                class="text-xs relative font-bold text-white me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-blue-400 border"
                 [ngStyle]="{ 'background-color': stateHistory.state.color, 'border-color': stateHistory.state.color }"
               >
-                {{ stateHistory.state.name }}
+                <div>
+                  {{ stateHistory.state.name }}
+                </div>
               </span>
             </div>
           }
