@@ -1,4 +1,4 @@
-<div style="display: flex; align-items: center; flex-direction: column;" class="center">
+<div style="display: flex; width: 100%; align-items: center; flex-direction: column;" class="center">
   <img width="248px" src="/github_images/aiko.png" />
 
 ### Projeto Teste Frontend V4
