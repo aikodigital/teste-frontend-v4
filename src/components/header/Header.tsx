@@ -1,13 +1,12 @@
 import { useContext } from "react"
-import { modeloContext } from "../../context/ModeloContext"
+import { modeloContext, modeloEquipament } from "../../context/ModeloContext"
 
 function Header() {
   const { modelo } = useContext(modeloContext);
-  console.log(modelo);
-  
+  const { setEquipamentoId } = useContext(modeloEquipament);
   
   const handleOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
+    setEquipamentoId(event.target.value);
   }
   
   return (

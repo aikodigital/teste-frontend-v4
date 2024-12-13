@@ -1,15 +1,13 @@
 import { Marker } from '@react-google-maps/api'
 import './making.css';
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import Header from '../header/Header';
-import { modeloContext, equipmentId } from '../../context/ModeloContext';
-import { typeModeloContext } from '../../types/typeModelContext';
-import typeEquipments from '../../types/typeEquipments';
+import { modeloContext, modeloEquipament, position } from '../../context/ModeloContext';
 
 const center = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: -19.126536,
+  lng: -45.947756,
 }
 
 export default function MarkingMap() {
@@ -18,20 +16,22 @@ export default function MarkingMap() {
     googleMapsApiKey: 'AIzaSyDyRulpfR67VEi9Dk2ZMDJLza8zVFjFM_0',
   })
 
-  const [modeloEqui, setModeloEqui] = useState<typeModeloContext>([]);
-  // const [equipamento, setEquipamento] = useState<typeEquipments>([]);
-
-  console.log(modeloEqui);
+  const { equipamentoId } = useContext(modeloEquipament); 
+  const { modelo } = useContext(modeloContext); // id, equipID, nome
+  const { positions } = useContext(position); // equiID, position {data, lat, lon}
   
-  const markingMapEquipment = useContext(modeloContext); // id, equipID, nome
-  // const markingMapEquipmentPosition = useContext(equipmentId); // equiID, position {data, lat, lon}
+  const filterModelo = modelo.filter((model) => model.name === equipamentoId)
+  // console.log(filterModelo);
 
-  useEffect(() => {
-    setModeloEqui(markingMapEquipment);
-    // setEquipamento(markingMapEquipmentPosition);
-  }, []);
-
-  // const filterModelo = modeloEqui.filter((item) => item);
+  const filterPosition = positions.filter((position) => position.equipmentId === filterModelo[0].id)
+  
+  // console.log(filterPosition[0].positions);
+  
+  // const lastPosition = filterPosition[0].positions.length -1
+  // console.log(lastPosition);
+  
+  // const last = filterPosition[0].positions[lastPosition]
+  // console.log(filterPosition[0].positions[lastPosition])
 
   return isLoaded ? (
     <>
@@ -41,9 +41,16 @@ export default function MarkingMap() {
         center={center}
         zoom={10}
       >
-        <Marker
-          position={center}
-         />
+          {filterPosition.map((position) => (
+            <Marker
+              key={position.equipmentId}
+              position={{
+                lat: position.positions[0].lat,
+                lng: position.positions[0].lon
+              }}
+            />
+          ))}
+
         {/* Child components, such as markers, info windows, etc. */}
       </GoogleMap>
     </>

@@ -1,32 +1,48 @@
 import { useEffect, useState } from "react";
-import { modeloContext, equipmentId } from "./ModeloContext";
+import { 
+  modeloContext,
+  position,
+  modeloEquipament,
+ } from "./ModeloContext";
 
 import PropsModelProvider from "../types/typeModelProvider";
 import equipment from "../../data/equipment.json";
 import equipmentPosition from "../../data/equipmentPositionHistory.json";
 import { typeModeloContext } from "../types/typeModelContext";
-import typeEquipments from "../types/typeEquipments";
+import { typeEquipments, typeIdModelos } from "../types/typeEquipments";
 
 export default function ModeloProvider({ children }: PropsModelProvider) {
     const [modelo, setModelo] = useState<typeModeloContext["modelo"]>([]);
-    const [equipamento, setEquipamento] = useState<typeEquipments>([]);
-    const [equipamentoId, setEquipamentoId] = useState('');
+    const [positions, setPositions] = useState<typeEquipments["positions"]>([]);
+    const [equipamentoId, setEquipamentoId] = useState<typeIdModelos["equipamentoId"]>("CA-0001");
 
     const value: typeModeloContext = {
-        modelo,
-        setModelo,
+      modelo,
+      setModelo,
+    }
+
+    const localizationModel: typeEquipments = {
+      positions,
+      setPositions,
+    }
+
+    const modelos: typeIdModelos = {
+      equipamentoId,
+      setEquipamentoId,
     }
     
     useEffect(() => {
         setModelo(equipment);
-        setEquipamento(equipmentPosition);
+        setPositions(equipmentPosition);
     }, [])
 
   return (
     <modeloContext.Provider value={value}>
-      <equipmentId.Provider value={equipamento}>
+      <position.Provider value={localizationModel}>
+        <modeloEquipament.Provider value={modelos}>
         {children}
-      </equipmentId.Provider>
+        </modeloEquipament.Provider>
+      </position.Provider>
     </modeloContext.Provider>
   );
 }

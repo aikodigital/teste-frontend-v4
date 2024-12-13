@@ -1,10 +1,36 @@
-type typeEquipments = {
-    equipmentId: string;
+export type typeEquipments = {
     positions: {
-        date: string;
-        lat: number;
-        lon: number;
+        equipmentId: string;
+        positions: {
+            date: string;
+            lat: number;
+            lon: number;
+        }[];
     }[];
-}[];
+    
 
-export default typeEquipments;
+    setPositions: (
+        positions: {
+            equipmentId: string,
+            positions: {
+                date: string;
+                lat: number;
+                lon: number;
+        }[];
+    }[]) => void;
+}
+
+export const defaultValue: typeEquipments = {
+    positions: [],
+    setPositions: () => {},
+};
+
+export type typeIdModelos = {
+    equipamentoId: string;
+    setEquipamentoId: (equipamentoId: string) => void;
+}
+
+export const defaultValueId: typeIdModelos = {
+    equipamentoId: "",
+    setEquipamentoId: () => {},
+};
