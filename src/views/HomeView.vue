@@ -1,9 +1,10 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <DefaultLayout>
+    <MapView />
+  </DefaultLayout>
 </template>
+
+<script setup lang="ts">
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import MapView from '@/components/maps/MapView.vue'
+</script>
