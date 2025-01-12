@@ -2,3 +2,8 @@
     width: 600px;
     height: 600px;
 }
+
+.label-marker {
+    margin-bottom: 50px;
+    font-weight: 500;
+}

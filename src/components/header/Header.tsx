@@ -1,12 +1,22 @@
 import { useContext } from "react"
-import { modeloContext, modeloEquipament } from "../../context/ModeloContext"
+import { modeloContext, modeloEquipament, position } from "../../context/ModeloContext"
 
 function Header() {
   const { modelo } = useContext(modeloContext);
-  const { setEquipamentoId } = useContext(modeloEquipament);
+  const { positions } = useContext(position);
+  const { equipamentoId, setEquipamentoId } = useContext(modeloEquipament);
   
-  const handleOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setEquipamentoId(event.target.value);
+  console.log(equipamentoId);
+  
+
+  const handleOption = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    key: keyof typeof equipamentoId
+  ) => {
+    setEquipamentoId({
+      ...equipamentoId,
+      [key]: event.target.value
+    })
   }
   
   return (
@@ -19,7 +29,8 @@ function Header() {
           <select
             name="modelos"
             id="modelos"
-            onChange={handleOption}
+            // value={equipamentoId.modelEquipment}
+            onChange={(e) => handleOption(e, "modelEquipment")}
             >
             
             {modelo.map((model) => (
@@ -31,6 +42,25 @@ function Header() {
                 </option>
             ))}
           </select>
+          </label>
+          <label htmlFor="date">
+            History date:
+            {' '}
+            <select
+             name="date" 
+             id="date"
+            //  value={equipamentoId.datePosition}
+             onChange={(e) => handleOption(e, 'datePosition')}
+            >
+              {positions[2].positions.map((dates, index) => (
+                <option
+                  key={index}
+                  value={dates.date}
+                >
+                  {dates.date}
+                </option>
+              ))}
+            </select>
           </label>
         </nav>
     </header>

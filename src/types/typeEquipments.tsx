@@ -25,12 +25,27 @@ export const defaultValue: typeEquipments = {
     setPositions: () => {},
 };
 
+export type EquipmentIdModelos = {
+    modelEquipment: string;
+    datePosition: string;
+}
+
 export type typeIdModelos = {
-    equipamentoId: string;
-    setEquipamentoId: (equipamentoId: string) => void;
+    equipamentoId: EquipmentIdModelos;
+    // setEquipamentoId: (update: Partial<typeof modeloEquipament>) => typeIdModelos;
+    setEquipamentoId: (
+        equipamentoId: EquipmentIdModelos
+    ) => void;
 }
 
 export const defaultValueId: typeIdModelos = {
-    equipamentoId: "",
-    setEquipamentoId: () => {},
+    equipamentoId: {
+        modelEquipment: "",
+        datePosition: ""
+    },
+    // equipamentoId: {
+    //     modelEquipment: "CA-0001",
+    //     datePosition: "2021-02-01T15:00:00.000Z"
+    // },
+    setEquipamentoId: () => {}
 };
