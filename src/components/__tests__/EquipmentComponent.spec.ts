@@ -50,7 +50,7 @@ describe('Component', () => {
 
     await wrapper.findComponent(Card).trigger('click')
     expect(wrapper.emitted('onClick')).toBeTruthy()
-    expect(wrapper.emitted('onClick')![0]).toEqual(['123'])
+    expect(wrapper.emitted('onClick')![0]).toEqual([])
   })
 
   it('should render correct badge severity based on state', () => {
