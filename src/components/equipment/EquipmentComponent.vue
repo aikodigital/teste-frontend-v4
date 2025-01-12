@@ -1,7 +1,7 @@
 <template>
   <Card
     :class="`hover:cursor-pointer ${selected ? 'border border-gray-700' : ''}`"
-    @click="$emit('onClick', id)"
+    @click="$emit('onClick')"
   >
     <template #title>
       <OverlayBadge

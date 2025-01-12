@@ -720,6 +720,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@kurkle/color@^0.3.0":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.4.tgz#4d4ff677e1609214fc71c580125ddddd86abcabf"
+  integrity sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==
+
 "@mdx-js/react@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-3.1.0.tgz#c4522e335b3897b9a845db1dbdd2f966ae8fb0ed"
@@ -2163,6 +2168,13 @@ character-parser@^2.2.0:
   dependencies:
     is-regex "^1.0.3"
 
+chart.js@^4.4.7:
+  version "4.4.7"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.4.7.tgz#7a01ee0b4dac3c03f2ab0589af888db296d896fa"
+  integrity sha512-pwkcKfdzTMAU/+jNosKhNL2bHtJc/sSmYgVbuGTEDhzkrhmyihmP7vUc/5ZK9WopidMDHNe3Wm7jOd/WhuHWuw==
+  dependencies:
+    "@kurkle/color" "^0.3.0"
+
 check-error@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/check-error/-/check-error-2.1.1.tgz"
@@ -2387,6 +2399,11 @@ data-urls@^5.0.0:
 dayjs@^1.10.4:
   version "1.11.13"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.13.tgz"
+  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
+
+dayjs@^1.11.13:
+  version "1.11.13"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
   integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
 
 de-indent@^1.0.2:
@@ -5446,12 +5463,7 @@ vue-component-meta@^2.0.0:
     path-browserify "^1.0.1"
     vue-component-type-helpers "2.2.0"
 
-vue-component-type-helpers@2.2.0, vue-component-type-helpers@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/vue-component-type-helpers/-/vue-component-type-helpers-2.2.0.tgz"
-  integrity sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==
-
-vue-component-type-helpers@latest:
+vue-component-type-helpers@2.2.0, vue-component-type-helpers@^2.0.0, vue-component-type-helpers@latest:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-component-type-helpers/-/vue-component-type-helpers-2.2.0.tgz#de5fa802b6beae7125595ec0d3d5195a22691623"
   integrity sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==

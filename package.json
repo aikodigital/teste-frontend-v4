@@ -19,6 +19,8 @@
   "dependencies": {
     "@primevue/themes": "^4.2.5",
     "@tailwindcss/vite": "^4.0.0-beta.8",
+    "chart.js": "^4.4.7",
+    "dayjs": "^1.11.13",
     "leaflet": "^1.9.4",
     "pinia": "^2.3.0",
     "primeicons": "^7.0.0",

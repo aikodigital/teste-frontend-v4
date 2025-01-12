@@ -1,14 +1,13 @@
 <template>
-  <div
-    v-if="storeEquipment.loadingEquipments"
-    class="flex flex-col space-y-1.5 justify-center items-center w-full"
-  >
-    loading
-  </div>
-  <div class="flex flex-col space-y-1.5 justify-center items-center w-full" v-else>
+  <div class="flex flex-col space-y-1.5 justify-center items-center w-full">
     <div v-for="equipment in storeEquipment.equipments" :key="equipment.id">
       <EquipmentComponent
-        @onClick="showHistoryEquipment"
+        @onClick="
+          () => {
+            selectedEquipment = equipment
+            visible = true
+          }
+        "
         :selected="selectedEquipment?.id === equipment?.id"
         :id="equipment.id"
         :equipmentName="equipment.name"
@@ -21,76 +20,68 @@
 
   <Dialog
     v-model:visible="visible"
+    maximizable
     modal
-    header="Visualização do histórico"
     :style="{ width: '45rem' }"
+    :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
   >
-    <Timeline :value="state.states" align="alternate" class="customized-timeline">
-      <template #content="slotProps">
-        <Card class="mt-4">
-          <template #subtitle>
-            {{ formatDate(slotProps.item.date) }}
-          </template>
-          <template #content>
-            <div class="flex flex-col items-center justify-center">
-              <img
-                src="../../assets/img/eq.jpg"
-                :alt="slotProps.item.name"
-                width="200"
-                class="shadow-sm"
-              />
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </div>
-          </template>
-        </Card>
+    <TabComponent :tabs="tabs">
+      <template #historico>
+        <HistoryDisplay :equipmentId="selectedEquipment?.id" />
       </template>
-    </Timeline>
+
+      <template #produtividade>
+        <ProductivityComponent :equipmentId="selectedEquipment?.id" />
+      </template>
+
+      <template #ganho>
+        <EarningsEquipment :equipmentId="selectedEquipment?.id" />
+      </template>
+    </TabComponent>
   </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useEquipmentsStore } from '@/stores/equipments'
-import type {
-  Equipment,
-  States,
-  EquipmentState,
-  EquipmentModel,
-  EquipmentStateHistory,
-} from '@/types'
+import type { Equipment, EquipmentModel, EquipmentState, States } from '@/types'
 import EquipmentComponent from '@/components/equipment/EquipmentComponent.vue'
 import Dialog from 'primevue/dialog'
-import Timeline from 'primevue/timeline'
-import { formatDate } from '@/utils/format'
-import Card from 'primevue/card'
+import TabComponent from '@/components/tab/TabComponent.vue'
+import HistoryDisplay from '@/components/equipment/HistoryDisplay.vue'
 import { getLastKnown } from '@/utils/common'
 import { equipmentState } from '@/data/equipmentState'
+import ProductivityComponent from './ProductivityComponent.vue'
+import EarningsEquipment from './EarningsEquipment.vue'
 
 const storeEquipment = useEquipmentsStore()
-const selectedEquipment = ref<Equipment | null>(null)
+const selectedEquipment = ref<Equipment | undefined>(undefined)
 const visible = ref(false)
 
-const showHistoryEquipment = (id: string): void => {
-  const equipment = storeEquipment.equipments.find((equipment) => equipment.id === id)
-  selectedEquipment.value = equipment || null
-  visible.value = true
-}
+const tabs = [
+  {
+    name: 'Visualização do histórico',
+    slot: 'historico',
+  },
+  {
+    name: 'Produtividade do Equipamento',
+    slot: 'produtividade',
+  },
+  {
+    name: 'Ganho por Equipamento',
+    slot: 'ganho',
+  },
+]
 
-const state: EquipmentStateHistory = computed(() =>
-  storeEquipment.states.find((st) => st.equipmentId === selectedEquipment.value?.id),
-)
-
-const equipmentModel: EquipmentModel = (equipmentModelId: string): EquipmentModel | null => {
-  return storeEquipment.models.find((model) => model.id === equipmentModelId) || null
+const equipmentModel = (equipmentModelId: string): EquipmentModel | undefined => {
+  return storeEquipment.models.find((model) => model.id === equipmentModelId)
 }
 
 const equipmentState_ = (id: string): EquipmentState | undefined => {
   const state = storeEquipment.states.find((st) => st.equipmentId === id)
-
   if (!state) return undefined
 
   const lastKnownState: States | undefined = getLastKnown(state.states || [])
-
   return equipmentState.find((st) => st.id === lastKnownState?.equipmentStateId)
 }
 </script>

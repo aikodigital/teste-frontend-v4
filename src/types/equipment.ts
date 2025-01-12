@@ -5,3 +5,5 @@ export type Equipment = {
   equipmentModelId: EquipmentModel['id']
   name: string
 }
+
+export type Period = 'day' | 'month' | 'year'
