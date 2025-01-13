@@ -1,207 +1,103 @@
-# Teste Frontend V4
+# Documentação do Projeto
 
-![Aiko](img/aiko.png)
+## Visão Geral
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+Este projeto foi desenvolvido utilizando **Vue 3** com **Vite** como empacotador. A aplicação segue boas práticas de desenvolvimento, utilizando ferramentas modernas e componentes reutilizáveis. O objetivo principal é garantir uma interface responsiva, acessível e eficiente, com uma base sólida para escalar funcionalidades futuras.
 
-## O Desafio
+---
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+## Tecnologias Utilizadas
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+- **Vue 3**: Framework JavaScript progressivo.
+- **Vite**: Ferramenta de build moderna e rápida.
+- **Pinia**: Gerenciamento de estado centralizado, substituindo Vuex.
+- **TailwindCSS**: Framework de CSS utilitário para estilização rápida e eficiente.
+- **PrimeVue**: Biblioteca de componentes UI ricos e prontos para uso.
+- **Leaflet**: Biblioteca para mapas interativos.
+- **Storybook**: Ferramenta para documentação de componentes visuais.
+- **Cypress**: Testes end-to-end (E2E).
+- **Vitest**: Framework para testes unitários e de integração.
 
-## Requisitos
+---
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+## Componentes Desenvolvidos
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+### Decisões Técnicas
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+Os componentes foram desenvolvidos com base nos seguintes critérios:
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+- **Reutilizáveis**: Componentes genéricos para cenários múltiplos.
+- **Documentados**: Integrados com o **Storybook**.
+- **Responsivos**: Estilizados com TailwindCSS e testados em múltiplos dispositivos.
 
-## Dados
+---
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+### Componentes Principais
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+#### **Mapa Interativo**
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+- **Função**: Apresenta um mapa com marcadores dinâmicos configurados através do **Leaflet**.
+- **Biblioteca Usada**: Leaflet.
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+# Documentação de Testes e Storybook
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+## Testes da Aplicação
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+A aplicação foi testada utilizando duas ferramentas principais: **Cypress** para testes end-to-end (E2E) e **Vitest** para testes unitários e de integração.
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+### Cypress (Testes E2E)
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+O **Cypress** foi utilizado para validar o comportamento da aplicação em fluxos completos do usuário, garantindo que as funcionalidades principais funcionam conforme esperado em ambiente real.
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+#### Configuração do Cypress
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+Para rodar os testes com Cypress:
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+1. Certifique-se de que as dependências estejam instaladas:
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+   ```bash
+   npm install
+   ```
 
+2. Inicie a aplicação localmente:
 
-## O que é permitido
+   ```bash
+   npm run dev
+   ```
 
-* Vue, React e Angular.
+3. Execute o Cypress:
+   ```bash
+   npx cypress open
+   ```
 
-* Typescript.
+### Vitest (Testes Unitários e de Integração)
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+O **Vitest** foi usado para garantir que cada componente, função e módulo da aplicação funcione isoladamente, bem como para validar interações entre eles.
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+#### Configuração do Vitest
 
-* Template engines (Pug, Ejs, etc).
+1. Para rodar os testes com Vitest:
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+   ```bash
+   npm run test:unit
+   ```
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+---
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+## Documentação do Storybook
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
+O **Storybook** foi utilizado para documentar e testar visualmente os componentes da aplicação. Ele permite a visualização de cada componente de forma isolada, bem como a interação com suas propriedades (props).
 
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
+### Configuração do Storybook
 
-## O que não é permitido
+1. Para iniciar o Storybook:
 
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
+   ```bash
+   npm run storybook
+   ```
 
-## Recomendações
+2. O Storybook estará disponível em:
+   ```
+   http://localhost:6006
+   ```
 
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-* Relizar o fork e clonar esse repositório para sua máquina.
-  
-* Criar uma branch com o nome de `teste/[NOME]`.
-  * `[NOME]`: Seu nome.
-  * Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-  
-* Faça um commit da sua branch com a implementação do teste.
-  
-* Realize o pull request da sua branch nesse repositório.
