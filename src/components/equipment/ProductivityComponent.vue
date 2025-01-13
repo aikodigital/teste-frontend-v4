@@ -2,15 +2,15 @@
   <div class="flex flex-wrap justify-center gap-4 p-3">
     <div class="flex items-center gap-2">
       <RadioButton v-model="period" inputId="day" name="pizza" value="day" />
-      <label for="day">Day</label>
+      <label for="day">Dia</label>
     </div>
     <div class="flex items-center gap-2">
       <RadioButton v-model="period" inputId="month" name="pizza" value="month" />
-      <label for="month">Month</label>
+      <label for="month">Mês</label>
     </div>
     <div class="flex items-center gap-2">
       <RadioButton v-model="period" inputId="year" name="pizza" value="year" />
-      <label for="year">Year</label>
+      <label for="year">Ano</label>
     </div>
   </div>
   <div class="card">

@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 export const calculateProductivity = (operatingHours: number, totalHours: number): number => {
   if (operatingHours < 0 || totalHours <= 0 || operatingHours > totalHours) {
-    throw new Error('Operating hour values   or total hours are not valid.')
+    throw new Error('Operating hour values or total hours are not valid.')
   }
 
   const productivity = (operatingHours / totalHours) * 100
@@ -49,13 +49,19 @@ export const calculateDailyProductivity = (
   const result: Record<string, number> = {}
   let lastTimestamp: dayjs.Dayjs | null = null
 
-  for (const currentStatus of states) {
+  const sortedStates = states.sort((a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf())
+
+  for (const currentStatus of sortedStates) {
     const currentTimestamp = dayjs(currentStatus.date)
     const currentDate = currentTimestamp.format('YYYY-MM-DD')
 
     if (currentStatus.equipmentStateId === operatingStateId && lastTimestamp !== null) {
-      const timeDiff = currentTimestamp.diff(lastTimestamp, 'millisecond')
-      result[currentDate] = (result[currentDate] || 0) + timeDiff
+      const lastDate = lastTimestamp.format('YYYY-MM-DD')
+
+      if (currentDate === lastDate) {
+        const timeDiff = currentTimestamp.diff(lastTimestamp, 'millisecond')
+        result[currentDate] = (result[currentDate] || 0) + timeDiff
+      }
     }
 
     lastTimestamp = currentTimestamp
@@ -63,6 +69,6 @@ export const calculateDailyProductivity = (
 
   return Object.keys(result).map((date) => ({
     date,
-    hours: result[date] / (1000 * 60 * 60),
+    hours: parseFloat((result[date] / (1000 * 60 * 60)).toFixed(2)), // Convertir ms a horas y redondear
   }))
 }

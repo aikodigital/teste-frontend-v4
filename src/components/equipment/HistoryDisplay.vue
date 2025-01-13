@@ -1,5 +1,5 @@
 <template>
-  <Timeline :value="state?.states" align="alternate" class="customized-timeline">
+  <Timeline :value="state?.states" align="alternate" class="flex items-center w-96 md:w-full">
     <template #content="slotProps">
       <Card class="mt-4">
         <template #subtitle>

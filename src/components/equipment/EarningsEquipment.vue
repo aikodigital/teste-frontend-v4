@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-evenly p-4">
+  <div class="flex flex-col items-center justify-center p-4 gap-2.5">
     <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full md:w-[15rem]" />
     <p class="text-sm text-gray-500">O ganho total do equipamento é: {{ earningsByequipment }}</p>
   </div>
