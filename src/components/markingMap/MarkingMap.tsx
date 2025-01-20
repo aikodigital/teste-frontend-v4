@@ -1,16 +1,17 @@
 import { Marker } from '@react-google-maps/api'
 import './making.css';
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import Header from '../header/Header';
 import { 
-  // estadoEquipamento,
+  estadoEquipamento,
   modeloContext,
   modeloEquipament, 
   position,
-  // horasTrabalhadas, 
-  // historicoEquipamento,
+  horasTrabalhadas, 
+  historicoEquipamento,
 } from '../../context/ModeloContext';
+// import { typeEquipments } from '../../types/typeEquipments';
 
 const center = {
   lat: -19.126536,
@@ -28,29 +29,27 @@ export default function MarkingMap() {
   const { equipamentoId } = useContext(modeloEquipament); 
   const { modelo } = useContext(modeloContext); // id, equipID, nome
   const { positions } = useContext(position); // equiID, position {data, lat, lon}
-  // const { stateEquipment } = useContext(estadoEquipamento)
-  // const { worked } = useContext(horasTrabalhadas)
-  // const {equipmentHistory } = useContext(historicoEquipamento)
+  const { stateEquipment } = useContext(estadoEquipamento)
+  const { worked } = useContext(horasTrabalhadas)
+  const {equipmentHistory } = useContext(historicoEquipamento)
   
-  console.log(equipamentoId.modelEquipment, equipamentoId.datePosition);
-  // console.log(modelo);
-  // console.log(positions);
+  const [hoverInfo, setHoverInfo] = useState<string>("CA-0001");
+  // const [filterPosition, setFilterPosition] = useState<[]>([])
+  // console.log(filterPosition);
   
-  
-  // console.log(modelo[0].id);
-  
-  const filterModelo = modelo.filter((model) => model.name === equipamentoId.modelEquipment)
-  // console.log(filterModelo);
-  
-  const filterPosition = positions.filter((position) => position.equipmentId === filterModelo[0].id)
+  // console.log('Tipo de estado', stateEquipment);
+  // console.log('MODELO', modelo);  
+  // console.log('historico equipamento', equipmentHistory);
+  const filterModelo = modelo.find((model) => model.name === equipamentoId.modelEquipment)
+  const filterPosition = positions.filter((position) => position.equipmentId === filterModelo?.id)
+    .map((position) => {
+      const positionFilter = position.positions.filter((position) => position.date === equipamentoId.datePosition)
+      return {
+        ...position,
+        positions: positionFilter
+      }
+    })
   console.log(filterPosition);
-  
-  // const filterState = worked.filter((state) => state.id === filterModelo[0].equipmentModelId)
-  // const filterState = equipmentHistory.filter((state) => state.equipmentId === filterModelo[0].id)
-  // const filterStateEquipment = filterState.filter((e) => e.states[0].date === filterPosition[0].positions[0].date)
-  // console.log(filterStateEquipment[0].states);
-  
-  // const [hoverInfo, setHoverInfo] = useState("");
   
   return isLoaded ? (
     <>
@@ -60,26 +59,26 @@ export default function MarkingMap() {
         center={center}
         zoom={10}
       >
-          {filterPosition.map((position) => (
+          {filterPosition[0].positions.map((position, index) => (
             <Marker
-              key={position.equipmentId}
-              // position={center}
-              position={{
-                lat: position.positions[0].lat, // não funcionou
-                lng: position.positions[0].lon
+            key={index}
+            // position={center}
+            position={{
+              lat: position.lat, 
+                lng: position.lon,
               }}
               
-              // onMouseOver={() => setHoverInfo("ola")}
-              // onMouseOut={() => setHoverInfo("ol")}
-              // onClick={() => setHoverInfo()}
-              // options={{
-              //   label: {
-              //     text: hoverInfo || equipamentoId,
-              //     className:'label-marker',
-              //   }
-              // }}
-            />
-          ))}
+              onMouseOver={() => setHoverInfo("Esperndo")}
+              onMouseOut={() => setHoverInfo(equipamentoId.modelEquipment)}
+              // onClick={() => setHoverInfo("click")}
+              options={{
+                label: {
+                  text: hoverInfo === "EEE" ? hoverInfo : equipamentoId.modelEquipment,
+                  className:'label-marker',
+                }
+              }}
+              />
+            ))}
         {/* Child components, such as markers, info windows, etc. */}
       </GoogleMap>
     </>

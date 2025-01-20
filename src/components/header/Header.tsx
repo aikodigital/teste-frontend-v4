@@ -6,9 +6,6 @@ function Header() {
   const { positions } = useContext(position);
   const { equipamentoId, setEquipamentoId } = useContext(modeloEquipament);
   
-  console.log(equipamentoId);
-  
-
   const handleOption = (
     event: React.ChangeEvent<HTMLSelectElement>,
     key: keyof typeof equipamentoId
@@ -18,6 +15,9 @@ function Header() {
       [key]: event.target.value
     })
   }
+
+  const filterModelo = modelo.find((model) => model.name === equipamentoId.modelEquipment)
+  const dtSelected = positions.filter((position) => position.equipmentId === filterModelo?.id)
   
   return (
     <header>
@@ -52,7 +52,7 @@ function Header() {
             //  value={equipamentoId.datePosition}
              onChange={(e) => handleOption(e, 'datePosition')}
             >
-              {positions[2].positions.map((dates, index) => (
+              {dtSelected[0].positions.map((dates, index) => (
                 <option
                   key={index}
                   value={dates.date}
