@@ -7,7 +7,7 @@ import equipmentStateHistory from '../assets/data/equipmentStateHistory.json'
 import type { EquipmentPositionHistory, EquipmentStateHistory } from '@/types/equipment'
 import { states } from '@/constants/states'
 
-let map = undefined
+let map: L.Map
 
 const createMapLayer = () => {
   map = L.map('mapContainer').setView([-19.126536, -45.947756], 9)
