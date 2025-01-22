@@ -5,7 +5,7 @@ import { onMounted } from 'vue'
 import equipmentPositionHistory from '../assets/data/equipmentPositionHistory.json'
 import equipmentStateHistory from '../assets/data/equipmentStateHistory.json'
 import type { EquipmentPositionHistory, EquipmentStateHistory } from '@/types/equipment'
-import { states } from '@/constants/states'
+import { useEquipment } from '@/hooks/useEquipment'
 
 let map: L.Map
 
@@ -20,9 +20,7 @@ const createMapLayer = () => {
   }
 }
 
-const getStateById = (id: string) => {
-  return states.find((state) => state.id === id) || null;
-}
+const { getMarkerColor, getStateById } = useEquipment()
 
 const setMarkers = () => {
   equipmentPositionHistory.map((equipment: EquipmentPositionHistory) => {
@@ -33,7 +31,7 @@ const setMarkers = () => {
     const lastState = equipmentState.states.slice(-1)
     const state = (getStateById(lastState[0]?.equipmentStateId))
 
-    return L.marker([currentPosition[0].lat, currentPosition[0].lon]).addTo(map).bindPopup('opa').bindTooltip(state?.name || '').openTooltip();
+    return L.marker([currentPosition[0].lat, currentPosition[0].lon], { icon: getMarkerColor(state?.color || '') }).addTo(map).bindPopup('opa').bindTooltip(state?.name || '').openTooltip();
   })
 }
 
