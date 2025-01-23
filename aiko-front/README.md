@@ -1,45 +1,41 @@
-# aiko-front
 
-This template should help get you started developing with Vue 3 in Vite.
+# Desafio Aiko - Frontend
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Type Support for `.vue` Imports in TS
+## Stack utilizada
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+**Front-end:** Vue.Js
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vite.dev/config/).
 
-## Project Setup
+## Instalação
 
-```sh
+Instale o projeto usando NPM ou Yarn
+
+Com NPM:
+```bash
+npm install
+```
+
+Com Yarn:
+```bash
 yarn
 ```
 
-### Compile and Hot-Reload for Development
 
-```sh
-yarn dev
-```
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-yarn build
-```
+## Pacotes Utilizados
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+**Leaflet:** Usado para criação do mapa, marcadores, popups e tooltips para exibição das informações dos equipamentos.
 
-```sh
-yarn test:unit
-```
+**Tailwind CSS:** Usado para estilização do projeto.
 
-### Lint with [ESLint](https://eslint.org/)
+**Date-fns:** Usado para formação de datas e horários.
+## Funcionalidades
 
-```sh
-yarn lint
-```
+- Mapa interativo com marcadores exibindo a localização dos equipamentos.
+- Marcadores com cores diferentes para indicação do estado atual dos equipamentos.
+- Aba com histórico detalhado do estado de cada equipamento, exibindo estado do equipamento, data e hora daquele estado.
+
