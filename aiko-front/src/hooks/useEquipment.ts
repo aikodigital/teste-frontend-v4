@@ -1,5 +1,8 @@
 import { states } from '../constants/states'
 import { greenIcon, redIcon, yellowIcon } from '../constants/icons'
+import type { EquipmentStateHistory } from '@/types/equipment';
+import equipments from '@/assets/data/equipment.json'
+import models from '@/assets/data/equipmentModel.json'
 
 export function useEquipment() {
   const getStateById = (id: string) => {
@@ -16,8 +19,27 @@ export function useEquipment() {
     return colorMap[color];
   }
 
+  const getStateHistory = (equipment: EquipmentStateHistory) => {
+    return equipment.states.map((equipment) => (
+      getStateById(equipment.equipmentStateId)
+    ))
+  }
+
+  const getEquipmentType = (id: string) => {
+    const equip = equipments.find((eq) => eq.id === id)
+    return equip
+  }
+
+  const getEquipmentModel = (id: string) => {
+    const model = models.find((model) => model.id === id)
+    return model
+  }
+
   return {
     getMarkerColor,
-    getStateById
+    getStateById,
+    getStateHistory,
+    getEquipmentType,
+    getEquipmentModel
   }
 }
