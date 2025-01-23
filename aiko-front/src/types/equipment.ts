@@ -41,3 +41,9 @@ export interface EquipmentStateHistory {
   equipmentId: string
   states: StateHistory[]
 }
+
+export interface DetailedStateHistory {
+  date: Date | string,
+  equipmentStateId: string
+  states: EquipmentState
+}
