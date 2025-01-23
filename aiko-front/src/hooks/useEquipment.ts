@@ -20,9 +20,10 @@ export function useEquipment() {
   }
 
   const getStateHistory = (equipment: EquipmentStateHistory) => {
-    return equipment.states.map((equipment) => (
-      getStateById(equipment.equipmentStateId)
-    ))
+    return equipment.states.map((state) => ({
+      ...state,
+      states: getStateById(state.equipmentStateId)
+    }))
   }
 
   const getEquipmentType = (id: string) => {
