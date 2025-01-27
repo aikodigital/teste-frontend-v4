@@ -8,18 +8,6 @@ Ao clicar no botão de acesso ao histórico dentro do popup ou clicar na tela in
 
 ## Getting Started 🚀
 
-Consumindo dados do JSON e  operações com firebase.
-
-Antes de executar o projeto, é necessário configurar algumas variáveis de ambiente. Siga os passos abaixo:
-
-1. Dentro da pasta raiz do projeto, crie um arquivo chamado `.env` com a seguinte configuração:
-
-```sh
-API_MAPBOX=SUA_API_MAPBOX
-```
-
-Substitua `SUA_API_MAPBOX` pela API KEY do Mapbox, necessário para exibição correta do mapa e localizações dos equipamentos.
-
 ### Requirements 📋
 
 _Vue.js._
