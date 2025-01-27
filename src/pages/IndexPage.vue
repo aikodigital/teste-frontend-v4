@@ -4,7 +4,7 @@
       <q-scroll-area
         :thumb-style="thumbStyle"
         :bar-style="barStyle"
-        style="width: 100%; height: 125px"
+        style="width: 100%; height: 140px"
         class="pr-[15px]"
       >
         <div class="flex flex-nowrap items-center justify-center gap-3 w-full p-1">
@@ -14,22 +14,29 @@
             v-for="(equipment, idx) in formHistory"
             :key="equipment.id"
           >
-            <q-card-section class="flex flex-col items-center justify-start gap-3 w-full h-[100px]">
+            <q-card-section class="flex flex-col items-center justify-start gap-3 w-full h-ful">
               <span class="text-start w-full">
-                Name:
-                {{ equipment.equipment_name }}
+                Nome:
+                {{ equipment.equipment.name }}
               </span>
               <span class="text-start w-full">
-                Last State:
-                {{ equipment.last_state }}
+                Modelo:
+                {{ equipment.equipment.model }}
               </span>
+              <div class="flex flex-nowrap items-center gap-1 w-full">
+                <span> Estado: {{ equipment.equipment.state.name }} </span>
+                <q-icon name="bi-circle-fill" :style="{ color: equipment.equipment.state.color }" />
+              </div>
             </q-card-section>
           </q-card>
         </div>
       </q-scroll-area>
       <div class="grid grid-cols-1 lg:grid-cols-3 items-center justify-center gap-3 w-full">
         <q-card class="rounded-3xl" v-for="(state, idx) in stateCounts" :key="state.name">
-          <q-card-section class="flex flex-col items-start justify-between gap-3 w-full h-[150px]">
+          <q-card-section
+            class="flex flex-col items-start justify-between gap-3 w-full h-[150px]"
+            :style="{ backgroundColor: state.color }"
+          >
             <span class="text-xl">
               {{ state.name }}
             </span>
@@ -53,7 +60,6 @@
 <script setup>
 import { useEquipmentStore } from 'src/stores/equipment'
 import { computed, onMounted, ref } from 'vue'
-import * as MiddlewareService from 'src/services/MiddlewareService'
 import { thumbStyle, barStyle } from 'src/utils/scrollStyle'
 
 const colors = ['#66a182', '#caffb9', '#fcaf58', '#d8d4f2']
@@ -68,16 +74,12 @@ const stateCounts = computed(() => {
   }
 
   const stateMap = eqpStore.states.reduce((map, state) => {
-    map[state.id] = { name: state.name, count: 0 }
+    map[state.id] = { name: state.name, count: 0, color: state.color }
     return map
   }, {})
 
-  formHistory.value.forEach((item) => {
-    item.states.forEach((state) => {
-      if (stateMap[state.equipmentStateId]) {
-        stateMap[state.equipmentStateId].count++
-      }
-    })
+  eqpStore.equipments.forEach((item) => {
+    stateMap[item.state.id].count++
   })
 
   return Object.values(stateMap)
@@ -88,18 +90,12 @@ const getColorByIndex = computed(() => (index) => {
 })
 
 onMounted(async () => {
-  const response = await MiddlewareService.GetData('equipmentState')
-  eqpStore.setState(response)
-
-  const respHistory = await MiddlewareService.GetData('equipmentStateHistory')
-  formHistory.value = respHistory.map((item) => {
+  formHistory.value = eqpStore.history.map((item) => {
     return {
       ...item,
-      equipment_name: eqpStore.equipments.find((equipment) => equipment.id === item.equipmentId)
-        .name,
-      last_state: eqpStore.states.find(
-        (state) => state.id === item.states[item.states.length - 1].equipmentStateId,
-      ).name,
+      equipment: {
+        ...eqpStore.equipments.find((equipment) => equipment.id === item.equipmentId),
+      },
     }
   })
 })

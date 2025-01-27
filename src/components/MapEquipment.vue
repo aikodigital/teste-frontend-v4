@@ -18,23 +18,22 @@
 <script setup>
 import { inject, onBeforeMount, onMounted, ref, watch, createApp } from 'vue'
 import mapboxgl from 'mapbox-gl'
-// import { triggerNegative } from 'src/utils/triggers'
 import { useQuasar, Quasar } from 'quasar'
 import TypeModalDialog from 'src/components/Map/MapTypeDialog.vue'
 import PopupContent from 'src/components/Map/PopupContent.vue'
 import { useThemeStore } from 'src/stores/theme'
-import { useEquipmentStore } from 'src/stores/equipment'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   data: {
-    type: Object,
+    type: Array,
     required: true,
   },
 })
 
 const $q = useQuasar()
+const router = useRouter()
 const theme = useThemeStore()
-const eqpStore = useEquipmentStore()
 const bus = inject('bus')
 const layerId = ref($q.dark.isActive ? 'dark' : 'streets')
 
@@ -46,32 +45,32 @@ watch(
   () => props.data,
   (newData) => {
     if (newData) {
-      const positions = newData.positions
-
       map.flyTo({
-        center: [positions[positions.length - 1].lon, positions[positions.length - 1].lat],
+        center: [newData.position.lon, newData.position.lat],
         zoom: 10,
       })
 
-      reloadFullMap(positions)
+      reloadFullMap(newData.position)
     }
   },
 )
 
-const getGeojson = (positions) => {
+const getGeojson = () => {
   return {
     type: 'FeatureCollection',
-    features: positions.map((pos) => ({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [pos.lon, pos.lat],
-      },
-      properties: {
-        date: pos.date,
-        ...eqpStore.equipments.find((item) => item.id == props.data.equipmentId),
-      },
-    })),
+    features: props.data.map((eqp) => {
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [eqp.position.lon, eqp.position.lat],
+        },
+        properties: {
+          data: JSON.stringify(eqp),
+          state: eqp.state.id,
+        },
+      }
+    }),
   }
 }
 
@@ -114,10 +113,10 @@ const setMapStyle = (type) => {
   $q.loading.hide()
 }
 
-const reloadFullMap = (positions) => {
+const reloadFullMap = () => {
   map.addSource('markers', {
     type: 'geojson',
-    data: getGeojson(positions),
+    data: getGeojson(),
   })
   map.addLayer({
     id: 'marker-layer',
@@ -125,7 +124,21 @@ const reloadFullMap = (positions) => {
     source: 'markers',
     paint: {
       'circle-radius': 8,
-      'circle-color': '#73ab84',
+      // 'circle-color': '#73ab84',
+      'circle-color': [
+        'match',
+        ['get', 'state'],
+        '0808344c-454b-4c36-89e8-d7687e692d57',
+        '#2ecc71',
+        'baff9783-84e8-4e01-874b-6fd743b875ad',
+        '#f1c40f',
+        '03b2d446-e3ba-4c82-8dc2-a5611fea6e1f',
+        '#e74c3c',
+        '#ccc',
+      ],
+      'circle-stroke-color': 'white',
+      'circle-stroke-width': 1,
+      // 'circle-opacity': 0.5,
     },
   })
 }
@@ -137,9 +150,8 @@ onBeforeMount(() => {
 })
 
 onMounted(async () => {
-  const positions = props.data.positions
-
-  const { lat, lon } = positions[positions.length - 1]
+  const positions = props.data[0].position
+  const { lat, lon } = positions
   const lngLat = [lon, lat]
 
   map = new mapboxgl.Map({
@@ -162,7 +174,7 @@ onMounted(async () => {
 
   map.on('style.load', async () => {
     map.setFog({})
-    reloadFullMap(positions)
+    reloadFullMap()
 
     bus.on('changeTheme', () => {
       setMapStyle($q.dark.isActive ? 'dark' : 'streets')
@@ -172,8 +184,7 @@ onMounted(async () => {
   map.on('load', async () => {
     map.on('click', 'marker-layer', (e) => {
       const coordinates = e.features[0].geometry.coordinates
-      const properties = e.features[0].properties
-      console.log('🚀 ~ map.on ~ coordinates:', coordinates, properties)
+      const properties = JSON.parse(e.features[0].properties.data)
 
       const mountPoint = document.createElement('div')
       const popupContentApp = createApp(PopupContent, {
@@ -182,6 +193,7 @@ onMounted(async () => {
       })
 
       popupContentApp.use(Quasar, {})
+      popupContentApp.use(router)
       popupContentApp.mount(mountPoint)
 
       popup.setLngLat(coordinates).setDOMContent(mountPoint).addTo(map)
@@ -198,7 +210,7 @@ onMounted(async () => {
     map.on('idle', () => {
       if (!map.getLayer('marker-layer')) {
         console.error('Erro ao carregar layers')
-        reloadFullMap(positions)
+        reloadFullMap()
       }
     })
   })

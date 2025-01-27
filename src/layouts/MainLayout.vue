@@ -84,11 +84,29 @@ const changeTheme = () => {
 
 const fetchData = async () => {
   try {
-    const response = await MiddlewareService.GetData('equipment')
-    eqpStore.setData(response)
-
+    const respState = await MiddlewareService.GetData('equipmentState')
+    eqpStore.setState(respState)
     const respModel = await MiddlewareService.GetData('equipmentModel')
     eqpStore.setModel(respModel)
+    const respHistory = await MiddlewareService.GetData('equipmentStateHistory')
+    eqpStore.setHistory(respHistory)
+    const respPosition = await MiddlewareService.GetData('equipmentPositionHistory')
+    eqpStore.setPosition(respPosition)
+
+    const response = await MiddlewareService.GetData('equipment')
+    const lstEquipment = response.map((eqp) => {
+      const lstStates = respHistory.find((history) => history.equipmentId === eqp.id).states
+      const lstPositions = respPosition.find((pos) => pos.equipmentId === eqp.id).positions
+      return {
+        ...eqp,
+        model: respModel.find((model) => model.id === eqp.equipmentModelId).name,
+        state: respState.find(
+          (state) => state.id == lstStates[lstStates.length - 1].equipmentStateId,
+        ),
+        position: lstPositions[lstPositions.length - 1],
+      }
+    })
+    eqpStore.setData(lstEquipment)
   } catch (error) {
     triggerNegative(error || 'Erro')
   }
