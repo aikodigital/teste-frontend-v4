@@ -4,7 +4,7 @@ Este projeto demonstra como acessar informações de equipamentos utilizados em 
 
 Além disso na sidebar contamos com um visualização de Mapa, onde é possível ver a localização mais recente dos equipamentos, sendo que cada círculo contém a cor do status. Ao clicar em um equipamento, é exibido informações sobre nome, modelo, status e date da posição.
 
-Ao clicar no botão de acesso ao histórico dentro do popup ou clicar na tela inicial em um dos cards dos equipmaentos é redirecionado para a tela de listagem de histórico, onde é possível ver o histórico de estados de um equipamento. Também é possível, utilizando os filtros, filtrar os dados da tabela, por equipamento ou status (TODO: filtro por modelo)
+Ao clicar no botão de acesso ao histórico dentro do popup ou clicar na tela inicial em um dos cards dos equipamentos é redirecionado para a tela de listagem de histórico, onde é possível ver o histórico de estados de um equipamento. Também é possível, utilizando os filtros, filtrar os dados da tabela, por equipamento ou status (TODO: filtro por modelo)
 
 Clicando em histórico de posições é exibido todas as posições de um equipamento específico, com a ligação dos pontos por onde passou.
 
