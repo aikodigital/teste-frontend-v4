@@ -9,7 +9,8 @@
       >
         <div class="flex flex-nowrap items-center justify-center gap-3 w-full p-1">
           <q-card
-            class="rounded-3xl w-[225px] font-bold text-md text-dark"
+            class="rounded-3xl w-[225px] font-bold text-md text-dark hover:cursor-pointer"
+            @click="$router.push(`/history/${equipment.equipment.id}`)"
             :style="{ backgroundColor: getColorByIndex(idx) }"
             v-for="(equipment, idx) in formHistory"
             :key="equipment.id"

@@ -1,5 +1,22 @@
 <template>
   <q-card-section class="flex flex-col gap-3 w-full">
+    <div class="flex justify-end w-full">
+      <q-btn
+        color="primary"
+        label="Histórico de Posições"
+        icon="bi-geo-alt-fill"
+        @click="
+          () => {
+            $router.push({
+              path: '/map',
+              query: { id: filters.equipment.value },
+            })
+          }
+        "
+        :disable="!filters.equipment?.value"
+        push
+      />
+    </div>
     <q-expansion-item
       class="shadow-1 overflow-hidden rounded-3xl w-full"
       header-class="bg-accent text-primary"
