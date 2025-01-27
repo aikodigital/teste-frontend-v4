@@ -1,6 +1,6 @@
 # Map Equipment (map-equipment)
 
-Este projeto demonstra como acessar informações de equipamentos utilizados em uma operação florestal como histórico de posições e estados desses equipamentos. É possíel visualizar uma dashboard inicial com algumas informações como status atual de cada equipamento, um somatório total dos equipamentos em cada estados. (TODO: cálculo de produtividade e ganho por equipamento)
+Este projeto demonstra como acessar informações de equipamentos utilizados em uma operação florestal como histórico de posições e estados desses equipamentos. É possível visualizar uma dashboard inicial com algumas informações como status atual de cada equipamento, um somatório total dos equipamentos em cada estados. (TODO: cálculo de produtividade e ganho por equipamento)
 
 Além disso na sidebar contamos com um visualização de Mapa, onde é possível ver a localização mais recente dos equipamentos, sendo que cada círculo contém a cor do status. Ao clicar em um equipamento, é exibido informações sobre nome, modelo, status e date da posição. (TODO: exibição de todas as posições de um equipamento específico e ligar os pontos)
 
