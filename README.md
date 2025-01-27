@@ -22,8 +22,6 @@ Substitua `SUA_API_MAPBOX` pela API KEY do Mapbox, necessário para exibição c
 
 ### Requirements 📋
 
-_Node.js._
-
 _Vue.js._
 
 ### Run Application 🔧
