@@ -1,6 +1,18 @@
 # Teste Frontend V4
-
 ![Aiko](img/aiko.png)
+
+Se preferir rodar a aplicação dentro de um container Docker, siga os passos abaixo:
+
+    Construa a imagem Docker:
+
+    docker build -t testeaiko .
+
+    Execute o container:
+
+    docker run -d -p 5173:5173 --name testeaiko testeaiko
+
+    A aplicação estará acessível em http://localhost:5173/.
+
 
 Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
 
