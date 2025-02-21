@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+.leaflet-control-zoom {
+  top: 80px !important;
+}
