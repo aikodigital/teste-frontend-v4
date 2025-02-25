@@ -1,0 +1,5 @@
+{
+  "*.vue": "npm run lint:fix",
+  "*.ts": "npm run lint:fix",
+  "*.js": "npm run lint:fix"
+}
