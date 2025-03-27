@@ -1,0 +1,40 @@
+.equipment-search {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .equipment-search label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .equipment-search input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 250px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+  }
+  
+  .equipment-search input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .equipment-search input::placeholder {
+    color: #aaa;
+  }
+  
+  @media (max-width: 768px) {
+    .equipment-search {
+      width: 100%;
+    }
+    
+    .equipment-search input {
+      width: 100%;
+    }
+  }

@@ -216,3 +216,7 @@ Para realizar a entrega do teste você deve:
 
 
 **📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+
+
+
+*** LINK DO VIDEO NO DRIVE: https://drive.google.com/file/d/1c6JwLXClV0IL14TQKeN2a63T4lF1J5Xz/view?usp=sharing  ***
