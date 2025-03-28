@@ -1,0 +1,27 @@
+@import 'leaflet/dist/leaflet.css'; 
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Estilos base */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+   background-image: none; 
+}
+
+/* Container do mapa - altura e largura */
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+}
