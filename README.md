@@ -1,3 +1,13 @@
+
+# Teste frontend v4 Flávia Brunetta Daboit
+
+Projeto desenvolvido para o teste da vaga de desenvolvedor frontend da Aiko
+
+https://drive.google.com/drive/folders/1nTxsvPLsB8-I64fo279dsnr4IxRDb2ci?usp=drive_link
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
