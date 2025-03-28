@@ -1,0 +1,86 @@
+/* informs.css */
+.productivity {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.productivity h3 {
+  font-size: 2em;
+  color: #34495e;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.productivity .dados {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.productivity .dados ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.productivity .dados ul li {
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1em;
+  color: #2c3e50;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productivity .dados ul li strong {
+  color: #2980b9;
+}
+
+.productivity .dados ul li span {
+  color: #7f8c8d;
+}
+
+.productivity .recharts-wrapper {
+  flex: 1;
+  max-width: 600px;
+  margin-top: 30px;
+}
+
+.recharts-wrapper .recharts-legend-item {
+  font-size: 14px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.recharts-wrapper .recharts-tooltip-item {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .productivity .dados {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .productivity .dados ul {
+    width: 90%;
+  }
+
+  .productivity h3 {
+    font-size: 1.6em;
+  }
+}

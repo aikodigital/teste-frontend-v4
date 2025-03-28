@@ -1,0 +1,73 @@
+/* maps.css */
+.maps {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.maps h3 {
+  color: #34495e;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.maps p {
+  font-size: 1em;
+  color: #7f8c8d;
+  margin: 5px 0;
+}
+
+.maps p strong {
+  color: #2c3e50;
+}
+
+.maps h5 {
+  font-size: 1.3em;
+  color: #2980b9;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.maps .google-map {
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.maps .history-container {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.maps .history-container h5 {
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.maps .history-entry {
+  padding: 10px;
+  border-radius: 5px;
+  background: #f4f4f4;
+  margin-bottom: 10px;
+}
+
+.maps .history-entry p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.maps .history-entry strong {
+  color: #2980b9;
+}
+
+.maps .history-entry hr {
+  border: none;
+  height: 1px;
+  background: #ddd;
+  margin: 10px 0;
+}

@@ -1,0 +1,39 @@
+# Node modules
+/node_modules/
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios e arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Ambiente de build
+/dist
+/build
+
+# Arquivos do ambiente de desenvolvimento
+.env
+.env.local
+.env.*.local
+
+# Dependências do gerenciador de pacotes
+package-lock.json
+yarn.lock
+
+# Arquivos temporários
+*.swp
+*.swo
+
+# Arquivos de configuração do editor (ex: VSCode)
+.vscode/
+.idea/
+
+# Arquivos de configuração do sistema de versões
+*.bak
+*.tmp
