@@ -1,16 +1,17 @@
 <template>
   <div>
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4">
-        
-        </v-col>
-      </v-row>
-    </v-container>
+    <LazyMapCluster />
   </div>
 </template>
+<script>
+import { LazyMapCluster, MapCluster } from '#components'; 
 
-<script lang="ts">
-
+export default {
+  components: {
+    MapCluster
+  }
+}
 </script>
+
+
 

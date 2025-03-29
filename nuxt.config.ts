@@ -20,6 +20,13 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/assets/styles/variables.scss";`
+        }
+      }
+    }
   },
 
   compatibilityDate: '2025-03-28',
