@@ -36,7 +36,7 @@
                 }"
                 @closeclick="onInfoWindowClose"
               >
-                <InfoEquipment :equipment="selectedEquipment" :allStatus="allStatus" />
+                <InfoEquipment :equipment="selectedEquipment" :all-status="allStatus" />
               </InfoWindow>
             </template>
             </CustomMarker>
@@ -81,6 +81,7 @@ export default {
     this.equipamentPositions = await EquipmentService.getEquipmentPositions()
     this.center = this.getInitialCenter()
   },
+
 
   methods: {
     getInitialCenter() {

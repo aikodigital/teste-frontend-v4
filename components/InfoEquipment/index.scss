@@ -17,5 +17,15 @@
     &--title {
       font-size: $font-big;
     }
+
+    &--history {
+      max-height: 500px;
+      height: auto;
+      overflow-y: auto;
+
+      @media screen and (max-width: 768px) {
+        max-height: 300px;
+      }
+    }
   }
 }

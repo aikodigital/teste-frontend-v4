@@ -32,8 +32,14 @@
           <template v-slot:text>
             <v-row>
               <v-col cols="12" md="4" sm="12">
-                <h4 class="info-equipment__card--title">Histórico do equipamento</h4>
-                {{ formatEquipmentStatus() }}
+                <h4 class="info-equipment__card--title mb-5">Histórico do equipamento</h4>
+                <div class="info-equipment__card--history">
+                  <EquipmentHistory
+                    v-for="(equipment, index) in formatEquipmentStatus()"
+                    :key="index"
+                    :equipment-history="equipment" 
+                  />
+                </div>
               </v-col>
               <v-col cols="12" md="8" sm="12">
                 Performance TODO
@@ -57,6 +63,8 @@
 import type { IEquipmentInfo, IAllEquipmentStates, IEquipamentState, IEquipmentStatusHistory } from "@/interfaces/IEquipament"
 
 export default {
+  name: "InfoEquipment",
+
   props: {
     equipment :{
       type: Object as () => IEquipmentInfo,
@@ -76,10 +84,11 @@ export default {
      */
     formatEquipmentStatus(): IEquipmentStatusHistory[] {
       return this.equipment.states.map(state => {
-        const status = this.allStatus.find(status => status.id === state.equipmentStateId)?.name ?? ''
+        const status = this.allStatus.find(status => status.id === state.equipmentStateId)
         return {
           date: state.date,
-          status
+          status: status?.name ?? '',
+          color: status?.color ?? ''
         }
       })
     },
