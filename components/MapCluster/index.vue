@@ -30,7 +30,7 @@
               <InfoWindow 
                 :options="{ 
                   position: {
-                    lat: (equipment.lastPosition.lat + 0.04),
+                    lat: equipment.lastPosition.lat,
                     lng: equipment.lastPosition.lon
                   },
                 }"

@@ -54,3 +54,8 @@ export interface IEquipmentInfo extends IEquipmentStateHistory {
   name: string,
   model: string
 }
+
+export interface IEquipmentStatusHistory {
+  date: string;
+  status: string
+}
