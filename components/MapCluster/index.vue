@@ -20,14 +20,25 @@
                 }
               }"
             >
-            <div class="custom-marker">
-              <v-icon icon="mdi-truck-outline" class="custom-marker__icon" />
-              <v-icon icon="mdi-tractor-variant" class="custom-marker__icon" />
-              <v-icon icon="mdi-rake" class="custom-marker__icon" />
+            <div class="custom-marker" @click="selectEquipment(equipment.equipmentId)">
+              <v-icon size="large" :icon="getMarkerIcon(equipment.equipmentId)" class="custom-marker__icon" />
               <div  class="custom-marker__name">
                 {{ getEquipmentName(equipment.equipmentId) }}
               </div>
             </div>
+            <template v-if="selectedEquipment && selectedEquipment.equipmentId === equipment.equipmentId">
+              <InfoWindow 
+                :options="{ 
+                  position: {
+                    lat: (equipment.lastPosition.lat + 0.04),
+                    lng: equipment.lastPosition.lon
+                  },
+                }"
+                @closeclick="onInfoWindowClose"
+              >
+                <InfoEquipment :equipment="selectedEquipment" :allStatus="allStatus" />
+              </InfoWindow>
+            </template>
             </CustomMarker>
           </MarkerCluster>
         </GoogleMap>
@@ -36,9 +47,9 @@
   </v-container>
 </template>
 <script lang="ts">
-import { GoogleMap, CustomMarker , MarkerCluster  } from 'vue3-google-map'
-import EquipamentService from '@/services/EquipmentService';
-import type { IEquipmentPositionHistory } from '~/interfaces/IEquipament';
+import { GoogleMap, CustomMarker , MarkerCluster, InfoWindow } from 'vue3-google-map'
+import EquipmentService from '@/services/EquipmentService';
+import type { IEquipmentInfo, IEquipmentPositionHistory } from '@/interfaces/IEquipament';
 import EquipmentMixin from '@/mixins/EquipmentMixin';
 
 type MapPosition = {
@@ -54,18 +65,20 @@ export default {
   data () {
     return {
       center: undefined as MapPosition | undefined,
-      equipamentPositions: [] as IEquipmentPositionHistory[], 
+      equipamentPositions: [] as IEquipmentPositionHistory[],
+      selectedEquipment: {} as IEquipmentInfo | null
     }
   },
 
   components: {
     GoogleMap,
     CustomMarker,
-    MarkerCluster
+    MarkerCluster,
+    InfoWindow
   },
 
   async mounted () {
-    this.equipamentPositions = await EquipamentService.getEquipmentPositions()
+    this.equipamentPositions = await EquipmentService.getEquipmentPositions()
     this.center = this.getInitialCenter()
   },
 
@@ -75,7 +88,15 @@ export default {
         lat: this.equipamentPositions[0].lastPosition.lat,
         lng: this.equipamentPositions[0].lastPosition.lon
       }
-    }
+    },
+
+    async selectEquipment(equipmentId: string) {
+      this.selectedEquipment = await this.formatSelectedEquipment(equipmentId)
+    },
+
+    onInfoWindowClose() {
+      this.selectedEquipment = null
+    },
   }
 }
 </script>

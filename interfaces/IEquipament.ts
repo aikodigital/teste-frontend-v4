@@ -39,7 +39,7 @@ export interface IAllEquipmentStates {
  color: string
 }
 
-interface IEquipamentState {
+export interface IEquipamentState {
   equipmentStateId: string;
   date: string
 }
@@ -48,4 +48,9 @@ interface IEquipamentState {
 export interface IEquipmentStateHistory {
   equipmentId: string;
   states:IEquipamentState[],
+}
+
+export interface IEquipmentInfo extends IEquipmentStateHistory {
+  name: string,
+  model: string
 }

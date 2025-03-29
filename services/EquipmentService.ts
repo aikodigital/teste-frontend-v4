@@ -18,7 +18,7 @@ export default class EquipmentService {
    * Retrieves all available equipment models.
    * @returns {Promise<IEquipmentModel[]>}
    */
-  static async getEquipamentModel(): Promise<IEquipmentModel[]> {
+  static async getEquipmentModels(): Promise<IEquipmentModel[]> {
     const data = await import("@/data/equipmentModel.json")
 
     return data.default
@@ -47,7 +47,7 @@ export default class EquipmentService {
    * Retrieves all available equipment states.
    * @returns {Promise<IAllEquipmentStates[]>}
    */
-  static async getAvailableStates (): Promise<IAllEquipmentStates[]> {
+  static async getAvailableStates(): Promise<IAllEquipmentStates[]> {
     const data = await import("@/data/equipmentState.json");
 
     return  data.default
@@ -57,9 +57,13 @@ export default class EquipmentService {
    * Retrieves the historical states of equipment.
    * @returns {Promise<IEquipmentStateHistory[]>}
    */
-  async getEquipmentStates(): Promise<IEquipmentStateHistory[]> {
+  static async getEquipmentStates(equipmentId: string): Promise<IEquipmentStateHistory> {
     const data = await import("@/data/equipmentStateHistory.json");
-
-    return  data.default
+    const filteredData = data.default.find((item: IEquipmentStateHistory) => item.equipmentId === equipmentId);
+    const defaultObj = {
+      equipmentId: '',
+      states:[],
+    }
+    return filteredData ?? defaultObj;
   }
 }
