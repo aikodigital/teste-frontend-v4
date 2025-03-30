@@ -31,7 +31,7 @@
           </template>
           <template v-slot:text>
             <v-row>
-              <v-col cols="12" md="4" sm="12">
+              <v-col cols="12" md="5" sm="12">
                 <h4 class="info-equipment__card--title mb-5">Histórico do equipamento</h4>
                 <div class="info-equipment__card--history">
                   <EquipmentHistory
@@ -41,9 +41,9 @@
                   />
                 </div>
               </v-col>
-              <v-col cols="12" md="8" sm="12">
+              <v-col cols="12" md="7" sm="12">
                 <h4 class="info-equipment__card--title mb-5">Performance</h4>
-                <EquipmentPerformance :equipment-activies="formatActivities()" />
+                <EquipmentPerformance :equipment-activies="formatActivities()" :equipment-earnings="earnings" />
               </v-col>
             </v-row> 
           </template>
@@ -53,8 +53,10 @@
   </div>
 </template>
 <script lang="ts">
-import type { IEquipmentInfo, IAllEquipmentStates, IEquipamentState, IEquipmentStatusHistory } from "@/interfaces/IEquipament"
+import type { IEquipmentInfo, IAllEquipmentStates, IEquipamentState, IEquipmentStatusHistory, IEquipmentEarn } from "@/interfaces/IEquipament"
 import { EquipmentHistory, EquipmentPerformance } from "#components"
+import EquipmentService from "@/services/EquipmentService";
+
 export default {
   name: "InfoEquipment",
 
@@ -72,6 +74,16 @@ export default {
       type: Array as () => IAllEquipmentStates[],
       required: true
     }
+  },
+
+  data() {
+    return {
+      earnings: [] as IEquipmentEarn[] | undefined
+    }
+  },
+
+  async mounted() {
+    this.earnings = await this.getEarnings()
   },
 
   methods: {
@@ -104,6 +116,17 @@ export default {
        
         return activity
       }));
+    },
+
+    /**
+     * Retrieves the hourly earnings for the equipment based on its ID.
+     * 
+     * @returns {Promise<IEquipmentEarn[] | undefined>} A promise that resolves to an array of hourly earnings for the equipment, or undefined if no data is found.
+     */
+    async getEarnings(): Promise<IEquipmentEarn[] | undefined> {
+      const earnings = await EquipmentService.getHourlyEarningById(this.equipment.equipmentId)
+
+      return earnings
     }
    },
 

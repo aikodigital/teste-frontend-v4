@@ -1,4 +1,4 @@
-import type { IEquipment, IEquipmentModel, IEquipmentPositionHistory, IEquipmentStateHistory, IAllEquipmentStates } from "@/interfaces/IEquipament"
+import type { IEquipment, IEquipmentModel, IEquipmentPositionHistory, IEquipmentStateHistory, IAllEquipmentStates, IEquipmentEarn } from "@/interfaces/IEquipament"
 
 /**
  * Service responsible for fetching equipment-related data.
@@ -59,11 +59,34 @@ export default class EquipmentService {
    */
   static async getEquipmentStates(equipmentId: string): Promise<IEquipmentStateHistory> {
     const data = await import("@/data/equipmentStateHistory.json");
-    const filteredData = data.default.find((item: IEquipmentStateHistory) => item.equipmentId === equipmentId);
+    const filteredData = data.default.find((equipment: IEquipmentStateHistory) => equipment.equipmentId === equipmentId);
     const defaultObj = {
       equipmentId: '',
       states:[],
     }
     return filteredData ?? defaultObj;
+  }
+
+  /**
+   * Retrieves the hourly earnings for a specific equipment by its ID.
+   * 
+   * @param {string} equipmentId - The ID of the equipment for which to retrieve hourly earnings.
+   * @returns {Promise<IEquipmentEarn[] | undefined>} A promise that resolves to an array of hourly earnings for the specified equipment, or undefined if no data is found.
+   */
+  static async getHourlyEarningById(equipmentId: string): Promise<IEquipmentEarn[] | undefined> {
+    const equipment = await EquipmentService.getEquipaments()
+    const equipmentModel = await EquipmentService.getEquipmentModels();
+    const states = await EquipmentService.getAvailableStates()
+
+    const currentEquipment = equipment.find(equipment => equipment.id === equipmentId);
+    const currentModel = equipmentModel.find(model => model.id === currentEquipment?.equipmentModelId)
+
+    return currentModel?.hourlyEarnings.map(item => {
+      const currentState = states.find(state => state.id === item.equipmentStateId)
+      return {
+        ...item,
+        stateLabel: currentState?.name ?? ''
+      }
+    })
   }
 }

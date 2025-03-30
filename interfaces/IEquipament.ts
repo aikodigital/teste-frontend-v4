@@ -6,9 +6,10 @@ export interface IEquipment {
 }
 
 /** Represents the earnings of an equipment. */
-interface IEquipmentEarn {
+export interface IEquipmentEarn {
   equipmentStateId: string;
   value: number;
+  stateLabel?: string
 }
 
 /** Represents an equipment model. */

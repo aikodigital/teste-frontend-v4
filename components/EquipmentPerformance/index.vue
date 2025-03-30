@@ -2,6 +2,18 @@
   <div>
     <template v-if="performance">
       <v-row>
+        <v-col cols="12" sm="12">
+          <v-card class="text-center mb-4" rounded="lg" variant="tonal" elevation="2">
+            <v-card-title class="text-h5 font-weight-bold mt-3">
+              <v-chip color="green" class="text-h5 font-weight-bold">
+                {{ earnsProvided }}
+              </v-chip>
+            </v-card-title>
+            <v-card-subtitle class="text-subtitle-1 mt-2 mb-3">
+              Ganhos gerais com o equipamento
+            </v-card-subtitle>
+          </v-card>
+        </v-col>
         <v-col cols="12" md="6" sm="12" class="d-flex align-center justify-center flex-column ">
           <v-progress-circular
             :model-value="performance.allProductivity"
@@ -31,10 +43,16 @@
   </div>
 </template>
 <script lang="ts">
-import type { IEquipmentStatusHistory } from "@/interfaces/IEquipament"
+import type { IEquipmentEarn, IEquipmentStatusHistory } from "@/interfaces/IEquipament"
 import type { IActivity, IPerformance, IProductivity } from "@/interfaces/IActivity";
 import { Status } from "@/enums/Status"
 import { TimeConstants } from "@/enums/TimeConstants";
+
+interface IHoursByStatus {
+  manutening: number;
+  stopped: number;
+  operating: number;
+}
 
 export default {
   nmame: 'EquipmentPerformence',
@@ -43,18 +61,29 @@ export default {
     equipmentActivies: {
       type: Array as () => IEquipmentStatusHistory[],
       required: true
+    },
+    equipmentEarnings: {
+      type: Array as () => IEquipmentEarn[] | undefined
     }
   },
 
   data () {
     return {
-      performance: {} as IPerformance | null
+      performance: {} as IPerformance | null,
+      activitiesFormatted: [] as IActivity[],
+      earnsProvided: '' as String,
+      hoursByStatus: {
+        manutening: 0,
+        stopped: 0,
+        operating: 0
+      } as IHoursByStatus
     }
   },
 
   mounted () {
-    const performanceByDay: IProductivity = this.calculateHoursPerformanceByDay()
-    this.performance = this.getAllProductivity(performanceByDay)
+    this.activitiesFormatted = this.formatActivities()
+    this.performance = this.getAllProductivity(this.calculateHoursPerformanceByDay())
+    this.earnsProvided = this.calculateEarnings()
   },
 
   methods: {
@@ -80,26 +109,40 @@ export default {
             const startOfDay = new Date(day).setUTCHours(0, 0, 0, 0);
             const diffHours = (new Date(current.date).getTime() - startOfDay) / TimeConstants.MILLISECONDS_IN_AN_HOUR;
             notProductiveHours[day] += diffHours;
+            if (current.status === Status.STOPPED) {
+              this.hoursByStatus.stopped += diffHours;
+            } else {
+              this.hoursByStatus.manutening += diffHours;
+            }
           }
         }
 
         if (next) {
           const diffHours = (new Date(next.date).getTime() - new Date(current.date).getTime()) / TimeConstants.MILLISECONDS_IN_AN_HOUR;
-          if (current.status === Status.STOPED || current.status === Status.MANUTENING) {
-              notProductiveHours[day] += diffHours;
-          }
-        } else {
-          if (current.status === Status.STOPED || current.status === Status.MANUTENING) {
-              const endOfDay = new Date(day).setUTCHours(24, 0, 0, 0);
-              const diffHours = (endOfDay - new Date(current.date).getTime()) / TimeConstants.MILLISECONDS_IN_AN_HOUR;
-              notProductiveHours[day] += diffHours;
+          if (current.status === Status.STOPPED || current.status === Status.MANUTENING) {
+            notProductiveHours[day] += diffHours;
+            if (current.status === Status.STOPPED) {
+              this.hoursByStatus.stopped += diffHours;
+            } else {
+              this.hoursByStatus.manutening += diffHours;
+            }
           }
         }
 
         lastStatus = current.status;
       }
-
       return notProductiveHours;
+    },
+
+    formatActivities(): IActivity[] {
+      return this.equipmentActivies.map(activity => {
+        const day = activity.date.split('T')[0]
+
+        return {
+          ...activity,
+          day
+        }
+      })
     },
 
     /**
@@ -108,21 +151,12 @@ export default {
      * @returns {IProductivity} An object where keys are days and values are the total productive hours for each day.
      */
     calculateHoursPerformanceByDay(): IProductivity {
-      const activitiesFormatted: IActivity[] = this.equipmentActivies.map(activity => {
-        const day = activity.date.split('T')[0]
-
-        return {
-          ...activity,
-          day
-        }
-      })
-      const hoursNotPerformedByDay = this.calculateHoursNotPerformedByDay(activitiesFormatted)
+      const hoursNotPerformedByDay = this.calculateHoursNotPerformedByDay(this.activitiesFormatted)
       const productiveHours: IProductivity = {};
 
       for (let day in hoursNotPerformedByDay) {
         productiveHours[day] = (24 - hoursNotPerformedByDay[day])
       }
-
       return productiveHours
     },
 
@@ -141,11 +175,35 @@ export default {
       const lastWeekDays: string[] = Object.keys(performanceByDay).slice(-7); 
       const lastWeekProductivityHours: number = lastWeekDays.reduce((sum, day) => sum + performanceByDay[day], 0);
       const lastWeekProductivity: number = (lastWeekProductivityHours / lastWeekHours) * 100
+      this.hoursByStatus.operating = productiveHours
 
       return {
         allProductivity: AllTimeProductivity.toFixed(1),
         lastWeekProductivity: lastWeekProductivity.toFixed(1)
       }
+    },
+
+
+    /**
+     * Calculates the total earnings based on the hours worked in different states of the equipment.
+     * 
+     * @returns {string} The total earnings calculated from the operating, manutening, and stopped hours formatted.
+     */
+    calculateEarnings(): string {
+      const { manutening = 0, operating = 0, stopped = 0 } = this.hoursByStatus || {};
+      const getEarningValue = (stateLabel: string) =>
+        this.equipmentEarnings?.find(item => item.stateLabel === stateLabel)?.value ?? 0;
+
+      const operatingValue = getEarningValue(Status.OPERATING);
+      const manuteningValue = getEarningValue(Status.MANUTENING);
+      const stoppedValue = getEarningValue(Status.STOPPED);
+
+      const value = (operating * operatingValue) + (manutening * manuteningValue) + (stopped * stoppedValue);
+
+      return  new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(value);
     }
   }
 }
