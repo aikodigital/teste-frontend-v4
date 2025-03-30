@@ -1,3 +1,5 @@
 export const enum Status {
-  OPERATING = 'Operando'
+  OPERATING = 'Operando',
+  STOPED = 'Parado',
+  MANUTENING = 'Manutenção'
 }
