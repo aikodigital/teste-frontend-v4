@@ -3,8 +3,8 @@
     <v-row>
       <v-col v-if="equipamentPositions.length > 0" cols="12" md="12" sm="4">
         <GoogleMap
-          api-key="AIzaSyAbhpwTTqP7cwbfd4nNjTGcFtDUJbxofmI"
-          mapId="b21087b65bb7d8b"
+          :api-key="apiKey"
+          :mapId="mapId"
           style="width: 100%; height: 500px"
           :center="center"
           :zoom="10"
@@ -66,7 +66,9 @@ export default {
     return {
       center: undefined as MapPosition | undefined,
       equipamentPositions: [] as IEquipmentPositionHistory[],
-      selectedEquipment: {} as IEquipmentInfo | null
+      selectedEquipment: {} as IEquipmentInfo | null,
+      apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+      mapId: import.meta.env.VITE_GOOGLE_MAPS_MAP_ID,
     }
   },
 
