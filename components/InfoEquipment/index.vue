@@ -100,7 +100,7 @@ export default {
           status: status?.name ?? '',
           color: status?.color ?? ''
         };
-      })
+      }).reverse()
     },
 
     /**
