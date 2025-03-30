@@ -61,3 +61,9 @@ export interface IEquipmentStatusHistory {
   status: string;
   color?: string;
 }
+
+export interface IEquipmentFilterName {
+  name: string;
+  equipmentId: string;
+  status: boolean;
+}
