@@ -35,7 +35,7 @@
                 <h4 class="info-equipment__card--title mb-5">Histórico do equipamento</h4>
                 <div class="info-equipment__card--history">
                   <EquipmentHistory
-                    v-for="(equipment, index) in formatEquipmentStatus()"
+                    v-for="(equipment, index) in getEquipments()"
                     :key="index"
                     :equipment-history="equipment" 
                   />
@@ -100,7 +100,7 @@ export default {
           status: status?.name ?? '',
           color: status?.color ?? ''
         };
-      }).reverse()
+      })
     },
 
     /**
@@ -127,6 +127,10 @@ export default {
       const earnings = await EquipmentService.getHourlyEarningById(this.equipment.equipmentId)
 
       return earnings
+    },
+
+    getEquipments(): IEquipmentStatusHistory[] {
+      return  this.formatEquipmentStatus().reverse()
     }
    },
 
