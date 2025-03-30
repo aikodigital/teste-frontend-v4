@@ -58,6 +58,12 @@ export default {
   },
 
   methods: {
+    /**
+     * Calculates the number of hours not performed by day based on the provided activity data.
+     * 
+     * @param {IActivity[]} data - An array of activity data containing status and date information.
+     * @returns {IProductivity} An object where keys are days and values are the total hours not performed for each day.
+     */
     calculateHoursNotPerformedByDay(data: IActivity[]): IProductivity {
       const notProductiveHours: IProductivity = {};
       let lastStatus: string = Status.OPERATING;
@@ -96,6 +102,11 @@ export default {
       return notProductiveHours;
     },
 
+    /**
+     * Calculates the productive hours by day based on the equipment activities.
+     * 
+     * @returns {IProductivity} An object where keys are days and values are the total productive hours for each day.
+     */
     calculateHoursPerformanceByDay(): IProductivity {
       const activitiesFormatted: IActivity[] = this.equipmentActivies.map(activity => {
         const day = activity.date.split('T')[0]
@@ -115,6 +126,12 @@ export default {
       return productiveHours
     },
 
+    /**
+     * Calculates overall productivity metrics based on performance data by day.
+     * 
+     * @param {IProductivity} performanceByDay - An object where keys are days and values are productive hours for each day.
+     * @returns {IPerformance} An object containing overall productivity metrics, including all-time productivity and last week's productivity.
+     */
     getAllProductivity(performanceByDay: IProductivity): IPerformance {
       const allHours: number = (Object.entries(performanceByDay).length * 24)
       const productiveHours: number = Object.values(performanceByDay).reduce((sum, hours) => sum + hours, 0);
