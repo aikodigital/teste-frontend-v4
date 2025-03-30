@@ -78,8 +78,8 @@ export default {
   },
 
   async mounted () {
-    this.equipamentPositions = await EquipmentService.getEquipmentPositions()
-    this.center = this.getInitialCenter()
+    this.equipamentPositions = await EquipmentService.getEquipmentPositions();
+    this.center = this.getInitialCenter();
   },
 
 
@@ -92,11 +92,11 @@ export default {
     },
 
     async selectEquipment(equipmentId: string) {
-      this.selectedEquipment = await this.formatSelectedEquipment(equipmentId)
+      this.selectedEquipment = await this.formatSelectedEquipment(equipmentId);
     },
 
     onInfoWindowClose() {
-      this.selectedEquipment = null
+      this.selectedEquipment = null;
     },
   }
 }

@@ -58,5 +58,5 @@ export interface IEquipmentInfo extends IEquipmentStateHistory {
 export interface IEquipmentStatusHistory {
   date: string;
   status: string;
-  color: string;
+  color?: string;
 }

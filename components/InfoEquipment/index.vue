@@ -42,17 +42,10 @@
                 </div>
               </v-col>
               <v-col cols="12" md="8" sm="12">
-                Performance TODO
-                <v-progress-circular
-                  :model-value="'59'"
-                  :rotate="150"
-                  :size="80"
-                  :width="11"
-                >
-                  59
-                </v-progress-circular>
+                <h4 class="info-equipment__card--title mb-5">Performance</h4>
+                <EquipmentPerformance :equipment-activies="formatActivities()" />
               </v-col>
-            </v-row>
+            </v-row> 
           </template>
         </v-card>
       </v-bottom-sheet>
@@ -61,9 +54,14 @@
 </template>
 <script lang="ts">
 import type { IEquipmentInfo, IAllEquipmentStates, IEquipamentState, IEquipmentStatusHistory } from "@/interfaces/IEquipament"
-
+import { EquipmentHistory, EquipmentPerformance } from "#components"
 export default {
   name: "InfoEquipment",
+
+  components: {
+    EquipmentHistory,
+    EquipmentPerformance
+  },
 
   props: {
     equipment :{
@@ -84,14 +82,29 @@ export default {
      */
     formatEquipmentStatus(): IEquipmentStatusHistory[] {
       return this.equipment.states.map(state => {
-        const status = this.allStatus.find(status => status.id === state.equipmentStateId)
+        const status = this.allStatus.find(status => status.id === state.equipmentStateId);
         return {
           date: state.date,
           status: status?.name ?? '',
           color: status?.color ?? ''
-        }
+        };
       })
     },
+
+    /**
+     * Formats the activities by removing the color property from each equipment status history object.
+     * 
+     * @returns {IEquipmentStatusHistory[]} An array of equipment status history objects without the color property.
+     */
+    formatActivities(): IEquipmentStatusHistory[] {
+      const activities: IEquipmentStatusHistory[] = this.formatEquipmentStatus();
+
+      return activities.map((activity => {
+        delete activity.color
+       
+        return activity
+      }));
+    }
    },
 
   computed: {
@@ -101,11 +114,11 @@ export default {
      * @returns {IAllEquipmentStates | undefined} The current status object or undefined if not found.
      */
     getCurrentStatus(): IAllEquipmentStates  | undefined {
-      const equipmentStates: IEquipamentState[] = this.equipment.states
-      const lastState: IEquipamentState = equipmentStates[equipmentStates.length - 1]
-      const status: IAllEquipmentStates | undefined = this.allStatus.find((status) => status.id === lastState.equipmentStateId)
+      const equipmentStates: IEquipamentState[] = this.equipment.states;
+      const lastState: IEquipamentState = equipmentStates[equipmentStates.length - 1];
+      const status: IAllEquipmentStates | undefined = this.allStatus.find((status) => status.id === lastState.equipmentStateId);
 
-      return status
+      return status;
     }
   }
 }
