@@ -4,6 +4,12 @@
 
 Aplicação web desenvolvida para a gestão de equipamentos utilizados em operações florestais. A aplicação coleta e exibe dados sobre o histórico de posições e estados dos equipamentos, proporcionando uma visão detalhada com gastoe e performance das operações.
 
+## Link da aplicação em funcionamento
+https://teste-frontend-v4-ijnc.vercel.app
+
+## Link do video solicitado
+https://drive.google.com/file/d/10lZ0_g4oHWAUDidUHz6-jOT9xAqPDViu/view
+
 ## Funcionalidades
 
 
