@@ -1,0 +1,69 @@
+<template>
+  <aside
+    class="sidebar bg-primary text-white p-3 vh-100 d-flex flex-column"
+    :class="{ expanded: isExpanded }"
+    @mouseenter="isExpanded = true"
+    @mouseleave="isExpanded = false"
+  >
+    <nav class="d-flex flex-column">
+      <router-link to="/" class="nav-link">
+        <i class="bi bi-house-door"></i>
+        <span v-if="isExpanded">{{ $t("sidebar.home") }}</span>
+      </router-link>
+      <router-link to="/about" class="nav-link">
+        <i class="bi bi-info-circle"></i>
+        <span v-if="isExpanded">{{ $t("sidebar.about") }}</span>
+      </router-link>
+    </nav>
+  </aside>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  name: "BaseSidebar",
+  setup() {
+    const isExpanded = ref(false);
+    return {
+      isExpanded,
+    };
+  },
+});
+</script>
+
+<style scoped>
+.sidebar {
+  width: 60px;
+  transition: width 0.3s ease-in-out;
+  background-color: #003380 !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar.expanded {
+  width: 250px;
+}
+.nav-link {
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  transition: color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-link:hover {
+  color: #42b983;
+}
+
+i {
+  font-size: 1.2rem;
+}
+
+.router-link-exact-active {
+  color: #42b983;
+}
+</style>
