@@ -1,0 +1,105 @@
+@import './base.css';
+
+html,
+body {
+  margin: 0px;
+  font-family: 'Roboto';
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: rgba(var(--off-white), 0.1);
+}
+
+html::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(var(--off-white), 0.1);
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--van-dyke), 1);
+  border-radius: 15px;
+  border: 2px solid rgba(var(--off-white), 1);
+}
+
+body {
+  background-color: rgba(var(--cinereous), 0.2);
+}
+
+.Marcador {
+  transition: all 200ms;
+}
+
+.Marcador > div {
+  padding: 5px;
+  border-radius: 0px 12px 12px 12px;
+  border: solid 2px var(--cor);
+  background-color: rgba(var(--off-white), 1);
+  text-align: center;
+}
+
+.Marcador svg {
+  width: auto;
+  height: 30px;
+}
+
+.Marcador .Nome {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.Marcador .Modelo {
+  margin: 0;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.Marcador.Desselecionado {
+  opacity: 0.85;
+  width: 45px !important;
+  height: 44px !important;
+}
+
+.Marcador.Desselecionado > div {
+  width: 45px;
+}
+
+.Marcador.Desselecionado p {
+  display: none;
+}
+
+.Marcador.Selecionado {
+  z-index: 800 !important;
+}
+
+.MarcadorHistoricoPosicao {
+  width: 45px !important;
+  height: 44px !important;
+}
+
+.MarcadorHistoricoPosicao > div {
+  width: 45px;
+  border: solid 2px rgba(var(--van-dyke), 1);
+  background-color: rgba(var(--off-white), 1);
+}
+
+.vs--searchable .vs__dropdown-toggle {
+  height: 35px;
+}
+
+.vs__dropdown-toggle {
+  border: solid 1px rgba(var(--cinereous), 0.2) !important;
+}
+
+.vs__open-indicator,
+.vs__clear {
+  fill: rgba(var(--cinereous), 1) !important;
+}
