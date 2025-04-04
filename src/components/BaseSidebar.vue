@@ -18,18 +18,10 @@
   </aside>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 
-export default defineComponent({
-  name: "BaseSidebar",
-  setup() {
-    const isExpanded = ref(false);
-    return {
-      isExpanded,
-    };
-  },
-});
+const isExpanded = ref(false);
 </script>
 
 <style scoped>
@@ -37,6 +29,7 @@ export default defineComponent({
   width: 60px;
   transition: width 0.3s ease-in-out;
   background-color: #003380 !important;
+  max-height: calc(100vh - 150px);
   overflow: hidden;
   white-space: nowrap;
 }

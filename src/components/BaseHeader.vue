@@ -5,8 +5,8 @@
     </div>
 
     <select
-      class="language-select"
       v-model="languageStore.language"
+      class="language-select"
       @change="languageStore.setLanguage(languageStore.language)"
     >
       <option value="pt">🇧🇷 Português</option>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguageStore } from "../store/languageStore";
+import { useLanguageStore } from "@/store/languageStore";
 
 const languageStore = useLanguageStore();
 </script>
@@ -44,7 +44,6 @@ const languageStore = useLanguageStore();
   font-weight: bold;
 }
 
-/* Seletor de idioma */
 .language-select {
   background: white;
   color: black;

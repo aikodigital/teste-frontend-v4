@@ -1,22 +1,19 @@
 import { defineStore } from "pinia";
+import type {
+  Equipment,
+  EquipmentModel,
+  EquipmentPosition,
+  EquipmentState,
+  EquipmentStateHistory,
+} from "@/types/types";
 
 export const useEquipmentDataStore = defineStore("equipmentData", {
   state: () => ({
-    equipment: [] as { id: string; equipmentModelId: string; name: string }[],
-    equipmentModels: [] as {
-      id: string;
-      name: string;
-      hourlyEarnings: { equipmentStateId: string; value: number }[];
-    }[],
-    positions: [] as {
-      equipmentId: string;
-      positions: { date: string; lat: number; lon: number }[];
-    }[],
-    states: [] as { id: string; name: string; color: string }[],
-    stateHistory: [] as {
-      equipmentId: string;
-      states: { equipmentStateId: string; date: string }[];
-    }[],
+    equipment: [] as Equipment[],
+    equipmentModels: [] as EquipmentModel[],
+    positions: [] as EquipmentPosition[],
+    states: [] as EquipmentState[],
+    stateHistory: [] as EquipmentStateHistory[],
   }),
 
   actions: {
@@ -36,7 +33,7 @@ export const useEquipmentDataStore = defineStore("equipmentData", {
 
     async fetchPositions() {
       if (this.positions.length === 0) {
-        const response = await fetch("/data/equipmentPosition.json");
+        const response = await fetch("/data/equipmentPositionHistory.json");
         this.positions = await response.json();
       }
     },
@@ -55,11 +52,11 @@ export const useEquipmentDataStore = defineStore("equipmentData", {
       }
     },
 
-    getEquipmentById(id: string) {
+    getEquipmentById(id: string): Equipment | undefined {
       return this.equipment.find((eq) => eq.id === id);
     },
 
-    getStateById(id: string) {
+    getStateById(id: string): EquipmentState | undefined {
       return this.states.find((st) => st.id === id);
     },
 

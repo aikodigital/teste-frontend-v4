@@ -1,14 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <EquipmentMap />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "HomeView",
-  components: {},
-});
+<script setup lang="ts">
+import EquipmentMap from "@/components/EquipmentMap.vue";
 </script>

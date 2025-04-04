@@ -2,5 +2,9 @@
   "sidebar": {
     "home": "Início",
     "about": "Sobre"
+  },
+  "detailMap": {
+    "stateActual": "Estado atual",
+    "stateHistory": "Histórico de estados"
   }
 }

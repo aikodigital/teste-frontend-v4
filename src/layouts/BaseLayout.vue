@@ -11,26 +11,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import BaseHeader from "@/components/BaseHeader.vue";
 import BaseSidebar from "@/components/BaseSidebar.vue";
 import BaseFooter from "@/components/BaseFooter.vue";
-
-export default defineComponent({
-  name: "BaseLayout",
-  props: {
-    msg: {
-      type: String,
-      default: "Hello, World!",
-    },
-  },
-  components: {
-    BaseHeader,
-    BaseSidebar,
-    BaseFooter,
-  },
-});
 </script>
 
 <style scoped></style>
