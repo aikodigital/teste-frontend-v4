@@ -68,5 +68,8 @@ export const useEquipmentDataStore = defineStore("equipmentData", {
         ? history.states[history.states.length - 1]
         : undefined;
     },
+    getModelById(modelId: string) {
+      return this.equipmentModels.find((model) => model.id === modelId);
+    },
   },
 });

@@ -1,29 +1,49 @@
 <template>
   <header class="header px-4 py-2 d-flex align-items-center">
     <div class="logo-container">
-      <span class="logo">Logo</span>
+      <img src="/img/aiko.png" alt="Logo" class="logo-image" />
     </div>
 
-    <select
-      v-model="languageStore.language"
-      class="language-select"
-      @change="languageStore.setLanguage(languageStore.language)"
-    >
-      <option value="pt">🇧🇷 Português</option>
-      <option value="en">🇺🇸 English</option>
-    </select>
+    <div class="dropdown">
+      <button class="btn btn-light dropdown-toggle" @click="toggleDropdown">
+        <span
+          :class="`flag-icon flag-icon-${languageStore.language}`"
+          class="me-2"
+        ></span>
+      </button>
+
+      <ul v-if="showDropdown" class="dropdown-menu dropdown-menu-end show">
+        <li class="dropdown-item" @click="changeLanguage('br')">
+          <span class="flag-icon flag-icon-br"></span> {{ $t("language.br") }}
+        </li>
+        <li class="dropdown-item" @click="changeLanguage('us')">
+          <span class="flag-icon flag-icon-us"></span> {{ $t("language.us") }}
+        </li>
+      </ul>
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { useLanguageStore } from "@/store/languageStore";
 
 const languageStore = useLanguageStore();
+const showDropdown = ref(false);
+
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value;
+};
+
+const changeLanguage = (lang: string) => {
+  languageStore.setLanguage(lang);
+  showDropdown.value = false;
+};
 </script>
 
 <style scoped lang="scss">
 .header {
-  background-color: #00c100;
+  background-color: #ffffff;
   color: white;
   display: flex;
   align-items: center;
@@ -35,13 +55,15 @@ const languageStore = useLanguageStore();
 }
 
 .logo-container {
-  font-size: 1.8rem;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.logo-image {
+  height: 40px;
+  width: auto;
+  display: block;
+  margin-right: 12px;
 }
 
 .language-select {
@@ -51,5 +73,9 @@ const languageStore = useLanguageStore();
   padding: 5px;
   cursor: pointer;
   border: none;
+}
+.dropdown-menu {
+  right: 0;
+  left: auto;
 }
 </style>

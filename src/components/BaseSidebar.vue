@@ -26,12 +26,12 @@ const isExpanded = ref(false);
 
 <style scoped>
 .sidebar {
-  width: 60px;
   transition: width 0.3s ease-in-out;
   background-color: #003380 !important;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 100px);
   overflow: hidden;
   white-space: nowrap;
+  z-index: 1000;
 }
 
 .sidebar.expanded {

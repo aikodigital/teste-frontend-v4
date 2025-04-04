@@ -1,4 +1,8 @@
-{
+{ 
+  "language": {
+    "br": "Português",
+    "us": "Inglês"
+  },
   "sidebar": {
     "home": "Início",
     "about": "Sobre"

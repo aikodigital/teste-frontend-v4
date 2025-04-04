@@ -5,17 +5,25 @@
     :equipment="selectedEquipment"
     :state="selectedState"
     :state-history="computedStateHistory"
+    :model="selectedModel"
     @close="selectedEquipmentId = null"
   />
+  <transition name="slide">
+    <div v-if="showFilters" class="filters-panel">
+      <EquipmentFilters @filter-change="onFilterChange" />
+    </div>
+  </transition>
+  <EquipmentFilters @filter-change="onFilterChange" />
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from "vue";
+import { ref, computed, onMounted, nextTick, watchEffect } from "vue";
 import type { EquipmentState } from "@/types/types";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEquipmentDataStore } from "@/store/equipmentDataStore";
 import DetailsMap from "@/components/DetailsMap.vue";
+import EquipmentFilters from "@/components/EquipmentFilters.vue";
 
 const markerIcon =
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png";
@@ -34,6 +42,12 @@ L.Icon.Default.mergeOptions({
 const map = ref<L.Map>();
 const selectedEquipmentId = ref<string | null>(null);
 const dataStore = useEquipmentDataStore();
+const showFilters = ref(true);
+
+const filters = ref<{ modelId: string; stateId: string }>({
+  modelId: "",
+  stateId: "",
+});
 
 const selectedEquipment = computed(() =>
   selectedEquipmentId.value
@@ -47,6 +61,13 @@ const selectedState = computed<EquipmentState | null>(() => {
   return latest
     ? dataStore.getStateById(latest.equipmentStateId) || null
     : null;
+});
+
+const selectedModel = computed(() => {
+  if (!selectedEquipment.value) return null;
+  return (
+    dataStore.getModelById(selectedEquipment.value.equipmentModelId) || null
+  );
 });
 
 const computedStateHistory = computed(() => {
@@ -68,38 +89,72 @@ const computedStateHistory = computed(() => {
         dataStore.getStateById(entry.equipmentStateId)?.name || "Desconhecido",
       color: dataStore.getStateById(entry.equipmentStateId)?.color || "#ccc",
     }))
-    .sort(
-      (a: { date: string }, b: { date: string }) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 });
+
 onMounted(async () => {
   await dataStore.fetchPositions();
   await dataStore.fetchEquipment();
   await dataStore.fetchStates();
   await dataStore.fetchStateHistory();
+  await dataStore.fetchEquipmentModels();
   await nextTick();
 
   const el = document.getElementById("map");
   if (!el) return;
 
-  map.value = L.map(el).setView([-19.15, -45.99], 10);
+  map.value = L.map(el, {
+    center: [-19.15, -45.99],
+    zoom: 10,
+    worldCopyJump: false,
+    maxZoom: 18,
+    minZoom: 5,
+    maxBounds: [
+      [-90, -180],
+      [90, 180],
+    ],
+    maxBoundsViscosity: 1.0,
+  });
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors",
   }).addTo(map.value);
 
+  renderMarkers();
+});
+
+function renderMarkers() {
+  if (!map.value) return;
+
+  map.value.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      map.value?.removeLayer(layer);
+    }
+  });
+
   dataStore.positions.forEach((equipment) => {
+    const equipData = dataStore.getEquipmentById(equipment.equipmentId);
+    if (!equipData) return;
+
+    const latest = dataStore.getLatestState(equipment.equipmentId);
+    if (!latest) return;
+
+    const matchesModel =
+      !filters.value.modelId ||
+      equipData.equipmentModelId === filters.value.modelId;
+    const matchesState =
+      !filters.value.stateId ||
+      latest.equipmentStateId === filters.value.stateId;
+
+    if (!matchesModel || !matchesState) return;
+
     const latestPosition = equipment.positions.at(-1);
     if (latestPosition && map.value) {
       const marker = L.marker([latestPosition.lat, latestPosition.lon]).addTo(
         map.value
       );
 
-      const equipData = dataStore.getEquipmentById(equipment.equipmentId);
-      const equipmentName = equipData?.name || "Equipamento";
-
-      marker.bindTooltip(equipmentName, {
+      marker.bindTooltip(equipData.name, {
         direction: "top",
         offset: [0, -10],
         permanent: true,
@@ -108,11 +163,21 @@ onMounted(async () => {
       });
 
       marker.on("click", () => {
-        selectedEquipmentId.value = equipment.equipmentId as string;
+        selectedEquipmentId.value = equipment.equipmentId;
       });
     }
   });
+}
+
+watchEffect(() => {
+  if (map.value) {
+    renderMarkers();
+  }
 });
+
+function onFilterChange(newFilters: { modelId: string; stateId: string }) {
+  filters.value = newFilters;
+}
 </script>
 
 <style>

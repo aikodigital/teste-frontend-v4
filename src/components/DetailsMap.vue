@@ -1,6 +1,9 @@
 <template>
   <div v-if="equipment" class="side-panel">
     <h3>{{ equipment.name }}</h3>
+
+    <p><strong>Modelo:</strong> {{ model?.name || "Desconhecido" }}</p>
+
     <p>
       <strong>{{ $t("detailMap.stateActual") }}:</strong>
       {{ state?.name || "Desconhecido" }}
@@ -19,13 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Equipment, EquipmentState } from "@/types/types";
+import type { Equipment, EquipmentState, EquipmentModel } from "@/types/types";
 import { defineProps, defineEmits } from "vue";
 
 defineProps<{
   equipment: Equipment | null;
   state: EquipmentState | null;
   stateHistory: { date: string; name: string; color: string }[];
+  model: EquipmentModel | null;
 }>();
 
 defineEmits<{
