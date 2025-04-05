@@ -1,33 +1,32 @@
 import { Marker, Popup } from 'react-leaflet';
-import { Icon } from 'leaflet';
-import { useEquipmentsHook } from '../../hooks/use-equipments.hook';
-import { marker } from '../../assets/image-mapping';
+import { Button, Model, Name } from './marker.styles';
+import { createMarker } from './marker.utils';
+import { Equipment } from '~/hooks/use-equipments.hook';
 
-const icon = new Icon({
-  iconUrl: marker,
-  iconSize: [24, 30],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
+interface MapMarkerProperties {
+  equipment: Equipment;
+  onMarkerClick: (machineId: string) => void;
+}
 
-export const MapMarkers = () => {
-  const { data } = useEquipmentsHook();
-
+export const MapMarkers = ({
+  equipment,
+  onMarkerClick,
+}: MapMarkerProperties) => {
   return (
     <>
-      {data.map((machine) => (
-        <Marker
-          key={machine.id}
-          position={[machine.position[0].lat, machine.position[0].lon]}
-          icon={icon}
-        >
-          <Popup>
-            <strong>{machine.name}</strong>
-            <br />
-            Status: {machine.state?.name}
-          </Popup>
-        </Marker>
-      ))}
+      <Marker
+        key={equipment.id}
+        position={[equipment.position.lat, equipment.position.lon]}
+        icon={createMarker(equipment.state.color)}
+      >
+        <Popup>
+          <Name>{equipment.name}</Name>
+          <Model>{equipment.model}</Model>
+          <Button onClick={() => onMarkerClick(equipment.id)}>
+            Ver detalhes
+          </Button>
+        </Popup>
+      </Marker>
     </>
   );
 };
