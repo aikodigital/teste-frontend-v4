@@ -5,6 +5,8 @@
   },
   "sidebar": {
     "home": "Início",
+    "map": "Mapa",
+    "chart": "Gráfico",
     "about": "Sobre"
   },
   "detailMap": {

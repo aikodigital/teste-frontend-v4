@@ -10,9 +10,13 @@
         <i class="bi bi-house-door"></i>
         <span v-if="isExpanded">{{ $t("sidebar.home") }}</span>
       </router-link>
-      <router-link to="/about" class="nav-link">
-        <i class="bi bi-info-circle"></i>
-        <span v-if="isExpanded">{{ $t("sidebar.about") }}</span>
+      <router-link to="/Map" class="nav-link">
+        <i class="bi bi-geo-alt-fill"></i>
+        <span v-if="isExpanded">{{ $t("sidebar.map") }}</span>
+      </router-link>
+      <router-link to="/Report" class="nav-link">
+        <i class="bi bi-bar-chart-fill"></i>
+        <span v-if="isExpanded">{{ $t("sidebar.chart") }}</span>
       </router-link>
     </nav>
   </aside>

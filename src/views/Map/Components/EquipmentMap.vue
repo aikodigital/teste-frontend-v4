@@ -1,4 +1,12 @@
 <template>
+  <button class="toggle-filters-btn" @click="toggleFilters">
+    {{ showFilters ? "Ocultar Filtros" : "Mostrar Filtros" }}
+  </button>
+  <EquipmentFilters
+    v-if="showFilters"
+    @filter-change="onFilterChange"
+    @toggle-path-mode="onTogglePathMode"
+  />
   <div id="map" class="map-container"></div>
   <DetailsMap
     v-if="selectedEquipment"
@@ -8,12 +16,6 @@
     :model="selectedModel"
     @close="selectedEquipmentId = null"
   />
-  <transition name="slide">
-    <div v-if="showFilters" class="filters-panel">
-      <EquipmentFilters @filter-change="onFilterChange" />
-    </div>
-  </transition>
-  <EquipmentFilters @filter-change="onFilterChange" />
 </template>
 
 <script setup lang="ts">
@@ -22,8 +24,8 @@ import type { EquipmentState } from "@/types/types";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEquipmentDataStore } from "@/store/equipmentDataStore";
-import DetailsMap from "@/components/DetailsMap.vue";
-import EquipmentFilters from "@/components/EquipmentFilters.vue";
+import DetailsMap from "@/views/Map/Components/DetailsMap.vue";
+import EquipmentFilters from "@/views/Map/Components/EquipmentFilters.vue";
 
 const markerIcon =
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png";
@@ -41,12 +43,15 @@ L.Icon.Default.mergeOptions({
 
 const map = ref<L.Map>();
 const selectedEquipmentId = ref<string | null>(null);
+const currentPathLayer = ref<L.Layer | null>(null);
 const dataStore = useEquipmentDataStore();
-const showFilters = ref(true);
+const showPathMode = ref(false);
+const showFilters = ref(false);
 
-const filters = ref<{ modelId: string; stateId: string }>({
+const filters = ref<{ modelId: string; stateId: string; search: string }>({
   modelId: "",
   stateId: "",
+  search: "",
 });
 
 const selectedEquipment = computed(() =>
@@ -70,6 +75,14 @@ const selectedModel = computed(() => {
   );
 });
 
+function onTogglePathMode() {
+  showPathMode.value = !showPathMode.value;
+  if (!showPathMode.value && currentPathLayer.value && map.value) {
+    map.value.removeLayer(currentPathLayer.value as L.Layer);
+    currentPathLayer.value = null;
+  }
+}
+
 const computedStateHistory = computed(() => {
   if (!selectedEquipment.value) return [];
 
@@ -91,6 +104,91 @@ const computedStateHistory = computed(() => {
     }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 });
+
+function renderPath(equipmentId: string) {
+  if (!map.value) return;
+
+  const equipment = dataStore.positions.find(
+    (p) => p.equipmentId === equipmentId
+  );
+  if (!equipment) return;
+
+  if (currentPathLayer.value) {
+    if (currentPathLayer.value) {
+      map.value.removeLayer(currentPathLayer.value as L.Layer);
+    }
+    currentPathLayer.value = null;
+  }
+
+  const latlngs = equipment.positions.map((pos) => [pos.lat, pos.lon]) as [
+    number,
+    number
+  ][];
+  if (latlngs.length < 2) return;
+
+  const polyline = L.polyline(latlngs, {
+    color: "blue",
+    weight: 4,
+    opacity: 0.7,
+  }).addTo(map.value);
+
+  currentPathLayer.value = polyline;
+  map.value.fitBounds(polyline.getBounds(), { padding: [30, 30] });
+}
+
+function renderMarkers() {
+  if (!map.value) return;
+
+  map.value.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      map.value?.removeLayer(layer);
+    }
+  });
+
+  dataStore.positions.forEach((equipment) => {
+    const equipData = dataStore.getEquipmentById(equipment.equipmentId);
+    if (!equipData) return;
+
+    const latest = dataStore.getLatestState(equipment.equipmentId);
+    if (!latest) return;
+
+    const matchesModel =
+      !filters.value.modelId ||
+      equipData.equipmentModelId === filters.value.modelId;
+
+    const matchesState =
+      !filters.value.stateId ||
+      latest.equipmentStateId === filters.value.stateId;
+
+    const searchTerm = filters.value.search.toLowerCase();
+    const matchesSearch =
+      !searchTerm || equipData.name.toLowerCase().includes(searchTerm);
+
+    if (!matchesModel || !matchesState || !matchesSearch) return;
+
+    const latestPosition = equipment.positions.at(-1);
+    if (latestPosition && map.value) {
+      const marker = L.marker([latestPosition.lat, latestPosition.lon]).addTo(
+        map.value
+      );
+
+      marker.bindTooltip(equipData.name, {
+        direction: "top",
+        offset: [0, -10],
+        permanent: true,
+        opacity: 0.9,
+        className: "leaflet-tooltip-custom",
+      });
+
+      marker.on("click", () => {
+        selectedEquipmentId.value = equipment.equipmentId;
+        if (showPathMode.value) {
+          renderPath(equipment.equipmentId);
+        }
+      });
+    }
+  });
+}
 
 onMounted(async () => {
   await dataStore.fetchPositions();
@@ -123,59 +221,21 @@ onMounted(async () => {
   renderMarkers();
 });
 
-function renderMarkers() {
-  if (!map.value) return;
-
-  map.value.eachLayer((layer) => {
-    if (layer instanceof L.Marker) {
-      map.value?.removeLayer(layer);
-    }
-  });
-
-  dataStore.positions.forEach((equipment) => {
-    const equipData = dataStore.getEquipmentById(equipment.equipmentId);
-    if (!equipData) return;
-
-    const latest = dataStore.getLatestState(equipment.equipmentId);
-    if (!latest) return;
-
-    const matchesModel =
-      !filters.value.modelId ||
-      equipData.equipmentModelId === filters.value.modelId;
-    const matchesState =
-      !filters.value.stateId ||
-      latest.equipmentStateId === filters.value.stateId;
-
-    if (!matchesModel || !matchesState) return;
-
-    const latestPosition = equipment.positions.at(-1);
-    if (latestPosition && map.value) {
-      const marker = L.marker([latestPosition.lat, latestPosition.lon]).addTo(
-        map.value
-      );
-
-      marker.bindTooltip(equipData.name, {
-        direction: "top",
-        offset: [0, -10],
-        permanent: true,
-        opacity: 0.9,
-        className: "leaflet-tooltip-custom",
-      });
-
-      marker.on("click", () => {
-        selectedEquipmentId.value = equipment.equipmentId;
-      });
-    }
-  });
-}
-
 watchEffect(() => {
   if (map.value) {
     renderMarkers();
   }
 });
 
-function onFilterChange(newFilters: { modelId: string; stateId: string }) {
+function toggleFilters() {
+  showFilters.value = !showFilters.value;
+}
+
+function onFilterChange(newFilters: {
+  modelId: string;
+  stateId: string;
+  search: string;
+}) {
   filters.value = newFilters;
 }
 </script>

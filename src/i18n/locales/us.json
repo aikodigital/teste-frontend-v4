@@ -5,6 +5,8 @@
   },
   "sidebar": {
     "home": "Home",
+    "map": "Map",
+    "chart": "Chart",
     "about": "About"
   },
   "detailMap": {

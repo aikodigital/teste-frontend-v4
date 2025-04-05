@@ -3,7 +3,7 @@
     <BaseHeader />
     <div class="d-flex flex-grow-1">
       <BaseSidebar />
-      <main class="flex-grow-1 p-3">
+      <main class="flex-grow-1 p-1">
         <slot></slot>
       </main>
     </div>
