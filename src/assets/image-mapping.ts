@@ -1,3 +1,3 @@
-import marker from './images/marker.png';
+import logo from './images/aiko.png';
 
-export { marker };
+export { logo };
