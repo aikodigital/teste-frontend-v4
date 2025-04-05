@@ -1,0 +1,103 @@
+
+# Documentação - Teste Técnico de Monitoramento de Equipamentos
+
+## 📌 Visão Geral
+
+Este projeto é uma aplicação web desenvolvida em React que tem como objetivo monitorar equipamentos em tempo real. O sistema exibe a posição atual dos equipamentos em um mapa, além de fornecer informações úteis como estado atual, histórico de estados, produtividade e ganhos estimados.
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+- React + TypeScript
+- Vite
+- Leaflet (mapa interativo)
+- Bootstrap (estilização)
+- SCSS (animações e customização visual)
+- Vitest (testes unitários)
+- ACF/JSON como base de dados simulada
+
+---
+
+## 🧠 Funcionalidades Implementadas
+
+- ✅ Mapa com marcadores dos equipamentos
+- ✅ Filtros por estado, modelo e nome do equipamento
+- ✅ Visualização do estado atual e últimos 3 estados
+- ✅ Trajeto dos equipamentos com toggle de exibição
+- ✅ Cálculo de produtividade com base no tempo operando
+- ✅ Cálculo de ganhos com base nos valores por hora
+- ✅ Tela de boas-vindas com animação e redirecionamento
+- ✅ Tela responsiva com visual diferenciado por modelo
+- ✅ Botão “Limpar Filtros” (limpa também campo de busca)
+- ✅ Testes unitários com Vitest
+
+---
+
+## 📁 Estrutura do Projeto
+
+src/
+├── App.tsx
+├── main.tsx
+├── pages/
+│   └── Welcome.tsx
+├── utils/
+│   ├── utils.ts            # Funções como calculateGain e calculateProductivity
+│   └── utils.test.ts       # Testes unitários
+├── styles.scss             # Estilo global e animações
+└── data/                   # JSONs simulando base de dados
+
+---
+
+## 🧪 Testes
+
+Os testes foram implementados com **Vitest** e estão localizados em `src/utils/utils.test.ts`.
+
+Para rodar os testes:
+
+npm run test
+# ou
+npx vitest run
+
+Exemplo de teste:
+describe('calculateProductivity', () => {
+  it('retorna 75% quando operou 18h', () => {
+    // ...
+  });
+});
+
+---
+
+## 📋 Instruções para Rodar o Projeto
+
+1. Instale as dependências
+npm install
+
+2. Rode o projeto localmente
+npm run dev
+
+3. Acesse em
+http://localhost:5173
+
+---
+
+## 🎨 Estilo e UX
+
+- Tela inicial com fundo animado em gradiente
+- Layout responsivo usando Bootstrap
+- Ícones e cores diferentes por modelo de equipamento
+
+---
+
+## 📌 Considerações Finais
+
+Este projeto demonstra habilidades em:
+- Manipulação de dados com React + TS
+- Integração com mapas e visualização dinâmica
+- Testes unitários com foco em funções críticas
+- Boas práticas com organização e documentação
+
+🗓️ Documento gerado em: 04/04/2025
+
+📽️ Vídeo de Apresentação Tafany:
+https://drive.google.com/file/d/1Pn4TjHcywhx2avjsFzTDvGAnTLY7rHdI/view?usp=sharing
