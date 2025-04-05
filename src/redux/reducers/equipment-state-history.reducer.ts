@@ -1,14 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface State {
-  date: string;
-  equipmentStateId: string;
-}
-
-interface EquipmentStateHistory {
-  equipmentId: string;
-  states: State[];
-}
+import {
+  EquipmentStateHistory,
+  State,
+} from '~/types/equipment-state-history.types';
+import { formatDate } from '~/utils/format-date';
 
 interface EquipmentStateHistoryState {
   data: EquipmentStateHistory[];
@@ -23,7 +18,18 @@ const equipmentStateHistorySlice = createSlice({
   initialState: initial,
   reducers: {
     setEquipmentStateHistory: (state, action) => {
-      state.data = action.payload;
+      state.data = action.payload.map((item: EquipmentStateHistory) => ({
+        ...item,
+        states: item.states
+          .map((state: State) => ({
+            ...state,
+            date: formatDate(state.date),
+          }))
+          .sort(
+            (a: State, b: State) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          ),
+      }));
     },
   },
 });

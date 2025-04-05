@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface EquipmentState {
-  id: string;
-  name: string;
-  color: string;
-}
+import { EquipmentState } from '~/types/equipment-state.types';
 
 interface EquipmentStateState {
   data: EquipmentState[];

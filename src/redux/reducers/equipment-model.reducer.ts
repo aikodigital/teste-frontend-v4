@@ -1,15 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface HourlyEarnings {
-  equipmentStateId: string;
-  value: number;
-}
-
-interface EquipmentModel {
-  id: string;
-  name: string;
-  hourlyEarnings: HourlyEarnings[];
-}
+import { EquipmentModel } from '~/types/equipment-model.types';
 
 interface EquipmentModelState {
   data: EquipmentModel[];
