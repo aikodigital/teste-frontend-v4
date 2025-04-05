@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "react-leaflet": "^5.0.0",
     "react-redux": "^9.2.0",
     "react-scripts": "5.0.1",
+    "recharts": "^2.15.2",
     "styled-components": "^6.1.17",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -37,6 +38,11 @@
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.17",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1"
   },
   "eslintConfig": {
     "extends": [
@@ -55,8 +61,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/leaflet": "^1.9.17"
   }
 }
