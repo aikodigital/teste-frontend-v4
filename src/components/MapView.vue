@@ -11,6 +11,7 @@ import equipmentStateHistory from '../data/equipmentStateHistory.json';
 
 export default {
   name: 'MapView',
+  
   mounted() {
     this.initMap();
   },
@@ -40,11 +41,18 @@ export default {
           let historyHtml = '';
 
           if (stateHistory && stateHistory.states.length > 0) {
-            historyHtml = '<hr><strong>Histórico:</strong><ul>';
-            stateHistory.states.forEach((entry) => {
+            historyHtml = '<strong>HISTÓRICO:</strong><ul style="max-height: 250px;overflow:auto;padding:8px;scrollbar-width:thin;scrollbar-color: #5f5f5f #0000001f;">';
+            stateHistory.states.slice().reverse().forEach((entry) => {
               const state = equipmentState.find(s => s.id === entry.equipmentStateId);
-              const date = new Date(entry.date).toLocaleString('pt-BR');
-              historyHtml += `<li>${date}: <span style="color:${state?.color || '#000'}">${state?.name || 'Desconhecido'}</span></li>`;
+              const rawDate = new Date(entry.date);
+              const formattedDate = rawDate.toLocaleDateString('pt-BR');
+              const formattedTime = rawDate.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+              });
+              const date = `${formattedDate} - ${formattedTime}`;
+              historyHtml += `<li>📅 <b>${date}:</b> <span style="color:${state?.color || '#000'}">${state?.name || 'Desconhecido'}</span></li>`;
             });
             historyHtml += '</ul>';
           }
@@ -53,11 +61,10 @@ export default {
             <div>
               <strong>${equipInfo?.name || 'Equipamento'}</strong><br/>
               Estado atual: <span style="color:${lastState?.color || '#000'}">${lastState?.name || 'Desconhecido'}</span>
-              ${historyHtml}
             </div>
           `;
 
-          L.circleMarker([lastPosition.lat, lastPosition.lon], {
+          const marker = L.circleMarker([lastPosition.lat, lastPosition.lon], {
             radius: 10,
             fillColor: lastState?.color || '#ccc',
             color: '#000',
@@ -65,8 +72,18 @@ export default {
             opacity: 1,
             fillOpacity: 0.8
           })
-            .addTo(map)
-            .bindPopup(popupContent);
+          marker.addTo(map)
+            .bindTooltip(
+              popupContent,
+              {
+                direction: 'top',
+                offset: [0, -10],
+                opacity: 0.9
+              }
+            )
+            .on('click', () => {
+              marker.bindPopup(historyHtml).openPopup();
+            })   
         }
       });
     }
