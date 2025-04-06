@@ -24,8 +24,10 @@ export interface EquipmentsHook {
   model: EquipmentModel[];
   state: EquipmentState[];
   filters: EquipmentFilters;
+  filtersModalOpen: boolean;
   updateFilter: (key: keyof EquipmentFilters, value: string) => void;
   clearFilters: () => void;
+  toggleFilterModal: (value: boolean) => void;
 }
 
 export const useEquipmentsHook = (): EquipmentsHook => {
@@ -34,6 +36,11 @@ export const useEquipmentsHook = (): EquipmentsHook => {
   );
 
   const [filters, setFilters] = useState<EquipmentFilters>({});
+  const [filtersModalOpen, setFiltersModalOpen] = useState(false);
+
+  const toggleFilterModal = (value: boolean) => {
+    setFiltersModalOpen(value);
+  };
 
   const data = useMemo(() => {
     return equipments.data.map((equipment) => {
@@ -61,17 +68,22 @@ export const useEquipmentsHook = (): EquipmentsHook => {
     });
   }, [equipments, position, stateHistory, state, model]);
 
+  const matchesFilter = (
+    value: string | undefined,
+    filter: string | undefined
+  ): boolean => {
+    if (!filter) return true;
+    if (!value) return false;
+    return value.toLowerCase().includes(filter.toLowerCase());
+  };
+
   const filteredData = useMemo(() => {
     return data.filter((equipment) => {
-      const matchesName = filters.name
-        ? equipment.name.toLowerCase().includes(filters.name.toLowerCase())
-        : true;
-      const matchesModel = filters.model
-        ? equipment.model === filters.model
-        : true;
-      const matchesState = filters.state
-        ? equipment.state?.name === filters.state
-        : true;
+      const matchesName =
+        matchesFilter(equipment.name, filters.name) ||
+        matchesFilter(equipment.model, filters.name);
+      const matchesModel = matchesFilter(equipment.model, filters.model);
+      const matchesState = matchesFilter(equipment.state?.name, filters.state);
 
       return matchesName && matchesModel && matchesState;
     });
@@ -90,5 +102,7 @@ export const useEquipmentsHook = (): EquipmentsHook => {
     filters,
     updateFilter,
     clearFilters,
+    filtersModalOpen,
+    toggleFilterModal,
   };
 };
