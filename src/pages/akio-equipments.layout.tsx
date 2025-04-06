@@ -21,12 +21,16 @@ export const AikoEquipmentsLayout = ({
   historyVisible,
   filters,
   data,
+  filtersModalOpen,
+  selectedDate,
+  handleDateChange,
   clearFilters,
   updateFilter,
   handleClose,
   handleOpen,
   handleTabChange,
   findStateNameById,
+  toggleFilterModal,
   toggleHistoryVisibility,
 }: AikoEquipmentsProperties) => {
   const centerPosition: [number, number] = [-19, -46];
@@ -72,7 +76,7 @@ export const AikoEquipmentsLayout = ({
         onClick={toggleHistoryVisibility}
         sx={{
           position: 'absolute',
-          top: 80,
+          top: 128,
           right: 16,
           zIndex: 1000,
         }}
@@ -82,19 +86,41 @@ export const AikoEquipmentsLayout = ({
     );
   };
 
+  const renderToggleFilterButton = () => {
+    return (
+      <Button
+        variant='contained'
+        color='info'
+        onClick={() => toggleFilterModal(true)}
+        sx={{
+          position: 'absolute',
+          top: 80,
+          right: 16,
+          zIndex: 1000,
+        }}
+      >
+        Abrir filtro
+      </Button>
+    );
+  };
+
   return (
     <MapWrapper>
       <MapContainer center={centerPosition} zoom={12} scrollWheelZoom>
         {renderToggleHistoryButton()}
+        {renderToggleFilterButton()}
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
         <Logo src={logo} />
+
         {renderMarkers(data)}
         {renderMarkers(markers)}
         {renderPolyline()}
         <EquipmentFiltersComponent
+          open={filtersModalOpen}
           filters={filters}
           onChange={updateFilter}
           onClear={clearFilters}
+          onClose={() => toggleFilterModal(false)}
           model={model}
           state={state}
         />
@@ -106,6 +132,8 @@ export const AikoEquipmentsLayout = ({
         details={details}
         areaChartData={chartData.areaChartData}
         pieChartData={chartData.pieChartData}
+        selectedDate={selectedDate}
+        handleDateChange={handleDateChange}
         onClose={handleClose}
         onTabChange={handleTabChange}
         findStateNameById={findStateNameById}
