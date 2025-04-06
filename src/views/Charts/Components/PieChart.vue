@@ -1,8 +1,8 @@
 <template>
   <div class="chart-wrapper">
-    <template v-if="!chartData"> Carregando gráfico... </template>
+    <template v-if="!chartData">{{ t("chart.loading") }}</template>
     <template v-else-if="!chartData.datasets?.length">
-      Sem dados para exibir.
+      <p>{{ t("chart.noDataAvailable") }}</p>
     </template>
     <Pie v-else :data="chartData" :options="chartOptions" />
   </div>
@@ -12,10 +12,13 @@
 import { ref, onMounted } from "vue";
 import { Pie } from "vue-chartjs";
 import { useEquipmentDataStore } from "@/store/equipmentDataStore";
+import { useI18n } from "vue-i18n";
 
 const store = useEquipmentDataStore();
 
 const chartData = ref();
+
+const { t } = useI18n();
 
 const chartOptions = {
   responsive: true,
@@ -29,7 +32,7 @@ const chartOptions = {
     },
     title: {
       display: true,
-      text: "Distribuição do Ganho por Equipamento",
+      text: t("chart.DistributionofGainbyEquipment"),
       color: "#111",
       font: { size: 18 },
     },
@@ -38,7 +41,7 @@ const chartOptions = {
         label: function (tooltipItem: import("chart.js").TooltipItem<"pie">) {
           const label = tooltipItem.label || "";
           const raw = tooltipItem.raw as number;
-          return `${label}: R$${raw.toFixed(2)}`;
+          return `${label}: ${t("chart.$")} ${raw.toFixed(2)}`;
         },
       },
     },
@@ -93,7 +96,7 @@ function generatePieChartData() {
     labels,
     datasets: [
       {
-        label: "Ganho Total (R$)",
+        label: t("chart.totalGains") + " " + t("chart.$"),
         data: gainData,
         backgroundColor: backgroundColors.slice(0, labels.length),
         borderWidth: 1,
@@ -119,8 +122,9 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
   height: 100vh;
+  width: 100%;
+  max-height: calc(100vh - 150px);
   margin: 0;
   padding: 2rem;
   background: #fff;

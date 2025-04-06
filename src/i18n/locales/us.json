@@ -7,10 +7,24 @@
     "home": "Home",
     "map": "Map",
     "chart": "Chart",
+    "report": "Report",
     "about": "About"
   },
   "detailMap": {
     "stateActual": "Current state",
     "stateHistory": "State history"
+  },
+  "chart": {
+    "charts": "Charts",
+    "choiceTypesCharts": "Choose chart types",
+    "barChart": "Bar chart",
+    "pieChart": "Pie chart",
+    "totalGains": "Total gains",
+    "productivity": "Productivity",
+    "ProductivityandGainperEquipment": "Productivity and Gain per Equipment",
+    "$": "$",
+    "loading": "Loading...",
+    "DistributionofGainbyEquipment": "Distribution of Gain by Equipment",
+    "noDataAvailable": "No data available"
+    }
   }
-}

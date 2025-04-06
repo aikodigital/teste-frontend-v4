@@ -7,10 +7,25 @@
     "home": "Início",
     "map": "Mapa",
     "chart": "Gráfico",
+    "report": "Relatório",
     "about": "Sobre"
   },
   "detailMap": {
     "stateActual": "Estado atual",
     "stateHistory": "Histórico de estados"
+  },
+  "chart": {
+    "charts": "Gráficos",
+    "choiceTypesCharts": "Escolha os tipos de gráficos",
+    "barChart": "Gráfico de barras",
+    "pieChart": "Gráfico de pizza",
+    "totalGains": "Ganhos totais",
+    "productivity": "Produtividade",
+    "ProductivityandGainperEquipment": "Produtividade e Ganho por Equipamento", 
+    "$": "R$",
+    "loading": "Carregando...",
+    "DistributionofGainbyEquipment": "Distribuição de Ganho por Equipamento",
+    "noDataAvailable": "Nenhum dado disponível"
+
   }
 }

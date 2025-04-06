@@ -14,9 +14,13 @@
         <i class="bi bi-geo-alt-fill"></i>
         <span v-if="isExpanded">{{ $t("sidebar.map") }}</span>
       </router-link>
-      <router-link to="/Report" class="nav-link">
+      <router-link to="/Chart" class="nav-link">
         <i class="bi bi-bar-chart-fill"></i>
         <span v-if="isExpanded">{{ $t("sidebar.chart") }}</span>
+      </router-link>
+      <router-link to="/Report" class="nav-link">
+        <i class="bi bi-file-earmark-text"></i>
+        <span v-if="isExpanded">{{ $t("sidebar.report") }}</span>
       </router-link>
     </nav>
   </aside>

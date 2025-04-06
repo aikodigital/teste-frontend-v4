@@ -1,41 +1,61 @@
 <template>
-  <div class="Report-view">
-    <h1>Report View</h1>
+  <div class="report-view container py-4">
+    <h1 class="mb-4 text-center">📊 Relatórios</h1>
 
-    <ChartSelector v-model="selectedChart" />
+    <div class="mb-4">
+      <label for="reportSelect" class="form-label fw-bold"
+        >Selecione o tipo de relatório:</label
+      >
+      <select id="reportSelect" v-model="selectedReport" class="form-select">
+        <option value="summary">📘 Estado atual dos equipamentos</option>
+        <option value="history">📚 Histórico de estados</option>
+        <option value="location">📍 Localização atual</option>
+        <option value="duration">⏳ Tempo total por estado</option>
+        <option value="profit">💰 Ganhos e perdas</option>
+      </select>
+    </div>
 
-    <BarChart v-if="selectedChart === 'bar'" />
-    <PieChart v-else-if="selectedChart === 'pie'" />
+    <div v-if="selectedReport === 'summary'">
+      <Reports />
+    </div>
+    <div v-if="selectedReport === 'history'">
+      <ReportEquipment />
+    </div>
+    <div v-if="selectedReport === 'location'">
+      <ReportLocale />
+    </div>
+    <div v-if="selectedReport === 'duration'">
+      <ReportStateDuration />
+    </div>
+    <div v-if="selectedReport === 'profit'">
+      <ReportProfit />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import BarChart from "@/views/Report/Components/BarChart.vue";
-import PieChart from "@/views/Report/Components/PieChart.vue";
-import ChartSelector from "@/views/Report/Components/ChartSelector.vue";
 
-const selectedChart = ref("bar");
+import Reports from "@/views/Report/Components/Reports.vue";
+import ReportEquipment from "@/views/Report/Components/ReportEquipment.vue";
+import ReportLocale from "@/views/Report/Components/ReportLocale.vue";
+import ReportStateDuration from "@/views/Report/Components/ReportStateDuration.vue";
+import ReportProfit from "@/views/Report/Components/ReportProfit.vue";
+
+const selectedReport = ref("summary");
 </script>
 
 <style scoped>
-.Report-view {
-  text-align: center;
-  margin-top: 20px;
+.report-view {
+  max-width: 900px;
+  margin: auto;
 }
 
 h1 {
   color: #333;
 }
 
-.chart-toggle {
-  margin: 1rem 0;
-}
-
-select {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+.form-select {
+  max-width: 400px;
 }
 </style>

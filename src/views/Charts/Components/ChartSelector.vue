@@ -1,9 +1,9 @@
 <template>
   <div class="chart-selector">
-    <label for="chartSelect">Escolha o tipo de gráfico:</label>
+    <label for="chartSelect">{{ $t("chart.choiceTypesCharts") }}</label>
     <select id="chartSelect" v-model="selected" @change="emitSelection">
-      <option value="bar">Gráfico de Barras</option>
-      <option value="pie">Gráfico de Pizza</option>
+      <option value="bar">{{ $t("chart.barChart") }}</option>
+      <option value="pie">{{ $t("chart.pieChart") }}</option>
     </select>
   </div>
 </template>

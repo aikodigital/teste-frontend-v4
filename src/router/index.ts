@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "@/views/Home/HomeView.vue";
 import MapleView from "@/views/Map/MapView.vue";
-import ReportVIew from "@/views/Report/ReportVIew.vue";
+import ChartView from "@/views/Charts/ChartView.vue";
+import ReportView from "@/views/Report/ReportView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,9 +16,14 @@ const routes: Array<RouteRecordRaw> = [
     component: MapleView,
   },
   {
+    path: "/Chart",
+    name: "charts",
+    component: ChartView,
+  },
+  {
     path: "/Report",
-    name: "report",
-    component: ReportVIew,
+    name: "reports",
+    component: ReportView,
   },
 ];
 

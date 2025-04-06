@@ -6,11 +6,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { Bar } from "vue-chartjs";
 import { useEquipmentDataStore } from "@/store/equipmentDataStore";
 import type { EquipmentState } from "@/types/types";
 
 const store = useEquipmentDataStore();
+
+const { t } = useI18n();
 
 const chartData = ref();
 
@@ -26,7 +29,7 @@ const chartOptions = {
     },
     title: {
       display: true,
-      text: "Produtividade e Ganho por Equipamento",
+      text: t("chart.ProductivityandGainperEquipment"),
       color: "#111",
       font: { size: 18 },
     },
@@ -43,7 +46,7 @@ const chartOptions = {
       },
       title: {
         display: true,
-        text: "Ganho Total (R$)",
+        text: t("chart.totalGains") + " " + t("chart.$"),
       },
     },
     y1: {
@@ -60,7 +63,7 @@ const chartOptions = {
       },
       title: {
         display: true,
-        text: "Produtividade (%)",
+        text: t("chart.productivity") + " %",
       },
     },
   },
@@ -120,13 +123,13 @@ function generateChartData() {
     labels,
     datasets: [
       {
-        label: "Ganho Total (R$)",
+        label: t("chart.totalGains") + " " + t("chart.$"),
         backgroundColor: "#10B981",
         data: gainData,
         yAxisID: "y",
       },
       {
-        label: "Produtividade (%)",
+        label: t("chart.productivity"),
         data: productivityData,
         borderColor: "#3B82F6",
         backgroundColor: "#3B82F6",
@@ -153,8 +156,9 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .chart-wrapper {
-  width: calc(100vw - 2rem);
-  height: calc(100vh - 4rem);
+  height: 100vh;
+  width: 100%;
+  max-height: calc(100vh - 150px);
   margin: 0 auto;
   padding: 2rem;
   background: #fff;
