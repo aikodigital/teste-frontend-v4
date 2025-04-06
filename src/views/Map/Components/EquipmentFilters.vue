@@ -37,6 +37,18 @@
     >
       {{ showPathMode ? "Desativar modo trajeto" : "Ativar modo trajeto" }}
     </button>
+
+    <!-- Filtros de data lado a lado -->
+    <div v-if="showPathMode" class="date-filters">
+      <div class="filter-group">
+        <label>Data Início:</label>
+        <input v-model="startDate" type="date" class="input" />
+      </div>
+      <div class="filter-group">
+        <label>Data Fim:</label>
+        <input v-model="endDate" type="date" class="input" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,7 +59,13 @@ import { useEquipmentDataStore } from "@/store/equipmentDataStore";
 const emit = defineEmits<{
   (
     e: "filter-change",
-    filters: { modelId: string; stateId: string; search: string }
+    filters: {
+      modelId: string;
+      stateId: string;
+      search: string;
+      startDate: string;
+      endDate: string;
+    }
   ): void;
   (e: "toggle-path-mode", enabled: boolean): void;
 }>();
@@ -58,6 +76,8 @@ const selectedModelId = ref("");
 const selectedStateId = ref("");
 const searchTerm = ref("");
 const showPathMode = ref(false);
+const startDate = ref("");
+const endDate = ref("");
 
 const models = ref<
   {
@@ -68,13 +88,18 @@ const models = ref<
 >([]);
 const states = ref<{ id: string; name: string; color: string }[]>([]);
 
-watch([selectedModelId, selectedStateId, searchTerm], () => {
-  emit("filter-change", {
-    modelId: selectedModelId.value,
-    stateId: selectedStateId.value,
-    search: searchTerm.value.trim(),
-  });
-});
+watch(
+  [selectedModelId, selectedStateId, searchTerm, startDate, endDate],
+  () => {
+    emit("filter-change", {
+      modelId: selectedModelId.value,
+      stateId: selectedStateId.value,
+      search: searchTerm.value.trim(),
+      startDate: startDate.value,
+      endDate: endDate.value,
+    });
+  }
+);
 
 function togglePathMode() {
   showPathMode.value = !showPathMode.value;
@@ -103,6 +128,14 @@ onMounted(async () => {
   flex-direction: column;
   gap: 0.25rem;
 }
+
+.date-filters {
+  display: flex;
+  gap: 1rem; /* Espaço entre os campos de data */
+  align-items: flex-end;
+  margin-top: 0.5rem; /* Espaço entre o botão e os filtros de data */
+}
+
 .input {
   padding: 0.5rem;
   border: 1px solid #ccc;

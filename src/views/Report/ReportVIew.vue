@@ -1,14 +1,21 @@
 <template>
   <div class="Report-view">
     <h1>Report View</h1>
-    <p>Welcome to the Report page!</p>
+
+    <ChartSelector v-model="selectedChart" />
+
+    <BarChart v-if="selectedChart === 'bar'" />
+    <PieChart v-else-if="selectedChart === 'pie'" />
   </div>
 </template>
 
-<script>
-export default {
-  name: "ReportView",
-};
+<script setup lang="ts">
+import { ref } from "vue";
+import BarChart from "@/views/Report/Components/BarChart.vue";
+import PieChart from "@/views/Report/Components/PieChart.vue";
+import ChartSelector from "@/views/Report/Components/ChartSelector.vue";
+
+const selectedChart = ref("bar");
 </script>
 
 <style scoped>
@@ -21,7 +28,14 @@ h1 {
   color: #333;
 }
 
-p {
-  color: #666;
+.chart-toggle {
+  margin: 1rem 0;
+}
+
+select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 </style>

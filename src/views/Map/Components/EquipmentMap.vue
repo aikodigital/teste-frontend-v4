@@ -48,10 +48,18 @@ const dataStore = useEquipmentDataStore();
 const showPathMode = ref(false);
 const showFilters = ref(false);
 
-const filters = ref<{ modelId: string; stateId: string; search: string }>({
+const filters = ref<{
+  modelId: string;
+  stateId: string;
+  search: string;
+  startDate: string;
+  endDate: string;
+}>({
   modelId: "",
   stateId: "",
   search: "",
+  startDate: "",
+  endDate: "",
 });
 
 const selectedEquipment = computed(() =>
@@ -75,9 +83,9 @@ const selectedModel = computed(() => {
   );
 });
 
-function onTogglePathMode() {
-  showPathMode.value = !showPathMode.value;
-  if (!showPathMode.value && currentPathLayer.value && map.value) {
+function onTogglePathMode(enabled: boolean) {
+  showPathMode.value = enabled;
+  if (!enabled && currentPathLayer.value && map.value) {
     map.value.removeLayer(currentPathLayer.value as L.Layer);
     currentPathLayer.value = null;
   }
@@ -113,18 +121,25 @@ function renderPath(equipmentId: string) {
   );
   if (!equipment) return;
 
-  if (currentPathLayer.value) {
-    if (currentPathLayer.value) {
-      map.value.removeLayer(currentPathLayer.value as L.Layer);
-    }
-    currentPathLayer.value = null;
-  }
+  const startDate = new Date(filters.value.startDate);
+  const endDate = new Date(filters.value.endDate);
 
-  const latlngs = equipment.positions.map((pos) => [pos.lat, pos.lon]) as [
+  const filteredPositions = equipment.positions.filter((pos) => {
+    const posDate = new Date(pos.date);
+    return posDate >= startDate && posDate <= endDate;
+  });
+
+  const latlngs = filteredPositions.map((pos) => [pos.lat, pos.lon]) as [
     number,
     number
   ][];
+
   if (latlngs.length < 2) return;
+
+  if (currentPathLayer.value) {
+    map.value.removeLayer(currentPathLayer.value as L.Layer);
+    currentPathLayer.value = null;
+  }
 
   const polyline = L.polyline(latlngs, {
     color: "blue",
@@ -235,8 +250,15 @@ function onFilterChange(newFilters: {
   modelId: string;
   stateId: string;
   search: string;
+  startDate: string;
+  endDate: string;
 }) {
   filters.value = newFilters;
+  renderMarkers();
+
+  if (showPathMode.value && selectedEquipmentId.value) {
+    renderPath(selectedEquipmentId.value);
+  }
 }
 </script>
 
