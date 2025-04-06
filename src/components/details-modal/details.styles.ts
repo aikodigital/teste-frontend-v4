@@ -3,11 +3,21 @@ import {
   ListItem as BaseListItem,
   Typography,
   Dialog as BaseDialog,
+  TextField as BaseTextField,
 } from '@mui/material';
 import styled from 'styled-components';
 
 export const ListItem = styled(BaseListItem).attrs({
   alignItems: 'flex-start',
+})``;
+
+export const TextField = styled(BaseTextField).attrs({
+  type: 'date',
+  size: 'small',
+  sx: { mb: 2 },
+  InputLabelProps: {
+    shrink: true,
+  },
 })``;
 
 export const InfoBox = styled.div`
@@ -37,7 +47,6 @@ export const SectionTitle = styled(Typography).attrs({
 export const SectionSubtitle = styled(Typography).attrs({
   variant: 'h6',
   fontWeight: 500,
-  marginTop: 2,
 })``;
 
 export const Subtitle = styled(Typography).attrs({
@@ -55,4 +64,8 @@ export const Dialog = styled(BaseDialog).attrs({
 
 export const ViewHistoryButton = styled(BaseButton).attrs({
   variant: 'contained',
+})``;
+
+export const ClearButton = styled(BaseButton).attrs({
+  variant: 'outlined',
 })``;

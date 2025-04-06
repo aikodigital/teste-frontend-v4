@@ -13,6 +13,7 @@ import { EquipmentDetails } from '~/hooks/use-equipment-details';
 import { AreaChartComponent, AreaChartData } from '../recharts/area.rechart';
 import { PieChartComponent, PieChartData } from '../recharts/pie.rechart';
 import {
+  ClearButton,
   Col,
   Dialog,
   InfoBox,
@@ -22,12 +23,14 @@ import {
   SectionSubtitle,
   SectionTitle,
   Subtitle,
+  TextField,
   ViewHistoryButton,
 } from './details.styles';
 
 interface DetailsModalProperties {
   open: boolean;
   tab: number;
+  selectedDate: string;
   details?: EquipmentDetails;
   pieChartData: PieChartData[];
   areaChartData: AreaChartData[];
@@ -35,6 +38,7 @@ interface DetailsModalProperties {
   onClose: () => void;
   onTabChange: (tab: number) => void;
   toggleViewHistoryOnMap: () => void;
+  handleDateChange: (date: string) => void;
 }
 
 export const DetailsModal = ({
@@ -43,10 +47,12 @@ export const DetailsModal = ({
   details,
   pieChartData,
   areaChartData,
+  selectedDate,
   findStateNameById,
   onClose,
   onTabChange,
   toggleViewHistoryOnMap,
+  handleDateChange,
 }: DetailsModalProperties) => {
   const renderItem = (label: string, value?: string | number) => (
     <Item>
@@ -129,6 +135,25 @@ export const DetailsModal = ({
   const renderProductivity = () => (
     <>
       <SectionTitle>Produtividade</SectionTitle>
+      <Row style={{ marginTop: 16, justifyContent: 'normal', gap: 16 }}>
+        <TextField
+          value={selectedDate}
+          onChange={(e) => handleDateChange(e.target.value)}
+          label='Filtrar por Data'
+          placeholder='dd/mm/aaaa'
+          inputProps={{
+            type: 'date',
+            min: details?.states[0].date,
+            max: details?.states[details?.states.length - 1].date,
+          }}
+        />
+        <ClearButton
+          disabled={!selectedDate}
+          onClick={() => handleDateChange('')}
+        >
+          Limpar Filtros
+        </ClearButton>
+      </Row>
       <List>
         {renderPieChart()}
         {renderAreaChart()}
