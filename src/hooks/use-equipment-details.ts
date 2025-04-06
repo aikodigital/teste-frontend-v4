@@ -36,9 +36,11 @@ export interface EquipmentDetailsHook {
   historyVisible: boolean;
   markers: Equipment[];
   chartData: ChartData;
+  selectedDate: string;
   handleOpen: (id: string) => void;
   handleClose: () => void;
   handleTabChange: (tab: number) => void;
+  handleDateChange: (date: string) => void;
   toggleHistoryVisibility: () => void;
   findStateNameById: (stateId: string) => string;
 }
@@ -53,6 +55,7 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
   const [id, setId] = useState<string>('');
   const [tab, setTab] = useState<number>(0);
   const [historyVisible, setHistoryVisible] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<string>('');
   const [markers, setMarkers] = useState<Equipment[]>([]);
 
   const {
@@ -102,9 +105,15 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
         (new Date(end).getTime() - new Date(start).getTime()) /
         (1000 * 60 * 60);
 
-      const sortedStates = [...equipmentStates].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      const sortedStates = [...equipmentStates]
+        .filter((s) => (selectedDate ? s.date.startsWith(selectedDate) : true))
+        .sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+
+      if (sortedStates.length === 0) {
+        return metrics;
+      }
 
       sortedStates.forEach((current, index) => {
         const next = sortedStates[index + 1];
@@ -139,42 +148,15 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
       positions,
       productivity: calculateProductivity(),
     };
-  }, [id, equipments, states, stateHistory, positionHistory, models]);
-
-  const getStateDuration = (start: string, end: string): number => {
-    return (
-      (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60)
-    );
-  };
-
-  const findStateNameById = (stateId: string): string => {
-    return states?.find((state) => state.id === stateId)?.name || '';
-  };
-
-  const prepareHistoryMarkers = (details: EquipmentDetails): Equipment[] => {
-    return details.positions.map((position) => ({
-      id: details.id,
-      name: details.name,
-      model: details.model?.name ?? '',
-      position,
-      state: {
-        id: '',
-        name: '',
-        color: palette.primary,
-      },
-    }));
-  };
-
-  const toggleHistoryVisibility = (): void => {
-    if (!historyVisible && equipmentDetails) {
-      const newMarkers = prepareHistoryMarkers(equipmentDetails);
-      setMarkers(newMarkers);
-    } else {
-      setMarkers([]);
-    }
-
-    setHistoryVisible((prev) => !prev);
-  };
+  }, [
+    id,
+    equipments,
+    states,
+    stateHistory,
+    positionHistory,
+    models,
+    selectedDate,
+  ]);
 
   const chartData = useMemo((): ChartData => {
     if (!equipmentDetails) {
@@ -210,9 +192,9 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
     let accumulated = 0;
     const equipmentStates = equipmentDetails?.states || [];
 
-    const sortedStates = [...equipmentStates].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
+    const sortedStates = [...equipmentStates]
+      .filter((s) => (selectedDate ? s.date.startsWith(selectedDate) : true))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     sortedStates.forEach((current, index) => {
       const next = sortedStates[index + 1];
@@ -237,7 +219,42 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
       pieChartData,
       areaChartData,
     };
-  }, [equipmentDetails]);
+  }, [equipmentDetails, selectedDate]);
+
+  const getStateDuration = (start: string, end: string): number => {
+    return (
+      (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60)
+    );
+  };
+
+  const findStateNameById = (stateId: string): string => {
+    return states?.find((state) => state.id === stateId)?.name || '';
+  };
+
+  const getHistoryMapMarkers = (details: EquipmentDetails): Equipment[] => {
+    return details.positions.map((position) => ({
+      id: details.id,
+      name: details.name,
+      model: details.model?.name ?? '',
+      position,
+      state: {
+        id: '',
+        name: '',
+        color: palette.primary,
+      },
+    }));
+  };
+
+  const toggleHistoryVisibility = (): void => {
+    if (!historyVisible && equipmentDetails) {
+      const newMarkers = getHistoryMapMarkers(equipmentDetails);
+      setMarkers(newMarkers);
+    } else {
+      setMarkers([]);
+    }
+
+    setHistoryVisible((prev) => !prev);
+  };
 
   const handleTabChange = (newTab: number): void => setTab(newTab);
 
@@ -249,9 +266,11 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
     historyVisible,
     markers,
     chartData,
+    selectedDate,
     handleOpen: setId,
     handleClose,
     handleTabChange,
+    handleDateChange: setSelectedDate,
     toggleHistoryVisibility,
     findStateNameById,
   };
