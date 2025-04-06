@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-import { TextField, Button } from '@mui/material';
+import {
+  TextField as BaseTextField,
+  Button as BaseButton,
+} from '@mui/material';
 import { palette } from '~/styles/colors';
 
 export const FiltersWrapper = styled.div`
@@ -14,14 +17,15 @@ export const FiltersWrapper = styled.div`
   background-color: ${palette.neutral.lightest};
 `;
 
-export const StyledTextField = styled(TextField).attrs({
+export const TextField = styled(BaseTextField).attrs({
   variant: 'outlined',
   size: 'small',
   sx: {
     minWidth: '150px',
+    marginBottom: '16px',
   },
 })``;
 
-export const StyledButton = styled(Button).attrs({
+export const Button = styled(BaseButton).attrs({
   variant: 'outlined',
 })``;
