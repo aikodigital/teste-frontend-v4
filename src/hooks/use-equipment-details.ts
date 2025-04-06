@@ -158,6 +158,12 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
     selectedDate,
   ]);
 
+  const getStateDuration = (start: string, end: string): number => {
+    return (
+      (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60)
+    );
+  };
+
   const chartData = useMemo((): ChartData => {
     if (!equipmentDetails) {
       return {
@@ -220,12 +226,6 @@ export const useEquipmentDetails = (): EquipmentDetailsHook => {
       areaChartData,
     };
   }, [equipmentDetails, selectedDate]);
-
-  const getStateDuration = (start: string, end: string): number => {
-    return (
-      (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60)
-    );
-  };
 
   const findStateNameById = (stateId: string): string => {
     return states?.find((state) => state.id === stateId)?.name || '';
