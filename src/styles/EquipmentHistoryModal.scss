@@ -1,0 +1,31 @@
+.modal {
+  z-index: 1060;
+}
+
+.modal .card {
+  min-height: 135px;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.badge {
+  font-size: 0.85em;
+  padding: 0.35em 0.65em;
+}
+
+.btn-outline-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
