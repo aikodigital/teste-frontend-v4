@@ -1,0 +1,364 @@
+/* ===== VARIÁVEIS E ESTILOS BASE ===== */
+:root {
+    --header-height: 60px;
+    --details-width: 450px;
+    --shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --border-radius: 8px;
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --primary-color: #2c3e50;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --light-gray: #dee2e6;
+}
+
+/* ===== ESTILOS GERAIS ===== */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+.container-fluid {
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== CABEÇALHO ===== */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.row.main-container {
+    flex: 1;
+    min-height: calc(100vh - var(--header-height));
+    position: relative;
+    margin: 0;
+}
+
+/* ===== MAPA PRINCIPAL ===== */
+.map-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--secondary-color);
+    transition: var(--transition);
+}
+
+/* ===== PAINEL DE FILTROS ===== */
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1000;
+}
+
+.filter-section h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.filter-group {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+#fitToMarkersBtn {
+    margin-top: 0.75rem;
+    width: 100%;
+    padding: 0.5rem;
+    align-self: center;
+}
+
+/* ===== PAINEL DE DETALHES ===== */
+#equipmentDetails {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 90%;
+    max-width: 500px;
+    height: 100vh;
+    background: white;
+    z-index: 1100;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    display: none;
+}
+
+#equipmentDetails.show {
+    right: 0;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+/* ===== CARDS E SEÇÕES ===== */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid var(--light-gray);
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* ===== MINI MAPA ===== */
+#miniMap {
+    height: 250px;
+    width: 100%;
+    border-radius: var(--border-radius);
+    background: var(--secondary-color);
+}
+
+/* ===== GRÁFICO DE HISTÓRICO ===== */
+#stateHistoryChart {
+    height: 200px;
+    width: 100%;
+}
+
+/* ===== BOTÕES E CONTROLES ===== */
+.btn {
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-secondary {
+    border-color: var(--light-gray);
+}
+
+#closeDetailsBtn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+/* ===== FORMULÁRIOS E FILTROS ===== */
+.form-control, .form-select {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+    padding: 0.5rem 0.75rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 992px) {
+    #equipmentDetails {
+        width: 80%;
+    }
+    
+    #map {
+        height: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .row.main-container {
+        flex-direction: column;
+    }
+    
+    .filter-section {
+        border: 1;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        margin-bottom: 0;
+        border-radius: 0;
+    }
+    
+    .map-container {
+        order: 2;
+        height: 60vh;
+        position: relative;
+    }
+    
+    #equipmentDetails {
+        width: 100%;
+    }
+    
+    body.details-open {
+        overflow: hidden;
+    }
+
+    @media (max-width: 767.98px) {
+      /* Layout para telas pequenas */
+      .filter-section {
+          border-radius: 0;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          margin-bottom: 0;
+          padding: 0.75rem;
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+      }
+      
+      #map {
+          height: calc(100vh - var(--header-height) - 180px);
+      }
+      
+
+  }
+}
+
+@media (max-width: 576px) {
+    .filter-section {
+        padding: 0.75rem;
+    }
+    
+    #miniMap, #stateHistoryChart {
+        height: 180px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    #fitToMarkersBtn {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+}
+
+/* ===== COMPORTAMENTO ESCAMOTEÁVEL PARA FILTROS ===== */
+@media (max-width: 767.98px) {
+  .filter-section {
+      transition: all 0.3s ease;
+      overflow: hidden;
+  }
+  
+  .filter-section.collapsed {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+  }
+  
+  .filter-section.collapsed .filter-content,
+  .filter-section.collapsed #fitToMarkersBtn {
+      display: none;
+  }
+  
+  .filter-section.collapsed h4 {
+      margin-bottom: 0;
+  }
+  
+  .toggle-icon {
+      transition: transform 0.3s ease;
+  }
+  
+  .filter-section.collapsed .toggle-icon {
+      transform: rotate(-90deg);
+  }
+  
+  #toggleFiltersBtn {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+  }
+}
+
+/* Ajuste para garantir que o mapa ocupe todo o espaço quando os filtros estiverem recolhidos */
+@media (max-width: 767.98px) {
+  .filter-section:not(.collapsed) + .col-md-9 #map {
+      height: calc(100vh - var(--header-height) - 180px);
+  }
+  
+  .filter-section.collapsed + .col-md-9 #map {
+      height: calc(100vh - var(--header-height) - 60px);
+  }
+  
+  /* Melhorias na aparência do botão toggle */
+  #toggleFiltersBtn {
+      padding: 0.25rem 0.5rem;
+  }
+  
+  #toggleFiltersBtn .bi {
+      font-size: 1rem;
+  }
+}
+
+/* Estilos para o painel de período */
+.datepicker {
+  background-color: white;
+  cursor: pointer;
+}
+
+#periodResults .card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+#periodResults .card-header {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+#periodResults .card-body {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+#periodResults hr {
+  margin: 0.5rem 0;
+  opacity: 0.5;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  #periodResults .row > div {
+      margin-bottom: 1rem;
+  }
+  
+  #periodResults .card {
+      margin-bottom: 0;
+  }
+}

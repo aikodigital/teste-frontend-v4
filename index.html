@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento de Equipamentos Florestais</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <!-- Nosso CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Bootstrap Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <!-- jQuery (necessário para o datepicker) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* Estilos adicionais */
+        #fitToMarkersBtn {
+            margin-top: 1rem;
+            padding: 0.5rem;
+        }
+        
+        .filter-section {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        #equipmentDetails {
+            z-index: 1050;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="detailsOverlay" class="details-overlay"></div>
+    
+    <div class="container-fluid">
+        <header class="row bg-dark text-white py-3">
+            <div class="col">
+                <h1 class="mb-0">Monitoramento de Equipamentos Florestais</h1>
+            </div>
+        </header>
+       
+        <div class="row g-0">
+ 
+            <!-- Painel de filtros-->
+
+            <div class="col-md-3 p-3 filter-section">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Filtros</h4>
+                    <button id="toggleFiltersBtn" class="btn btn-sm d-md-none">
+                        <i class="bi bi-chevron-down toggle-icon"></i>
+                    </button>
+                </div>
+                
+                <div class="filter-content">
+                    <div class="filter-content">
+                        <!-- Filtro de equipamentos -->
+                        <div class="filter-group">
+                            <label for="equipmentFilter" class="form-label">Equipamento</label>
+                            <select id="equipmentFilter" class="form-select">
+                                <option value="all">Todos</option>
+                            </select>
+                        </div>
+                
+                        <!-- Filtro de estados -->
+                        <div class="filter-group">
+                            <label for="stateFilter" class="form-label">Estado</label>
+                            <select id="stateFilter" class="form-select">
+                                <option value="all">Todos</option>
+                            </select>
+                        </div>
+                
+                        <!-- Filtro de modelos -->
+                        <div class="filter-group">
+                            <label for="modelFilter" class="form-label">Modelo</label>
+                            <select id="modelFilter" class="form-select">
+                                <option value="all">Todos</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botão de enquadramento -->
+                <button id="fitToMarkersBtn" class="btn btn-primary mt-2">
+                    <i class="bi bi-arrows-angle-contract"></i> Enquadrar no Mapa
+                </button>
+            </div>
+
+            
+<!-- Mapa e conteúdo principal -->
+ <div class="col-md-9 position-relative">
+    <div id="map" class="vh-100 w-100"></div>
+                
+<!-- Overlay de carregamento -->
+<div id="loadingOverlay" class="position-absolute top-0 start-0 w-100 h-100 bg-light bg-opacity-75 d-flex justify-content-center align-items-center d-none">
+    <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+   </div>
+</div>
+                
+<!-- Painel de detalhes do equipamento -->
+<div id="equipmentDetails" class="position-fixed top-0 end-0 vh-100 w-100 w-md-50 bg-white shadow-lg overflow-auto" style="display: none;">
+    <div class="p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Detalhes do Equipamento</h4>
+            <button id="closeDetailsBtn" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        
+        <div id="equipmentInfo" class="mb-4">
+            <!-- Conteúdo será preenchido dinamicamente -->
+        </div>
+        
+<!-- Informações de Operação -->
+<div class="card mb-3">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Informações de Operação</h5>
+    </div>
+
+    
+    <div class="card-body" id="operationInfo">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="startDate" class="form-label">Data Inicial</label>
+                <input type="text" id="startDate" class="form-control datepicker" placeholder="DD/MM/AAAA">
+            </div>
+            <div class="col-md-6">
+                <label for="endDate" class="form-label">Data Final</label>
+                <input type="text" id="endDate" class="form-control datepicker" placeholder="DD/MM/AAAA">
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="profitPerHour" class="form-label">Lucro por Hora Operacional (R$)</label>
+                <input type="number" id="profitPerHour" class="form-control" placeholder="0.00" step="0.01" min="0">
+            </div>
+            <div class="col-md-6">
+                <label for="costPerHour" class="form-label">Custo por Hora de Manutenção (R$)</label>
+                <input type="number" id="costPerHour" class="form-control" placeholder="0.00" step="0.01" min="0">
+            </div>
+        </div>
+        
+        <button id="applyPeriodBtn" class="btn btn-primary w-100 mb-3">
+            <i class="bi bi-calculator"></i> Calcular Período
+        </button>
+        
+        <div id="periodResults">
+            <div class="alert alert-info">Selecione um período e valores para cálculo</div>
+        </div>
+    </div>
+</div>
+        
+        <!-- Trajeto Percorrido -->
+        <div class="card mb-3">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Trajeto Percorrido</h5>
+            </div>
+            <div class="card-body">
+                <div id="miniMap" style="height: 250px; width: 100%;"></div>
+            </div>
+        </div>
+        
+        <!-- Histórico de Estados -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Histórico de Estados</h5>
+            </div>
+            <div class="card-body">
+                <div id="stateHistoryChart" style="height: 200px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Nosso JS -->
+    <script src="js/app.js" type="module"></script>
+</body>
+</html>
