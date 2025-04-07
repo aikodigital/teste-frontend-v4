@@ -1,0 +1,125 @@
+.popup-modal {
+  width: 250px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: sans-serif;
+}
+
+.popup-modal h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.popup-modal button {
+  margin-top: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup-modal button:hover {
+  background: #2980b9;
+}
+
+.container-historic-state {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  overflow-x: hidden;
+  margin-top: 15px;
+  overflow-y: scroll;
+}
+
+.state-card {
+  background-color: #f9f9f9;
+
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .state-id {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .state-name {
+    display: block;
+    font-size: 16px;
+    color: #333;
+  }
+}
+
+.span-title-state {
+  display: flex;
+  font-weight: bold;
+  margin-left: 5px !important;
+}
+
+.container-main {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.container-filters {
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.multiselect {
+  width: 330px;
+  margin-right: 12px;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding-right: 2rem; // espaço pro ícone
+}
+
+.search-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+}
+
+.l-map {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2e3d26; /* Verde escuro, tom florestal */
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  letter-spacing: 1px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
+}

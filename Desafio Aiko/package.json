@@ -1,0 +1,42 @@
+{
+  "name": "Desafio-Aiko",
+  "private": true,
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "css": "sass public/theme/:public/css --watch",
+    "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.0.1",
+    "@types/leaflet": "^1.9.17",
+    "@types/node": "^22.14.0",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "leaflet": "^1.9.4",
+    "lint": "^0.8.19",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.3",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "@typescript-eslint/parser": "^8.29.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.5.0",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.24.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-vue": "^10.0.0",
+    "prettier": "^3.5.3",
+    "sass": "^1.86.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.0",
+    "vite-plugin-sass": "^0.1.0",
+    "vue-tsc": "^2.2.4"
+  }
+}

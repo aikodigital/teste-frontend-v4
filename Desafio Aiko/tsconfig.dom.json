@@ -1,0 +1,22 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.vue",
+    "package.json"
+  ],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "allowJs": true,
+    "verbatimModuleSyntax": false,
+    "moduleResolution": "Bundler",
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
