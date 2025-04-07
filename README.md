@@ -1,218 +1,185 @@
-# 🏆 Teste Frontend
+# Sistema de Rastreamento de Equipamentos
 
-![Aiko](img/aiko.png)
+## Introdução
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+Este projeto é um aplicativo React/TypeScript projetado para rastrear e gerenciar equipamentos florestais. Ele fornece uma interface de mapa visual, informações detalhadas sobre equipamentos e uma visualização de lista para navegação fácil.
 
-## 🚀 O Desafio
+[link do vídeo:](https://drive.google.com/file/d/1hFzj_LvsR7D59cbtbnWpcKwecsPPbPK8/view?usp=sharing)
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+### Principais Funcionalidades
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+*   **Visualização de Mapa:** Exibe as localizações dos equipamentos em um mapa com marcadores interativos.
+*   **Detalhes do Equipamento:** Mostra informações detalhadas sobre cada equipamento, incluindo seu modelo, estado atual, produtividade, ganhos e histórico de estados.
+*   **Lista de Equipamentos:** Fornece uma visualização em lista de todos os equipamentos com recursos de filtragem e pesquisa.
+*   **Filtragem:** Permite que os usuários filtrem os equipamentos por nome, modelo e estado atual.
+*   **Pesquisa:** Permite que os usuários pesquisem equipamentos por nome.
+*   **Histórico de Estados:** Exibe o histórico de mudanças de estado para cada equipamento.
+*   **Cálculos:** Calcula a produtividade e os ganhos de cada equipamento.
 
-## 🎯 Requisitos
+## Componentes
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+### `EquipmentMap.tsx`
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+*   **Descrição:** Este componente renderiza um mapa com marcadores para cada equipamento. Ele permite a filtragem por nome, modelo e estado.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `search`: A consulta de pesquisa atual (string).
+    *   `selectedModel`: O ID do modelo selecionado (string).
+    *   `selectedState`: O ID do estado selecionado (string).
+    *   `mapMarkers`: Um array de objetos `MarkerData` a serem exibidos no mapa.
+    *   `filteredEquipment`: Um array de objetos de equipamento que correspondem aos critérios de filtro atuais.
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos e dados de estados de arquivos JSON.
+    *   Filtra equipamentos com base na pesquisa, modelo selecionado e estado selecionado.
+    *   Calcula a posição e o estado mais recentes para cada equipamento.
+    *   Renderiza marcadores no mapa com popups mostrando detalhes do equipamento.
+    *   Usa `react-leaflet` para renderização do mapa.
+    *   Usa `leaflet` para ícones.
+    *   Usa `react-router-dom` para navegação.
+    *   Usa `useEffect` para atualizar os marcadores quando os filtros mudam.
+    *   Usa `FitBoundsToMarkers` para ajustar os limites do mapa aos marcadores.
+*   **Elementos de UI:**
+    *   Campo de entrada de pesquisa.
+    *   Dropdown de modelo.
+    *   Dropdown de estado.
+    *   Contêiner do mapa.
+    *   Marcadores com popups.
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+### `EquipmentDetails.tsx`
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+*   **Descrição:** Este componente exibe informações detalhadas sobre um único equipamento.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `order`: A ordem do histórico de estados ('latest' ou 'oldest').
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos, dados de estados, histórico de estados e histórico de posições de arquivos JSON.
+    *   Calcula a produtividade e os ganhos usando as funções utilitárias em `calculations.ts`.
+    *   Exibe o nome do equipamento, modelo, estado atual, produtividade, ganhos e histórico de estados.
+    *   Renderiza um mapa com um marcador mostrando a localização atual do equipamento.
+    *   Usa `react-leaflet` para renderização do mapa.
+    *   Usa `date-fns` para formatação de data.
+    *   Usa `react-router-dom` para obter o ID do equipamento da URL.
+    *   Usa `getStateHistoryInOrder` para ordenar o histórico de estados.
+*   **Elementos de UI:**
+    *   Nome do equipamento.
+    *   Nome do modelo.
+    *   Estado atual.
+    *   Produtividade.
+    *   Ganhos.
+    *   Histórico de estados.
+    *   Contêiner do mapa.
+    *   Marcador.
 
-## 🎲 Dados
+### `EquipmentList.tsx`
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+*   **Descrição:** Este componente exibe uma lista de equipamentos com recursos de filtragem e pesquisa.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `search`: A consulta de pesquisa atual (string).
+    *   `selectedModel`: O ID do modelo selecionado (string).
+    *   `selectedState`: O ID do estado selecionado (string).
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos e dados de estados de arquivos JSON.
+    *   Filtra equipamentos com base na pesquisa, modelo selecionado e estado selecionado.
+    *   Calcula o estado mais recente para cada equipamento.
+    *   Renderiza um `EquipmentCard` para cada equipamento.
+*   **Elementos de UI:**
+    *   Campo de entrada de pesquisa.
+    *   Dropdown de modelo.
+    *   Dropdown de estado.
+    *   Lista de componentes `EquipmentCard`.
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+### `EquipmentCard.tsx`
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+*   **Descrição:** Este componente exibe um cartão com informações básicas sobre um equipamento.
+*   **Props:**
+    *   `equipment`: Os dados do equipamento (objeto).
+    *   `currentState`: O estado atual do equipamento (objeto).
+*   **Funcionalidade:**
+    *   Exibe o nome do equipamento e o estado atual.
+    *   Fornece um link para a página `EquipmentDetails`.
+*   **Elementos de UI:**
+    *   Nome do equipamento.
+    *   Estado atual.
+    *   Link para `EquipmentDetails`.
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+## Funções Utilitárias (`utils/calculations.ts`)
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+*   **`calculateProductivity(states: StateHistory[]): number`**
+    *   **Descrição:** Calcula a produtividade de um equipamento com base em seu histórico de estados.
+    *   **Parâmetros:**
+        *   `states`: Um array de objetos `StateHistory`.
+    *   **Retorna:** A produtividade como uma porcentagem (número).
+*   **`calculateEarnings(states: StateHistory[], model: EquipmentModel): number`**
+    *   **Descrição:** Calcula os ganhos totais de um equipamento com base em seu histórico de estados e modelo.
+    *   **Parâmetros:**
+        *   `states`: Um array de objetos `StateHistory`.
+        *   `model`: Um objeto `EquipmentModel`.
+    *   **Retorna:** Os ganhos totais (número).
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+## Configuração e Instalação
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+1.  **Clone o repositório:**
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+    ```bash
+    git clone https://github.com/jacksont-santos/teste-frontend-v4.git
+    ```
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+2.  **Navegue até o diretório do projeto:**
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+    ```bash
+    cd aiko-test
+    ```
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+3.  **Instale as dependências:**
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+    ```bash
+    npm install
+    ```
 
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
+4.  **Inicie o servidor de desenvolvimento:**
 
-* Vue, React e Angular.
+    ```bash
+    npm run dev
+    ```
+5. **Execute os testes:**
+    ```bash
+    npm test
+    ```
 
-* Typescript.
+## Tecnologias e 
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+Principais tecnologias:
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+*   Vite
+*   React
+*   Typescript
+*   Tailwind
 
-* Template engines (Pug, Ejs, etc).
+Este projeto usa as seguintes dependências principais:
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+*   **`react`:** ^18.3.1
+*   **`react-dom`:** ^18.3.1
+*   **`react-router-dom`:** ^6.22.3
+*   **`leaflet`:** ^1.9.4
+*   **`react-leaflet`:** ^4.2.1
+*   **`date-fns`:** ^3.3.1
+*   **`lucide-react`:** ^0.344.0
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+E as seguintes dependências de desenvolvimento:
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
-
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-### ❌ O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## 💡 Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## 🌟 Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
-## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
-
-
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+*   **`@eslint/js`:** ^9.9.1
+*   **`@types/react`:** ^18.3.5
+*   **`@types/react-dom`:** ^18.3.0
+*   **`@types/leaflet`:** ^1.9.8
+*   **`@vitejs/plugin-react`:** ^4.3.1
+*   **`autoprefixer`:** ^10.4.18
+*   **`eslint`:** ^9.9.1
+*   **`eslint-plugin-react-hooks`:** ^5.1.0-rc.0
+*   **`eslint-plugin-react-refresh`:** ^0.4.11
+*   **`globals`:** ^15.9.0
+*   **`postcss`:** ^8.4.35
+*   **`tailwindcss`:** ^3.4.1
+*   **`typescript`:** ^5.5.3
+*   **`typescript-eslint`:** ^8.3.0
+*   **`vite`:** ^5.4.2
