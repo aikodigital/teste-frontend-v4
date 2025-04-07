@@ -1,0 +1,19 @@
+{
+  "equipment": [
+    {
+      "id": 1,
+      "state": "Operando",
+      "model": "Caminhão de carga"
+    },
+    {
+      "id": 2,
+      "state": "Parado",
+      "model": "Harvester"
+    },
+    {
+      "id": 3,
+      "state": "Manutenção",
+      "model": "Garra traçadora"
+    }
+  ]
+}
