@@ -1,218 +1,136 @@
-# 🏆 Teste Frontend
+# Dashboard de Monitoramento de Equipamentos
 
-![Aiko](img/aiko.png)
+Esta documentação descreve a **arquitetura**, os **requisitos**, as **decisões de design** e as **práticas adotadas** para o desenvolvimento do **dashboard de monitoramento de equipamentos**, desafio proposto pela **AIKO** para o processo seletivo para vaga de **desenvolvedor front-end**. O objetivo da aplicação é exibir, de forma **intuitiva** e **responsiva**, informações coletadas de equipamentos, tais como **posições** e **estados**.
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+---
 
-## 🚀 O Desafio
+## 1. Introdução
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+O **Dashboard de Monitoramento de Equipamentos** foi desenvolvido para fornecer aos gestores uma visão **integrada** e **dinâmica** dos equipamentos utilizados. A aplicação permite visualizar:
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+- **Posições mais recentes dos Equipamentos:** Exibidas em um **mapa interativo**.
+- **Estado Atual dos Equipamentos:** Visualizados como **pop-ups** ou ao passar o mouse sobre os **markers**.
+- **Histórico de Estados:** Disponível ao clicar em um equipamento, permitindo analisar a **evolução dos estados**.
 
-## 🎯 Requisitos
+---
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+## 2. Arquitetura e Tecnologias
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+### 2.1. Tecnologias Utilizadas
+- **Framework Frontend:** **Vue 3** (Composition API)
+- **Gerenciamento de Estado:** **Pinia**
+- **Mapas:** **Leaflet** (para exibição de posições)
+- **Estilização:** **Tailwind CSS**
+- **Testes:** **Vitest** para testes unitários
+- **Linguagem:** **JavaScript** (ES6+)
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+### 2.2. Estrutura de Arquivos
+A estrutura do projeto segue as boas práticas de **componentização** e **modularização**.
+---
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+## 3. Modelagem dos Dados
 
-## 🎲 Dados
+Os dados são fornecidos em formato **JSON** na pasta `data/`, e cada arquivo possui a seguinte finalidade:
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+- **equipment.json:** Lista de equipamentos, contendo **id**, **equipmentModelId** e **name**.
+- **equipmentModel.json:** Modelos de equipamentos com atributos como **name** e **hourlyEarnings** (valores por hora para cada estado).
+- **equipmentState.json:** Estados dos equipamentos (por exemplo, **Operando**, **Parado**, **Manutenção**) com propriedades **id**, **name** e **color**.
+- **equipmentStateHistory.json:** Histórico de estados de cada equipamento, permitindo identificar o **estado atual** e a **evolução**.
+- **equipmentPositionHistory.json:** Histórico de posições (**GPS**) dos equipamentos, permitindo plotar os **markers** no mapa.
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+---
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+## 4. Funcionalidades e Fluxo da Aplicação
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+### 4.1. Exibição do Mapa e Posições
+- **MapComponent.vue:** Responsável por carregar os dados de posição e exibi-los como **markers** no mapa usando **Leaflet**.
+  - Os markers são **customizados** com cores que refletem o estado do equipamento.
+  - Ao passar o mouse (**hover**) são exibidos **pop-ups** com detalhes básicos sobre o equipamento.
+  - Ao clicar em um marker, a **sidebar de detalhes** será acionada.
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+### 4.2. Visualização do Estado Atual
+- **EquipmentSidebar.vue:** Ao selecionar um equipamento, a sidebar exibe:
+  - **Nome do equipamento** e **modelo**.
+  - **Estado atual** com **cor**, obtidos através do getter **getCurrentState** na store.
+  - **Última posição** registrada.
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+### 4.3. Histórico de Estados e Posições
+- **Histórico de Estados:** Disponível na sidebar, onde o usuário pode visualizar uma lista de estados do equipamento.
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+### 4.4. Pesquisa e Filtros
+- **SearchBar.vue:** Permite ao usuário digitar e filtrar equipamentos com **sugestões dinâmicas**.
+  - Implementa **debounce** para melhorar a experiência.
+- **EquipmentFilter.vue:** Permite filtrar os equipamentos por **estado atual** ou **modelo**.
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+---
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+## 5. Gerenciamento de Estado
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+A **Pinia** é utilizada para gerenciar o **estado global** da aplicação. O **equipmentStore** centraliza:
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+- **Listas** de equipamentos, modelos, estados, históricos de estados e posições.
+- **Métodos** para carregar os dados (via fetch dos arquivos JSON).
+- **Getters** para obter informações agregadas (ex.: estado atual, detalhes do equipamento, posição mais recente).
+- **Ações** para selecionar um equipamento, filtrar e pesquisar.
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+---
 
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
+## 6. Boas Práticas de UI/UX e Responsividade
 
-* Vue, React e Angular.
+- **Layout Responsivo:**  
+  O layout adapta-se a diferentes tamanhos de tela utilizando classes do **Tailwind** como `flex`, `md:` e `lg:`, garantindo que o mapa e as sidebars sejam exibidos adequadamente em **dispositivos móveis**, **tablets** e **desktops**.
 
-* Typescript.
+- **Interação Intuitiva:**
+  - O **mapa** é o elemento central, enquanto os **filtros** e a **sidebar** são acessíveis e interativos.
+  - **Transições suaves** (com `<transition>` e classes de CSS customizadas) melhoram a experiência de abrir e fechar a sidebar.
+  - **Feedback visual** (hover, focus) é aplicado a botões e elementos interativos para uma experiência consistente.
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+- **Acessibilidade:**
+  Utilização de tags semânticas como: `<nav>`, `<main>`, `<aside>`, `<section>`, `<footer>`.
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+- **Performance:**
+  - Uso de **debounce** na search bar para reduzir chamadas desnecessárias.
+  - Carregamento **assíncrono** dos dados com **Promises** e `await`.
 
-* Template engines (Pug, Ejs, etc).
+---
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+## 7. Testes
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+### 7.1. Testes Unitários
+Utilização do **Vitest** para testar funções essenciais em **equipmentStore.js** e a exibição dos dados através do **MapComponent.vue**, garantindo a precisão do funcionamento da **store** e do **mapa**.
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+### 7.2. Testes End-to-End
+Testes E2E com **Cypress** verificam os fluxos principais:
+- Exibição do **mapa** e dos **filtros**.
+- Funcionamento da **search bar** com sugestões dinâmicas.
+- Interação com **markers** e abertura da **sidebar de detalhes**.
+- Visualização do **histórico de estados** e posições.
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
+---
 
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
+## 8. Possíveis Melhorias Futuras
 
-### ❌ O que não é permitido
+- **Integração com APIs Reais:**  
+  Atualmente, os dados são carregados de arquivos **JSON**. Uma evolução seria integrar com **APIs REST** para dados em tempo real.
 
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
+- **Melhoria dos Gráficos e Visualizações:**  
+  Incorporar **gráficos** (ex.: **D3.js**, **Chart.js**) para exibir a evolução dos estados e indicadores de forma visual e interativa.
 
-## 💡 Recomendações
+- **Notificações e Alertas:**  
+  Implementar **notificações** para alertar os gestores sobre equipamentos com **produtividade baixa** ou com histórico de **manutenção elevado**.
 
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
+- **Testes Automatizados:**  
+  Expandir a cobertura dos testes unitários e implementar testes E2E, incluindo testes de **acessibilidade** e **desempenho**.
 
-## 🌟 Extras
+---
 
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
+## 9. Conclusão
 
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
+Esta documentação apresenta de forma clara e detalhada a **arquitetura** e as **funcionalidades** do **Dashboard de Monitoramento de Equipamentos**, alinhado às boas práticas de desenvolvimento e aos requisitos do projeto. A aplicação foi desenvolvida com foco em **responsividade**, **interatividade** e **usabilidade**, fornecendo uma ferramenta robusta para a gestão e monitoramento dos equipamentos.
 
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
+## Demonstração em vídeo
 
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
+Link: https://drive.google.com/file/d/1OohHBVrBbgeidI7GX0y698l6SLRp0iIf/view?usp=drive_link
 
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
+---
 
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
-## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
-
-
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
