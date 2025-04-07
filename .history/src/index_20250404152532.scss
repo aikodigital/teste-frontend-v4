@@ -1,0 +1,8 @@
+@use "tailwindcss";
+
+.container-title {
+    display: flex;
+    align-items: center;
+
+    .search {}
+}

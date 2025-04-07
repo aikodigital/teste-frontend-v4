@@ -1,0 +1,122 @@
+// Variáveis
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+@font-face {
+    font-family: 'Inria Sans';
+    src: url('../fonts/MinhaFonte.woff2') format('woff2'),
+        url('../fonts/MinhaFonte.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+$stroke: #D3D3D3;
+$operating: #2ECC71;
+$idle: #F1C40F;
+$maintenance: #E74C3C;
+$logo: #003184;
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 20px;
+}
+
+body {
+    overflow: hidden;
+}
+
+.border-container {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: $stroke;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    div {
+        border-bottom: 1px solid $stroke;
+        padding-bottom: 10px;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .container-filters {
+        display: flex;
+        gap: 10px;
+
+        .select-status {
+            padding: 5px;
+            border-color: $stroke;
+        }
+    }
+
+    ul {
+        list-style: none;
+    }
+}
+
+.leaflet-container {
+    overflow: hidden;
+    z-index: 0;
+    height: 500px;
+}
+
+.container-title {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    position: relative;
+    // top: 0;
+    z-index: 2;
+    gap: 20px;
+    border-bottom: 1px solid $stroke;
+
+    .logo {
+        width: 138px;
+        height: 69px;
+    }
+
+    .search {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 5px;
+        padding-left: 10px;
+        outline: none;
+        border-color: $stroke;
+    }
+}
+
+.container-details-map {
+    display: flex;
+
+    .container-details {
+        // position: absolute;
+        // bottom: 0;
+        background-color: white;
+        z-index: 1;
+        right: 0;
+        width: 381px;
+        height: 87vh;
+        border-left: 1px solid $stroke;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+
+        .status {
+            padding: 20px;
+            border: 1px solid;
+            border-radius: 10px;
+            color: #008D3C;
+            border-color: #008D3C;
+            background-color: rgba(46, 204, 113, 0.5);
+            text-align: center;
+        }
+    }
+}
