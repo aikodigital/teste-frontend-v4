@@ -1,0 +1,145 @@
+.map-container {
+	position: relative;
+	width: 100%;
+	height: calc(100vh - 64px);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.map-filters {
+	padding: 16px;
+	background: white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+}
+
+.map-controls {
+	position: absolute;
+	top: 80px;
+	right: 16px;
+	z-index: 1000;
+}
+
+.timeline-control {
+	position: absolute;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	padding: 16px;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	width: 80%;
+	max-width: 600px;
+}
+
+.map-popup {
+	min-width: 250px;
+	max-width: 300px;
+}
+
+.popup-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.popup-header h3 {
+	margin: 0;
+	font-size: 1.1em;
+}
+
+.leaflet-container {
+	width: 100%;
+	height: 100%;
+}
+
+.leaflet-control-zoom {
+	margin: 16px !important;
+}
+
+.route-control {
+	background: white;
+	padding: 8px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.route-button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border: none;
+	background: #f0f0f0;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.9em;
+}
+
+.route-button.active {
+	background: #2196f3;
+	color: white;
+}
+
+.timeline-slider {
+	margin-top: 12px;
+}
+
+.timeline-slider input[type="range"] {
+	width: 100%;
+	margin: 8px 0;
+}
+
+.timeline-info {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.8em;
+	color: #666;
+}
+
+.custom-div-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.marker-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	position: relative;
+	z-index: 2;
+}
+
+.marker-pulse {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	animation: pulse 2s infinite;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+@keyframes pulse {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 0.8;
+	}
+	70% {
+		transform: translate(-50%, -50%) scale(2);
+		opacity: 0;
+	}
+	100% {
+		transform: translate(-50%, -50%) scale(2);
+		opacity: 0;
+	}
+}
