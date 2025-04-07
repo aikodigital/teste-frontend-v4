@@ -42,7 +42,7 @@ const EquipmentStats = ({
       
       <Grid container spacing={3}>
         {/* Dados básicos */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} sm={6}>
           <Typography variant="subtitle1" gutterBottom>
             Informações Básicas
           </Typography>
@@ -57,7 +57,7 @@ const EquipmentStats = ({
         </Grid>
         
         {/* Produtividade */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} sm={6}>
           <Typography variant="subtitle1" gutterBottom>
             Produtividade (últimas 24h)
           </Typography>
@@ -85,7 +85,7 @@ const EquipmentStats = ({
         </Grid>
         
         {/* Ganhos */}
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <Typography variant="subtitle1" gutterBottom>
             Ganhos Totais
           </Typography>

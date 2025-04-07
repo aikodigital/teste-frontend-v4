@@ -181,7 +181,7 @@ const Dashboard = ({
         {/* Cards de estatísticas */}
         <Grid container spacing={2} sx={{ mb: 3 }}>
           {/* Total de Equipamentos */}
-          <Grid item xs={12} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Card 
               elevation={1}
               sx={{ 
@@ -248,7 +248,7 @@ const Dashboard = ({
           
           {/* Cards por estado */}
           {equipmentStates.map(state => (
-            <Grid item xs={12} md={3} key={state.id}>
+            <Grid xs={12} sm={6} md={3} key={state.id}>
               <Card 
                 elevation={1}
                 sx={{ 

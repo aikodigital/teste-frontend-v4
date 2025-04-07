@@ -208,7 +208,7 @@ const FilterPanel = ({
         <CardContent sx={{ p: { xs: 2, md: 3 } }}>
           <Grid container spacing={2}>
             {/* Pesquisa por nome */}
-            <Grid item xs={12} md={4}>
+            <Grid xs={12} sm={4}>
               <TextField
                 fullWidth
                 size="small"
@@ -259,7 +259,7 @@ const FilterPanel = ({
             </Grid>
             
             {/* Filtro por modelo - Nova implementação */}
-            <Grid item xs={12} md={4}>
+            <Grid xs={12} sm={4}>
               <Stack spacing={0.5}>
                 <Typography variant="body2" fontWeight={500} color="text.secondary">
                   Modelo de Equipamento
@@ -486,10 +486,10 @@ const FilterPanel = ({
             </Grid>
             
             {/* Filtro por estado - Nova implementação */}
-            <Grid item xs={12} md={4}>
+            <Grid xs={12} sm={4}>
               <Stack spacing={0.5}>
                 <Typography variant="body2" fontWeight={500} color="text.secondary">
-                  Estado Atual
+                  Estado do Equipamento
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Button

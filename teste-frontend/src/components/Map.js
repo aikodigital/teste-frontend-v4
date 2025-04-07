@@ -166,10 +166,10 @@ const MapContainer = styled(Box)(({ theme }) => `
     display: block;
     position: absolute;
     width: 300%;
-    height: 100%;
+    height: 300%;
     box-sizing: border-box;
-    margin-left: 18%;
-    margin-top: 180%;
+    margin-left: -100%;
+    margin-top: -100%;
     border-radius: 50%;
     background-color: currentColor;
     animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
@@ -338,8 +338,38 @@ const Map = ({ equipments, equipmentModels, latestPositions, latestStates, equip
         zoom: 5,
         zoomControl: false,
         attributionControl: true,
+        dragging: true,
+        doubleClickZoom: true,
+        scrollWheelZoom: true,
+        boxZoom: true,
+        keyboard: true,
+        tap: false,
+        tapTolerance: 15,
+        clickable: false,
+        draggableCursor: 'default'
       });
       
+      // Prevent unwanted click behaviors
+      map.on('click', function(e) {
+        if (e.originalEvent) {
+          const target = e.originalEvent.target;
+          if (target.classList.contains('custom-marker') || 
+              target.closest('.custom-marker') || 
+              target.closest('.leaflet-popup')) {
+            L.DomEvent.stopPropagation(e);
+            L.DomEvent.preventDefault(e);
+            return false;
+          }
+        }
+      });
+
+      // Disable click and drag events on markers
+      map.on('popupopen', function(e) {
+        if (e.popup && e.popup._source) {
+          e.popup._source.dragging.disable();
+        }
+      });
+
       const tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
@@ -597,11 +627,12 @@ const Map = ({ equipments, equipmentModels, latestPositions, latestStates, equip
 
       const icon = L.divIcon({
         className: "custom-marker",
-        iconAnchor: [15, 30],
-        popupAnchor: [0, -30],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -35],
+        iconSize: [38, 38],
         html: `
-          <div class="${wrapperClass}" style="${pulseStyle}">
-            <span style="${markerHtmlStyles} ${markerAdditionalStyles}">
+          <div class="${wrapperClass}" style="${pulseStyle}; pointer-events: none;">
+            <span style="${markerHtmlStyles} ${markerAdditionalStyles}; pointer-events: none;">
               <div style="${iconHtmlStyles}" role="presentation" aria-hidden="true">
                 <span style="${acronymStyles}">${modelInfo.acronym}</span>
               </div>
@@ -611,16 +642,42 @@ const Map = ({ equipments, equipmentModels, latestPositions, latestStates, equip
       });
 
       // Criar o marcador com o popup
-      const marker = L.marker([lat, lng], { icon }).addTo(mapInstanceRef.current);
+      const marker = L.marker([lat, lng], { 
+        icon,
+        interactive: true,
+        bubblingMouseEvents: false,
+        riseOnHover: true,
+        riseOffset: 250
+      }).addTo(mapInstanceRef.current);
       
       // Criar e adicionar o popup
       const popup = L.popup({
         closeButton: true,
         className: `popup-${theme.palette.mode}`,
-        maxWidth: 300
+        maxWidth: 300,
+        autoPan: true,
+        keepInView: true,
+        closeOnClick: false
       }).setContent(popupContent);
       
       marker.bindPopup(popup);
+      
+      // Prevent any click events from propagating
+      marker.getElement().addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        marker.openPopup();
+      }, false);
+
+      marker.getElement().addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+
+      marker.getElement().addEventListener('mousemove', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
       
       // Armazenar o marcador para referência futura
       markersRef.current[equipment.id] = marker;

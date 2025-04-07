@@ -159,7 +159,7 @@ const EquipmentDetail = ({
             }}
           >
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} md={7}>
+              <Grid xs={12} sm={7} md={7}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Avatar 
                     sx={{ 
@@ -204,7 +204,7 @@ const EquipmentDetail = ({
                 </Box>
               </Grid>
               
-              <Grid item xs={12} md={5}>
+              <Grid xs={12} sm={5} md={5}>
                 <Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' }, gap: 1 }}>
                   <Button
                     variant="outlined"

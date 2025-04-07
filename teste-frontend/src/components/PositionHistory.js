@@ -71,7 +71,34 @@ const PositionHistory = ({ equipmentId, positionHistory }) => {
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current) {
       // Inicializar o mapa
-      const map = L.map(mapRef.current).setView([-19.2, -46.0], 10);
+      const map = L.map(mapRef.current, {
+        center: [-19.2, -46.0],
+        zoom: 10,
+        zoomControl: true,
+        attributionControl: true,
+        dragging: true,
+        doubleClickZoom: true,
+        scrollWheelZoom: true,
+        boxZoom: true,
+        keyboard: true,
+        tap: false,
+        tapTolerance: 15,
+        clickable: false,
+        draggableCursor: 'default'
+      });
+
+      // Prevent unwanted click behaviors
+      map.on('click', function(e) {
+        if (e.originalEvent) {
+          const target = e.originalEvent.target;
+          if (target.classList.contains('custom-marker') || 
+              target.closest('.custom-marker') || 
+              target.closest('.leaflet-popup')) {
+            L.DomEvent.stopPropagation(e);
+            return false;
+          }
+        }
+      });
       
       // Adicionar camada de mapa (OpenStreetMap)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -107,7 +134,8 @@ const PositionHistory = ({ equipmentId, positionHistory }) => {
     const polyline = L.polyline(points, { 
       color: '#3498db', 
       weight: 3,
-      opacity: 0.7
+      opacity: 0.7,
+      interactive: false
     }).addTo(mapInstanceRef.current);
     
     // Adicionar marcadores para início e fim
@@ -115,7 +143,14 @@ const PositionHistory = ({ equipmentId, positionHistory }) => {
       // Marcador de início (verde)
       const startIcon = L.divIcon({
         className: 'custom-marker',
-        html: `<div style="background-color: #2ecc71; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+        html: `<div style="
+          background-color: #2ecc71; 
+          width: 12px; 
+          height: 12px; 
+          border-radius: 50%; 
+          border: 2px solid white;
+          pointer-events: none;
+        "></div>`,
         iconSize: [16, 16],
         iconAnchor: [8, 8]
       });
@@ -123,27 +158,85 @@ const PositionHistory = ({ equipmentId, positionHistory }) => {
       // Marcador de fim (vermelho)
       const endIcon = L.divIcon({
         className: 'custom-marker',
-        html: `<div style="background-color: #e74c3c; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+        html: `<div style="
+          background-color: #e74c3c; 
+          width: 12px; 
+          height: 12px; 
+          border-radius: 50%; 
+          border: 2px solid white;
+          pointer-events: none;
+        "></div>`,
         iconSize: [16, 16],
         iconAnchor: [8, 8]
       });
       
       // Adicionar marcadores com popups informativos
-      const startMarker = L.marker(points[0], { icon: startIcon }).addTo(mapInstanceRef.current);
-      startMarker.bindPopup(`
+      const startMarker = L.marker(points[0], { 
+        icon: startIcon,
+        interactive: true,
+        bubblingMouseEvents: false,
+        riseOnHover: true,
+        riseOffset: 250
+      }).addTo(mapInstanceRef.current);
+
+      const startPopup = L.popup({
+        closeButton: true,
+        className: 'custom-popup',
+        maxWidth: 300,
+        autoPan: true,
+        keepInView: true,
+        closeOnClick: false
+      }).setContent(`
         <div>
           <strong>Início</strong><br>
           Data: ${dayjs(filteredPositions[0].date).format('DD/MM/YYYY HH:mm')}
         </div>
       `);
+
+      startMarker.bindPopup(startPopup);
       
-      const endMarker = L.marker(points[points.length - 1], { icon: endIcon }).addTo(mapInstanceRef.current);
-      endMarker.bindPopup(`
+      const endMarker = L.marker(points[points.length - 1], { 
+        icon: endIcon,
+        interactive: true,
+        bubblingMouseEvents: false,
+        riseOnHover: true,
+        riseOffset: 250
+      }).addTo(mapInstanceRef.current);
+
+      const endPopup = L.popup({
+        closeButton: true,
+        className: 'custom-popup',
+        maxWidth: 300,
+        autoPan: true,
+        keepInView: true,
+        closeOnClick: false
+      }).setContent(`
         <div>
           <strong>Fim</strong><br>
           Data: ${dayjs(filteredPositions[filteredPositions.length - 1].date).format('DD/MM/YYYY HH:mm')}
         </div>
       `);
+
+      endMarker.bindPopup(endPopup);
+
+      // Prevent click events from propagating
+      [startMarker, endMarker].forEach(marker => {
+        marker.getElement().addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          marker.openPopup();
+        }, false);
+
+        marker.getElement().addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }, false);
+
+        marker.getElement().addEventListener('mousemove', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }, false);
+      });
       
       // Ajustar visualização para mostrar toda a rota
       mapInstanceRef.current.fitBounds(polyline.getBounds(), { padding: [50, 50] });
