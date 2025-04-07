@@ -1,0 +1,203 @@
+body {
+    overflow-y: hidden;
+}
+
+
+/*ALTERAÇÕES NOS ESTILOS DO PRÓPRIO LEAFLET*/
+.marker-label {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.marker-container {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 200px !important;
+    align-items: center;
+}
+
+.marker-container img {
+    width: 64px !important;
+    height: 64px !important;
+}
+
+
+.leaflet-popup-content-wrapper {
+    max-height: 550px !important;
+    width: 600px !important;
+    overflow-y: auto !important;
+    border-radius: 8px !important;
+}
+.leaflet-popup-content {
+
+    width: auto !important;
+}
+
+
+#mapa {
+    box-sizing: border-box;
+    width: 98vw;
+    height: 98vh;
+}
+/* Estilização das tabelas*/
+#tabela-produtividade {
+    border-collapse: collapse;
+    margin-top: 16px;
+    width: 100%;
+}
+#tabela-produtividade td, #tabela-produtividade th {
+    border: 1px solid #000;
+   text-align: center;
+   padding: 6px 8px;
+}
+#dados-equipamento {
+    text-align: center;
+}
+
+#horas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.Operando {
+    background-color: #2ecc71;
+}
+
+.Manutenção {
+    background-color: #e74c3c;
+}
+
+.Parado {
+    background-color: #f1c40f;
+}
+/* Estilização dos Filtros e Inputs*/
+#filtros {
+    width: fit-content;
+    z-index: 999;
+    position: sticky;
+    left: 16px;
+    bottom: 16px;
+    text-align: start;
+
+}
+
+#legenda, #filtro-modelo, #modal-modelos{
+    max-width: 128px;
+    height: auto;
+    padding: 16px;
+
+    border: none;
+    border-radius: 10px;
+    box-shadow: #2c2c2c 0px 0px 10px 0px;
+    background-color: #fff;
+
+}
+#legenda {
+    
+    margin-top: 16PX;
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+
+ input {
+    display: none;
+}
+
+#legenda label::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+label {
+    
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 5px;
+}
+label[for='op']::before {
+  background-color: #2ecc71;
+}
+
+label[for='pa']::before {
+  background-color: #f1c40f;
+}
+
+label[for='ma']::before {
+  background-color: #e74c3c;
+}
+
+label:hover {
+    
+    background-color: rgb(235, 235, 235);
+    border: 2px solid rgb(143, 143, 143);
+}
+
+input[type="checkbox"]:checked + label{
+    background-color: rgb(186, 187, 187);
+}
+#infos-historicas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#infos-historicas span {
+    padding: 12px;
+}
+
+.popup-historico button, #dados-equipamento button {
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #2c2c2c;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+
+.popup-historico button:hover, #dados-equipamento button:hover {
+
+    background-color: rgb(208, 220, 231);
+}
+/* Estilização do Modal e dos Filtros*/
+#filtro-modelo {
+    cursor: pointer;
+}
+
+#modal-modelos {
+    display: none;
+    z-index: 999;
+    width: 300px;
+    height: auto;
+   
+    position: sticky;
+    left: 16;
+    bottom: 40%;
+    text-align: start;
+
+}
+
+#modal-modelos div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#fechaModal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    border: 1px solid #2c2c2c;
+    padding: 4px;
+    background-color: #e74c3c;
+    cursor: pointer;
+}
+

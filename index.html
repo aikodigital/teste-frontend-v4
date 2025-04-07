@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aiko - Teste FrontEnd</title>
+    <link rel="stylesheet" href="./leaflet/leaflet.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./img/aiko.png" type="image/x-icon">
+    <script src="./leaflet/leaflet.js"></script>
+</head>
+<body>
+    
+
+    <div id="mapa"></div>
+
+    <div id="filtros">
+        <div>
+            <button onclick="abreModal()"  id="filtro-modelo">Modelos</button>
+        </div>
+    <div id="legenda">
+        <input type='checkbox' name="Operando" id="op" onchange="filtraMapa(self.name)"></input>
+        <label for="op">Operando</label>
+
+        <input type='checkbox' name="Parado" id="pa" onchange="filtraMapa(self.name)"></input>
+        <label for="pa">Parado</label>
+
+        <input type='checkbox' name="Manutenção" id="ma" onchange="filtraMapa(self.name)"></input>
+        <label for="ma">Manutenção</label>
+    </div>
+</div>
+  
+
+    <div id="modal-modelos">
+        <button onclick="fechaModal()" id="fechaModal">X</button>
+    </div>
+
+    <script src="mapa.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

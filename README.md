@@ -1,3 +1,261 @@
+*******TESTE FRONTEND AIKO - Gabriel Alexandre de Aguiar
+
+Documentação do Teste
+
+ESSA DOCUMENTAÇÃO SERÁ DIVIDIA EM DUAS PARTES (script.js e mapa.js)
+
+SCRIPT.JS código responsáveis pelo tratamento de dados:
+
+Variáveis Globais:
+
+local = './data/';
+
+arquivos = ['equipment', 'equipmentModel', 'equipmentPositionHistory', 'equipmentState', 'equipmentStateHistory'];
+
+let dados = {};
+
+local : Define o caminho base onde os arquivos JSON estão armazenados.
+
+arquivos : Lista os nomes dos arquivos JSON que contêm os dados do sistema (equipamentos, modelos, posições, estados e histórico de estados).
+
+dados : Objeto global que armazenará todos os dados processados do sistema após a execução das funções de carregamento e processamento.
+
+
+2. Carregamento de Dados
+
+
+Finalidade : Carrega um arquivo JSON específico com base no índice fornecido (cod) na lista arquivos.
+Funcionamento :
+Constrói a URL completa para o arquivo JSON.
+Usa fetch para fazer uma requisição HTTP e retorna os dados em formato JSON.
+
+Retorno : Uma Promise que resolve para os dados JSON do arquivo solicitado.
+
+
+3. Processamento de Dados
+Função processaDados(equipamentos, modelos, posicoes, status, historico_status)
+
+Finalidade : Processa os dados brutos carregados e os organiza em uma estrutura mais acessível e útil para o sistema.
+Entrada :
+equipamentos: Dados dos equipamentos.
+modelos: Dados dos modelos de equipamentos.
+posicoes: Dados das posições históricas dos equipamentos.
+status: Dados dos estados possíveis dos equipamentos.
+historico_status: Histórico de estados dos equipamentos.
+Saída : Um objeto dados contendo:
+
+equipamentos: Lista de equipamentos processados.
+
+modelos: Dicionário de modelos.
+
+posicoes: Dicionário de posições históricas por equipamento.
+
+status: Dicionário de estados.
+
+historico_status: Histórico de estados formatado por equipamento.
+
+Processamento Detalhado
+
+Modelos :
+Cada modelo é armazenado em dados.modelos com seu nome e ganhos horários (hourlyEarnings).
+
+Status :
+Cada estado é armazenado em dados.status com seu nome e cor associada.
+
+Posições :
+As posições históricas são organizadas por ID de equipamento.
+
+Histórico de Status :
+O histórico de estados é processado para calcular o estado atual (ultimoStatus) e formatar os dados para facilitar o uso posterior.
+
+Equipamentos :
+Cada equipamento é associado ao seu modelo, histórico de estados, posições e último status.
+
+4. Cálculo de Produtividade
+Função calculaProdutividade()
+
+Finalidade : Calcula métricas de produtividade para cada equipamento com base no histórico de estados.
+
+Funcionalidades :
+Horas por Estado :
+Calcula o tempo total que cada equipamento passou em cada estado.
+
+Rendimento Diário :
+Calcula o valor gerado por dia para cada equipamento com base nos ganhos horários de cada estado.
+
+Eficiência :
+Calcula a eficiência operacional diária como uma porcentagem do tempo total operacional.
+
+Ganhos Totais :
+Calcula o valor total gerado pelo equipamento ao longo de todo o histórico.
+
+Produtividade Total :
+Calcula a produtividade geral como uma porcentagem do tempo operacional em relação ao tempo total.
+
+Funções Auxiliares
+adicionaHoras(equipamento, horasPorEstado, dia, estado, horas) :
+Adiciona as horas de um estado específico ao rendimento diário e ao total acumulado.
+converteHora(hora) :
+Converte uma hora no formato "HH:mm" para apenas horas inteiras.
+
+
+5. Montagem do Modal
+Função montaModal()
+
+Finalidade : Cria dinamicamente checkboxes para filtrar os equipamentos por modelo no modal.
+
+Funcionalidades :
+Itera sobre os modelos disponíveis em dados.modelos.
+Para cada modelo, cria um checkbox e um label associado.
+Adiciona um listener (change) ao checkbox para aplicar o filtro no mapa quando alterado.
+
+6. Filtros no Mapa
+
+Filtro por Modelo
+O filtro por modelo é implementado no evento change dos checkboxes criados em montaModal. Quando um checkbox é marcado ou desmarcado, o mapa é atualizado para exibir apenas os marcadores correspondentes aos modelos selecionados.
+
+Integração com Outros Filtros
+Se houver outros filtros (como por estado), eles devem ser combinados para garantir que ambos sejam aplicados simultaneamente. Isso pode ser feito usando uma função de filtragem combinada que verifica tanto o modelo quanto o estado de cada marcador.
+
+7. Funções de Mapa
+Carregamento de Marcadores
+Os marcadores são adicionados ao mapa usando a função criarMarcador, que associa propriedades personalizadas (como modelo e estado) a cada marcador.
+
+Filtragem Dinâmica
+A filtragem dinâmica é aplicada sempre que um filtro é alterado, garantindo que apenas os marcadores que atendem aos critérios selecionados sejam exibidos.
+
+MAPA.JS Tem como função fazer a estrutuação e montagem do mapa na tela.
+
+1. Configuração do Mapa
+
+var map = L.map('mapa', {
+    center: [-19.126536, -45.947756],
+    zoom: 10
+});
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+
+Finalidade : Inicializa o mapa usando a biblioteca Leaflet.
+
+Funcionalidades :
+O mapa é centralizado nas coordenadas [-19.126536, -45.947756] com um nível de zoom inicial de 10.
+A camada de tiles (imagens do mapa) é carregada do OpenStreetMap.
+A atribuição ao OpenStreetMap é incluída para dar crédito aos contribuidores dos dados.
+
+2. Variáveis Globais
+
+let marcadores = [];
+const filtroModelos = [];
+
+marcadores : Array global que armazena todos os marcadores adicionados ao mapa. Isso permite manipular os marcadores dinamicamente (ex.: exibir/ocultar).
+
+filtroModelos : Array global que armazena os modelos selecionados para filtragem. (Nota: Este array não é usado no código fornecido, mas pode ser útil para extensões futuras.)
+
+3. Função montaPopUp(equipamento)
+
+Finalidade : Gera uma tabela HTML com informações de produtividade diárias para um equipamento.
+
+Funcionamento :
+Pré-processamento :
+Organiza o histórico de estados (historico_status) em um Map, onde cada chave é um dia e o valor é uma lista 
+de estados ocorridos nesse dia.
+
+Geração do HTML :
+Para cada dia, gera uma linha na tabela com as seguintes informações:
+Data (dia).
+
+Horário e estado de cada registro (hora e estadoNome).
+
+Valor gerado no dia (valorDia).
+
+Eficiência operacional no dia (eficiencia).
+
+Retorno : Uma string contendo o HTML da tabela formatada.
+
+4. Função carregaItensMapa(equipamentos, mostrarHistoricoCompleto = false)
+
+
+Finalidade : Carrega marcadores no mapa com base nos equipamentos fornecidos.
+Parâmetros :
+equipamentos: Lista de equipamentos cujas posições serão exibidas no mapa.
+
+mostrarHistoricoCompleto: Define se o histórico completo de posições deve ser exibido (true) ou apenas a última posição (false).
+
+Funcionamento :
+Limpeza de Marcadores :
+Remove todos os marcadores existentes no mapa.
+
+Modo Histórico Completo :
+Para cada posição histórica, cria um marcador associado ao estado correspondente.
+
+Centraliza o mapa na primeira posição histórica.
+
+Modo Normal :
+Cria um único marcador para a última posição de cada equipamento.
+
+5. Função criarMarcador(equipamento, coordenadas, status, isHistorico)
+
+    Finalidade : Cria e adiciona um marcador ao mapa com informações personalizadas.
+Funcionamento :
+Ícone Personalizado :
+Usa L.divIcon para criar um ícone personalizado com informações como nome do equipamento, modelo e estado.
+
+Popup :
+Se for um marcador histórico, o popup exibe informações detalhadas sobre o estado naquele momento.
+
+Se for um marcador normal, o popup exibe uma tabela de produtividade e um botão para carregar o histórico.
+
+Propriedades Personalizadas :
+Adiciona propriedades como marker.modelo e marker.status para facilitar a filtragem posterior.
+
+Adição ao Mapa :
+O marcador é adicionado ao mapa e ao array global marcadores.
+
+6. Função encontrarStatusPorData(historicoStatus, dataPosicao)
+
+
+Finalidade : Encontra o estado mais próximo antes de uma data específica.
+Funcionamento :
+Converte as datas do histórico para objetos Date.
+Itera sobre o histórico de trás para frente para encontrar o primeiro estado anterior ou igual à data fornecida.
+
+7. Função filtraMapa()
+
+Finalidade : Filtra os marcadores no mapa com base nos estados e modelos selecionados.
+
+Funcionamento :
+Obtém os estados e modelos selecionados nos checkboxes.
+
+Itera sobre os marcadores e verifica se eles atendem aos critérios de ambos os filtros.
+
+Exibe ou oculta os marcadores no mapa conforme os filtros.
+
+8. Funções de Modal
+
+Função abreModal()
+
+Finalidade : Abre o modal de seleção de modelos.
+
+Função fechaModal()
+
+Finalidade : Fecha o modal de seleção de modelos.
+
+9. Objeto window.MapManager
+
+Finalidade : Exporta a função carregaItensMapa para uso global, permitindo que ela seja acessada de outros scripts.
+
+
+**************LISTA DE TESTES *********************
+
+1- Testar se traz os dados corretamente, alterar alguns dados manualmente para verificar se mantém a integridade.
+
+2- Inserir mais dados nos arquivos JSON.
+
+3- Testar os Filtros tanto no histórico quanto no mapa normal.
+
+4- Testar em outras Telas
+
+
 # 🏆 Teste Frontend
 
 ![Aiko](img/aiko.png)
