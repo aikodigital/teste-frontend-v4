@@ -1,0 +1,14 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  background-color: #ccc5c5; /* Substitua #f0f0f0 pela cor desejada */
+  margin: 0;
+  font-family: Arial, sans-serif; /* Opcional: ajuste a fonte */
+}
+
+
