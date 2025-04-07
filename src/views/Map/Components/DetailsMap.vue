@@ -2,11 +2,14 @@
   <div v-if="equipment" class="side-panel">
     <h3>{{ equipment.name }}</h3>
 
-    <p><strong>Modelo:</strong> {{ model?.name || "Desconhecido" }}</p>
+    <p>
+      <strong>{{ $t("detailMap.model") }}:</strong>
+      {{ model?.name || $t("detailMap.unknown") }}
+    </p>
 
     <p>
       <strong>{{ $t("detailMap.stateActual") }}:</strong>
-      {{ state?.name || "Desconhecido" }}
+      {{ state?.name || $t("detailMap.unknown") }}
     </p>
 
     <h4>{{ $t("detailMap.stateHistory") }}</h4>
@@ -17,7 +20,7 @@
       </li>
     </ul>
 
-    <button @click="$emit('close')">Fechar</button>
+    <button @click="$emit('close')">{{ $t("detailMap.close") }}</button>
   </div>
 </template>
 

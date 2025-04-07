@@ -1,15 +1,15 @@
 <template>
   <div class="container py-4">
-    <h2 class="mb-4 text-center">📍 Localização Atual dos Equipamentos</h2>
+    <h2 class="mb-4 text-center">📍 {{ $t("reportLocale.title") }}</h2>
 
     <div class="table-responsive">
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
           <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Última Localização</th>
-            <th scope="col">Data</th>
+            <th scope="col">{{ $t("reportLocale.name") }}</th>
+            <th scope="col">{{ $t("reportLocale.model") }}</th>
+            <th scope="col">{{ $t("reportLocale.lastLocation") }}</th>
+            <th scope="col">{{ $t("reportLocale.date") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
               {{
                 eq.latestPosition
                   ? `${eq.latestPosition.lat}, ${eq.latestPosition.lon}`
-                  : "Localização não encontrada"
+                  : $t("reportLocale.locationNotFound")
               }}
             </td>
             <td>

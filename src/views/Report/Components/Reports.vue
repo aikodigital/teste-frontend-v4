@@ -6,10 +6,10 @@
       >
         <thead class="table-dark">
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Modelo</th>
-            <th scope="col">Último Estado</th>
+            <th scope="col">{{ $t("reports.id") }}</th>
+            <th scope="col">{{ $t("reports.name") }}</th>
+            <th scope="col">{{ $t("reports.model") }}</th>
+            <th scope="col">{{ $t("reports.latestState") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -32,8 +32,10 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { useEquipmentDataStore } from "@/store/equipmentDataStore";
+import { useI18n } from "vue-i18n";
 
 const store = useEquipmentDataStore();
+const { t } = useI18n();
 
 onMounted(async () => {
   await Promise.all([
@@ -54,21 +56,21 @@ const equipmentWithDetails = computed(() => {
 
     return {
       ...equipment,
-      modelName: model?.name ?? "Modelo não encontrado",
-      latestState: stateDetails?.name ?? "Estado não encontrado",
+      modelName: model?.name ?? t("reports.modelNotFound"),
+      latestState: stateDetails?.name ?? t("reports.stateNotFound"),
     };
   });
 });
 
 function getBadgeClass(stateName: string) {
   switch (stateName.toLowerCase()) {
-    case "ativo":
-    case "operando":
+    case t("reports.active").toLowerCase():
+    case t("reports.operating").toLowerCase():
       return "bg-success";
-    case "inativo":
-    case "em manutenção":
+    case t("reports.inactive").toLowerCase():
+    case t("reports.maintenance").toLowerCase():
       return "bg-warning text-dark";
-    case "desativado":
+    case t("reports.deactivated").toLowerCase():
       return "bg-danger";
     default:
       return "bg-secondary";

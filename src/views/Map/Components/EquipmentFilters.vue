@@ -1,9 +1,9 @@
 <template>
   <div class="filters">
     <div class="filter-group">
-      <label>Estado:</label>
+      <label>{{ $t("equipmentFilters.state") }}:</label>
       <select v-model="selectedStateId" class="input">
-        <option value="">Todos</option>
+        <option value="">{{ $t("equipmentFilters.all") }}</option>
         <option v-for="state in states" :key="state.id" :value="state.id">
           {{ state.name }}
         </option>
@@ -11,9 +11,9 @@
     </div>
 
     <div class="filter-group">
-      <label>Modelo:</label>
+      <label>{{ $t("equipmentFilters.model") }}:</label>
       <select v-model="selectedModelId" class="input">
-        <option value="">Todos</option>
+        <option value="">{{ $t("equipmentFilters.all") }}</option>
         <option v-for="model in models" :key="model.id" :value="model.id">
           {{ model.name }}
         </option>
@@ -21,11 +21,11 @@
     </div>
 
     <div class="filter-group">
-      <label>Pesquisar:</label>
+      <label>{{ $t("equipmentFilters.search") }}:</label>
       <input
         v-model="searchTerm"
         type="text"
-        placeholder="Digite nome ou código"
+        :placeholder="$t('equipmentFilters.searchPlaceholder')"
         class="input"
       />
     </div>
@@ -35,17 +35,20 @@
       :class="{ active: showPathMode }"
       @click="togglePathMode"
     >
-      {{ showPathMode ? "Desativar modo trajeto" : "Ativar modo trajeto" }}
+      {{
+        showPathMode
+          ? $t("equipmentFilters.deactivatePathMode")
+          : $t("equipmentFilters.activatePathMode")
+      }}
     </button>
 
-    <!-- Filtros de data lado a lado -->
     <div v-if="showPathMode" class="date-filters">
       <div class="filter-group">
-        <label>Data Início:</label>
+        <label>{{ $t("equipmentFilters.startDate") }}:</label>
         <input v-model="startDate" type="date" class="input" />
       </div>
       <div class="filter-group">
-        <label>Data Fim:</label>
+        <label>{{ $t("equipmentFilters.endDate") }}:</label>
         <input v-model="endDate" type="date" class="input" />
       </div>
     </div>
@@ -131,9 +134,9 @@ onMounted(async () => {
 
 .date-filters {
   display: flex;
-  gap: 1rem; /* Espaço entre os campos de data */
+  gap: 1rem;
   align-items: flex-end;
-  margin-top: 0.5rem; /* Espaço entre o botão e os filtros de data */
+  margin-top: 0.5rem;
 }
 
 .input {
@@ -147,27 +150,6 @@ onMounted(async () => {
 
 .input:focus {
   outline: none;
-  border-color: #3b82f6;
-}
-
-.toggle-path {
-  padding: 0.6rem 1.2rem;
-  font-weight: 500;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #fff;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  height: fit-content;
-}
-
-.toggle-path:hover {
-  background-color: #f3f4f6;
-}
-
-.toggle-path.active {
-  background-color: #3b82f6;
-  color: #fff;
   border-color: #3b82f6;
 }
 </style>

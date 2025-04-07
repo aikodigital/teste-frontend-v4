@@ -1,17 +1,17 @@
 <template>
   <div class="report-view container py-4">
-    <h1 class="mb-4 text-center">📊 Relatórios</h1>
+    <h1 class="mb-4 text-center">📊 {{ $t("reportView.title") }}</h1>
 
     <div class="mb-4">
-      <label for="reportSelect" class="form-label fw-bold"
-        >Selecione o tipo de relatório:</label
-      >
+      <label for="reportSelect" class="form-label fw-bold">
+        {{ $t("reportView.selectReportType") }}
+      </label>
       <select id="reportSelect" v-model="selectedReport" class="form-select">
-        <option value="summary">📘 Estado atual dos equipamentos</option>
-        <option value="history">📚 Histórico de estados</option>
-        <option value="location">📍 Localização atual</option>
-        <option value="duration">⏳ Tempo total por estado</option>
-        <option value="profit">💰 Ganhos e perdas</option>
+        <option value="summary">📘 {{ $t("reportView.summary") }}</option>
+        <option value="history">📚 {{ $t("reportView.history") }}</option>
+        <option value="location">📍 {{ $t("reportView.location") }}</option>
+        <option value="duration">⏳ {{ $t("reportView.duration") }}</option>
+        <option value="profit">💰 {{ $t("reportView.profit") }}</option>
       </select>
     </div>
 

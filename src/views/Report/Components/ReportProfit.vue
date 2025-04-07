@@ -1,17 +1,19 @@
 <template>
   <div class="container py-4">
-    <h2 class="mb-4 text-center">💰 Relatório de Ganhos e Perdas</h2>
+    <h2 class="mb-4 text-center">💰 {{ $t("reportProfit.title") }}</h2>
 
     <div class="mb-4">
-      <label for="equipmentSelect" class="form-label"
-        >Selecione um equipamento:</label
-      >
+      <label for="equipmentSelect" class="form-label">
+        {{ $t("reportProfit.selectEquipment") }}
+      </label>
       <select
         id="equipmentSelect"
         v-model="selectedEquipmentId"
         class="form-select"
       >
-        <option disabled value="">-- Selecione --</option>
+        <option disabled value="">
+          {{ $t("reportProfit.selectPlaceholder") }}
+        </option>
         <option
           v-for="equipment in store.equipment"
           :key="equipment.id"
@@ -26,11 +28,11 @@
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
           <tr>
-            <th>Equipamento</th>
-            <th>Estado</th>
-            <th>Duração</th>
-            <th>Valor/h</th>
-            <th>Total (R$)</th>
+            <th>{{ $t("reportProfit.equipment") }}</th>
+            <th>{{ $t("reportProfit.state") }}</th>
+            <th>{{ $t("reportProfit.duration") }}</th>
+            <th>{{ $t("reportProfit.hourlyRate") }}</th>
+            <th>{{ $t("reportProfit.total") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +44,11 @@
                 {{ entry.durationMs ? formatDuration(entry.durationMs) : "-" }}
               </td>
               <td>
-                {{ entry.hourlyRate != null ? "R$ " + entry.hourlyRate : "-" }}
+                {{
+                  entry.hourlyRate != null
+                    ? $t("reportProfit.currency") + " " + entry.hourlyRate
+                    : "-"
+                }}
               </td>
               <td
                 :class="{
@@ -50,7 +56,11 @@
                   'text-success': entry.total != null && entry.total >= 0,
                 }"
               >
-                {{ entry.total != null ? "R$ " + entry.total : "-" }}
+                {{
+                  entry.total != null
+                    ? $t("reportProfit.currency") + " " + entry.total
+                    : "-"
+                }}
               </td>
             </tr>
           </template>
@@ -59,7 +69,7 @@
     </div>
 
     <div v-else class="text-center text-muted mt-4">
-      Selecione um equipamento para ver o relatório.
+      {{ $t("reportProfit.noData") }}
     </div>
   </div>
 </template>

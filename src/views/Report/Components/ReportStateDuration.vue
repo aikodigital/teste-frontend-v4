@@ -1,17 +1,19 @@
 <template>
   <div class="container py-4">
-    <h2 class="mb-4 text-center">⏳ Tempo Total por Estado</h2>
+    <h2 class="mb-4 text-center">⏳ {{ $t("reportStateDuration.title") }}</h2>
 
     <div class="mb-4">
-      <label for="equipmentSelect" class="form-label"
-        >Selecione um equipamento:</label
-      >
+      <label for="equipmentSelect" class="form-label">
+        {{ $t("reportStateDuration.selectEquipment") }}
+      </label>
       <select
         id="equipmentSelect"
         v-model="selectedEquipmentId"
         class="form-select"
       >
-        <option disabled value="">-- Escolha um equipamento --</option>
+        <option disabled value="">
+          {{ $t("reportStateDuration.selectPlaceholder") }}
+        </option>
         <option
           v-for="equipment in store.equipment"
           :key="equipment.id"
@@ -26,8 +28,8 @@
       <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark sticky-header">
           <tr>
-            <th>Estado</th>
-            <th>Duração Total</th>
+            <th>{{ $t("reportStateDuration.state") }}</th>
+            <th>{{ $t("reportStateDuration.totalDuration") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +46,7 @@
     </div>
 
     <p v-else-if="selectedEquipmentId" class="text-muted">
-      Nenhum histórico disponível para este equipamento.
+      {{ $t("reportStateDuration.noHistory") }}
     </p>
   </div>
 </template>

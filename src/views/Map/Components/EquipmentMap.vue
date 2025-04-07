@@ -1,6 +1,10 @@
 <template>
   <button class="toggle-filters-btn" @click="toggleFilters">
-    {{ showFilters ? "Ocultar Filtros" : "Mostrar Filtros" }}
+    {{
+      showFilters
+        ? $t("equipmentMap.hideFilters")
+        : $t("equipmentMap.showFilters")
+    }}
   </button>
   <EquipmentFilters
     v-if="showFilters"
@@ -17,7 +21,6 @@
     @close="selectedEquipmentId = null"
   />
 </template>
-
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick, watchEffect } from "vue";
 import type { EquipmentState } from "@/types/types";

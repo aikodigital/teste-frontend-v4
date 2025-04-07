@@ -1,6 +1,6 @@
 <template>
   <div class="container py-4">
-    <h2 class="mb-4 text-center">📘 Histórico de Estados por Equipamento</h2>
+    <h2 class="mb-4 text-center">📘 {{ $t("reportEquipment.title") }}</h2>
 
     <div id="equipmentHistoryAccordion" class="accordion">
       <div
@@ -17,7 +17,8 @@
             aria-expanded="false"
             :aria-controls="`collapse-${index}`"
           >
-            {{ eq.name }} (Modelo: {{ eq.modelName }})
+            {{ eq.name }} ({{ $t("reportEquipment.model") }}:
+            {{ eq.modelName }})
           </button>
         </h2>
         <div
@@ -44,7 +45,7 @@
                 v-if="eq.history.length === 0"
                 class="list-group-item text-muted"
               >
-                Nenhum histórico encontrado.
+                {{ $t("reportEquipment.noHistory") }}
               </li>
             </ul>
           </div>

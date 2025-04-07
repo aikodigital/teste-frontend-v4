@@ -12,7 +12,10 @@
   },
   "detailMap": {
     "stateActual": "Current state",
-    "stateHistory": "State history"
+    "stateHistory": "State history",
+    "model": "Model",
+    "unknown": "Unknown",
+    "close": "Close"
   },
   "chart": {
     "charts": "Charts",
@@ -26,5 +29,90 @@
     "loading": "Loading...",
     "DistributionofGainbyEquipment": "Distribution of Gain by Equipment",
     "noDataAvailable": "No data available"
-    }
+  },
+  "reportEquipment": {
+    "title": "State History by Equipment",
+    "model": "Model",
+    "noHistory": "No history found."
+  },
+  "equipmentMap": {
+    "showFilters": "Show Filters",
+    "hideFilters": "Hide Filters",
+    "unknown": "Unknown"
+  },
+  "reportLocale": {
+    "title": "Current Location of Equipment",
+    "name": "Name",
+    "model": "Model",
+    "lastLocation": "Last Location",
+    "date": "Date",
+    "locationNotFound": "Location not found",
+    "modelNotFound": "Model not found"
+  },
+  "reportProfit": {
+    "title": "Profit and Loss Report",
+    "selectEquipment": "Select an equipment:",
+    "selectPlaceholder": "-- Select --",
+    "equipment": "Equipment",
+    "state": "State",
+    "duration": "Duration",
+    "hourlyRate": "Hourly Rate",
+    "total": "Total ($)",
+    "currency": "$",
+    "noData": "Select an equipment to view the report."
+  },
+  "reportStateDuration": {
+    "title": "Total Time by State",
+    "selectEquipment": "Select an equipment:",
+    "selectPlaceholder": "-- Choose an equipment --",
+    "state": "State",
+    "totalDuration": "Total Duration",
+    "noHistory": "No history available for this equipment."
+  },
+  "reports": {
+    "id": "ID",
+    "name": "Name",
+    "model": "Model",
+    "latestState": "Latest State",
+    "modelNotFound": "Model not found",
+    "stateNotFound": "State not found",
+    "active": "Active",
+    "operating": "Operating",
+    "inactive": "Inactive",
+    "maintenance": "In maintenance",
+    "deactivated": "Deactivated"
+  },
+  "reportView": {
+    "title": "Reports",
+    "selectReportType": "Select the report type:",
+    "summary": "Current state of equipment",
+    "history": "State history",
+    "location": "Current location",
+    "duration": "Total time by state",
+    "profit": "Profit and loss"
+  },
+  "equipmentFilters": {
+    "state": "State",
+    "model": "Model",
+    "search": "Search",
+    "searchPlaceholder": "Enter name or code",
+    "activatePathMode": "Activate path mode",
+    "deactivatePathMode": "Deactivate path mode",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "all": "All"
+  },
+  "home": {
+    "welcomeTitle": "Welcome to the Equipment Management System",
+    "description": "Explore the system's features to manage and view equipment information.",
+    "mapTitle": "Map",
+    "mapDescription": "View the location and current state of equipment.",
+    "goToMap": "Go to Map",
+    "reportTitle": "Reports",
+    "reportDescription": "Access detailed reports about the equipment.",
+    "goToReport": "Go to Reports",
+    "chartTitle": "Charts",
+    "chartDescription": "View charts of productivity and gains.",
+    "goToChart": "Go to Charts"
   }
+}
