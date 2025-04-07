@@ -1,0 +1,39 @@
+#filter-container {
+    display: flex;
+    position: fixed;
+    bottom: 2.5%;
+    left: 100px;
+    background-color: #1E1E1E;
+    z-index: 999;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 25px;
+    color: #fff;
+}
+
+#filter-container h2 {
+    margin: 0 0 10px 0;
+}
+
+#filter-container div {
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#filter-container div.filter {
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#filter-container div.filter button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+    padding: 0;
+    gap: 10px;
+    background-color: transparent;
+    border: none;
+}

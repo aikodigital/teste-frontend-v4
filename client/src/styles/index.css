@@ -1,0 +1,24 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+:root {
+  --primary-color: #141414;
+  --secondary-color: #1D1D1D;
+  --tertiary-color: #3B3B3B;
+
+  --shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

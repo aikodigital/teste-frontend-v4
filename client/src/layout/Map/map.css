@@ -1,0 +1,27 @@
+#map-wrapper {
+    display: flex;
+    height: 100%;
+    width: calc(100% - 75px);
+    overflow: hidden;
+}
+
+#map-wrapper button#filter-btn {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color: transparent;
+    z-index: 999;
+    display: flex;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border: none;
+    color: #00DF00;
+}
+
+#map-wrapper button#filter-btn:hover {
+    background-color: #00DF0080;
+    color: #fff;
+}

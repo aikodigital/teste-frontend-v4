@@ -1,0 +1,10 @@
+#nav-bar {
+    width: 75px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px;
+    background-color: var(--primary-color);
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+}
