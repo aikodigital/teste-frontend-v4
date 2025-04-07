@@ -1,0 +1,13 @@
+.popup-container {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+    margin: 1rem 0;
+}
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.7rem;
+}
