@@ -1,3 +1,6 @@
+# 🔗 Link Video
+https://www.youtube.com/watch?v=a3xU7X3V4DU
+
 # 🏆 Teste Frontend
 
 ![Aiko](img/aiko.png)
