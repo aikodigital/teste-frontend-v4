@@ -1,0 +1,6 @@
+{
+  "*.{js,jsx,ts,tsx,cjs,mjs}": [
+    "npx prettier --write",
+    "yarn lint:fix -- --fix"
+  ]
+}

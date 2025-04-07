@@ -1,0 +1,10 @@
+# .editorconfig
+
+root = true
+
+[*]
+max_line_length = 120
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false

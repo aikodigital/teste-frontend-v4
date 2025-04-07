@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: rgb(0 51 128 / 1);
+  --color-secondary: rgb(214 222 235 / 1);
+  --color-tertiary: rgb(255 255 255 / 1);
+  --color-quaternary: rgb(0 193 0 / 1);
+}
