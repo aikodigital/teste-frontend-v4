@@ -1,0 +1,4 @@
+export const DATE_LIMITS = {
+    START: '2021-02-01T00:00:00.000Z',
+    END: '2021-02-28T23:59:59.999Z'
+};
