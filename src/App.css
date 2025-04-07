@@ -1,0 +1,20 @@
+@import "leaflet/dist/leaflet.css";
+
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-tooltip {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #333;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    
+  }
+  
+  
