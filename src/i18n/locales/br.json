@@ -1,0 +1,118 @@
+{ 
+  "language": {
+    "br": "Português",
+    "us": "Inglês"
+  },
+  "sidebar": {
+    "home": "Início",
+    "map": "Mapa",
+    "chart": "Gráfico",
+    "report": "Relatório",
+    "about": "Sobre"
+  },
+  "home": {
+    "welcomeTitle": "Bem-vindo ao Sistema de Gestão de Equipamentos",
+    "description": "Explore as funcionalidades do sistema para gerenciar e visualizar informações sobre equipamentos.",
+    "mapTitle": "Mapa",
+    "mapDescription": "Visualize a localização e o estado atual dos equipamentos.",
+    "goToMap": "Ir para o Mapa",
+    "reportTitle": "Relatórios",
+    "reportDescription": "Acesse relatórios detalhados sobre os equipamentos.",
+    "goToReport": "Ir para Relatórios",
+    "chartTitle": "Gráficos",
+    "chartDescription": "Visualize gráficos de produtividade e ganhos.",
+    "goToChart": "Ir para Gráficos"
+  },
+  "detailMap": {
+    "stateActual": "Estado atual",
+    "stateHistory": "Histórico de estados",
+    "model": "Modelo",
+    "unknown": "Desconhecido",
+    "close": "Fechar"
+  },
+  "chart": {
+    "charts": "Gráficos",
+    "choiceTypesCharts": "Escolha os tipos de gráficos",
+    "barChart": "Gráfico de barras",
+    "pieChart": "Gráfico de pizza",
+    "totalGains": "Ganhos totais",
+    "productivity": "Produtividade",
+    "ProductivityandGainperEquipment": "Produtividade e Ganho por Equipamento", 
+    "$": "R$",
+    "loading": "Carregando...",
+    "DistributionofGainbyEquipment": "Distribuição de Ganho por Equipamento",
+    "noDataAvailable": "Nenhum dado disponível"
+  },
+  "reportEquipment": {
+    "title": "Histórico de Estados por Equipamento",
+    "model": "Modelo",
+    "noHistory": "Nenhum histórico encontrado."
+  },
+  "equipmentMap": {
+    "showFilters": "Mostrar Filtros",
+    "hideFilters": "Ocultar Filtros",
+    "unknown": "Desconhecido"
+  },
+  "equipmentFilters": {
+    "state": "Estado",
+    "model": "Modelo",
+    "search": "Pesquisar",
+    "searchPlaceholder": "Digite nome ou código",
+    "activatePathMode": "Ativar modo trajeto",
+    "deactivatePathMode": "Desativar modo trajeto",
+    "startDate": "Data Início",
+    "endDate": "Data Fim",
+    "all": "Todos"
+  },
+  "reportLocale": {
+    "title": "Localização Atual dos Equipamentos",
+    "name": "Nome",
+    "model": "Modelo",
+    "lastLocation": "Última Localização",
+    "date": "Data",
+    "locationNotFound": "Localização não encontrada",
+    "modelNotFound": "Modelo não encontrado"
+  },
+  "reportProfit": {
+    "title": "Relatório de Ganhos e Perdas",
+    "selectEquipment": "Selecione um equipamento:",
+    "selectPlaceholder": "-- Selecione --",
+    "equipment": "Equipamento",
+    "state": "Estado",
+    "duration": "Duração",
+    "hourlyRate": "Valor/h",
+    "total": "Total (R$)",
+    "currency": "R$",
+    "noData": "Selecione um equipamento para ver o relatório."
+  },
+  "reportStateDuration": {
+    "title": "Tempo Total por Estado",
+    "selectEquipment": "Selecione um equipamento:",
+    "selectPlaceholder": "-- Escolha um equipamento --",
+    "state": "Estado",
+    "totalDuration": "Duração Total",
+    "noHistory": "Nenhum histórico disponível para este equipamento."
+  },
+  "reports": {
+    "id": "ID",
+    "name": "Nome",
+    "model": "Modelo",
+    "latestState": "Último Estado",
+    "modelNotFound": "Modelo não encontrado",
+    "stateNotFound": "Estado não encontrado",
+    "active": "Ativo",
+    "operating": "Operando",
+    "inactive": "Inativo",
+    "maintenance": "Em manutenção",
+    "deactivated": "Desativado"
+  },
+  "reportView": {
+    "title": "Relatórios",
+    "selectReportType": "Selecione o tipo de relatório:",
+    "summary": "Estado atual dos equipamentos",
+    "history": "Histórico de estados",
+    "location": "Localização atual",
+    "duration": "Tempo total por estado",
+    "profit": "Ganhos e perdas"
+  }
+}

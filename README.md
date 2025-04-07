@@ -1,218 +1,78 @@
-# 🏆 Teste Frontend
+# Equipment Dashboard 📊🗺️
 
-![Aiko](img/aiko.png)
+Sistema desenvolvido com Vue 3 para visualização de dados de produtividade e ganho de equipamentos em um mapa interativo, com suporte a gráficos dinâmicos e filtros por data.
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+## 🛠️ Tecnologias Utilizadas
 
-## 🚀 O Desafio
+- [Vue 3](https://vuejs.org/)
+- [Pinia](https://pinia.vuejs.org/) – Gerenciamento de estado
+- [Vue Router](https://router.vuejs.org/)
+- [Chart.js](https://www.chartjs.org/) + [vue-chartjs](https://vue-chartjs.org/)
+- [Leaflet](https://leafletjs.com/) – Mapas interativos
+- [TypeScript](https://www.typescriptlang.org/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [i18n](https://vue-i18n.intlify.dev/) – Suporte a múltiplos idiomas
+- [Flag-icon-css](https://www.npmjs.com/package/flag-icon-css) – Ícones de bandeiras
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+## ⚙️ Funcionalidades
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+- Exibição de equipamentos no mapa com ícones e informações detalhadas
+- Filtros por datas e estado dos equipamentos
+- Histórico de estados com rotas percorridas por equipamento
+- Gráficos de produtividade (%) e ganho total (R$) por equipamento
+- Interface responsiva e moderna
 
-## 🎯 Requisitos
+## 📦 Instalação
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+git clone https://github.com/VictorAlmeidaSiLva/teste-frontend-v4/tree/teste/victor_augusto_almeida_silva
+cd equipment-dashboard
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+🚀 Execução
+npm install
+npm run dev
+Acesse em: http://localhost:8080
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+📁 Estrutura de Pastas
+bash
+Copiar
+Editar
+src/
+├── assets/               # Imagens e estilos
+├── components/           # Componentes reutilizáveis
+├── i18n/                 # Arquivos de tradução
+├── router/               # Configuração das rotas
+├── store/                # Pinia stores
+├── types/                # Tipagens com TypeScript
+├── views/                # Telas principais
+└── App.vue / main.ts     # Arquivos principais
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+🧠 Como Funciona o Gráfico
+Cada equipamento tem um histórico de estados.
 
-## 🎲 Dados
+Estados como "Operando" são considerados produtivos.
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+A produtividade é calculada com base na proporção de estados produtivos.
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
+O ganho total é somado conforme os valores por hora de cada estado.
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+Os dados são exibidos em um gráfico combinado (barras + linha).
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
+📌 Futuras Melhorias
+Upload de arquivos CSV para importar dados
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+Dashboard com indicadores principais (KPIs)
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+Exportação de relatórios
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+Autenticação de usuários
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+Filtros mais avançados (por modelo, localização, etc.)
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
-
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
-
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
-
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
-
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
-
-* Vue, React e Angular.
-
-* Typescript.
-
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
-
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
-
-* Template engines (Pug, Ejs, etc).
-
-* Gerenciamento de estado (Vuex, Redux, etc).
-
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
-
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
-
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-### ❌ O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## 💡 Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## 🌟 Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
-## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
+🧑‍💻 Desenvolvedor
+Victor Silva – Desenvolvedor Front-End com foco em Vue
 
 
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+Vídeo sobre a aplicação
+Vídeo explicativo com a demonstração da solução, decisões técnicas
+
+https://www.youtube.com/watch?v=TOgeI4Bzc7I&feature=youtu.be
