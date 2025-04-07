@@ -1,0 +1,29 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "include": ["./src/.d.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*",  "tests/*.tsx"]
+    },
+    "types": ["google.maps", "@testing-library/jest-dom", "@types/jest", "node", "jest"],
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUnusedLocals": false,
+    "strictNullChecks": false
+  }
+}
