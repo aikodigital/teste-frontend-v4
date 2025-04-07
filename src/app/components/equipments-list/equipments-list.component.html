@@ -1,0 +1,13 @@
+
+@for(equipment of equipments; track equipment.id) {
+  <mat-card appearance="outlined" [routerLink]="['equipments', equipment.id]">
+    <mat-card-header>
+      <mat-card-title color="mat-sys-primary">
+        {{ equipment.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ equipment.model.name }}
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+}

@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+.map-container {
+  height: 400px;
+
+  #map {
+    width: 100%;
+    height: 100%;
+
+    
+  }
+}
+
+.leaflet-pane.leaflet-shadow-pane {
+  display: none;
+}

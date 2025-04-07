@@ -1,0 +1,13 @@
+<h2>Histórico de Estados</h2>
+
+@for(state of currentPageStates(); track $index){
+  <app-equipment-state-history-item [state]="state"></app-equipment-state-history-item>
+}
+
+<mat-paginator
+  [pageIndex]="pageIndex()"
+  [pageSize]="pageSize()"
+  [length]="states().length"
+  [pageSizeOptions]="[5, 10, 25, 50]"
+  (page)="onPageChange($event)"
+></mat-paginator>

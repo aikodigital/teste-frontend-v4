@@ -1,0 +1,28 @@
+$primary: var(--mat-sys-primary);
+:host {
+  margin-top: 2rem;
+  display: block;
+}
+.mat-mdc-card {
+  margin-bottom: 1rem;
+  cursor: pointer;
+
+
+  &:hover {
+    background-color: rgba($color: #005cbb, $alpha: 0.3);
+  }
+  
+}
+
+
+.mat-mdc-card-title {
+  color: var(--mat-sys-primary);
+  font-weight: 600;
+
+  
+  
+}
+
+.mat-mdc-card-header {
+  padding: 1rem;
+}

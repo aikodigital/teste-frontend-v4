@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-content>
+    <p>
+      <strong>Data: </strong>
+      <span>{{ state().date | date: 'dd/MM/yyyy' }}</span>
+    </p>
+    <p>
+      <strong>Estado: </strong>
+      <span [style]="{ color: state().color }">{{ state().name }}</span>
+    </p>
+  </mat-card-content>
