@@ -1,241 +1,162 @@
-# Equipment Tracking System
+# Sistema de Rastreamento de Equipamentos
 
-## Introduction
+## Introdução
 
-This project is a React/TypeScript application designed to track and manage forestry equipment. It provides a visual map interface, detailed equipment information, and a list view for easy browsing.
+Este projeto é um aplicativo React/TypeScript projetado para rastrear e gerenciar equipamentos florestais. Ele fornece uma interface de mapa visual, informações detalhadas sobre equipamentos e uma visualização de lista para navegação fácil.
 
-### Key Features
+[link do vídeo:](https://drive.google.com/file/d/1hFzj_LvsR7D59cbtbnWpcKwecsPPbPK8/view?usp=sharing)
 
-*   **Map View:** Displays equipment locations on a map with interactive markers.
-*   **Equipment Details:** Shows detailed information about each piece of equipment, including its model, current state, productivity, earnings, and state history.
-*   **Equipment List:** Provides a list view of all equipment with filtering and searching capabilities.
-*   **Filtering:** Allows users to filter equipment by name, model, and current state.
-*   **Searching:** Enables users to search for equipment by name.
-*   **State History:** Displays the history of state changes for each equipment.
-*   **Calculations:** Calculates the productivity and earnings of each equipment.
+### Principais Funcionalidades
 
-### Target Audience
+*   **Visualização de Mapa:** Exibe as localizações dos equipamentos em um mapa com marcadores interativos.
+*   **Detalhes do Equipamento:** Mostra informações detalhadas sobre cada equipamento, incluindo seu modelo, estado atual, produtividade, ganhos e histórico de estados.
+*   **Lista de Equipamentos:** Fornece uma visualização em lista de todos os equipamentos com recursos de filtragem e pesquisa.
+*   **Filtragem:** Permite que os usuários filtrem os equipamentos por nome, modelo e estado atual.
+*   **Pesquisa:** Permite que os usuários pesquisem equipamentos por nome.
+*   **Histórico de Estados:** Exibe o histórico de mudanças de estado para cada equipamento.
+*   **Cálculos:** Calcula a produtividade e os ganhos de cada equipamento.
 
-This documentation is intended for developers who will be working with or maintaining this project.
-
-## Project Structure
-
-aiko-test/ ├── src/ │ ├── pages/ │ │ ├── EquipmentMap.tsx # The map view component │ │ ├── EquipmentDetails.tsx # The detailed view for a single equipment │ │ └── EquipmentList.tsx # The list view of all equipment │ ├── components/ │ │ └── EquipmentCard.tsx # A card component to display equipment information in the list │ ├── data/ │ │ ├── equipment.json # Basic information about each equipment │ │ ├── equipmentModel.json # Information about equipment models │ │ ├── equipmentState.json # Information about equipment states │ │ ├── equipmentStateHistory.json # History of state changes for each equipment │ │ └── equipmentPositionHistory.json # History of position changes for each equipment │ ├── utils/ │ │ └── calculations.ts # Functions for calculating productivity and earnings │ ├── types/ │ │ └── equipment.ts # Contains the types for the equipment data │ ├── assets/ │ │ ├── icons/ # Equipment icons │ │ └── statesImages/ # Images for equipment states │ ├── App.tsx # The main application component │ ├── index.tsx # The entry point of the application │ ├── index.css # Global styles │ └── setupTests.ts # File to configure the tests │ └── mocks/ # Folder to put the mock files ├── public/ │ └── ... ├── package.json # Project dependencies and scripts ├── package-lock.json # Exact versions of dependencies ├── tsconfig.json # TypeScript configuration ├── tsconfig.app.json # TypeScript configuration for the app ├── tsconfig.node.json # TypeScript configuration for node ├── vite.config.ts # Vite configuration └── README.md # This file
-
-
-## Components
+## Componentes
 
 ### `EquipmentMap.tsx`
 
-*   **Description:** This component renders a map with markers for each equipment. It allows filtering by name, model, and state.
-*   **Props:** None.
-*   **State:**
-    *   `search`: The current search query (string).
-    *   `selectedModel`: The ID of the selected model (string).
-    *   `selectedState`: The ID of the selected state (string).
-    *   `mapMarkers`: An array of `MarkerData` objects to be displayed on the map.
-    * `filteredEquipment`: An array of equipment objects that match the current filter criteria.
-*   **Functionality:**
-    *   Fetches equipment data, model data, and state data from JSON files.
-    *   Filters equipment based on search, selected model, and selected state.
-    *   Calculates the latest position and state for each equipment.
-    *   Renders markers on the map with popups showing equipment details.
-    *   Uses `react-leaflet` for map rendering.
-    *   Uses `leaflet` for icons.
-    *   Uses `react-router-dom` for navigation.
-    *   Uses `useEffect` to update the markers when the filters change.
-    *   Uses `FitBoundsToMarkers` to fit the map bounds to the markers.
-*   **UI Elements:**
-    *   Search input field.
-    *   Model dropdown.
-    *   State dropdown.
-    *   Map container.
-    *   Markers with popups.
+*   **Descrição:** Este componente renderiza um mapa com marcadores para cada equipamento. Ele permite a filtragem por nome, modelo e estado.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `search`: A consulta de pesquisa atual (string).
+    *   `selectedModel`: O ID do modelo selecionado (string).
+    *   `selectedState`: O ID do estado selecionado (string).
+    *   `mapMarkers`: Um array de objetos `MarkerData` a serem exibidos no mapa.
+    *   `filteredEquipment`: Um array de objetos de equipamento que correspondem aos critérios de filtro atuais.
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos e dados de estados de arquivos JSON.
+    *   Filtra equipamentos com base na pesquisa, modelo selecionado e estado selecionado.
+    *   Calcula a posição e o estado mais recentes para cada equipamento.
+    *   Renderiza marcadores no mapa com popups mostrando detalhes do equipamento.
+    *   Usa `react-leaflet` para renderização do mapa.
+    *   Usa `leaflet` para ícones.
+    *   Usa `react-router-dom` para navegação.
+    *   Usa `useEffect` para atualizar os marcadores quando os filtros mudam.
+    *   Usa `FitBoundsToMarkers` para ajustar os limites do mapa aos marcadores.
+*   **Elementos de UI:**
+    *   Campo de entrada de pesquisa.
+    *   Dropdown de modelo.
+    *   Dropdown de estado.
+    *   Contêiner do mapa.
+    *   Marcadores com popups.
 
 ### `EquipmentDetails.tsx`
 
-*   **Description:** This component displays detailed information about a single equipment.
-*   **Props:** None.
-*   **State:**
-    * `order`: The order of the state history ('latest' or 'oldest').
-*   **Functionality:**
-    *   Fetches equipment data, model data, state data, state history, and position history from JSON files.
-    *   Calculates productivity and earnings using the `calculations.ts` utility functions.
-    *   Displays the equipment's name, model, current state, productivity, earnings, and state history.
-    *   Renders a map with a marker showing the equipment's current location.
-    *   Uses `react-leaflet` for map rendering.
-    *   Uses `date-fns` for date formatting.
-    *   Uses `react-router-dom` to get the equipment ID from the URL.
-    *   Uses `getStateHistoryInOrder` to order the state history.
-*   **UI Elements:**
-    *   Equipment name.
-    *   Model name.
-    *   Current state.
-    *   Productivity.
-    *   Earnings.
-    *   State history.
-    *   Map container.
-    *   Marker.
+*   **Descrição:** Este componente exibe informações detalhadas sobre um único equipamento.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `order`: A ordem do histórico de estados ('latest' ou 'oldest').
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos, dados de estados, histórico de estados e histórico de posições de arquivos JSON.
+    *   Calcula a produtividade e os ganhos usando as funções utilitárias em `calculations.ts`.
+    *   Exibe o nome do equipamento, modelo, estado atual, produtividade, ganhos e histórico de estados.
+    *   Renderiza um mapa com um marcador mostrando a localização atual do equipamento.
+    *   Usa `react-leaflet` para renderização do mapa.
+    *   Usa `date-fns` para formatação de data.
+    *   Usa `react-router-dom` para obter o ID do equipamento da URL.
+    *   Usa `getStateHistoryInOrder` para ordenar o histórico de estados.
+*   **Elementos de UI:**
+    *   Nome do equipamento.
+    *   Nome do modelo.
+    *   Estado atual.
+    *   Produtividade.
+    *   Ganhos.
+    *   Histórico de estados.
+    *   Contêiner do mapa.
+    *   Marcador.
 
 ### `EquipmentList.tsx`
 
-*   **Description:** This component displays a list of equipment with filtering and searching capabilities.
-*   **Props:** None.
-*   **State:**
-    *   `search`: The current search query (string).
-    *   `selectedModel`: The ID of the selected model (string).
-    *   `selectedState`: The ID of the selected state (string).
-*   **Functionality:**
-    *   Fetches equipment data, model data, and state data from JSON files.
-    *   Filters equipment based on search, selected model, and selected state.
-    *   Calculates the latest state for each equipment.
-    *   Renders an `EquipmentCard` for each equipment.
-*   **UI Elements:**
-    *   Search input field.
-    *   Model dropdown.
-    *   State dropdown.
-    *   List of `EquipmentCard` components.
+*   **Descrição:** Este componente exibe uma lista de equipamentos com recursos de filtragem e pesquisa.
+*   **Props:** Nenhuma.
+*   **Estado:**
+    *   `search`: A consulta de pesquisa atual (string).
+    *   `selectedModel`: O ID do modelo selecionado (string).
+    *   `selectedState`: O ID do estado selecionado (string).
+*   **Funcionalidade:**
+    *   Busca dados de equipamentos, dados de modelos e dados de estados de arquivos JSON.
+    *   Filtra equipamentos com base na pesquisa, modelo selecionado e estado selecionado.
+    *   Calcula o estado mais recente para cada equipamento.
+    *   Renderiza um `EquipmentCard` para cada equipamento.
+*   **Elementos de UI:**
+    *   Campo de entrada de pesquisa.
+    *   Dropdown de modelo.
+    *   Dropdown de estado.
+    *   Lista de componentes `EquipmentCard`.
 
 ### `EquipmentCard.tsx`
 
-*   **Description:** This component displays a card with basic information about an equipment.
+*   **Descrição:** Este componente exibe um cartão com informações básicas sobre um equipamento.
 *   **Props:**
-    *   `equipment`: The equipment data (object).
-    *   `currentState`: The current state of the equipment (object).
-*   **Functionality:**
-    *   Displays the equipment's name and current state.
-    *   Provides a link to the `EquipmentDetails` page.
-*   **UI Elements:**
-    *   Equipment name.
-    *   Current state.
-    *   Link to `EquipmentDetails`.
+    *   `equipment`: Os dados do equipamento (objeto).
+    *   `currentState`: O estado atual do equipamento (objeto).
+*   **Funcionalidade:**
+    *   Exibe o nome do equipamento e o estado atual.
+    *   Fornece um link para a página `EquipmentDetails`.
+*   **Elementos de UI:**
+    *   Nome do equipamento.
+    *   Estado atual.
+    *   Link para `EquipmentDetails`.
 
-## Data Structure
-
-*   **`equipment.json`:**
-
-    ```json
-    [
-      {
-        "id": "equipment-1",
-        "name": "Equipamento 1",
-        "equipmentModelId": "model-1"
-      },
-      // ... more equipment
-    ]
-    ```
-
-*   **`equipmentModel.json`:**
-
-    ```json
-    [
-      {
-        "id": "model-1",
-        "name": "Modelo 1",
-        "hourlyRate": 100
-      },
-      // ... more models
-    ]
-    ```
-
-*   **`equipmentState.json`:**
-
-    ```json
-    [
-      {
-        "id": "state-1",
-        "name": "Operando",
-        "color": "#4CAF50"
-      },
-      // ... more states
-    ]
-    ```
-
-*   **`equipmentStateHistory.json`:**
-
-    ```json
-    [
-      {
-        "equipmentId": "equipment-1",
-        "states": [
-          { "equipmentStateId": "state-1", "date": "2023-01-01T00:00:00.000Z" },
-          { "equipmentStateId": "state-2", "date": "2023-01-01T01:00:00.000Z" },
-          // ... more state changes
-        ]
-      },
-      // ... more state histories
-    ]
-    ```
-
-*   **`equipmentPositionHistory.json`:**
-
-    ```json
-    [
-      {
-        "equipmentId": "equipment-1",
-        "positions": [
-          { "lat": -23.5505, "lon": -46.6333 },
-          // ... more positions
-        ]
-      },
-      // ... more position histories
-    ]
-    ```
-
-## Utility Functions (`utils/calculations.ts`)
+## Funções Utilitárias (`utils/calculations.ts`)
 
 *   **`calculateProductivity(states: StateHistory[]): number`**
-    *   **Description:** Calculates the productivity of an equipment based on its state history.
-    *   **Parameters:**
-        *   `states`: An array of `StateHistory` objects.
-    *   **Returns:** The productivity as a percentage (number).
+    *   **Descrição:** Calcula a produtividade de um equipamento com base em seu histórico de estados.
+    *   **Parâmetros:**
+        *   `states`: Um array de objetos `StateHistory`.
+    *   **Retorna:** A produtividade como uma porcentagem (número).
 *   **`calculateEarnings(states: StateHistory[], model: EquipmentModel): number`**
-    *   **Description:** Calculates the total earnings of an equipment based on its state history and model.
-    *   **Parameters:**
-        *   `states`: An array of `StateHistory` objects.
-        *   `model`: An `EquipmentModel` object.
-    *   **Returns:** The total earnings (number).
+    *   **Descrição:** Calcula os ganhos totais de um equipamento com base em seu histórico de estados e modelo.
+    *   **Parâmetros:**
+        *   `states`: Um array de objetos `StateHistory`.
+        *   `model`: Um objeto `EquipmentModel`.
+    *   **Retorna:** Os ganhos totais (número).
 
-## Setup and Installation
+## Configuração e Instalação
 
-1.  **Clone the repository:**
+1.  **Clone o repositório:**
 
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/jacksont-santos/teste-frontend-v4.git
     ```
 
-2.  **Navigate to the project directory:**
+2.  **Navegue até o diretório do projeto:**
 
     ```bash
     cd aiko-test
     ```
 
-3.  **Install dependencies:**
+3.  **Instale as dependências:**
 
     ```bash
     npm install
     ```
 
-4.  **Start the development server:**
+4.  **Inicie o servidor de desenvolvimento:**
 
     ```bash
     npm run dev
     ```
-5. **Run the tests:**
+5. **Execute os testes:**
     ```bash
     npm test
     ```
 
-## Testing
+## Tecnologias e 
 
-*   The project uses Jest and React Testing Library for testing.
-*   Test files are located next to the component files (e.g., `EquipmentMap.test.tsx`).
-*   Tests cover component rendering, data display, filtering, searching, state management, and calculations.
-*   Mock data is used to isolate components during testing.
+Principais tecnologias:
 
-## Dependencies
+*   Vite
+*   React
+*   Typescript
+*   Tailwind
 
-This project uses the following main dependencies:
+Este projeto usa as seguintes dependências principais:
 
 *   **`react`:** ^18.3.1
 *   **`react-dom`:** ^18.3.1
@@ -243,9 +164,9 @@ This project uses the following main dependencies:
 *   **`leaflet`:** ^1.9.4
 *   **`react-leaflet`:** ^4.2.1
 *   **`date-fns`:** ^3.3.1
-* **`lucide-react`:** ^0.344.0
+*   **`lucide-react`:** ^0.344.0
 
-And the following dev dependencies:
+E as seguintes dependências de desenvolvimento:
 
 *   **`@eslint/js`:** ^9.9.1
 *   **`@types/react`:** ^18.3.5
@@ -262,31 +183,3 @@ And the following dev dependencies:
 *   **`typescript`:** ^5.5.3
 *   **`typescript-eslint`:** ^8.3.0
 *   **`vite`:** ^5.4.2
-
-## TypeScript Configuration
-
-The project uses the following TypeScript configurations:
-
-**`tsconfig.json`**
-
-```json
-{
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
-}
-
-
-**Explanation of Changes and Additions**
-
-1.  **Consolidated Information:** I've merged the documentation outline, component descriptions, data structure, and utility function details into a single, well-structured Markdown file.
-2.  **`package.json` Details:** I've added a "Dependencies" section that lists the project's main dependencies and dev dependencies, taken directly from your `package.json` file.
-3.  **`tsconfig.json` Details:** I've added a "TypeScript Configuration" section that includes the content of your `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.node.json` files.
-4. **Project Structure:** I've added a section with the project structure.
-5. **Code Blocks:** I've used code blocks (```) to format JSON data, code snippets, and file paths, making them more readable.
-6.  **Markdown Formatting:** I've used Markdown headings, lists, and bold/italic text to improve the overall readability and organization of the document.
-7. **Corrected the scripts:** I've corrected the scripts to `npm run dev` and `npm test`.
-
-This `README.md` file now serves as a comprehensive guide to your project, covering its purpose, structure, components, data, setup, testing, dependencies, and TypeScript configuration. It's ready to be placed in the root directory of your project.
