@@ -1,0 +1,58 @@
+$stroke: #D3D3D3;
+$operating : #D3D3D3;
+$stroke: #D3D3D3;
+$stroke: #D3D3D3;
+$stroke: #D3D3D3;
+$stroke: #D3D3D3;
+$stroke: #D3D3D3;
+$stroke: #D3D3D3;
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.leaflet-container {
+    overflow: hidden;
+    z-index: 0;
+    height: 500px;
+}
+
+.container-title {
+    display: flex;
+    align-items: center;
+    height: 121px;
+    width: 100vw;
+    padding: 20px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    gap: 20px;
+
+    .logo {
+        width: 138px;
+        height: 69px;
+    }
+
+    .search {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 5px;
+        padding-left: 10px;
+        outline: none;
+        border-color: $stroke;
+    }
+}
+
+.container-details {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    z-index: 1;
+    right: 0;
+    width: 381px;
+    height: 87vh;
+
+}

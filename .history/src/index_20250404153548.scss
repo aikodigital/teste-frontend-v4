@@ -1,0 +1,17 @@
+@use "tailwindcss";
+
+.container-title {
+    display: flex;
+    align-items: center;
+    height: 121px;
+    width: 100%;
+
+    .logo {
+        width: 138px;
+        height: 69px;
+    }
+
+    .search {
+        border: 1px solid;
+    }
+}

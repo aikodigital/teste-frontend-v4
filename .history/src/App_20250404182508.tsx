@@ -1,0 +1,58 @@
+import './App.css'
+import Logo from './assets/logo.png';
+import Map from './components/Map.tsx'
+
+function App() {
+
+  return (
+    <>
+      <div className='container-title h-100'>
+        <img src={Logo} className='logo' alt='logo-aiko' title='logo-aiko'></img>
+        <input type="text" className='search' />
+        <span>Equipamento Florestal</span>
+      </div>
+      <div className='container-details'>
+        <h2>Estado atual</h2>
+        <div></div>
+        <h2>Histórico de estados</h2>
+        <div>
+          <input type="text" />
+          <button>ordenar</button>
+          <ul>
+            <li>
+              <span>01/04/2025</span>
+              <span>11:00</span>
+              <span>Operando</span>
+            </li>
+          </ul>
+        </div>
+        <h2>Percentual de produtividade do equipamento</h2>
+        <div>
+          <div>
+            <span>Produtividade:</span>
+            <span>18h</span>
+          </div>
+          <div>
+            <span>Percentual:</span>
+            <span>65%</span>
+          </div>
+        </div>
+        <h2>Ganho por equipamento</h2>
+        <div>
+          <div>
+            <span>Por hora:</span>
+            <span>R$ 100,00</span>
+          </div>
+          <div>
+            <div>
+              <span>Manutenção</span>
+              <span>R$ 20,00</span>
+            </div>
+          </div>
+        </div>
+        <Map></Map>
+      </>
+      )
+}
+
+      export default App
