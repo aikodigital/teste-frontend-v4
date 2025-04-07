@@ -70,3 +70,9 @@ Filtros mais avançados (por modelo, localização, etc.)
 
 🧑‍💻 Desenvolvedor
 Victor Silva – Desenvolvedor Front-End com foco em Vue
+
+
+Vídeo sobre a aplicação
+Vídeo explicativo com a demonstração da solução, decisões técnicas
+
+https://www.youtube.com/watch?v=TOgeI4Bzc7I&feature=youtu.be
