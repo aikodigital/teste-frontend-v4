@@ -1,218 +1,173 @@
-# 🏆 Teste Frontend
+# 🏆 Teste Frontend - Matheus Carvalho - Documentação da Aplicação de Monitoramento Florestal
 
 ![Aiko](img/aiko.png)
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+Link do vídeo com explicação e mostrando o funcionamento da aplicação: https://youtu.be/17s9jwKcIiI
+## Visão Geral do Sistema
 
-## 🚀 O Desafio
+### Objetivo principal
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+A aplicação fornece um painel de monitoramento para equipamentos em operações florestais, permitindo:
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+- Visualização geográfica dos ativos;
+- Acompanhamento do status operacional;
+- Análise de produtividade;
+- Gestão de manutenções;
 
-## 🎯 Requisitos
+## Arquitetura e Tecnologias
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+### Stack Principal
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+- Frontend: React 19 com TypeScript;
+- Build: Vite - Devido ao descontinuamento do (CRA) optei pelo vite
+- Estilização: TailwindCSS
+- Mapas: Leaflet + React-Leaflet : Optei pelo Leaflet devido a documentação bem rica e robusta
+- Biblioteca de Componentes: shadcn/ui \*
+- Biblioteca de Ícones: Lucide-React \*
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+### shadcn/ui & lucide-react
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+- Optei por escolher ambas as bibliotecas por familiariadade, já trabalhei com elas antes e ambas tem integração com tailwind, performance otimizada.
+- Essas duas bibliotecas se complementam, é a escolha oficial recomandada pelo shadcn.
+
+<hr>
+
+### shadcn/ui
+
+- Customização total - Os componentes são seus, você pode modificar como quiser.
+- Performance otimizada – Zero bloat de JavaScript desnecessário.
+- Integração perfeita com Tailwind – Estilização rápida e consistente.
+- Ao contrário de outras bibliotecas que você precisa instalar todos os componentes dela, com shadcn ao invés de instalar a biblioteca toda você pode instalar somente o componente que vai utilizar, tornando o projeto mais leve, como por exemplo
+
+```sh
+  npm i shadcn@2.3.0
+npx shadcn add button  # Exemplo: Adiciona apenas o componente "Button"
+```
+
+<hr>
+
+- Ao instalar será criado o componente customizável dentro do seu projeto em 'src/components/ui' dentro dessa pasta fica todos os componentes instalados em arquivos '.tsx'
+
+### lucide-react
+
+- Performance leve
+- Design harmonioso- Todos os ícones seguem o mesmo estilo
+- Escalabilidade perfeita - Vetores nítidos em qualquer tamanho
+- Compatível com tailwind - Personalização direta via classes CSS
+- Tipagem TypeScript
+- Customização simples
+
+## ESLint & Prettier
+
+- ESLint - Configurei o ESLint para ordenar os imports para deixar em ordem para melhorar a legibilidade do código e consistência com todos os arquivos com mesmo padrão.
+- O ESLint ordena os imports dessa forma:
+- Bibliotecas externas
+  (Ex: react, axios, lodash)
+- Bibliotecas internas/aliases
+  (Ex: @/components, ~/utils)
+- Arquivos locais (relativos)
+  (Ex: ./Button, ../utils)
+
+- Prettier - Configurei o prettier só para ordenar as classes das estilizações do tailwind, ao salvar ordena sozinho.
+
+## 🚀 Começando
+
+Siga as instruções abaixo para configurar o ambiente de desenvolvimento e rodar o projeto localmente.
+
+### 1. Instale as dependências
+
+```bash
+npm install
+```
+
+### 2. Rode o servidor de desenvolvimento
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível em `http://localhost:5173`.
+
+## 📱 Resultados
+
+- Irei seguir o fluxo do teste para ficar mais organizado
+- <strong>Posições dos equipamentos Exibir no mapa os equipamentos nas suas posições mais recentes. ✅</strong>
+  - (Clique na imagem para ver melhor)
+    ![image](https://github.com/user-attachments/assets/860b86c4-a62f-4d78-ae39-3e656370caf0)
+
+<hr>
+
+- <strong>Estado atual do equipamento: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc. ✅ </strong>
+  - Na imagem abaixo é possível observer o efeito de hover mostrando os dados mais atualizados
+  - - Nome do equipamento, Modelo, Estado, Produtividade diária, Última atualização, Latitude e Longitude do posição mais atualizada - (Clique na imagem para ver melhor)
+      ![image](https://github.com/user-attachments/assets/32ecabd0-14ef-4994-9056-2bb30b91acc5)
+
+<hr>
+
+- <strong>Histórico de estados do equipamento: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento. ✅</strong>
+  - Já nessa imagem abaixo é possível observar o pop-up ao clicar no Equipamento localizado no mapa
+  - Nele é mostrado o histórico de status (ou estados), então é mostrado, A data e hora, latitude e longitude, e o status de 'Operando', 'Manutenção' e 'Parado'
+  - (Clique na imagem para ver melhor)
+    ![image](https://github.com/user-attachments/assets/ee907d2a-1617-45cd-ad35-eaf28ba0f617)
+
+<hr>
+
+### Como foi feito
+
+- Para criar precisei ler a Documentação do [Leaflet](https://leafletjs.com/index.html) e também a [React Leaflet](https://react-leaflet.js.org) para exibir o mapa na tela em um componente, a própria biblioteca suporte para toda as necessidades que este teste propõe:
+- Antes de utilizar as opções que a biblioteca tem, é preciso importar o arquivo principal da biblioteca Leaflet: 'import "leaflet/dist/leaflet.css";' através dela a renderização do mapa se torna possível e correta. Então, onde eu criei o componente do mapa eu precisei importar esse arquivo de CSS.
+-
+
+## Componentes da biblioteca React Leaflet
+
+### MapContainer
+
+- Esse componente 'MapContainer' é responsável por criar a instância do Leaflet Map e fornecê-la aos seus componentes filhos, usando um React Context, nele é preciso passar parâmetros nas propriedades 'center' é ele que define as coordenadas iniciais do centro do mapa quando ele é carregado. , 'zoom' para definir o zoom inicial no mapa e scrollWheelZoom' para definir zoom no scroll do mouse.
+
+### Marker
+
+- Esse componente 'Marker' representa um ponto específico no mapa, usado para mostrar a localização de equipamentos, onde eu passei os parâmetros nas propriedades 'position' em position passei a localização (Obtida pelo dados vindo de '/data/equipmentPositionHistory'
+  ![image](https://github.com/user-attachments/assets/4ed10e8c-4432-4070-b22a-c80254eeb52c)
+- Tratei esses dados e fiz uma logica para obter a posição mais atual e passei no Marker para obter a posição mais atualizada e mostrar no mapa. e 'icon' utilizei essa propriedade para passar icones customizados que importei da biblioteca lucide-react para colocar icons coloridos baseado nos modelos dos equipamentos.
+
+  <hr>
+
+### Popup
+
+- Esse componente 'Popup' já veio pronto da biblioteca, ao colocar ele já abre o popup então dentro dele coloquei o histórico de status, que horas esse equipamento estava em operação, manutenção ou parado criei uma logica no css para mostrar os status baseado nas cores que deve representar cada um que vem nos dados em 'equipmentState.json'. Organizei os dados por ordem cronológica (do mais recente) e adicionei scroll para casos com mais registros, interei sobre cada uma das posições vindas do 'equipmentPositionHIstory.json' e renderizei dentro desse Popup para mostrar a posição dele e quando estava Operando ou Parado ou em Manutenção.
+
+ <hr>
+ 
+### TileLayer
+- Esse componente 'TileLayer' é o componente que carrega e exibe as imagens do mapa de fundo, oferecido pela própria documentação.
+
+  <hr>
+  
+### Tooltip
+- Esse componente 'Tooltip' é o efeito hover no pointer no mapa, nele renderizei os dados: Equipamento, Modelo, Estado, Produtividade, Ultima atualização, Latitude e Longitude
+
+  <hr>
+  
+### useMap
+- O'useMap' é instanciado para manipular eventos do mapa, eu usei ele para Ajustar a posição do mapa passando as coordenadas como parâmetro, dessa forma quando chamo ele, ele direciona o mapa para os equipamentos no mapa ![image](https://github.com/user-attachments/assets/d58ec9f0-3639-428e-a3db-d93aa4b3e2bc) ![image](https://github.com/user-attachments/assets/4f7a05a2-5b53-441b-9e11-af3a5e86a206) Então eu chamo ele logo no inicio do Mapa para sempre o mapa apontar para as posições dos equipamentos.
+
+- Além disso coloquei filtros para mostrar os equipamentos filtrados
+
+- ![image](https://github.com/user-attachments/assets/8a26e558-076d-4ca7-8cf4-8cf0d42407f6)
+
+- - Adicionei um filtro para o nome do equipamento e também para o Status.
+  - ![image](https://github.com/user-attachments/assets/8f2f3957-4280-45df-9a58-84b43101433f)
+
+  <hr>
 
 ## 🎲 Dados
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+Os dados que estão na pasta `data/` no formato `json` foram consumidos no compoente do mapa para simular uma api, então usei o axios só para fazer uma simulação de uma requisição a uma api retornando os dados dela, dessa forma
+(Clique na imagem para ver melhor)
+![image](https://github.com/user-attachments/assets/fe464b31-10af-4597-aa81-fceb5cc97094)
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
-```
-
-### equipment.json
-Contém todos os equipamentos da aplicação.
-
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
-```
-
-### equipmentState.json
-Contém todos os estados dos equipamentos.
-
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
-
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
-
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
-
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
-
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
-
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
-
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
-
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
-
-* Vue, React e Angular.
-
-* Typescript.
-
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
-
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
-
-* Template engines (Pug, Ejs, etc).
-
-* Gerenciamento de estado (Vuex, Redux, etc).
-
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
-
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
-
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-### ❌ O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## 💡 Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## 🌟 Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
 ## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
 
+- Tentei fazer o máximo que consegui, tive um emprevisto pessoal no periodo de desenvolvimento e não tive muito tempo para desenvolver tive algumas dificuldades por isso não consegui implementar todos os requisitos extras, mas o principal eu entreguei.
 
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+<h1>Obrigado pela atenção!!</h1>
