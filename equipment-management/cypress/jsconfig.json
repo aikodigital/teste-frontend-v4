@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress"]
+    "types": ["node"]
   },
-  "include": ["./e2e/**/*", "./support/**/*"],
+  "include": ["./support/**/*"],
   "exclude": ["./support/component.*"]
 }
