@@ -1,3 +1,14 @@
+# Teste Frontend - Aplicação de Monitoramento de Equipamentos
+
+## 📹 Apresentação do Projeto
+
+Assista ao vídeo de apresentação do projeto: [Apresentação do Projeto](https://youtu.be/rVzcwgbUtg0)
+
+O vídeo demonstra:
+- Funcionalidades principais da aplicação
+- Decisões técnicas adotadas
+- Desafios enfrentados e soluções implementadas
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
