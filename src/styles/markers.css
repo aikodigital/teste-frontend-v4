@@ -1,0 +1,41 @@
+.marker-icon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  border-radius: 50%;
+  border: 2px solid white;
+  overflow: hidden;
+}
+
+.marker-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: gray;
+}
+
+.marker-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  z-index: 2;
+}
+
+.state-operando::after { background-color: #2ecc71; }
+.state-parado::after { background-color: #f1c40f; }
+.state-manutencao::after { background-color: #e74c3c; }
+.state-desconhecido::after { background-color: #999; }
+
+.model-gt::before {
+  background-image: url('/img/claw-machine.png');
+}
+.model-ca::before {
+  background-image: url('/img/transportation-truck.png');
+}
+.model-hv::before {
+  background-image: url('/img/combine-harvester.png');
+}

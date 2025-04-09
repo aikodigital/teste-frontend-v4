@@ -1,0 +1,100 @@
+.filters-container {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: rgba(255, 255, 255, 0.95); 
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
+  z-index: 50;
+  max-width: 100%;
+  width: auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.filters-container label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem; 
+  color: #2C3E50; 
+  width: 180px; 
+  font-weight: 500;
+}
+
+
+.filters-container select,
+.filters-container input {
+  padding: 0.75rem;
+  border-radius: 8px; 
+  border: 1px solid #BDC3C7; 
+  background-color: #F5F5F5; 
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.filters-container select:focus,
+.filters-container input:focus {
+  border-color: #2ecc71; 
+  box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
+
+.filters-container select:hover,
+.filters-container input:hover {
+  border-color: #2ecc71; 
+}
+
+.filters-container .suggestions-dropdown {
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.filters-container .suggestion-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #34495E; 
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filters-container .suggestion-item:hover {
+  background-color: #2ecc71; 
+  color: white;
+}
+
+/* Filter Button Icon */
+.filter-icon-toggle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 32px; 
+  height: 32px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 50;
+}
+
+.filter-icon-toggle:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.filters-container select:focus option:checked {
+  background-color: #2ecc71; 
+  color: white; 
+}

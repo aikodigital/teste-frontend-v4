@@ -1,218 +1,134 @@
-# 🏆 Teste Frontend
+# 🚜 AIKO Tracker
 
-![Aiko](img/aiko.png)
+Bem-vindo ao **AIKO Tracker**, uma aplicação web interativa desenvolvida para monitoramento e visualização eficiente de equipamentos no mapa, com recursos analíticos avançados e interações fluidas. Este projeto foi criado como solução técnica para o desafio proposto pela AIKO.
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+---
 
-## 🚀 O Desafio
+## 🌟 Principais Funcionalidades
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+### 🗺️ **Visualização Interativa no Mapa**
+- Utiliza **Mapbox GL JS** para renderizar equipamentos com precisão geográfica.
+- Exibe ícones personalizados e interativos que indicam visualmente o estado atual do equipamento:
+  - 🟢 Operando
+  - 🟡 Parado
+  - 🔴 Manutenção
+- Permite movimentar, rotacionar e alterar a perspectiva do mapa com interações simples (clique e arraste com o botão direito do mouse).
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+### 📍 **Informações Detalhadas em Tempo Real**
+- Popup completo com informações ao clicar nos equipamentos:
+  - **Nome e Modelo** do equipamento
+  - **Última data válida** de atualização
+  - **Estado atual** claramente destacado com cores distintas
+  - **Produtividade** calculada automaticamente
+  - **Ganho estimado** no período filtrado
+  - Histórico operacional detalhado com scroll
 
-## 🎯 Requisitos
+### 🔍 **Filtros Avançados**
+- Filtro personalizado com interface moderna:
+  - Por **Modelo** (dropdown)
+  - Por **Estado** (dropdown)
+  - Por **Nome** (campo de busca com autocomplete e sugestões automáticas)
+- Intervalo de datas dinâmico com impacto direto na visualização das rotas, produtividade e ganhos.
+- Opção de exibir rotas históricas específicas por equipamento.
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+### 🎚️ **Toggle Visual e Responsividade**
+- Ícone elegante que permite ocultar/mostrar os filtros facilmente, proporcionando uma experiência limpa e imersiva.
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
+---
 
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
+## 🛠️ Stack Tecnológico
 
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
+| Tecnologia        | Descrição e Motivação                                                   |
+| ----------------- | ----------------------------------------------------------------------- |
+| ⚛️ **React**      | Interfaces modernas, responsivas e altamente dinâmicas.                 |
+| 🔷 **TypeScript** | Segurança e clareza na tipagem e organização do projeto.                |
+| 🗺️ **Mapbox GL** | Visualização geográfica interativa e desempenho excelente em tempo real.|
+| 🎨 **CSS Puro**   | Flexibilidade e rapidez na estilização sem overhead adicional.          |
 
-## 🎲 Dados
+---
 
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
+## 🗃️ Estrutura do Projeto
 
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
+```
+src/
+├── assets/
+├── components/ (componentes React reutilizáveis)
+├── services/ (fetching e lógica de negócios)
+├── styles/ (CSS customizado)
+├── types/ (tipagens centralizadas e organizadas)
+└── App.tsx (componente principal)
 ```
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+---
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos:
+- Node.js (versão 18+ recomendada)
+- npm ou yarn instalados
+
+### Instalação e execução:
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/aiko-tracker.git
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor local
+npm run dev
 ```
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
+Acesse `http://localhost:5173` no navegador para visualizar o projeto.
 
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
-```
+---
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+## 📌 Decisões Técnicas e Melhores Práticas
+- **Componentização e organização modular:** pensadas para garantir escalabilidade.
+- **Persistência local:** utilização do LocalStorage para salvar preferências e filtros, proporcionando praticidade.
+- **Desistência estratégica do Tailwind:** Decisão tomada visando a qualidade final, clareza e entrega dentro do prazo estipulado.
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+---
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+## ⚙️ Fluxo de Dados e Lógicas Importantes
+- **Cálculo dinâmico de produtividade e ganhos estimados:** realizado em tempo real com base no histórico dos estados operacionais dentro do intervalo de datas filtrado.
+- **Renderização condicional:** garante que apenas equipamentos com dados válidos sejam exibidos no mapa.
+- **Autocomplete com sugestões:** facilita a busca por nome dos equipamentos.
+- **Lógica integrada entre componentes:** filtros impactam diretamente na visualização do mapa e das rotas, demonstrando uma comunicação eficiente entre estados e componentes React.
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+---
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+## 🚧 Desafios e Aprendizados
+- Tentativa e decisão estratégica sobre migração para Tailwind CSS: reforçou a importância de foco, entrega e prioridades claras em contextos de tempo reduzido.
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
-```
+---
 
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
+## 💡 Features adicionais
+- Popup com scroll para histórico detalhado.
+- Pins intuitivos e visualmente destacados conforme estado operacional.
+- Data-driven interações e cálculos dinâmicos.
+- Filtros personalizados salvos automaticamente no LocalStorage.
+- Exibição e ocultação prática e elegante do painel de filtros.
+- Visualização dinâmica das rotas dos equipamentos com seleção individual.
+- Interface intuitiva, moderna e com cores inspiradas na identidade visual da AIKO.
+- Interações avançadas e responsivas com o Mapbox para melhor experiência do usuário.
 
-* Vue, React e Angular.
+---
 
-* Typescript.
+## 🙌 Agradecimentos
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+Obrigado à AIKO pela oportunidade incrível de realizar este desafio, que proporcionou crescimento e aprendizados valiosos. Estou disponível para quaisquer esclarecimentos adicionais e feedbacks.
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+---
 
-* Template engines (Pug, Ejs, etc).
+LINK DO VIDEO
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+https://www.loom.com/share/713a65a69fc24005b41c2499af54206b?sid=c8270da8-4fa9-4479-a4f1-6f30b8cda41e
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+---
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
+LINK DO DEPLOY
 
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
+https://teste-frontend-v4-git-teste-ivan-5302ef-ivans-projects-1c591bc8.vercel.app?_vercel_share=s9fdguMrvR6VUs4Q8OEyvOUroHbTAzdG
 
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-### ❌ O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## 💡 Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## 🌟 Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
-## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
-
-
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+✨ Desenvolvido por Ivanilson Ferreira com carinho e dedicação.
