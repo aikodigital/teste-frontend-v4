@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+app-header {
+  // position: fixed;
+  // top: 0;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+app-footer {position: relative;
+  bottom: 0;
+  width: 100%;
+}

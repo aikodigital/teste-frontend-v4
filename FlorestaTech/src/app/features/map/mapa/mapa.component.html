@@ -1,0 +1,56 @@
+<div class="container mt-5 px-4">
+  <div class="row">
+    <div class="col-12 p-0">
+      <div class="filter">
+        <p class="name-enterprise">
+          <span>FlorestaTech </span><br>
+          <b>Equipamentos de Opreação Florestal</b>
+        </p>
+        <hr>
+        <h5>Filtro de Equipamento</h5>
+        <div class="row m-0">
+          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 ps-xxl-0
+            ps-xl-0 ps-lg-0 ps-md-0 ps-sm-0">
+            <label class="text-left" for="nameEquipament">Nome</label><br>
+            <select class="py-1 ps-2 text-muted w-100"
+              [(ngModel)]="equipamentSelect"
+              id="nameEquipament" (change)="filterNameEquipament()"
+              name="nameEquipament">
+              <option value="">Todos</option>
+              <option [value]="equipement.id" *ngFor="let equipement of
+                listEquipaments">{{
+                equipement.name }}</option>
+            </select>
+          </div>
+          <!-- E-mail-->
+          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 ps-xxl-3
+            ps-xl-3 ps-md-3 ps-sm-3 ps-0">
+            <label class="text-left" for="model">Modelo</label><br>
+            <select class="py-1 ps-2 text-muted w-100" id="model"
+              name="model" [(ngModel)]="listModelEquipamentsSelect"
+              (change)="filterModeloEquipament()">
+              <option value="">Todos</option>
+              <option [value]="equipement.name" *ngFor="let equipement of
+                listModelEquipaments">{{ equipement.name }}</option>
+            </select>
+          </div>
+          <!-- Perfil -->
+          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 ps-xxl-3
+            ps-xl-3 ps-lg-3 ps-md-3 ps-sm-0 ps-0">
+            <label class="text-left" for="state">Estado</label><br>
+            <select class="py-1 ps-2 text-muted w-100"
+              id="state" name="state" [(ngModel)]="listStateEquipamentstSelect"
+              (change)="filterStateEquipament()">
+              <option value="">Todos</option>
+              <option [value]="equipement.id" *ngFor="let equipement of
+                listStateEquipaments">{{ equipement.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 p-0">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>

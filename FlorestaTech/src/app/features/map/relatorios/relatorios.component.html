@@ -1,0 +1,104 @@
+<section class="modal-detail">
+  <div class="text-end p-2">
+    <svg class="cursor-pointer" (click)="gerarPdf()" fill="#000000" width="25px"
+      height="25px"
+      viewBox="0 0 32 32"
+      version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier"
+        stroke-width="0"></g><g id="SVGRepo_tracerCarrier"
+        stroke-linecap="round" stroke-linejoin="round">
+      </g><g
+        id="SVGRepo_iconCarrier"><title>Imprimir</title> <path d="M5.656
+          6.938l-0.344
+          2.688h11.781l-0.344-2.688c0-0.813-0.656-1.438-1.469-1.438h-8.188c-0.813
+          0-1.438 0.625-1.438 1.438zM1.438 11.094h19.531c0.813 0 1.438 0.625
+          1.438 1.438v8.563c0 0.813-0.625 1.438-1.438
+          1.438h-2.656v3.969h-14.219v-3.969h-2.656c-0.813
+          0-1.438-0.625-1.438-1.438v-8.563c0-0.813 0.625-1.438
+          1.438-1.438zM16.875 25.063v-9.281h-11.344v9.281h11.344zM15.188
+          18.469h-8.125c-0.188 0-0.344-0.188-0.344-0.375v-0.438c0-0.188
+          0.156-0.344 0.344-0.344h8.125c0.188 0 0.375 0.156 0.375 0.344v0.438c0
+          0.188-0.188 0.375-0.375 0.375zM15.188 21.063h-8.125c-0.188
+          0-0.344-0.188-0.344-0.375v-0.438c0-0.188 0.156-0.344
+          0.344-0.344h8.125c0.188 0 0.375 0.156 0.375 0.344v0.438c0 0.188-0.188
+          0.375-0.375 0.375zM15.188 23.656h-8.125c-0.188
+          0-0.344-0.188-0.344-0.375v-0.438c0-0.188 0.156-0.344
+          0.344-0.344h8.125c0.188 0 0.375 0.156 0.375 0.344v0.438c0 0.188-0.188
+          0.375-0.375 0.375z"></path> </g></svg>
+    <svg (click)="closeModal()" class="cursor-pointer" width="22px"
+      height="22px" viewBox="0 0 24 24" title="Fechar"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg" stroke="@3c4d5a"><g
+        id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+        id="SVGRepo_tracerCarrier" stroke-linecap="round"
+        stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>Fechar</title>
+        <path
+          d="M8.00191 9.41621C7.61138 9.02569 7.61138 8.39252 8.00191
+          8.002C8.39243 7.61147 9.0256 7.61147 9.41612 8.002L12.0057
+          10.5916L14.5896 8.00771C14.9801 7.61719 15.6133 7.61719 16.0038
+          8.00771C16.3943 8.39824 16.3943 9.0314 16.0038 9.42193L13.4199
+          12.0058L16.0039 14.5897C16.3944 14.9803 16.3944 15.6134 16.0039
+          16.004C15.6133 16.3945 14.9802 16.3945 14.5896 16.004L12.0057
+          13.42L9.42192 16.0038C9.03139 16.3943 8.39823 16.3943 8.00771
+          16.0038C7.61718 15.6133 7.61718 14.9801 8.00771 14.5896L10.5915
+          12.0058L8.00191 9.41621Z" fill="#3c4d5a"></path> <path
+          fill-rule="evenodd" clip-rule="evenodd" d="M23 4C23 2.34315 21.6569
+          1
+          20 1H4C2.34315 1 1 2.34315 1 4V20C1 21.6569 2.34315 23 4
+          23H20C21.6569
+          23 23 21.6569 23 20V4ZM21 4C21 3.44772 20.5523 3 20 3H4C3.44772 3 3
+          3.44772 3 4V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21
+          20V4Z" fill="#3c4d5a"></path></g>
+    </svg>
+  </div>
+  <div class="text-center">
+    <p class="text-muted">RELATÓRIO DE EQUIPAMENTO</p>
+  </div>
+  <div class="body-modal">
+    <div class="p-2">
+      <h5 style="color: #fe8901;"><b>{{ equipament.name }}</b></h5>
+      <p>
+        <b>Modelo:</b>
+        {{ equipament.modelo.name }}</p>
+    </div>
+    <hr class="m-0">
+    <div class="table-responsive tabela mt-4"
+      style="max-height: 50vh; overflow: auto; border-bottom: 1px solid
+      #dee2e6;">
+      <table class="table align-middle table-striped table-nowrap table-hover">
+        <thead class="table-ligth">
+          <tr>
+            <td>Horário</td>
+            <td>Latitude - Longitude</td>
+            <td>Estado</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equipament of equipament.positionHitory | paginate: {
+            itemsPerPage: 15, currentPage: paginaAtual }; let i= index">
+            <td>
+              <span>{{ equipament.date | date: 'dd/MM/yyyy'}} às {{
+                getHours(equipament.date) }}h</span>
+            </td>
+            <td>
+              <span>[ {{equipament.lat}} - {{equipament.lon}} ]</span>
+            </td>
+            <td>
+              <span class="badge-states"
+                [style.backgroundColor]="getStateEquipament(equipament.date,
+                'color')">
+                {{ getStateEquipament(equipament.date, 'state') }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container>
+      <div class="text-end me-3 pe-1 pt-3 mb-0"
+        *ngIf="equipament.positionHitory.length> 15">
+        <pagination-controls (pageChange)="paginaAtual= $event"
+          previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+      </div>
+    </ng-container>
+  </div>
+</section>

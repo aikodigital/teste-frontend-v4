@@ -1,0 +1,17 @@
+<header>
+  <a routerLink="/">
+    <img src="./../../../assets/imagens/logo-florestatech.png" alt="Logomarca
+      FlorestaTech"
+      width="80px">
+  </a>
+  <ul class="d-flex flex-row gap-4 align-items-center">
+    <li><p routerLink="/tracking-equipment"
+        [routerLinkActive]="['rota-active']"
+        [routerLinkActiveOptions]="{exact:
+        false}">Página inicial</p></li>
+    <li><p routerLink="/dashboard/graphics"
+        [routerLinkActive]="['rota-active']"
+        [routerLinkActiveOptions]="{exact:
+        false}">Dashboards</p></li>
+  </ul>
+</header>

@@ -1,0 +1,26 @@
+// Bootstrap
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+// Mapa Leaflet
+@import "~leaflet/dist/leaflet.css";
+
+
+// Reset Css
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Classes Globais
+.cursor-pointer {
+  cursor: pointer;
+}

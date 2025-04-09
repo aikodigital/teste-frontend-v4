@@ -1,0 +1,56 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  box-shadow: 0px 3px 6px #0000003d;
+  align-items: center;
+  padding: 0 120px;
+  background-color: #3c4d5a;
+  color: #fff;
+
+  ul {
+    height: 100%;
+    margin-bottom: 0;
+
+    li {
+      cursor: pointer;
+      transition: 0.3s;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        color: aquamarine;
+      }
+
+      .rota-active {
+        font-weight: 500;
+        color: aquamarine;
+        border-bottom: 2px solid aquamarine;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  header {
+    padding: 0 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 0 30px;
+
+    ul {
+      padding-left: 5px;
+      li {
+        p {
+          font-size: 0.60rem;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
