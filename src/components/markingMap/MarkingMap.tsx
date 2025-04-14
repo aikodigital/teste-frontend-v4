@@ -8,8 +8,9 @@ import {
   modeloContext,
   modeloEquipament, 
   position,
-  horasTrabalhadas, 
+  // horasTrabalhadas, 
   historicoEquipamento,
+  horasTrabalhadas,
 } from '../../context/ModeloContext';
 // import { typeEquipments } from '../../types/typeEquipments';
 
@@ -30,16 +31,16 @@ export default function MarkingMap() {
   const { modelo } = useContext(modeloContext); // id, equipID, nome
   const { positions } = useContext(position); // equiID, position {data, lat, lon}
   const { stateEquipment } = useContext(estadoEquipamento)
-  const { worked } = useContext(horasTrabalhadas)
+  // const { worked } = useContext(horasTrabalhadas)
   const {equipmentHistory } = useContext(historicoEquipamento) // get date => idState === estadoOpera & color
   
-  const [hoverInfo, setHoverInfo] = useState();  // Aqui tem q ser Objeto ou array
-  // const [filterPosition, setFilterPosition] = useState<[]>([])
-  // console.log(hoverInfo);
-  
-  // console.log('Tipo de estado', stateEquipment);
-  // console.log('MODELO', modelo);  
-  // console.log('historico equipamento', equipmentHistory);
+  const [stateCurrent, setStateCurrent] = useState([]);  // função de over mouse
+  const [clickState, setClickState] = useState({
+    estadoEquipamento: '',
+    data: '',
+    modelo: '',
+    equipamento: '',
+  }); 
 
   const filterModelo = modelo.find((model) => model.name === equipamentoId.modelEquipment)
   const filterPosition = positions.filter((position) => position.equipmentId === filterModelo?.id)
@@ -64,37 +65,52 @@ export default function MarkingMap() {
             key={index}
             // position={center}
             position={{
-                lat: position.lat, 
+                lat: position.lat,
                 lng: position.lon,
               }}
-              // onMouseOver={() => {
-              //   const v = equipmentHistory.filter((e) => e.equipmentId === filterModelo?.id)
-              //   console.log(v);
-                
-              // }}
-              // onMouseOut={() => console.log("out")}
-              onClick={() => {
-                console.log(equipmentHistory.filter((eq) => eq.equipmentId === filterModelo?.id))
-                // .map((i) => {
-                //   // if (i.states[0].date !== equipamentoId.datePosition) 
-                //   return i.states.filter((a) => a.date === filterPosition[0].positions[0].date)
-                // })
-                // console.log(c);
-                
-                // const ve = stateEquipment.filter((w) => w.id === c[0][0].equipmentStateId)
-                // console.log(ve);
-              }}
+             
+              onMouseOver={() => {
+                const idState = equipmentHistory.filter((eq) => eq.equipmentId === filterModelo?.id)
+                .map((i) => i.states.filter((a) => a.date === position.date))
+                  .map((state) => state.map((i) => i.equipmentStateId))
+              
+                const c = stateEquipment.filter((i) => i.id === idState[0][0])
+                if(c === undefined) {
+                  setStateCurrent([]);
+                }
+                setStateCurrent(c);
+                }
+              }
+
+              onMouseOut={() => setStateCurrent([])}
+
+              onClick={() => setClickState({
+                estadoEquipamento: stateCurrent[0]?.name,
+                data: position.date,
+                modelo: equipamentoId.modelEquipment,
+                equipamento: filterModelo?.equipmentId,
+              })}
+              
                       
               options={{
                 label: {
-                  text: equipamentoId.datePosition,
-                  className:'label-marker',
+                  text: stateCurrent[0]?.name,
+                  className: 'label-marker',
+                  color: stateCurrent[0]?.color,
                 }
               }}
               />
             ))}
         {/* Child components, such as markers, info windows, etc. */}
       </GoogleMap>
+      <ul style={{listStyleType: 'none'}}>
+        <li><strong>{clickState.modelo}</strong></li>
+        <li>{clickState.data}</li>
+        <li>{clickState.equipamento}</li>
+        <li>{clickState.estadoEquipamento}</li>
+      </ul>
+      
+    
     </>
   ) : (
     <></>

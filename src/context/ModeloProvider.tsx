@@ -19,6 +19,7 @@ import { typeModeloContext } from "../types/typeModelContext";
 import { EquipmentIdModelos, typeEquipments, typeIdModelos } from "../types/typeEquipments";
 import { typeWorkedHours, typeStateEquipment, typeEquipamentHistory } from "./ModeloContext";
 
+// provavlemnte vinrá com API melhor como estado global
 export default function ModeloProvider({ children }: PropsModelProvider) {
     const [modelo, setModelo] = useState<typeModeloContext["modelo"]>([]);
     const [positions, setPositions] = useState<typeEquipments["positions"]>([]);
@@ -30,6 +31,7 @@ export default function ModeloProvider({ children }: PropsModelProvider) {
     const [stateEquipment, setStateEquipment] = useState<typeStateEquipment["stateEquipment"]>([]);
     const [equipmentHistory, setEquipmentHistory] = useState<typeEquipamentHistory["equipmentHistory"]>([]);
 
+    // Esse modelo deve ser alterado para o modelo do equipamento
     const value: typeModeloContext = {
       modelo,
       setModelo,
