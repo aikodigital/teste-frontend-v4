@@ -1,218 +1,81 @@
-# 🏆 Teste Frontend
+# Teste prático - Desenvolvedor Frontend Aiko
 
-![Aiko](img/aiko.png)
+Desafio da Aiko para vaga de Dev Frontend
 
-Neste teste serão avaliados seus conhecimentos em Javascript, HTML e CSS, a criatividade e metodologia aplicada no desenvolvimento, a usabilidade e design da aplicação final.
+## Pré-requisitos
 
-## 🚀 O Desafio
+- Node.js
+- npm
 
-Você é o desenvolvedor frontend de uma empresa que coleta dados de equipamentos utilizados em uma operação florestal. Dentre esses dados estão o histórico de posições e estados desses equipamentos. O estado de um equipamento é utilizado para saber o que o equipamento estava fazendo em um determinado momento, seja *Operando*, *Parado* ou em *Manutenção*. O estado é alterado de acordo com o uso do equipamento na operação, já a posição do equipamento é coletada através do GPS e é enviada e armazenada de tempo em tempo pela aplicação.
+## Instruções
 
-Seu objetivo é, de posse desses dados, desenvolver o frontend de aplicação web que trate e exibida essas informações para os gestores da operação.
+1. Baixe e instale [node.js](https://nodejs.org/en).
 
-## 🎯 Requisitos
+2. Crie um arquivo .env na raiz do projeto
 
-Esses requisitos são obrigatórios e devem ser desenvolvidos para a entrega do teste.
+3. Adicione as seguintes variaveis:
 
-* **Posições dos equipamentos**: Exibir no mapa os equipamentos nas suas posições mais recentes.
-
-* **Estado atual do equipamento**: Visualizar o estado mais recente dos equipamentos. Exemplo: mostrando no mapa, como um pop-up, mouse hover sobre o equipamento, etc.
-
-* **Histórico de estados do equipamento**: Permitir a visualização do histórico de estados de um equipamento específico ao clicar sobre o equipamento.
-
-## 🎲 Dados
-
-Todos os dados que precisa para desenvolver os requisitos estão na pasta `data/` no formato `json` e são detalhados a seguir.
-
-```sh
-data/
-|- equipment.json
-|- equipmentModel.json
-|- equipmentPositionHistory.json
-|- equipmentState.json
-|- equipmentStateHistory.json
+```
+VITE_GOOGLE_MAPS_API_KEY=<Chave da API do Google Maps>
+VITE_MAP_ID=<ID do Mapa>
 ```
 
-### equipment.json
-Contém todos os equipamentos da aplicação.
+4. Abra seu terminal/cmd no diretório do projeto
 
-```JSONC
-[
-    {
-        // Identificador único do equipamento
-        "id": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Chave estrangeira, utilizada para referenciar de qual modelo é esse equipamento 
-        "equipmentModelId": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do Equipamento
-        "name": "CA-0001"
-    },
-    // ...
-]
+5. Instale as dependencias
+
+```bash
+> npm install
 ```
 
-### equipmentState.json
-Contém todos os estados dos equipamentos.
-
-```JSONC
-[
-    {
-        // Identificador único do estado de equipamento
-        "id": "0808344c-454b-4c36-89e8-d7687e692d57",
-        // Nome do estado
-        "name": "Operando",
-        // Cor utilizada para representar o estado
-        "color": "#2ecc71"
-    },
-    // ...
-]
+6. Rode a aplicação em ambiente de desenvolvomento
+```bash
+> npm run dev
 ```
 
-### equipmentModel.json
-Contém todos os modelos de equipamento e a informação de qual é o valor por hora do equipamento em cada um dos estados.
+## Scripts
 
-```JSONC
-[
-    {
-        // Identificador único do modelo de equipamento
-        "id": "a3540227-2f0e-4362-9517-92f41dabbfdf",
-        // Nome do modelo de equipamento
-        "name": "Caminhão de carga",
-        // Valor gerado por hora para cada estado
-        "hourlyEarnings": [
-            {
-                // Chave estrangeira, utilizada para referenciar de qual valor é esse estado
-                "equipmentStateId": "0808344c-454b-4c36-89e8-d7687e692d57",
-                // Valor gerado por hora nesse estado
-                "value": 100
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+- *dev*: Rodar APP em ambiente de desenvolvimento
+
+```bash
+> npm run dev
 ```
 
-### equipmentStateHistory.json
-O histórico de estados por equipamento.
+- *build*: Compilar aplicação
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Histórico de estados do equipamento
-        "states": [
-            {
-                // Data em que o equipamento declarou estar nesse estado
-                "date": "2021-02-01T03:00:00.000Z",
-                // Chave estrangeira, utilizada para referenciar qual é o estado
-                // que o equipamento estava nesse momento
-                "equipmentStateId": "03b2d446-e3ba-4c82-8dc2-a5611fea6e1f"
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+```bash
+> npm run build
 ```
 
-### equipmentPositionHistory.json
-O histórico de posições dos equipamentos.
+- *preview*: Rodar preview da aplicação compilada
 
-```JSONC
-[
-    {
-        // Chave estrangeira, utilizada para referenciar de qual equipamento são esses estados
-        "equipmentId": "a7c53eb1-4f5e-4eba-9764-ad205d0891f9",
-        // Posições do equipamento
-        "positions": [
-            {   
-                // Data em que a posição foi registrada
-                "date": "2021-02-01T03:00:00.000Z",
-                // Latitude WGS84
-                "lat": -19.126536,
-                // Longitude WGS84
-                "lon": -45.947756
-            },
-            // ...
-        ]
-    },
-    // ...
-]
+```bash
+> npm run preview
 ```
 
-## 🛠️ Regras do Teste
-### ✅ O que é permitido
+- *lint*: Executa eslint para checagem de código
 
-* Vue, React e Angular.
+```bash
+> npm run lint
+```
 
-* Typescript.
+## Detalhes técnicos do projeto
 
-* Bibliotecas de componentes (Element-ui, Vuetify, Bootstrap, etc.)
+Foram utilizados os seguintes pacotes no desenvolvimento do APP:
 
-* Bibliotecas e APIs de Mapas (Leaflet, Openlayers, Google Maps API, etc).
+- **[tailwindcss](https://tailwindcss.com/)**: Para estilização da aplicação e dos componentes.
+- **[react-router](https://reactrouter.com/start/data/installation)**: Para a criação de rotas/páginas dentro da aplicação.
+- **[zustand](https://zustand-demo.pmnd.rs/)**: Para gerenciamento de estados.
+- **[@vis.gl/react-google-maps](http://vis.gl/react-google-maps)**: Para a criação de mapas utilizando a API do Google Maps.
+- **[react-bootstrap-icons](https://github.com/ismamz/react-bootstrap-icons#readme)**: Biblioteca de ícones svg.
+- **[clsx](https://github.com/lukeed/clsx#readme)**: Utilitário para concatenar e construir *string* para classes de forma condicional.
 
-* Template engines (Pug, Ejs, etc).
+Além disso, a plicação possui um design responsivo compativel com smartphones.
 
-* Gerenciamento de estado (Vuex, Redux, etc).
+## Págins
 
-* Frameworks CSS (Tailwind, Bulma, Bootstrap, Materialize, etc).
+Seguindo os requisitos e alguns extras, foram criadas as seguintes páginas:
 
-* Pré-processadores CSS (SCSS, SASS, LESS, etc).
-
-* Frameworks baseados em Vue (Nuxt.js, Quasar, etc).
-
-* Qualquer tecnologia complementar as citadas anteriormente são permitidas desde que seu uso seja justificável.
-
-### ❌ O que não é permitido
-
-* Utilizar componentes ou códigos de terceiros que implementem algum dos requisitos.
-
-## 💡 Recomendações
-
-* **Linter**: Desenvolva o projeto utilizando algum padrão de formatação de código.
-
-## 🌟 Extras
-
-Aqui são listados algumas sugestões para você que quer ir além do desafio inicial. Lembrando que você não precisa se limitar a essas sugestões, se tiver pensado em outra funcionalidade que considera relevante ao escopo da aplicação fique à vontade para implementá-la.
-
-* **Filtros**: Filtrar as visualizações por estado atual ou modelo de equipamento.
-
-* **Pesquisa**: Ser possível pesquisar por dados de um equipamento especifico.
-
-* **Percentual de Produtividade do equipamento**: Calcular a produtividade do equipamento, que consiste em uma relação das horas produtivas (em estado "Operando") em relação ao total de horas. Exemplo se um equipamento teve 18 horas operando no dia a formula deve ser `18 / 24 * 100 = 75% de produtividade`.
-
-* **Ganho por equipamento**: Calcular o ganho do equipamento com base no valor recebido por hora informado no Modelo de Equipamento. Exemplo se um modelo de equipamento gera 100 por hora em operando e -20 em manutenção, então se esse equipamento ficou 10 horas em operação e 4 em manutenção ele gerou `10 * 100 + 4 * -20 = 920`.
-
-* **Diferenciar os equipamentos**: Diferenciar visualmente os equipamentos por modelo de equipamento na visualização do mapa.
-
-* **Histórico de posições**: Que seja possível visualizar o histórico de posições de um equipamento, mostrando o trajeto realizado por ele.
-
-* **Testes**: Desenvolva testes que achar necessário para a aplicação, seja testes unitários, testes automatizados, testes de acessibilidade, etc.
-
-* **Documentação**: Gerar uma documentação da aplicação. A documentação pode incluir detalhes sobre as decisões tomadas, especificação dos componentes desenvolvidos, instruções de uso dentre outras informações que achar relevantes.
-
-## Entregas
-
-Para realizar a entrega do teste você deve:
-
-1. Relizar o fork e clonar esse repositório para sua máquina.
-2. Crie uma branch com seu nome no seguinte formato:
-    - `teste/[NOME]`
-    - `[NOME]`: Seu nome.
-    - Exemplos: `teste/fulano-da-silva`; `teste/beltrano-primeiro-gomes`.
-3. Implemente sua solução e faça commit das alterações.
-4. Grave um vídeo explicando sua solução. O vídeo deve:
-    - Mostrar a aplicação em funcionamento
-    - Explicar as decisões técnicas adotadas
-    - Comentar sobre desafios enfrentados e como foram resolvidos
-    - O link do vídeo deve estar no Pull Request ou no README.md do projeto (pode ser não listado no YouTube ou um link compartilhável no Google Drive)
-5. Crie um Pull Request para este repositório com sua branch.
-  
-## 📌 Considerações
-- Você pode utilizar qualquer tecnologia adicional ou abordagem diferente, desde que justifique sua escolha no README.md.
-- A organização, legibilidade e boas práticas no desenvolvimento serão avaliadas, então priorize código limpo, modular e bem documentado.
-- Dúvidas? Caso tenha qualquer dúvida sobre o teste, fique à vontade para perguntar!
-
-
-**📩 Boa sorte! Estamos ansiosos para ver seu código e sua apresentação! 🚀**
+- **/**: Página *home* da aplicação. Contém uma tabela com a listagem completa de todos os equipamentos e seus estados mais atuais.
+- **/state**: Página com mapa para vizualização das posições mais recentes dos equipamentos com filtros para modelos e estados. O mapa possui marcadores diferentes para cada modelo que, ao serem clicados, exibem um popup com informações do equipamento. Ao clicar no marcados, também é exibido o histórico de estados em uma tabela.
+- **/route**: Página com mapa para a visualização das rotas dos equipamentos, marcando os pontos A (Primeira posição salva) e B (Ultima posição salva).
