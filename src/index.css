@@ -13,3 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mapa {
+  height: 100vh;
+  width: 200vw;
+  margin: auto;
+}
+

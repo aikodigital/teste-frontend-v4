@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "google-maps-react-markers": "^2.0.15",
     "leaflet": "^1.9.4",
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
