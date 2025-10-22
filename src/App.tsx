@@ -1,11 +1,9 @@
 import Equipment from "./components/Equipment"
-import Header from "./components/Header"
 
 function App() {
   return (
     <>
-      <Header />
-      <h1>MAPA</h1>  
+      <img src="../../img/aiko.png" alt="aiko" />
       <Equipment />  
     </>
   )
