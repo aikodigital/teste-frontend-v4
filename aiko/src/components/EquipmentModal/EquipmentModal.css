@@ -1,0 +1,132 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 50px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 70vh;
+    padding: 40px;
+    overflow: auto;
+}
+
+.modal header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal header button {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #111;
+    color: #fff;
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 18px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
+
+.modal header button:hover {
+    background: #e74c3c;
+    transform: scale(1.05);
+}
+
+.modal header button:active {
+    transform: scale(0.95);
+}
+
+.productivity {
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    /* espaço entre linhas */
+    font-size: 14px;
+}
+
+thead th {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: #666;
+    padding: 10px 14px;
+}
+tbody tr {
+    background: #f9fafb;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #eef6f1;
+    transform: translateY(-1px);
+}
+
+
+tbody td {
+    padding: 12px 14px;
+    border: none;
+    vertical-align: middle;
+}
+
+
+tbody tr td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: 600;
+}
+
+tbody tr td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-weight: 500;
+}
+
+
+tbody td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+tbody td:first-child::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+}
